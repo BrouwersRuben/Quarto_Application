@@ -3,8 +3,8 @@ package main.java.pieces;
 public class pieces {
     protected int color; //0 for white, 1 for black  2^1
     protected int shape; //0 for round, 1 for square 2^2
-    protected int dens; //0 for solid, 1 for hollow 2^3
-    protected int lenght; //0 for tall, 1 for short 2^4
+    protected int density; //0 for solid, 1 for hollow 2^3
+    protected int length; //0 for tall, 1 for short 2^4
 
     protected int name;
     //example: piece #4 : 0100 ==> White, Square, Solid & tall
@@ -16,11 +16,11 @@ public class pieces {
     public int getShape() {
         return shape;
     }
-    public int getDens() {
-        return dens;
+    public int getDensity() {
+        return density;
     }
-    public int getLenght() {
-        return lenght;
+    public int getLength() {
+        return length;
     }
     public int getName() {
         return name;
@@ -32,21 +32,21 @@ public class pieces {
     public void setShape(int shape) {
         this.shape = shape;
     }
-    public void setDens(int dens) {
-        this.dens = dens;
+    public void setDens(int density) {
+        this.density = density;
     }
-    public void setLenght(int lenght) {
-        this.lenght = lenght;
+    public void setLenght(int length) {
+        this.length = length;
     }
     public void setName(int name) {
         this.name = name;
     }
 
-    public pieces(int color, int shape, int dens, int lenght, int name) {
+    public pieces(int color, int shape, int density, int length, int name) {
         this.color = color;
         this.shape = shape;
-        this.dens = dens;
-        this.lenght = lenght;
+        this.density = density;
+        this.length = length;
         this.name = name;
     }
 }
