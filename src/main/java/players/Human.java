@@ -1,6 +1,6 @@
 package main.java.players;
 
-public class Human {
+public class Human extends Player {
     protected String name;
     protected int score;
     protected boolean startsFirst;
@@ -21,6 +21,12 @@ public class Human {
         this.score = score;
     }
     public void setStartsFirst(boolean startsFirst) {
+        this.startsFirst = startsFirst;
+    }
+
+    public Human(String name, int score, boolean startsFirst) {
+        this.name = name;
+        this.score = score;
         this.startsFirst = startsFirst;
     }
 }
