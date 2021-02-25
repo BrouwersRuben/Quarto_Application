@@ -32,7 +32,7 @@ public class pieces {
     public void setShape(int shape) {
         this.shape = shape;
     }
-    public void setDens(int density) {
+    public void setDensity(int density) {
         this.density = density;
     }
     public void setLenght(int length) {

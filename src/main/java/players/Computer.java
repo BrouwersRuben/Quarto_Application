@@ -1,5 +1,5 @@
 package main.java.players;
 
-public class Computer {
+public class Computer extends Player {
     protected final boolean isAi = true;
 }

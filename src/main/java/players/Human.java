@@ -13,7 +13,7 @@ public class Human extends Player {
         return score;
     }
     public boolean isStartsFirst() {
-        return startsFirst;
+        return startsFirst;     
     }
 
     //Setters
