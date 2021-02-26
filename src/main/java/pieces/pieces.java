@@ -6,6 +6,8 @@ public class pieces {
     protected int density; //0 for solid, 1 for hollow 2^3
     protected int length; //0 for tall, 1 for short 2^4
 
+    //TODO: enum
+
     protected int name;
     //example: piece #4 : 0100 ==> White, Square, Solid & tall
 

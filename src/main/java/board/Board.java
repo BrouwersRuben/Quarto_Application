@@ -12,7 +12,7 @@ public class Board {
     private int[] pieceStatus = new int[16];
     private int pieceInHand = 16;
     private final int inPlay = 1, offBoard = 0, inHand = 2;
-
+    //TODO: enum
 
     //Getters
     public String[][] getBoard() {
