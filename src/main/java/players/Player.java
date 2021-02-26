@@ -6,6 +6,7 @@ public class Player {
     //Setters
 
     //Getters
+
     public boolean isHasQuarto() {
         return hasQuarto;
     }

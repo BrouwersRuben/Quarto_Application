@@ -6,6 +6,6 @@ public class Runner {
 	protected int gameTimer;
 	
 	public static void main(String[] args) {
-		
+		System.out.println("Quarto game");
 	}
 }
