@@ -1,6 +1,4 @@
-package main.java.board;
-
-import main.java.players.Human;
+package main.java.Model.LeaderBoard;
 
 public class Leaderboard {
 	//private String name = Human.this.getName();

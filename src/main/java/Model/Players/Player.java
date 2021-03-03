@@ -1,4 +1,4 @@
-package main.java.players;
+package main.java.Model.Players;
 
 public class Player {
     protected final boolean hasQuarto = false;

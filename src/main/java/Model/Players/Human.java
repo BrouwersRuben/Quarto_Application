@@ -1,4 +1,4 @@
-package main.java.players;
+package main.java.Model.Players;
 
 public class Human extends Player {
     protected String name;

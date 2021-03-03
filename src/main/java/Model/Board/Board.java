@@ -1,12 +1,12 @@
-package main.java.board;
+package main.java.Model.Board;
 
-import main.java.pieces.pieces;
+import main.java.Model.Pieces.pieces;
 
 public class Board {
     private final int columns = 4;
     private final int rows = 4;
     private String[][] board = new String[columns][rows];
-    private pieces[] pieces = new pieces[16];
+    private main.java.Model.Pieces.pieces[] pieces = new pieces[16];
     private int remainingPieces = 16;
     private int remainingSpots = 16;
     private int[] pieceStatus = new int[16];

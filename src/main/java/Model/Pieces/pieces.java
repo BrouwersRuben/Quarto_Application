@@ -1,4 +1,4 @@
-package main.java.pieces;
+package main.java.Model.Pieces;
 
 public class pieces {
     protected int color; //0 for white, 1 for black  2^1
