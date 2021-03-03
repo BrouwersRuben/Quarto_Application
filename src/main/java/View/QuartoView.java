@@ -1,6 +1,9 @@
 package main.java.View;
 
-public class QuartoView /* extends layout type */ {
+import javafx.scene.Node;
+import javafx.scene.Parent;
+
+public class QuartoView extends Parent /* extends layout type */ {
     // private Node attributes (controls)
 
     public QuartoView () {
