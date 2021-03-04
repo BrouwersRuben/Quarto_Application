@@ -1,12 +1,12 @@
 package main.java.Model.Board;
 
-import main.java.Model.Pieces.pieces;
+import main.java.Model.Pieces.Pieces;
 
 public class Board {
     private final int columns = 4;
     private final int rows = 4;
     private String[][] board = new String[columns][rows];
-    private main.java.Model.Pieces.pieces[] pieces = new pieces[16];
+    private main.java.Model.Pieces.Pieces[] pieces = new Pieces[16];
     private int remainingPieces = 16;
     private int remainingSpots = 16;
     private int[] pieceStatus = new int[16];
@@ -17,7 +17,7 @@ public class Board {
     public String[][] getBoard() {
         return board;
     }
-    public pieces[] getPieces() {
+    public Pieces[] getPieces() {
         return pieces ;
     }
     public int getRemainingPieces() {
@@ -31,7 +31,7 @@ public class Board {
     public void setBoard(String[][] board) {
         this.board = board;
     }
-    public void setPeice(pieces[] piece) {
+    public void setPeice(Pieces[] piece) {
         this.pieces = piece ;
     }
     public void setRemainingPieces(int remainingPieces) {

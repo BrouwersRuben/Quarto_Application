@@ -1,6 +1,6 @@
 package main.java.Model.Pieces;
 
-public class pieces {
+public class Pieces {
     protected int color; //0 for white, 1 for black  2^1
     protected int shape; //0 for round, 1 for square 2^2
     protected int density; //0 for solid, 1 for hollow 2^3
@@ -44,7 +44,7 @@ public class pieces {
         this.name = name;
     }
 
-    public pieces(int color, int shape, int density, int length, int name) {
+    public Pieces(int color, int shape, int density, int length, int name) {
         this.color = color;
         this.shape = shape;
         this.density = density;
