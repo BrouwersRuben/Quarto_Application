@@ -1,5 +1,7 @@
 package main.java.Model.Board;
 
+import main.java.Model.Pieces.Pieces;
+
 public class Board {
     private final int columns = 4;
     private final int rows = 4;
@@ -9,7 +11,7 @@ public class Board {
     private int remainingSpots = 16;
     private int[] pieceStatus = new int[16];
     private int pieceInHand = 16;
-    private final int inPlay = 1, offBoard = 0, inHand = 2;
+    PStatus pStatus;
 
     //Getters
     public int getColumns() {
@@ -35,15 +37,6 @@ public class Board {
     }
     public int getPieceInHand() {
         return pieceInHand;
-    }
-    public int getInPlay() {
-        return inPlay;
-    }
-    public int getOffBoard() {
-        return offBoard;
-    }
-    public int getInHand() {
-        return inHand;
     }
 
     //Setters

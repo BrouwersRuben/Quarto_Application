@@ -1,6 +1,29 @@
 package main.java.Model.Pieces;
 
+import main.java.Model.Board.PStatus;
+
 public class Piece {
+
+    int pieceStat;
+    PStatus pStatus;
+
+    public String pieceStatus(){
+        if (pieceStat == pStatus.IN_HAND.getCode()){
+            return "The piece is in someones hand";
+        } else if (pieceStat == pStatus.IN_PLAY.getCode()){
+            return "The piece is already on the board";
+        } else {
+            return "the piece is free to play";
+        }
+    }
+
+    public int getPieceStat() {
+        return pieceStat;
+    }
+    public void setPieceStat(int pieceStat) {
+        this.pieceStat = pieceStat;
+    }
+
     /*
     public static String getStringFromIndex( int index ) throws IllegalArgumentException {
         if (index==16)

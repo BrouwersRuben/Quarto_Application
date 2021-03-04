@@ -2,10 +2,12 @@ package main.java.Model;
 
 import main.java.Model.Board.Board;
 import main.java.Model.Board.PStatus;
+import main.java.Model.Pieces.Piece;
 
 public class Quarto {
     // private attributes
     Board newBoard = new Board();
+    Piece quartoPiece = new Piece();
     PStatus pieceStatus;
 
     public Quarto() {
@@ -14,11 +16,6 @@ public class Quarto {
     }
 
 // methods with business logic
-    public boolean play(int piece){
-        return true;
-    }
-
-
     public boolean pass(int piece){
             if (piece<0 || piece>15) {
                 System.out.println( "Non existant" );
@@ -36,9 +33,19 @@ public class Quarto {
             }
     }
 
-public boolean hasQuarto(){
-        return ;
-}
+    public boolean hasQuarto(){
+
+    }
+
+    public void play(int piece){
+        if (quartoPiece.getPieceStat() != 1 || quartoPiece.getPieceStat() != 2){
+
+        }
+    }
+
+    public String showAvailablePieces(){
+        return quartoPiece.pieceStatus();
+    }
 
 
 
