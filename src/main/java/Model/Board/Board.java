@@ -1,7 +1,5 @@
 package main.java.Model.Board;
 
-import main.java.Model.Pieces.Pieces;
-
 public class Board {
     private final int columns = 4;
     private final int rows = 4;
