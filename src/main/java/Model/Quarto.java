@@ -9,6 +9,9 @@ public class Quarto {
     Board newBoard = new Board();
     Piece quartoPiece = new Piece();
     PStatus pieceStatus;
+    protected boolean isRunning;
+    protected int amountOfTurns;
+    protected int gameTimer = 300 /*5 min*/;
 
     public Quarto() {
 // Constructor
@@ -33,9 +36,11 @@ public class Quarto {
         }
     }
 
+    /*
     public boolean hasQuarto() {
 
     }
+     */
 
     public void play(int piece) {
         if (quartoPiece.getPieceStat() != 1 || quartoPiece.getPieceStat() != 2) {
@@ -51,6 +56,24 @@ public class Quarto {
         }
         //ELSE?
         return "";
+    }
+
+    private void startGameTimer() {
+            while(gameTimer > 0) {
+                try {
+                    Thread.sleep(1000);
+                    gameTimer = gameTimer - 1;
+                    //update the timer
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            //maybe quit the game when the user is afk for to long.
+            //reset the timer after every move.
+            if(gameTimer <= 0) {
+                System.exit();
+            }
     }
 
 // needed getters and setters

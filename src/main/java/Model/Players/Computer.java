@@ -1,6 +1,10 @@
 package main.java.Model.Players;
 
 public class Computer extends Player{
+    Player computer = new Player();
 
-    protected final boolean isAi = true;
+    private final boolean isAi = true;
+
+    //computer.isHasQuarto()
+
 }

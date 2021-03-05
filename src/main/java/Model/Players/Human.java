@@ -1,9 +1,23 @@
 package main.java.Model.Players;
 
 public class Human extends Player {
+
+    Player human = new Player();
+
     protected String name;
     protected int score;
     protected boolean startsFirst;
+    //human.hasquarto;
+
+    public Human() {
+
+    }
+
+    public Human(String name, int score, boolean startsFirst) {
+        this.name = name;
+        this.score = score;
+        this.startsFirst = startsFirst;
+    }
 
     //Getters
     public String getName() {
@@ -24,9 +38,5 @@ public class Human extends Player {
         this.startsFirst = startsFirst;
     }
 
-    public Human(String name, int score, boolean startsFirst) {
-        this.name = name;
-        this.score = score;
-        this.startsFirst = startsFirst;
-    }
+
 }

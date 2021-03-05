@@ -1,8 +1,13 @@
 package main.java.Model.LeaderBoard;
 
+import main.java.Model.Players.Human;
+
 public class Leaderboard {
-	//private String name = Human.this.getName();
-	//private double score = Human.this.getScore();
+
+	Human player = new Human();
+
+	private String name = player.getName();
+	private double score = player.getScore();
 	private String date;
 
 	//TODO: Database Stuff
