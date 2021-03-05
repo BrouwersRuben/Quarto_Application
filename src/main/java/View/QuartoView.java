@@ -6,7 +6,7 @@ import javafx.scene.layout.GridPane;
 
 public class QuartoView extends GridPane {
     // private Node attributes (controls)
-    
+
 
     public QuartoView () {
         initialiseNodes();

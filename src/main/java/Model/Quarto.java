@@ -39,7 +39,7 @@ public class Quarto {
 
     public void play(int piece) {
         if (quartoPiece.getPieceStat() != 1 || quartoPiece.getPieceStat() != 2) {
-
+            //WIP
         }
     }
 
