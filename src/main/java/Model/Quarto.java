@@ -76,6 +76,11 @@ public class Quarto {
             }
     }
 
+    private void resetVariables(){
+        gameTimer = 300;
+        //all the variables that have to be resetted after each turn.
+    }
+
 // needed getters and setters
 
 
