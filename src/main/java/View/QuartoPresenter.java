@@ -17,6 +17,10 @@ public class QuartoPresenter {
 // to view controls
 // Event handlers: call model methods and
 // update the view.
+        this.view.getExit().setOnAction(event -> {
+            System.exit(69);
+            updateView();
+        });
     }
 
     private void updateView() {

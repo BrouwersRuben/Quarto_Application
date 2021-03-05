@@ -83,7 +83,6 @@ public class Quarto {
 
 // needed getters and setters
 
-
     public int getGameTimer() {
         return gameTimer;
     }

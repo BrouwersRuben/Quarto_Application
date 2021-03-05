@@ -15,8 +15,8 @@ public class Main extends Application {
 
         primaryStage.setTitle("Quarto");
         //TODO: Set correct size!
-        primaryStage.setWidth(400.0);
-        primaryStage.setHeight(250.0);
+        primaryStage.setWidth(625);
+        primaryStage.setHeight(425);
         primaryStage.setResizable(false);
         primaryStage.show();
     }
