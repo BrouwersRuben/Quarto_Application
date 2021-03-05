@@ -62,15 +62,11 @@ public class QuartoView extends GridPane {
         this.setHgap(8);
         this.setVgap(8);
 
-        //TODO: Bold
-        //title.fontProperty();
-
         title.textAlignmentProperty();
         this.add(title, 1, 1, 3, 1 );
         GridPane.setHalignment(title, HPos.CENTER);
         title.setStyle("-fx-font-weight: BOLD;" +
                         "-fx-font-size: 45;");
-
 
         this.add(startGame, 1, 3, 3, 1 );
         startGame.setPrefHeight(25);
@@ -99,9 +95,6 @@ public class QuartoView extends GridPane {
         exit.setAlignment(Pos.CENTER);
         GridPane.setHalignment(exit, HPos.CENTER);
         exit.setStyle("-fx-font-weight: BOLD");
-
-
-
     }
 
 // package-private Getters
