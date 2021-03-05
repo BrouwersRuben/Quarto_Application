@@ -2,9 +2,11 @@ package main.java.View;
 
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.layout.GridPane;
 
-public class QuartoView extends Parent /* extends layout type */ {
+public class QuartoView extends GridPane {
     // private Node attributes (controls)
+    
 
     public QuartoView () {
         initialiseNodes();
