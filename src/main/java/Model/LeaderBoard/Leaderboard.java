@@ -1,11 +1,15 @@
 package main.java.Model.LeaderBoard;
 
 import main.java.Model.Players.Human;
+import main.java.Model.Quarto;
 
 public class Leaderboard {
 
 	Human player = new Human();
+	Quarto game = new Quarto();
 
+	private int gametimer = game.getGameTimer();
+	private int amountOfTurns = game.getAmountOfTurns();
 	private String name = player.getName();
 	private double score = player.getScore();
 	private String date;
