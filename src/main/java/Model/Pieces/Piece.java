@@ -1,11 +1,13 @@
 package main.java.Model.Pieces;
 
+import main.java.Model.Board.Board;
 import main.java.Model.Board.PStatus;
 
 public class Piece {
 
     int pieceStat;
     PStatus pStatus;
+
 
     public String pieceStatus(){
         if (pieceStat == pStatus.IN_HAND.getCode()){

@@ -15,40 +15,43 @@ public class Quarto {
 
     }
 
-// methods with business logic
-    public boolean pass(int piece){
-            if (piece<0 || piece>15) {
-                System.out.println( "Non existant" );
-                return false;
-            }
+    // methods with business logic
+    public boolean pass(int piece) {
+        if (piece < 0 || piece > 15) {
+            System.out.println("Non existant");
+            return false;
+        }
 
-            if ( newBoard.getPieceStatus()[piece] == pieceStatus.OFF_BOARD.getCode()) {
-                newBoard.setPieceInHand(piece);
-                newBoard.getPieceStatus()[piece] = pieceStatus.IN_HAND.getCode();
-                newBoard.setRemainingPieces(-1);
-                return true;
-            } else {
-                System.out.printf( "We could not pass piece #%d. The piece is %s\n", piece, ((newBoard.getPieceStatus()[piece]==pieceStatus.IN_HAND.getCode()) ? "in someones hand" : "already on the board"));
-                return false;
-            }
+        if (newBoard.getPieceStatus()[piece] == pieceStatus.OFF_BOARD.getCode()) {
+            newBoard.setPieceInHand(piece);
+            newBoard.getPieceStatus()[piece] = pieceStatus.IN_HAND.getCode();
+            newBoard.setRemainingPieces(-1);
+            return true;
+        } else {
+            System.out.printf("We could not pass piece #%d. The piece is %s\n", piece, ((newBoard.getPieceStatus()[piece] == pieceStatus.IN_HAND.getCode()) ? "in someones hand" : "already on the board"));
+            return false;
+        }
     }
 
-    public boolean hasQuarto(){
+    public boolean hasQuarto() {
 
     }
 
-    public void play(int piece){
-        if (quartoPiece.getPieceStat() != 1 || quartoPiece.getPieceStat() != 2){
+    public void play(int piece) {
+        if (quartoPiece.getPieceStat() != 1 || quartoPiece.getPieceStat() != 2) {
 
         }
     }
 
-    public String showAvailablePieces(){
-        return quartoPiece.pieceStatus();
+    public String showAvailablePieces() {
+        for (int i = 0; i <= newBoard.getPieces().length; i++) {
+            if (newBoard.getPieceStatus()[i] != PStatus.IN_HAND.getCode() || newBoard.getPieceStatus()[i] != PStatus.IN_PLAY.getCode()) {
+                return String.format("%s", "The available pieces will be shown here");
+            }
+        }
+        //ELSE?
+        return "";
     }
 
-
-
 // needed getters and setters
-
 }
