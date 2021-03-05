@@ -72,7 +72,7 @@ public class Quarto {
             //maybe quit the game when the user is afk for to long.
             //reset the timer after every move.
             if(gameTimer <= 0) {
-                System.exit();
+                System.exit(0);
             }
     }
 
