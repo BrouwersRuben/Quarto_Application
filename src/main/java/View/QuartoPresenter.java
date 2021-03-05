@@ -17,7 +17,24 @@ public class QuartoPresenter {
 // to view controls
 // Event handlers: call model methods and
 // update the view.
+        //TODO: finish the buttons to go to different screens
+        this.view.getStartGame().setOnAction(event -> {
+            System.out.println("Start the game");
+            updateView();
+        });
+
+        this.view.getLeaderboard().setOnAction(event -> {
+            System.out.println("Go to the Leaderboard screen");
+            updateView();
+        });
+
+        this.view.getTutorial().setOnAction(event -> {
+            System.out.println("Go to the Tutorial screen");
+            updateView();
+        });
+
         this.view.getExit().setOnAction(event -> {
+            System.out.println("Exit the game, see ya later!");
             System.exit(69);
             updateView();
         });
