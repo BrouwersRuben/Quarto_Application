@@ -1,5 +1,6 @@
 package main.java.View;
 
+import javafx.application.Platform;
 import main.java.Model.Quarto;
 
 public class QuartoPresenter {
@@ -35,7 +36,7 @@ public class QuartoPresenter {
 
         this.view.getExit().setOnAction(event -> {
             System.out.println("Exit the game, see ya later!");
-            System.exit(69);
+            Platform.exit();
             updateView();
         });
     }
