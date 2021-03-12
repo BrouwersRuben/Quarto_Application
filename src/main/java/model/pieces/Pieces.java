@@ -1,10 +1,10 @@
 package main.java.model.pieces;
 
 public class Pieces {
-    Color color;
-    Density density;
-    Length length;
-    Shape shape;
+    private Color color;
+    private Density density;
+    private Length length;
+    private Shape shape;
 
     
 }

@@ -4,7 +4,7 @@ import main.java.model.board.PStatus;
 
 public class Piece {
 
-    int pieceStat;
+    protected int pieceStat;
     PStatus pStatus;
 
 
