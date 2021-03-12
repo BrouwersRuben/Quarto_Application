@@ -2,7 +2,13 @@ package main.java.model.leaderBoard;
 
 import main.java.model.players.Human;
 import main.java.model.Quarto;
+import oracle.jdbc.pool.OracleDataSource;
 
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -11,13 +17,43 @@ public class Leaderboard {
 	Human player = new Human();
 	Quarto game = new Quarto();
 
-	private int gametimer = game.getGameTimer();
+	private int gametimer = game.getGameTimerSeconds();
 	private int amountOfTurns = game.getAmountOfTurns();
 	private String name = player.getName();
 	private double score = player.getScore();
 	//private String date = Calendar.getInstance().getTime();
 
 	//TODO: Database Stuff
+
+	private static final File WALLET = new File("Wallet_QuartoDatabase");
+	private static String dbURL = "jdbc:oracle:thin:@quartodatabase_medium?TNS_ADMIN="+WALLET.getAbsolutePath();
+	private static OracleDataSource ods;
+
+	/* you have to type
+
+			ods = new OracleDataSource();
+			ods.setURL(dbURL);
+			Connection connection = DriverManager.getConnection(dbURL, "QUARTOADMIN", "Quarto_Game1");
+			Statement statement = connection.createStatement();
+
+			for every database related method
+	 */
+
+	public void createTable() {
+		try {
+			ods = new OracleDataSource();
+			ods.setURL(dbURL);
+			Connection connection = DriverManager.getConnection(dbURL, "QUARTOADMIN", "Quarto_Game1");
+			Statement statement = connection.createStatement();
+
+			statement.execute("CREATE TABLE INT_leaderboard"
+					+ "(player_name VARCHAR2(20),"
+					+ "top_score INTEGER," +
+					"date_submitted DATE DEFAULT SYSDATE)");
+
+		} catch (SQLException throwables) {
+		}
+	}
 
 	/*
 	    public static void main(String[] args) {

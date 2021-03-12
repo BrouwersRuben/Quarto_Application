@@ -3,6 +3,7 @@ package main.java;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import main.java.model.leaderBoard.Leaderboard;
 import main.java.view.QuartoPresenter;
 import main.java.view.QuartoView;
 
@@ -12,6 +13,8 @@ public class Main extends Application {
     protected int amountOfTurns;
     protected int gameTimerSeconds;
     Stage window;
+
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -34,6 +37,12 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        Leaderboard leaderboard = new Leaderboard();
+        System.out.println("Before");
+        leaderboard.createTable();
+        System.out.println("After");
         Application.launch(args);
     }
+
+
 }
