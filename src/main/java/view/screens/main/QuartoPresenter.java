@@ -7,6 +7,8 @@ import main.java.view.screens.leaderboard.LeaderboardPresenter;
 import main.java.view.screens.leaderboard.LeaderboardView;
 import main.java.view.screens.tutorial.TutorialPresenter;
 import main.java.view.screens.tutorial.TutorialView;
+import main.java.view.screens.userNamePrologue.UserNameProloguePresenter;
+import main.java.view.screens.userNamePrologue.UserNamePrologueView;
 
 public class QuartoPresenter {
 
@@ -31,12 +33,12 @@ public class QuartoPresenter {
 
         //TODO: finish the buttons to go to different screens
         this.view.getStartGame().setOnAction(event -> {
-            System.out.println("Start the game");
+            setUserNamePrologue();
             updateView();
         });
 
         this.view.getLeaderboard().setOnAction(event -> {
-            System.out.println("Go to the Leaderboard screen");
+            setLeaderboard();
             updateView();
         });
 
@@ -63,10 +65,18 @@ public class QuartoPresenter {
         view.getScene().setRoot(tutorialView);
         tutorialView.getScene().getWindow().sizeToScene();
     }
+
     private void setLeaderboard() {
         LeaderboardView leaderboardView = new LeaderboardView();
         LeaderboardPresenter leaderboardPresenter = new LeaderboardPresenter(model, leaderboardView);
         view.getScene().setRoot(leaderboardView);
         leaderboardView.getScene().getWindow().sizeToScene();
+    }
+
+    private void setUserNamePrologue() {
+        UserNamePrologueView userNamePrologueView = new UserNamePrologueView();
+        UserNameProloguePresenter userNameProloguePresenter = new UserNameProloguePresenter(model, userNamePrologueView);
+        view.getScene().setRoot(userNamePrologueView);
+        userNamePrologueView.getScene().getWindow().sizeToScene();
     }
 }
