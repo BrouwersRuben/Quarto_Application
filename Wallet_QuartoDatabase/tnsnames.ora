@@ -1,0 +1,10 @@
+quartodatabase_high = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.eu-amsterdam-1.oraclecloud.com))(connect_data=(service_name=eryy0gvdtxacbzq_quartodatabase_high.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.eu-amsterdam-1.oraclecloud.com,OU=Oracle ADB AMSTERDAM,O=Oracle Corporation,L=Redwood City,ST=California,C=US")))
+
+quartodatabase_low = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.eu-amsterdam-1.oraclecloud.com))(connect_data=(service_name=eryy0gvdtxacbzq_quartodatabase_low.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.eu-amsterdam-1.oraclecloud.com,OU=Oracle ADB AMSTERDAM,O=Oracle Corporation,L=Redwood City,ST=California,C=US")))
+
+quartodatabase_medium = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.eu-amsterdam-1.oraclecloud.com))(connect_data=(service_name=eryy0gvdtxacbzq_quartodatabase_medium.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.eu-amsterdam-1.oraclecloud.com,OU=Oracle ADB AMSTERDAM,O=Oracle Corporation,L=Redwood City,ST=California,C=US")))
+
+quartodatabase_tp = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.eu-amsterdam-1.oraclecloud.com))(connect_data=(service_name=eryy0gvdtxacbzq_quartodatabase_tp.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.eu-amsterdam-1.oraclecloud.com,OU=Oracle ADB AMSTERDAM,O=Oracle Corporation,L=Redwood City,ST=California,C=US")))
+
+quartodatabase_tpurgent = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.eu-amsterdam-1.oraclecloud.com))(connect_data=(service_name=eryy0gvdtxacbzq_quartodatabase_tpurgent.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.eu-amsterdam-1.oraclecloud.com,OU=Oracle ADB AMSTERDAM,O=Oracle Corporation,L=Redwood City,ST=California,C=US")))
+
