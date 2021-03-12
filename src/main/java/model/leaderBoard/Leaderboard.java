@@ -56,8 +56,7 @@ public class Leaderboard {
 	}
 
 	/*
-	    public static void main(String[] args) {
-        try {
+	   try {
             String db_url = "jdbc:oracle:thin:@Group7Integration_medium?TNS_ADMIN=./db";
             String username = "INTEGRATION PROJECT";
             String password = "Group7Integration";
