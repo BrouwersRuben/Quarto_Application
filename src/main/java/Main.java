@@ -3,9 +3,9 @@ package main.java;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import main.java.model.Quarto;
-import main.java.view.screens.main.QuartoPresenter;
-import main.java.view.screens.main.QuartoView;
+import main.java.model.leaderBoard.Leaderboard;
+import main.java.view.QuartoPresenter;
+import main.java.view.QuartoView;
 
 public class Main extends Application {
 
@@ -18,6 +18,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         window = primaryStage;
 
+//        Quarto model = new Quarto();
 //        window.setResizable(false);
 //        Fucks in Linux
 
@@ -35,6 +36,8 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        Leaderboard leaderboard = new Leaderboard();
+        leaderboard.connectToDb();
         Application.launch(args);
     }
 }
