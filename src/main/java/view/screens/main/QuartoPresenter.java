@@ -35,7 +35,6 @@ public class QuartoPresenter {
         });
 
         this.view.getTutorial().setOnAction(event -> {
-            System.out.println("Go to the Tutorial screen");
             setTutorialView();
             updateView();
         });

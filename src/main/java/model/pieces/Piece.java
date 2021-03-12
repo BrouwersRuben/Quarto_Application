@@ -1,11 +1,11 @@
 package main.java.model.pieces;
 
-import main.java.model.board.PStatus;
+import main.java.model.board.PieceStatus;
 
 public class Piece {
 
     protected int pieceStat;
-    PStatus pStatus;
+    PieceStatus pStatus;
 
 
     public String pieceStatus(){

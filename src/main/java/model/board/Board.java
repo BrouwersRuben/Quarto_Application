@@ -11,7 +11,7 @@ public class Board {
     private int remainingSpots = 16;
     private int[] pieceStatus = new int[16];
     private int pieceInHand = 16;
-    PStatus pStatus;
+    PieceStatus pStatus;
 
     //Getters
     public int getColumns() {

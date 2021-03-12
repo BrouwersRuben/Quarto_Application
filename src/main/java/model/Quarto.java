@@ -1,7 +1,7 @@
 package main.java.model;
 
 import main.java.model.board.Board;
-import main.java.model.board.PStatus;
+import main.java.model.board.PieceStatus;
 import main.java.model.pieces.Piece;
 
 public class Quarto {
@@ -11,7 +11,7 @@ public class Quarto {
     // private attributes
     Board newBoard = new Board();
     Piece quartoPiece = new Piece();
-    PStatus pieceStatus;
+    PieceStatus pieceStatus;
 
     public Quarto() {
 // Constructor
@@ -25,13 +25,13 @@ public class Quarto {
             return false;
         }
 
-        if (newBoard.getPieceStatus()[piece] == PStatus.OFF_BOARD.getCode()) {
+        if (newBoard.getPieceStatus()[piece] == PieceStatus.OFF_BOARD.getCode()) {
             newBoard.setPieceInHand(piece);
-            newBoard.getPieceStatus()[piece] = PStatus.IN_HAND.getCode();
+            newBoard.getPieceStatus()[piece] = PieceStatus.IN_HAND.getCode();
             newBoard.setRemainingPieces(-1);
             return true;
         } else {
-            System.out.printf("We could not pass piece #%d. The piece is %s\n", piece, ((newBoard.getPieceStatus()[piece] == PStatus.IN_HAND.getCode()) ? "in someones hand" : "already on the board"));
+            System.out.printf("We could not pass piece #%d. The piece is %s\n", piece, ((newBoard.getPieceStatus()[piece] == PieceStatus.IN_HAND.getCode()) ? "in someones hand" : "already on the board"));
             return false;
         }
     }
@@ -50,7 +50,7 @@ public class Quarto {
 
     public String showAvailablePieces() {
         for (int i = 0; i <= newBoard.getPieces().length; i++) {
-            if (newBoard.getPieceStatus()[i] != PStatus.IN_HAND.getCode() || newBoard.getPieceStatus()[i] != PStatus.IN_PLAY.getCode()) {
+            if (newBoard.getPieceStatus()[i] != PieceStatus.IN_HAND.getCode() || newBoard.getPieceStatus()[i] != PieceStatus.IN_PLAY.getCode()) {
                 return String.format("%s", "The available pieces will be shown here");
             }
         }
