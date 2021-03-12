@@ -24,7 +24,7 @@ public class Leaderboard {
     Human player = new Human();
     Quarto game = new Quarto();
 
-    private final int gametimer = game.getGameTimerSeconds();
+    private final int gameTimerSeconds = game.getGameTimerSeconds();
     // TODO: Get the local date
     //private String date = Date.toString(Calendar.getInstance().getTime());
 
@@ -56,11 +56,11 @@ public class Leaderboard {
 		try {
 			if(statement != null && !statement.isClosed()) {
                 statement.close();
-				System.out.println("Closed database statements.");
+				System.out.println("Closed the database statements.");
 			}
 			if(connection != null && !connection.isClosed()) {
                 connection.close();
-				System.out.println("Closed database connection.");
+				System.out.println("Closed the database connection.");
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();

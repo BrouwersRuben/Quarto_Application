@@ -2,6 +2,7 @@ package main.java.view.screens.main;
 
 import javafx.application.Platform;
 import main.java.model.Quarto;
+import main.java.model.leaderBoard.Leaderboard;
 import main.java.view.screens.tutorial.TutorialPresenter;
 import main.java.view.screens.tutorial.TutorialView;
 
@@ -9,6 +10,9 @@ public class QuartoPresenter {
 
     private final QuartoView view;
     private final Quarto model;
+    // TODO: closeDb()
+    // Is it call the leaderboard class to have the closeDb() here
+    private Leaderboard lb = new Leaderboard();
 
     public QuartoPresenter(Quarto model, QuartoView view) {
         this.model = model;
@@ -41,6 +45,7 @@ public class QuartoPresenter {
 
         this.view.getExit().setOnAction(event -> {
             Platform.exit();
+            lb.closeDb();
             updateView();
         });
     }
