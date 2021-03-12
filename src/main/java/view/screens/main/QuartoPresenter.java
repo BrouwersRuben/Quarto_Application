@@ -1,20 +1,17 @@
-package main.java.view;
+package main.java.view.screens.main;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import main.java.model.Quarto;
+import main.java.view.screens.tutorial.TutorialPresenter;
 import main.java.view.screens.tutorial.TutorialView;
 
 public class QuartoPresenter {
 
-//    private Quarto model;
-    private QuartoView view;
+    private final QuartoView view;
+    private final Quarto model;
 
-    public QuartoPresenter(/*Quarto model, */QuartoView view) {
-//        this.model = model;
+    public QuartoPresenter(Quarto model, QuartoView view) {
+        this.model = model;
         this.view = view;
         addEventHandlers();
         updateView();
@@ -39,7 +36,7 @@ public class QuartoPresenter {
 
         this.view.getTutorial().setOnAction(event -> {
             System.out.println("Go to the Tutorial screen");
-            changeScreen(new Scene(new TutorialView()), "Tutorial", 625, 525);
+            setTutorialView();
             updateView();
         });
 
@@ -49,23 +46,15 @@ public class QuartoPresenter {
         });
     }
 
-    private EventHandler<ActionEvent> changeScreen(Scene scene, String windowTitle, int width, int height) {
-        return (event) -> {
-            Stage stage = new Stage();
-            stage.initOwner(view.getScene().getWindow());
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(scene);
-            stage.setWidth(width);
-            stage.setHeight(height);
-            stage.setX(view.getScene().getWindow().getX() + 100);
-            stage.setY(view.getScene().getWindow().getY() + 100);
-            stage.setTitle(windowTitle);
-            stage.show();
-            //stage.sizeToScene();
-        };
-    }
     private void updateView() {
 // fills the view with model data
 
+    }
+
+    private void setTutorialView() {
+        TutorialView tutorialView = new TutorialView();
+        TutorialPresenter tutorialPresenter = new TutorialPresenter(model, tutorialView);
+        view.getScene().setRoot(tutorialView);
+        tutorialView.getScene().getWindow().sizeToScene();
     }
 }

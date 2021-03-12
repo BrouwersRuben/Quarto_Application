@@ -1,4 +1,4 @@
-package main.java.view;
+package main.java.view.screens.main;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;

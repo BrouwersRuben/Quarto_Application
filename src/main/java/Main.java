@@ -3,8 +3,9 @@ package main.java;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import main.java.view.QuartoPresenter;
-import main.java.view.QuartoView;
+import main.java.model.Quarto;
+import main.java.view.screens.main.QuartoPresenter;
+import main.java.view.screens.main.QuartoView;
 
 public class Main extends Application {
 
@@ -17,14 +18,14 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         window = primaryStage;
 
-//        Quarto model = new Quarto();
 //        window.setResizable(false);
 //        Fucks in Linux
 
         window.setTitle("Quarto");
-        QuartoView view = new QuartoView();
-        new QuartoPresenter(view);
-        Scene scene = new Scene(view);
+        final QuartoView view = new QuartoView();
+        final Quarto model = new Quarto();
+        new QuartoPresenter(model, view);
+        final Scene scene = new Scene(view);
 
         window.setWidth(625);
         window.setHeight(425);
