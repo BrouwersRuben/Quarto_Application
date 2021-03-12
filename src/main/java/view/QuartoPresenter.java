@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.java.model.leaderBoard.Leaderboard;
 import main.java.view.screens.tutorial.TutorialView;
 
 public class QuartoPresenter {
@@ -44,6 +45,8 @@ public class QuartoPresenter {
         });
 
         this.view.getExit().setOnAction(event -> {
+            Leaderboard leaderboard = new Leaderboard();
+            leaderboard.closeDb();
             Platform.exit();
             updateView();
         });

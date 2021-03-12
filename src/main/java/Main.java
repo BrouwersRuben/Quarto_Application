@@ -20,7 +20,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         window = primaryStage;
 
-//        Quarto model = new Quarto();
 //        window.setResizable(false);
 //        Fucks in Linux
 
@@ -38,9 +37,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         Leaderboard leaderboard = new Leaderboard();
-        System.out.println("Before");
-        leaderboard.createTable();
-        System.out.println("After");
+        leaderboard.connectToDb();
         Application.launch(args);
     }
 
