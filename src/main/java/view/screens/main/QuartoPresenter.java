@@ -3,6 +3,8 @@ package main.java.view.screens.main;
 import javafx.application.Platform;
 import main.java.model.Quarto;
 import main.java.model.leaderBoard.Leaderboard;
+import main.java.view.screens.leaderboard.LeaderboardPresenter;
+import main.java.view.screens.leaderboard.LeaderboardView;
 import main.java.view.screens.tutorial.TutorialPresenter;
 import main.java.view.screens.tutorial.TutorialView;
 
@@ -60,5 +62,11 @@ public class QuartoPresenter {
         TutorialPresenter tutorialPresenter = new TutorialPresenter(model, tutorialView);
         view.getScene().setRoot(tutorialView);
         tutorialView.getScene().getWindow().sizeToScene();
+    }
+    private void setLeaderboard() {
+        LeaderboardView leaderboardView = new LeaderboardView();
+        LeaderboardPresenter leaderboardPresenter = new LeaderboardPresenter(model, leaderboardView);
+        view.getScene().setRoot(leaderboardView);
+        leaderboardView.getScene().getWindow().sizeToScene();
     }
 }

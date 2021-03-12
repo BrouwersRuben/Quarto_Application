@@ -1,14 +1,14 @@
-package main.java.view.screens.statistics;
+package main.java.view.screens.leaderboard;
 
 
 import javafx.stage.Window;
 import main.java.model.Quarto;
 
-public class StatisticsPresenter {
+public class LeaderboardPresenter {
     private final Quarto model;
-    private final StatisticsView view;
+    private final LeaderboardView view;
 
-    public StatisticsPresenter(Quarto model, StatisticsView view) {
+    public LeaderboardPresenter(Quarto model, LeaderboardView view) {
         this.model = model;
         this.view = view;
         addEventHandlers();

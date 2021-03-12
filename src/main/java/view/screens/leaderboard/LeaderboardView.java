@@ -1,12 +1,12 @@
-package main.java.view.screens.statistics;
+package main.java.view.screens.leaderboard;
 
 
 import javafx.scene.layout.GridPane;
 
-public class StatisticsView extends GridPane {
+public class LeaderboardView extends GridPane {
     // private Node attributes (controls)
 
-    public StatisticsView() {
+    public LeaderboardView() {
         initialiseNodes();
         layoutNodes();
     }
