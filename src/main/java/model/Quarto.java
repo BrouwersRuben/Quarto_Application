@@ -37,6 +37,7 @@ public class Quarto {
     }
 
     /*
+    // TODO: Has quarto method
     public boolean hasQuarto() {
 
     }
