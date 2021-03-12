@@ -1,7 +1,10 @@
-package main.java.Model.LeaderBoard;
+package main.java.model.leaderBoard;
 
-import main.java.Model.Players.Human;
-import main.java.Model.Quarto;
+import main.java.model.players.Human;
+import main.java.model.Quarto;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class Leaderboard {
 
@@ -12,7 +15,7 @@ public class Leaderboard {
 	private int amountOfTurns = game.getAmountOfTurns();
 	private String name = player.getName();
 	private double score = player.getScore();
-	private String date;
+	//private String date = Calendar.getInstance().getTime();
 
 	//TODO: Database Stuff
 

@@ -1,4 +1,4 @@
-package main.java.Model.Board;
+package main.java.model.board;
 
 public enum PStatus {
 	OFF_BOARD(0),  IN_PLAY(1), IN_HAND(2);

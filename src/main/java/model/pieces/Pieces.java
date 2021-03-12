@@ -1,4 +1,4 @@
-package main.java.Model.Pieces;
+package main.java.model.pieces;
 
 public class Pieces {
     Color color;

@@ -1,4 +1,4 @@
-package main.java.Model.Board;
+package main.java.model.board;
 
 public class Tile {
     protected boolean occupied;

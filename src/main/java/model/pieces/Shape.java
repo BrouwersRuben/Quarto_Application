@@ -1,11 +1,11 @@
-package main.java.Model.Pieces;
+package main.java.model.pieces;
 
-public enum Length {
-	SHORT(0), TALL(1);
+public enum Shape {
+	ROUND(0), SQUARE(100);
 
 	private final int code;
 
-	Length(int code) {
+	Shape(int code) {
 		this.code = code;
 	}
 

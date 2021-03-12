@@ -1,7 +1,6 @@
-package main.java.Model.Pieces;
+package main.java.model.pieces;
 
-import main.java.Model.Board.Board;
-import main.java.Model.Board.PStatus;
+import main.java.model.board.PStatus;
 
 public class Piece {
 

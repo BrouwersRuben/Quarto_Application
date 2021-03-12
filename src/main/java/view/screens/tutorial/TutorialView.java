@@ -1,5 +1,5 @@
 
-package main.java.View.Screens.Tutorial;
+package main.java.view.screens.tutorial;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

@@ -1,8 +1,8 @@
-package main.java.Model;
+package main.java.model;
 
-import main.java.Model.Board.Board;
-import main.java.Model.Board.PStatus;
-import main.java.Model.Pieces.Piece;
+import main.java.model.board.Board;
+import main.java.model.board.PStatus;
+import main.java.model.pieces.Piece;
 
 public class Quarto {
     // private attributes
@@ -11,7 +11,7 @@ public class Quarto {
     PStatus pieceStatus;
     protected boolean isRunning;
     protected int amountOfTurns;
-    protected int gameTimer = 300 /*5 min*/;
+    protected int gameTimerSeconds = 300 /*5 min*/;
 
     public Quarto() {
 // Constructor
@@ -59,10 +59,10 @@ public class Quarto {
     }
 
     private void startGameTimer() {
-            while(gameTimer > 0) {
+            while(gameTimerSeconds > 0) {
                 try {
                     Thread.sleep(1000);
-                    gameTimer = gameTimer - 1;
+                    gameTimerSeconds = gameTimerSeconds - 1;
                     //update the timer
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -71,13 +71,13 @@ public class Quarto {
 
             //maybe quit the game when the user is afk for to long.
             //reset the timer after every move.
-            if(gameTimer <= 0) {
+            if(gameTimerSeconds <= 0) {
                 System.exit(0);
             }
     }
 
     private void resetVariables(){
-        gameTimer = 300;
+        gameTimerSeconds = 300;
         //all the variables that have to be resetted after each turn.
     }
 

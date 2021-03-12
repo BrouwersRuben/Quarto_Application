@@ -1,6 +1,6 @@
-package main.java.Model.Board;
+package main.java.model.board;
 
-import main.java.Model.Pieces.Pieces;
+import main.java.model.pieces.Pieces;
 
 public class Board {
     private final int columns = 4;

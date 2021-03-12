@@ -1,4 +1,4 @@
-package main.java.Model.Players;
+package main.java.model.players;
 
 public class Computer extends Player{
     Player computer = new Player();

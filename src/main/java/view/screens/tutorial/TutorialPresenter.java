@@ -1,6 +1,6 @@
-package main.java.View.Screens.Tutorial;
+package main.java.view.screens.tutorial;
 
-import main.java.Model.Quarto;
+import main.java.model.Quarto;
 
 public class TutorialPresenter {
     private Quarto model;
