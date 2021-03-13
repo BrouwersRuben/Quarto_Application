@@ -5,7 +5,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
+
+import java.io.File;
+import java.nio.file.Paths;
 
 public class TutorialView extends BorderPane {;
 
@@ -13,6 +19,9 @@ public class TutorialView extends BorderPane {;
     private Text title;
     private Text body;
     private Button exit;
+    private Media media;
+    private MediaPlayer player;
+    private MediaView playerView;
 
     public TutorialView() {
         initialiseNodes();
@@ -23,7 +32,7 @@ public class TutorialView extends BorderPane {;
         // create and configure controls
         // button = new Button("...")
         // label = new Label("...")
-        title = new Text("Quarto Tutorial!");
+        title = new Text("Quarto Tutorial");
         body = new Text("Components\n" +
                 "A board with 16 squares\n" +
                 "16 different pieces each with 4 characteristics: light or dark,\n" +
@@ -38,6 +47,9 @@ public class TutorialView extends BorderPane {;
                 "selects one of the 16 pieces and gives it to his opponent.\n" +
                 "Each player takes one turn.\n");
         exit = new Button("Exit");
+        media = new Media(Paths.get("resources/media/videos/Quarto.mp4").toUri().toString());
+        player = new MediaPlayer(media);
+        playerView = new MediaView(player);
     }
 
     private void layoutNodes() {
@@ -64,6 +76,11 @@ public class TutorialView extends BorderPane {;
         this.setMargin(exit, new Insets(25));
         this.setAlignment(exit, Pos.BOTTOM_CENTER);
 
+        player.play();
+        this.setRight(playerView);
+        this.setAlignment(playerView, Pos.CENTER);
+        // TODO: Mediaplayer buttons
+        playerView.setFitWidth(500);
     }
 
     // package-private Getters

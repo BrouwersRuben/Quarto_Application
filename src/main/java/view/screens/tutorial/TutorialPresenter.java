@@ -22,7 +22,6 @@ public class TutorialPresenter {
 // update the view.
         //TODO: finish the buttons to go to different screens
         this.view.getExit().setOnAction(event -> {
-            System.out.println("Go back to the main screen");
             setMainWindow();
             updateView();
         });
