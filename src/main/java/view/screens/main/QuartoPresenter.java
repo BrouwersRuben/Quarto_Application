@@ -19,7 +19,6 @@ public class QuartoPresenter {
 
     private final QuartoView view;
     private final Quarto model;
-    // TODO: closeDb()
     // Is it call the leaderboard class to have the closeDb() here
     private Leaderboard lb = new Leaderboard();
 
@@ -42,7 +41,6 @@ public class QuartoPresenter {
 // Event handlers: call model methods and
 // update the view.
 
-        //TODO: finish the buttons to go to different screens
         this.view.getStartGame().setOnAction(event -> {
             setUserNamePrologue();
             updateView();
@@ -93,7 +91,7 @@ public class QuartoPresenter {
     }
 
     private void closingAlert(WindowEvent event){
-        // TODO: How to add this to the exit buttons?
+        // TODO: How to add this to all the exit buttons?
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText("You are about to quit the game!");
         alert.setContentText("Are you sure you want to quit the game!");
