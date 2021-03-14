@@ -61,7 +61,7 @@ public class QuartoView extends GridPane {
 
         title.textAlignmentProperty();
         this.add(title, 1, 1, 3, 1 );
-        GridPane.setHalignment(title, HPos.CENTER);
+        this.setHalignment(title, HPos.CENTER);
         title.setStyle("-fx-font-weight: BOLD;" +
                         "-fx-font-size: 45;");
 
@@ -69,28 +69,28 @@ public class QuartoView extends GridPane {
         startGame.setPrefHeight(25);
         startGame.setPrefWidth(200);
         startGame.setAlignment(Pos.CENTER);
-        GridPane.setHalignment(startGame, HPos.CENTER);
+        this.setHalignment(startGame, HPos.CENTER);
         startGame.setStyle("-fx-font-weight: BOLD");
 
         this.add(leaderboard, 1, 4, 3, 1 );
         leaderboard.setPrefHeight(25);
         leaderboard.setPrefWidth(200);
         leaderboard.setAlignment(Pos.CENTER);
-        GridPane.setHalignment(leaderboard, HPos.CENTER);
+        this.setHalignment(leaderboard, HPos.CENTER);
         leaderboard.setStyle("-fx-font-weight: BOLD");
 
         this.add(tutorial, 1, 5, 3, 1 );
         tutorial.setPrefHeight(25);
         tutorial.setPrefWidth(200);
         tutorial.setAlignment(Pos.CENTER);
-        GridPane.setHalignment(tutorial, HPos.CENTER);
+        this.setHalignment(tutorial, HPos.CENTER);
         tutorial.setStyle("-fx-font-weight: BOLD");
 
         this.add(exit, 1, 6, 3, 1 );
         exit.setPrefHeight(25);
         exit.setPrefWidth(200);
         exit.setAlignment(Pos.CENTER);
-        GridPane.setHalignment(exit, HPos.CENTER);
+        this.setHalignment(exit, HPos.CENTER);
         exit.setStyle("-fx-font-weight: BOLD");
     }
 
