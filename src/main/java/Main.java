@@ -19,15 +19,17 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         window = primaryStage;
 
-//        Quarto model = new Quarto();
 //        window.setResizable(false);
 //        Fucks in Linux
 
         window.setTitle("Quarto");
-        final QuartoView view = new QuartoView();
         final Quarto model = new Quarto();
-        new QuartoPresenter(model, view);
+        final QuartoView view = new QuartoView();
+        final QuartoPresenter presenter = new QuartoPresenter(model, view);
+        // TODO: annot invoke "javafx.scene.Scene.getWindow()" because the return value of "main.java.view.screens.main.QuartoView.getScene()" is null
+        //presenter.addWindowEventHandlers();
         final Scene scene = new Scene(view);
+
 
         window.setWidth(625);
         window.setHeight(425);
