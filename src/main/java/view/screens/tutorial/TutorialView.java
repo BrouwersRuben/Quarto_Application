@@ -4,13 +4,14 @@ package main.java.view.screens.tutorial;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
-
-import java.io.File;
 import java.nio.file.Paths;
 
 public class TutorialView extends BorderPane {;
@@ -22,6 +23,10 @@ public class TutorialView extends BorderPane {;
     private Media media;
     private MediaPlayer player;
     private MediaView playerView;
+
+    private VBox mediaBox;
+    private Slider time;
+    private Button PlayButton;
 
     public TutorialView() {
         initialiseNodes();
@@ -50,6 +55,9 @@ public class TutorialView extends BorderPane {;
         media = new Media(Paths.get("resources/media/videos/Quarto.mp4").toUri().toString());
         player = new MediaPlayer(media);
         playerView = new MediaView(player);
+        mediaBox = new VBox();
+        time = new Slider();
+        PlayButton = new Button("||");
     }
 
     private void layoutNodes() {
@@ -77,10 +85,16 @@ public class TutorialView extends BorderPane {;
         this.setAlignment(exit, Pos.BOTTOM_CENTER);
 
         player.play();
-        this.setRight(playerView);
-        this.setAlignment(playerView, Pos.CENTER);
-        // TODO: Mediaplayer buttons
+        this.setRight(mediaBox);
+        this.setAlignment(mediaBox, Pos.CENTER);
+
+        mediaBox.getChildren().add(playerView);
+        mediaBox.getChildren().add(time);
+        mediaBox.getChildren().add(PlayButton);
         playerView.setFitWidth(500);
+        mediaBox.setAlignment(Pos.CENTER);
+        mediaBox.setPadding(new Insets(5, 10, 5, 10));
+        mediaBox.setVgrow(time, Priority.ALWAYS);
     }
 
     // package-private Getters
@@ -88,5 +102,14 @@ public class TutorialView extends BorderPane {;
 
     public Button getExit() {
         return exit;
+    }
+    public Slider getTime() {
+        return time;
+    }
+    public Button getPlayButton() {
+        return PlayButton;
+    }
+    public MediaPlayer getPlayer() {
+        return player;
     }
 }
