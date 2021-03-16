@@ -78,6 +78,8 @@ public class LeaderboardView extends GridPane {
         addPlaceHolder(p4, 5);
         addPlaceHolder(p5, 6);
 
+        // TODO: add a textfield to search specific users
+
         addButton(exit, 1, 7, 3, 1);
     }
 
