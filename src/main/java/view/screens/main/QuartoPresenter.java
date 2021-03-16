@@ -99,10 +99,11 @@ public class QuartoPresenter {
         ButtonType yes = new ButtonType("YES");
         alert.getButtonTypes().addAll(yes, no);
         alert.showAndWait();
-        if (alert.getResult() != null || alert.getResult().equals(yes)) {
+        if (alert.getResult() == null || alert.getResult().equals(no)) {
+            event.consume();
+        } else {
             lb.closeDb();
             Platform.exit();
         }
-
     }
 }
