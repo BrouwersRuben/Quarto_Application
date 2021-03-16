@@ -65,33 +65,19 @@ public class QuartoView extends GridPane {
         title.setStyle("-fx-font-weight: BOLD;" +
                         "-fx-font-size: 45;");
 
-        this.add(startGame, 1, 3, 3, 1 );
-        startGame.setPrefHeight(25);
-        startGame.setPrefWidth(200);
-        startGame.setAlignment(Pos.CENTER);
-        this.setHalignment(startGame, HPos.CENTER);
-        startGame.setStyle("-fx-font-weight: BOLD");
+        addButton(startGame, 1, 3, 3, 1 );
+        addButton(leaderboard, 1, 4, 3, 1);
+        addButton(tutorial, 1, 5, 3, 1);
+        addButton(exit, 1, 6, 3, 1);
+    }
 
-        this.add(leaderboard, 1, 4, 3, 1 );
-        leaderboard.setPrefHeight(25);
-        leaderboard.setPrefWidth(200);
-        leaderboard.setAlignment(Pos.CENTER);
-        this.setHalignment(leaderboard, HPos.CENTER);
-        leaderboard.setStyle("-fx-font-weight: BOLD");
-
-        this.add(tutorial, 1, 5, 3, 1 );
-        tutorial.setPrefHeight(25);
-        tutorial.setPrefWidth(200);
-        tutorial.setAlignment(Pos.CENTER);
-        this.setHalignment(tutorial, HPos.CENTER);
-        tutorial.setStyle("-fx-font-weight: BOLD");
-
-        this.add(exit, 1, 6, 3, 1 );
-        exit.setPrefHeight(25);
-        exit.setPrefWidth(200);
-        exit.setAlignment(Pos.CENTER);
-        this.setHalignment(exit, HPos.CENTER);
-        exit.setStyle("-fx-font-weight: BOLD");
+    private void addButton(Button button, int i1, int i2, int i3, int i4){
+        this.add(button, i1, i2, i3, i4 );
+        button.setPrefHeight(25);
+        button.setPrefWidth(200);
+        button.setAlignment(Pos.CENTER);
+        this.setHalignment(button, HPos.CENTER);
+        button.setStyle("-fx-font-weight: BOLD");
     }
 
 // package-private Getters

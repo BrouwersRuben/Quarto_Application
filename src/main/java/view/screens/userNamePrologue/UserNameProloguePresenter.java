@@ -2,6 +2,8 @@ package main.java.view.screens.userNamePrologue;
 
 import javafx.stage.Window;
 import main.java.model.Quarto;
+import main.java.view.screens.main.QuartoPresenter;
+import main.java.view.screens.main.QuartoView;
 
 public class UserNameProloguePresenter {
     private final Quarto model;
@@ -19,6 +21,12 @@ public class UserNameProloguePresenter {
         // lambdas) to view controls.
         // In the event handlers: call model methods
         // and updateView().
+        this.view.getBack().setOnAction(event -> {
+            setMainWindow();
+            updateView();
+        });
+
+        // TODO: Set gameWindow
     }
 
     private void updateView() {
@@ -28,5 +36,13 @@ public class UserNameProloguePresenter {
     public void addWindowEventHandlers() {
         Window window = view.getScene().getWindow();
         // Add event handlers to window
+    }
+
+    private void setMainWindow() {
+        QuartoView quartoView = new QuartoView();
+        QuartoPresenter quartoPresenter = new QuartoPresenter(model, quartoView);
+        view.getScene().setRoot(quartoView);
+        quartoView.getScene().getWindow().setWidth(625);
+        quartoView.getScene().getWindow().setHeight(425);
     }
 }

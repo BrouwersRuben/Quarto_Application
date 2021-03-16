@@ -89,7 +89,6 @@ public class QuartoPresenter {
     }
 
     private void closingAlert(Event event) {
-        // TODO: How to add this to all the exit buttons?
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText("You are about to quit the game!");
         alert.setContentText("Are you sure you want to quit the game!");

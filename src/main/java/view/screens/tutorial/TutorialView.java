@@ -26,7 +26,7 @@ public class TutorialView extends BorderPane {;
 
     private VBox mediaBox;
     private Slider time;
-    private Button PlayButton;
+    private Button playButton;
 
     public TutorialView() {
         initialiseNodes();
@@ -57,7 +57,7 @@ public class TutorialView extends BorderPane {;
         playerView = new MediaView(player);
         mediaBox = new VBox();
         time = new Slider();
-        PlayButton = new Button("||");
+        playButton = new Button("||");
     }
 
     private void layoutNodes() {
@@ -90,7 +90,8 @@ public class TutorialView extends BorderPane {;
 
         mediaBox.getChildren().add(playerView);
         mediaBox.getChildren().add(time);
-        mediaBox.getChildren().add(PlayButton);
+        // TODO: Maybe change this button into in icon
+        mediaBox.getChildren().add(playButton);
         playerView.setFitWidth(500);
         mediaBox.setAlignment(Pos.CENTER);
         mediaBox.setPadding(new Insets(5, 10, 5, 10));
@@ -107,7 +108,7 @@ public class TutorialView extends BorderPane {;
         return time;
     }
     public Button getPlayButton() {
-        return PlayButton;
+        return playButton;
     }
     public MediaPlayer getPlayer() {
         return player;
