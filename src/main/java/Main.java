@@ -27,14 +27,13 @@ public class Main extends Application {
         final QuartoView view = new QuartoView();
         final QuartoPresenter presenter = new QuartoPresenter(model, view);
         // TODO: annot invoke "javafx.scene.Scene.getWindow()" because the return value of "main.java.view.screens.main.QuartoView.getScene()" is null
-        //presenter.addWindowEventHandlers();
         final Scene scene = new Scene(view);
-
 
         window.setWidth(625);
         window.setHeight(425);
 
         window.setScene(scene);
+        presenter.addWindowEventHandlers();
         window.show();
     }
 
