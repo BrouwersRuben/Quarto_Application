@@ -2,6 +2,8 @@ package main.java.view.screens.gameWindow;
 
 import javafx.stage.Window;
 import main.java.model.Quarto;
+import main.java.view.screens.main.QuartoPresenter;
+import main.java.view.screens.main.QuartoView;
 
 public class GameWindowPresenter {
     private final Quarto model;
@@ -14,11 +16,31 @@ public class GameWindowPresenter {
         updateView();
     }
 
+    private void setMainWindow() {
+        QuartoView quartoView = new QuartoView();
+        QuartoPresenter quartoPresenter = new QuartoPresenter(model, quartoView);
+        view.getScene().setRoot(quartoView);
+        quartoView.getScene().getWindow().setWidth(745);
+        quartoView.getScene().getWindow().setHeight(475);
+    }
+
     private void addEventHandlers() {
         // Add event handlers (inner classes or
         // lambdas) to view controls.
         // In the event handlers: call model methods
         // and updateView().
+        this.view.getPauseGame().setOnAction(event -> {
+            // setPauseWindow(); TODO: need a pause screen for this I assume +something that would stop the view from being updated (for the timer etc.)
+            updateView();
+        });
+        this.view.getSaveGame().setOnAction(event -> {
+            // TODO: some method that updates the database with the current state of the game
+            updateView();
+        });
+        this.view.getEndGame().setOnAction(event -> {
+            setMainWindow();
+            updateView();
+        });
     }
 
     private void updateView() {

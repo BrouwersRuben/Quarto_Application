@@ -2,6 +2,8 @@ package main.java.view.screens.userNamePrologue;
 
 import javafx.stage.Window;
 import main.java.model.Quarto;
+import main.java.view.screens.gameWindow.GameWindowPresenter;
+import main.java.view.screens.gameWindow.GameWindowView;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 
@@ -26,6 +28,11 @@ public class UserNameProloguePresenter {
             updateView();
         });
 
+        this.view.getStartGame().setOnAction(event -> {
+            setGameWindow();
+            updateView();
+        });
+
         // TODO: Set gameWindow
     }
 
@@ -44,5 +51,13 @@ public class UserNameProloguePresenter {
         view.getScene().setRoot(quartoView);
         quartoView.getScene().getWindow().setWidth(625);
         quartoView.getScene().getWindow().setHeight(425);
+    }
+
+    private void setGameWindow() {
+        GameWindowView gameWindowView = new GameWindowView();
+        GameWindowPresenter gameWindowPresenter = new GameWindowPresenter(model, gameWindowView);
+        view.getScene().setRoot(gameWindowView);
+        gameWindowView.getScene().getWindow().setWidth(625);
+        gameWindowView.getScene().getWindow().setHeight(425);
     }
 }
