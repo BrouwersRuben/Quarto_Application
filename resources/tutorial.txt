@@ -1,5 +1,3 @@
-Quarto Tutorial!
-
 Components
 A board with 16 squares
 16 different pieces each with 4 characteristics: light or dark, round or square, tall or short, solid or hollow.

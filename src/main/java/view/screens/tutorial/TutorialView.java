@@ -33,15 +33,16 @@ public class TutorialView extends BorderPane {;
         layoutNodes();
     }
 
-    private void initialiseNodes() {
+    private void initialiseNodes(){
         // create and configure controls
         // button = new Button("...")
         // label = new Label("...")
         title = new Text("Quarto Tutorial");
+        // TODO: Read this from a textfile
         body = new Text("Components\n" +
                 "A board with 16 squares\n" +
                 "16 different pieces each with 4 characteristics: light or dark,\n" +
-                "round or square, tall or short, solid or hollow.\n" +
+               "round or square, tall or short, solid or hollow.\n" +
                 "\n" +
                 "Object of the Game\n" +
                 "To establish a line of four pieces, with at least one common\n" +
