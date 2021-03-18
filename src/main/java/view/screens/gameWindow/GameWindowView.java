@@ -90,6 +90,7 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
 
         for (int i = 1; i <= 16; i++) {
             pieces.getChildren().add(new ImageView(Paths.get("resources/media/images/" + i + ".png").toUri().toString()));
+            //i think it is best to just make 11 buttons and add them where needed, because i have to be able to remove them as well, when they are placed on the board
         }
 
         for (int i = 0; i < numColumns; i++) {
