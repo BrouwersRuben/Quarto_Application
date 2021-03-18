@@ -1,32 +1,42 @@
 package main.java.view.screens.gameWindow;
 
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.nio.file.Paths;
 
-public class GameWindowView extends BorderPane {
+public class GameWindowView extends BorderPane { // TODO: make the layout responsive(currently fixated on px count) & just overall work on it more/clean up code
     // private Node attributes (controls)
     private Button pauseGame;
     private Button saveGame;
     private Button endGame;
-
-    private Text gameTitle;
+    private Label gameTitle;
     private Text time;
-    private Text turns;
+    private Text turn;
     private Label timeCounter;
     private Label turnCounter;
+    private Label turnIndicator;
 
-    FlowPane pieces = new FlowPane(Orientation.VERTICAL);
+    // Center pane
+    TilePane pieces = new TilePane();
+    public static final int numColumns = 4; // TODO: remove one of these
+    public static final int numRows = 4;
+
+    GridPane gameBoard = new GridPane();
+    HBox centerHBox = new HBox(gameBoard, pieces);
+
+    // Bottom pane
+    GridPane bottomPane = new GridPane();
+    GridPane bottomPaneTwo = new GridPane();
+    HBox bottomHBox = new HBox(bottomPane, bottomPaneTwo);
+
 
     public GameWindowView() {
         initialiseNodes();
@@ -41,59 +51,71 @@ public class GameWindowView extends BorderPane {
         saveGame = new Button("Save");
         endGame = new Button("End");
 
-        gameTitle = new Text("QUARTO");
+        gameTitle = new Label("QUARTO");
         time = new Text("Time: ");
-        turns = new Text("Turns: ");
+        turn = new Text("Turn: ");
         timeCounter = new Label("test");
         turnCounter = new Label("test");
+        turnIndicator = new Label("Your turn!\nSelect a piece!");
 
-
-        pieces.setVgap(8);
-        pieces.setHgap(8);
-        pieces.setPrefWrapLength(500);
-
-        for (int i=1; i<=16; i++) {
-            pieces.getChildren().add(new ImageView(Paths.get("resources/media/images/"+i+".png").toUri().toString()));
-        }
     }
 
     private void layoutNodes() {
         // add/set … methods
         // Insets, padding, alignment, …
-//        addButton(pauseGame, 1, 0, 3, 1);
-//        addButton(saveGame, 0, 1, 4, 2);
-//        addButton(endGame, 0, 2, 3, 1);
-//        GridPane gridPane = new GridPane();
-//        gridPane.setGridLinesVisible(true);
-//        gridPane.setHgap(10);
-//        gridPane.setVgap(10);
-
         this.setTop(gameTitle);
-        this.setCenter(pieces);
-        this.setBottom(pauseGame);
-        this.setBottom(saveGame);
-        this.setBottom(endGame);
+        this.setCenter(centerHBox);
+        this.setBottom(bottomHBox);
+
+        bottomPaneTwo.add(turnIndicator, 0, 0);
+        bottomPaneTwo.setAlignment(Pos.CENTER); //TODO: Center them in the middle vertically
+
+        bottomPane.add(time, 1, 0);
+        bottomPane.add(timeCounter, 2, 0);
+
+        bottomPane.add(turn, 1, 1);
+        bottomPane.add(turnCounter, 2, 1);
+
+        bottomPane.add(saveGame, 0, 2);
+        bottomPane.add(pauseGame, 1, 2);
+        bottomPane.add(endGame, 2, 2);
+//        bottomPane.setHgap(10); // TODO: Find out why this pushes the layout
+//        bottomPane.setVgap(10);
+        bottomPane.setPadding(new Insets(0, 0, 10, 60));
+
+        pieces.setVgap(20);
+        pieces.setHgap(20);
+        pieces.setOrientation(Orientation.VERTICAL);
 
 
+        for (int i = 1; i <= 16; i++) {
+            pieces.getChildren().add(new ImageView(Paths.get("resources/media/images/" + i + ".png").toUri().toString()));
+        }
 
+        for (int i = 0; i < numColumns; i++) {
+            for (int j = 0; j < numRows; j++) {
+                Rectangle tile = new Rectangle(60, 60);
+                tile.setStyle("-fx-fill:whitesmoke; -fx-stroke:black; -fx-stroke-width:1");
+                GridPane.setRowIndex(tile, i);
+                GridPane.setColumnIndex(tile, j);
+                gameBoard.getChildren().addAll(tile);
+            }
+        }
 
-
-
+        gameTitle.setPadding(new Insets(0, 0, 0, 85)); // top, right, bottom, left
+        gameTitle.setStyle("-fx-font-weight: BOLD; -fx-font-size: 32");
+        centerHBox.setPrefWidth(745);
+        centerHBox.setPadding(new Insets(0, 20, 10, 20));
+        pieces.setPrefColumns(3); // ?this doesn't work?
+        gameBoard.setPrefWidth(centerHBox.getPrefWidth() / 2); // TODO: shorten this
+        pieces.setPrefWidth(centerHBox.getPrefWidth() / 2);
+        bottomPane.setPrefWidth(centerHBox.getPrefWidth() / 2);
+        bottomPaneTwo.setPrefWidth(centerHBox.getPrefWidth() / 2);
     }
 
 
-
-//    private void addButton(Button button, int i1, int i2, int i3, int i4){
-//        this.add(button, i1, i2, i3, i4);
-//        button.setPrefHeight(25);
-//        button.setPrefWidth(50);
-//        button.setStyle("-fx-font-weight: BOLD");
-//    }
-
     // package-private Getters
     // for controls used by Presenter
-
-
     public Button getPauseGame() {
         return pauseGame;
     }
@@ -106,6 +128,8 @@ public class GameWindowView extends BorderPane {
         return endGame;
     }
 
-
+    public TilePane getPieces() {
+        return pieces;
+    }
 }
 
