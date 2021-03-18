@@ -25,7 +25,7 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
     private Label turnIndicator;
 
     // Center pane
-    TilePane pieces = new TilePane();
+    TilePane pieces = new TilePane(); // REMARK: What is this? I think it is best to make this gridpane as well, and make each image a button so it is clickable or something, but just remove the styling
     public static final int numColumns = 4; // TODO: remove one of these
     public static final int numRows = 4;
 
