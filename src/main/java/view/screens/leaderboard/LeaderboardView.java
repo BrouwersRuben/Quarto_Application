@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -13,10 +14,10 @@ import javafx.scene.text.Text;
 
 public class LeaderboardView extends GridPane {
     // private Node attributes (controls)
-
-    private final int numColums = 5;
+    private final int numColumns = 5;
     private final int numRows = 9;
 
+//    private GridPane pane;
     private Text title;
     private Label p1;
     private Label p2;
@@ -41,17 +42,21 @@ public class LeaderboardView extends GridPane {
         p4 = new Label("4. Player4-xxxx");
         p5 = new Label("5. Player5-xxxx");
         exit = new Button("Back");
+//        pane = new GridPane();
     }
 
     private void layoutNodes() {
         // add/set … methods
         // Insets, padding, alignment, …
 
+//        this.setCenter(pane);
+
+
         this.setPadding(new Insets(10));
 
-        for (int i = 0; i < numColums; i++) {
+        for (int i = 0; i < numColumns; i++) {
             ColumnConstraints colConst = new ColumnConstraints();
-            colConst.setPercentWidth(100.0 / numColums);
+            colConst.setPercentWidth(100.0 / numColumns);
             this.getColumnConstraints().add(colConst);
         }
 
@@ -60,8 +65,6 @@ public class LeaderboardView extends GridPane {
             rowConst.setPercentHeight(100.0 / numRows);
             this.getRowConstraints().add(rowConst);
         }
-
-        // TODO: Make the window the same size as the main window
 
         this.setHgap(8);
         this.setVgap(8);

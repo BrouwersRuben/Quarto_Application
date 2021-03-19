@@ -78,7 +78,7 @@ public class QuartoPresenter {
         LeaderboardView leaderboardView = new LeaderboardView();
         LeaderboardPresenter leaderboardPresenter = new LeaderboardPresenter(model, leaderboardView);
         view.getScene().setRoot(leaderboardView);
-        leaderboardView.getScene().getWindow().sizeToScene();
+        leaderboardView.getScene().getWindow();
     }
 
     private void setUserNamePrologue() {
