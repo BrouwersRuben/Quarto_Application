@@ -5,12 +5,16 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.nio.file.Paths;
+
+import static javax.swing.text.StyleConstants.Orientation;
 
 public class GameWindowView extends BorderPane { // TODO: make the layout responsive(currently fixated on px count) & just overall work on it more/clean up code
     // private Node attributes (controls)
@@ -25,7 +29,7 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
     private Label turnIndicator;
 
     // Center pane
-    TilePane pieces = new TilePane(); // REMARK: What is this? I think it is best to make this gridpane as well, and make each image a button so it is clickable or something, but just remove the styling
+    GridPane pieces = new GridPane(); // REMARK: What is this? I think it is best to make this gridpane as well, and make each image a button so it is clickable or something, but just remove the styling
     public static final int numColumns = 4; // TODO: remove one of these
     public static final int numRows = 4;
 
@@ -85,21 +89,36 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
 
         pieces.setVgap(20);
         pieces.setHgap(20);
-        pieces.setOrientation(Orientation.VERTICAL);
+//        pieces.setOrientation(Orientation.VERTICAL);
 
 
-        for (int i = 1; i <= 16; i++) {
-            pieces.getChildren().add(new ImageView(Paths.get("resources/media/images/" + i + ".png").toUri().toString()));
-            //i think it is best to just make 11 buttons and add them where needed, because i have to be able to remove them as well, when they are placed on the board
+        for (int i=0; i<numColumns;i++) {
+            for (int j=0; j<numRows;j++) {
+//                for (int img = 1; img <= 16; img++) {
+//                    pieces.getChildren().add(new ImageView(Paths.get("resources/media/images/" + img + ".png").toUri().toString()));
+//
+//                    //i think it is best to just make 11 buttons and add them where needed, because i have to be able to remove them as well, when they are placed on the board
+//                }
+                Rectangle pieceTile = new Rectangle(60, 60);
+                pieceTile.setStyle("-fx-stroke:black; -fx-stroke-width:1");
+                GridPane.setRowIndex(pieceTile, i);
+                GridPane.setColumnIndex(pieceTile, j);
+                pieces.getChildren().addAll(pieceTile);
+                for (int img=i; img<=16;img++) {
+                    Image p = new Image(Paths.get("resources/media/images/" + img + ".png").toUri().toString());
+                pieceTile.setFill(new ImagePattern(p));
+            }
+            }
         }
 
         for (int i = 0; i < numColumns; i++) {
             for (int j = 0; j < numRows; j++) {
-                Rectangle tile = new Rectangle(60, 60);
-                tile.setStyle("-fx-fill:whitesmoke; -fx-stroke:black; -fx-stroke-width:1");
-                GridPane.setRowIndex(tile, i);
-                GridPane.setColumnIndex(tile, j);
-                gameBoard.getChildren().addAll(tile);
+                Rectangle boardTile = new Rectangle(60, 60);
+                boardTile.setStyle("-fx-fill:whitesmoke; -fx-stroke:black; -fx-stroke-width:1");
+                GridPane.setRowIndex(boardTile, i);
+                GridPane.setColumnIndex(boardTile, j);
+                gameBoard.getChildren().addAll(boardTile);
+                System.out.println(GridPane.getColumnIndex(pieces));
             }
         }
 
@@ -107,7 +126,7 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         gameTitle.setStyle("-fx-font-weight: BOLD; -fx-font-size: 32");
         centerHBox.setPrefWidth(745);
         centerHBox.setPadding(new Insets(0, 20, 10, 20));
-        pieces.setPrefColumns(3); // ?this doesn't work?
+//        pieces.setPrefColumns(3); // ?this doesn't work?
         gameBoard.setPrefWidth(centerHBox.getPrefWidth() / 2); // TODO: shorten this
         pieces.setPrefWidth(centerHBox.getPrefWidth() / 2);
         bottomPane.setPrefWidth(centerHBox.getPrefWidth() / 2);
@@ -129,7 +148,7 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         return endGame;
     }
 
-    public TilePane getPieces() {
+    public GridPane getPieces() {
         return pieces;
     }
 }

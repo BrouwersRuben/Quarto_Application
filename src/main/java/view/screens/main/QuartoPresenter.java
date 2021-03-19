@@ -60,6 +60,7 @@ public class QuartoPresenter {
             closingAlert(event);
             updateView();
         });
+
     }
 
     private void updateView() {

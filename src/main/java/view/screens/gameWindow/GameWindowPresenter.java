@@ -5,6 +5,8 @@ import main.java.model.Quarto;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 
+import java.awt.event.MouseEvent;
+
 public class GameWindowPresenter {
     private final Quarto model;
     private final GameWindowView view;
@@ -41,6 +43,11 @@ public class GameWindowPresenter {
             setMainWindow();
             updateView();
         });
+
+//        this.view.getPieces().Mous(MouseEvent.MOUSE_CLICKED, event -> {
+//            System.out.println("Tile pressed ");
+//            event.consume();
+//        });
     }
 
     private void updateView() {
