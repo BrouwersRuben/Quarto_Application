@@ -15,8 +15,8 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
     private Button saveGame;
     private Button endGame;
     private Label gameTitle;
-    private Text time;
-    private Text turn;
+    private Label time;
+    private Label turn;
     private Label timeCounter;
     private Label turnCounter;
     private Label turnIndicator;
@@ -44,11 +44,11 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         saveGame = new Button("Save");
         endGame = new Button("End");
         gameTitle = new Label("QUARTO");
-        time = new Text("Time: ");
-        turn = new Text("Turn: ");
+        time = new Label("Time: ");
+        turn = new Label("Turn: ");
         timeCounter = new Label("test");
         turnCounter = new Label("test");
-        turnIndicator = new Label("Your turn!\nSelect a piece!");
+        turnIndicator = new Label("    Your turn!\nSelect a piece!");
     }
 
     private void layoutNodes() {
@@ -80,6 +80,11 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         rightBottomPane.setPrefWidth(setWidthForHBox());
         rightBottomPane.add(turnIndicator, 0, 0);
         rightBottomPane.setAlignment(Pos.CENTER); //TODO: Center them in the middle vertically
+        time.setStyle("-fx-font-size:20");
+        turn.setStyle("-fx-font-size:20");
+        timeCounter.setStyle("-fx-font-size:20");
+        turnCounter.setStyle("-fx-font-size:20");
+        turnIndicator.setStyle("-fx-font-size:20");
 
         for (int i = 0; i< gridDimension; i++) {
             for (int j=0; j<gridDimension;j++) {
