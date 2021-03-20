@@ -5,14 +5,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,28 +65,32 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         // add/set … methods
         // Insets, padding, alignment, …
         this.setTop(gameTitle);
-        this.setCenter(centerHBox);
-        this.setBottom(bottomHBox);
+        gameTitle.setStyle("-fx-font-weight: BOLD; -fx-font-size: 32");
+        BorderPane.setAlignment(gameTitle, Pos.CENTER);
 
+        this.setCenter(centerHBox);
+        centerHBox.setPrefWidth(745);
+        centerHBox.setPadding(new Insets(0, 20, 10, 20));
+        gameBoard.setPrefWidth(setWidthForHBox());
+        gameBoard.setAlignment(Pos.CENTER);
+        pieceGrid.setPrefWidth(setWidthForHBox());
+        pieceGrid.setAlignment(Pos.CENTER);
+
+        this.setBottom(bottomHBox);
         bottomPaneTwo.add(turnIndicator, 0, 0);
         bottomPaneTwo.setAlignment(Pos.CENTER); //TODO: Center them in the middle vertically
-
         bottomPane.add(time, 1, 0);
         bottomPane.add(timeCounter, 2, 0);
-
         bottomPane.add(turn, 1, 1);
         bottomPane.add(turnCounter, 2, 1);
-
         bottomPane.add(saveGame, 0, 2);
         bottomPane.add(pauseGame, 1, 2);
         bottomPane.add(endGame, 2, 2);
 //        bottomPane.setHgap(10); // TODO: Find out why this pushes the layout
 //        bottomPane.setVgap(10);
         bottomPane.setPadding(new Insets(0, 0, 10, 60));
-
-        pieceGrid.setVgap(20);
-        pieceGrid.setHgap(20);
-//        pieces.setOrientation(Orientation.VERTICAL);
+        bottomPane.setPrefWidth(setWidthForHBox());
+        bottomPaneTwo.setPrefWidth(setWidthForHBox());
 
 
         for (int i=0; i<numColumns;i++) {
@@ -100,7 +100,7 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
 //
 //                    //i think it is best to just make 11 buttons and add them where needed, because i have to be able to remove them as well, when they are placed on the board
 //                }
-                Rectangle pieceTile = new Rectangle(60, 60);
+                Rectangle pieceTile = new Rectangle(setWidthForHBox() / 6, setWidthForHBox() / 6);
                 pieceTile.setStyle("-fx-fill:beige;-fx-stroke:black; -fx-stroke-width:1");
                 GridPane.setRowIndex(pieceTile, i);
                 GridPane.setColumnIndex(pieceTile, j);
@@ -114,7 +114,7 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
 
         for (int i = 0; i < numColumns; i++) {
             for (int j = 0; j < numRows; j++) {
-                Rectangle boardTile = new Rectangle(60, 60);
+                Rectangle boardTile = new Rectangle(setWidthForHBox() / 6, setWidthForHBox() / 6);
                 boardTile.setStyle("-fx-fill:whitesmoke; -fx-stroke:black; -fx-stroke-width:1");
                 GridPane.setRowIndex(boardTile, i);
                 GridPane.setColumnIndex(boardTile, j);
@@ -122,23 +122,6 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
                 System.out.println(GridPane.getColumnIndex(pieceGrid));
             }
         }
-
-
-
-
-
-
-
-
-
-        gameTitle.setPadding(new Insets(0, 0, 0, 85)); // top, right, bottom, left
-        gameTitle.setStyle("-fx-font-weight: BOLD; -fx-font-size: 32");
-        centerHBox.setPrefWidth(745);
-        centerHBox.setPadding(new Insets(0, 20, 10, 20));
-        gameBoard.setPrefWidth(GameWindowPresenter.getScreenWidth() / 2); // TODO: shorten this
-        pieceGrid.setPrefWidth(GameWindowPresenter.getScreenWidth() / 2);
-        bottomPane.setPrefWidth(GameWindowPresenter.getScreenWidth() / 2);
-        bottomPaneTwo.setPrefWidth(GameWindowPresenter.getScreenWidth() / 2);
     }
 
     // package-private Getters
@@ -157,6 +140,10 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
 
     public GridPane getPieceGrid() {
         return pieceGrid;
+    }
+
+    public double setWidthForHBox() {
+        return GameWindowPresenter.getScreenWidth() / 2;
     }
 }
 
