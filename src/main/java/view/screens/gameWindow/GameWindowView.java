@@ -62,7 +62,6 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         timeCounter = new Label("test");
         turnCounter = new Label("test");
         turnIndicator = new Label("Your turn!\nSelect a piece!");
-        loadPieces();
 
     }
 
@@ -93,7 +92,6 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         pieceGrid.setHgap(20);
 //        pieces.setOrientation(Orientation.VERTICAL);
 
-        System.out.println("here"+pieces);
 
         for (int i=0; i<numColumns;i++) {
             for (int j=0; j<numRows;j++) {
@@ -107,8 +105,8 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
                 GridPane.setRowIndex(pieceTile, i);
                 GridPane.setColumnIndex(pieceTile, j);
                 pieceGrid.getChildren().addAll(pieceTile);
-                for (int img=0; img<=pieces.size();img++) {
-                    Image p = new Image(String.valueOf(pieces.get(img)));
+                for (int img=i; img<=16;img++) {
+                    Image p = new Image(Paths.get("resources/media/images/" + img + ".png").toUri().toString());
                 pieceTile.setFill(new ImagePattern(p));
 
             }
