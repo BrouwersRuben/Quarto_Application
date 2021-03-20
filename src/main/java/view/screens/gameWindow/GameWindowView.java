@@ -26,8 +26,7 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
 
     // Center pane
     GridPane pieceGrid = new GridPane(); // REMARK: What is this? I think it is best to make this gridpane as well, and make each image a button so it is clickable or something, but just remove the styling
-    public static final int numColumns = 4; // TODO: remove one of these
-    public static final int numRows = 4;
+    public static final int gridDimension = 4;
 
     GridPane gameBoard = new GridPane();
     HBox centerHBox = new HBox(gameBoard, pieceGrid);
@@ -93,8 +92,8 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         bottomPaneTwo.setPrefWidth(setWidthForHBox());
 
 
-        for (int i=0; i<numColumns;i++) {
-            for (int j=0; j<numRows;j++) {
+        for (int i = 0; i< gridDimension; i++) {
+            for (int j=0; j<gridDimension;j++) {
 //                for (int img = 1; img <= 16; img++) {
 //                    pieces.getChildren().add(new ImageView(Paths.get("resources/media/images/" + img + ".png").toUri().toString()));
 //
@@ -112,8 +111,8 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
             }
         }
 
-        for (int i = 0; i < numColumns; i++) {
-            for (int j = 0; j < numRows; j++) {
+        for (int i = 0; i < gridDimension; i++) {
+            for (int j = 0; j <gridDimension; j++) {
                 Rectangle boardTile = new Rectangle(setWidthForHBox() / 6, setWidthForHBox() / 6);
                 boardTile.setStyle("-fx-fill:whitesmoke; -fx-stroke:black; -fx-stroke-width:1");
                 GridPane.setRowIndex(boardTile, i);
