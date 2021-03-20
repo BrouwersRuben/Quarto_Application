@@ -2,6 +2,7 @@ package main.java.view.screens.userNamePrologue;
 
 import javafx.stage.Window;
 import main.java.model.Quarto;
+import main.java.model.players.Human;
 import main.java.view.screens.gameWindow.GameWindowPresenter;
 import main.java.view.screens.gameWindow.GameWindowView;
 import main.java.view.screens.main.QuartoPresenter;
@@ -33,7 +34,11 @@ public class UserNameProloguePresenter {
             updateView();
         });
 
-        // TODO: Set gameWindow
+        this.view.getUserName().setOnTouchReleased(event -> {
+            Human player = new Human();
+            // TODO: Does this work...?
+            player.setName(view.getUserName().toString());
+        });
     }
 
     private void updateView() {

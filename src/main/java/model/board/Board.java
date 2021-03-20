@@ -8,7 +8,7 @@ public class Board {
     private String[][] board = new String[columns][rows];
     private Pieces[] pieces = new Pieces[16];
     private int remainingPieces = 16;
-    private int remainingSpots = 16;
+    private int remainingSpots = 0;
     private int[] pieceStatus = new int[16];
     private int pieceInHand = 16;
     PieceStatus pStatus;

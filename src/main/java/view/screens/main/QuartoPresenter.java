@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.stage.Window;
 import main.java.model.Quarto;
 import main.java.model.leaderBoard.Leaderboard;
 import main.java.view.screens.leaderboard.LeaderboardPresenter;
