@@ -1,7 +1,6 @@
 package main.java.view.screens.gameWindow;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,8 +12,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.nio.file.Paths;
-
-import static javax.swing.text.StyleConstants.Orientation;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameWindowView extends BorderPane { // TODO: make the layout responsive(currently fixated on px count) & just overall work on it more/clean up code
     // private Node attributes (controls)
@@ -29,17 +28,19 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
     private Label turnIndicator;
 
     // Center pane
-    GridPane pieces = new GridPane(); // REMARK: What is this? I think it is best to make this gridpane as well, and make each image a button so it is clickable or something, but just remove the styling
+    GridPane pieceGrid = new GridPane(); // REMARK: What is this? I think it is best to make this gridpane as well, and make each image a button so it is clickable or something, but just remove the styling
     public static final int numColumns = 4; // TODO: remove one of these
     public static final int numRows = 4;
 
     GridPane gameBoard = new GridPane();
-    HBox centerHBox = new HBox(gameBoard, pieces);
+    HBox centerHBox = new HBox(gameBoard, pieceGrid);
 
     // Bottom pane
     GridPane bottomPane = new GridPane();
     GridPane bottomPaneTwo = new GridPane();
     HBox bottomHBox = new HBox(bottomPane, bottomPaneTwo);
+
+    List<Image> pieces = new ArrayList<>(); // Initializing arrayList, to occupy it I've created loadPieces() function
 
 
     public GameWindowView() {
@@ -61,6 +62,7 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         timeCounter = new Label("test");
         turnCounter = new Label("test");
         turnIndicator = new Label("Your turn!\nSelect a piece!");
+        loadPieces();
 
     }
 
@@ -87,10 +89,11 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
 //        bottomPane.setVgap(10);
         bottomPane.setPadding(new Insets(0, 0, 10, 60));
 
-        pieces.setVgap(20);
-        pieces.setHgap(20);
+        pieceGrid.setVgap(20);
+        pieceGrid.setHgap(20);
 //        pieces.setOrientation(Orientation.VERTICAL);
 
+        System.out.println("here"+pieces);
 
         for (int i=0; i<numColumns;i++) {
             for (int j=0; j<numRows;j++) {
@@ -103,11 +106,13 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
                 pieceTile.setStyle("-fx-stroke:black; -fx-stroke-width:1");
                 GridPane.setRowIndex(pieceTile, i);
                 GridPane.setColumnIndex(pieceTile, j);
-                pieces.getChildren().addAll(pieceTile);
-                for (int img=i; img<=16;img++) {
-                    Image p = new Image(Paths.get("resources/media/images/" + img + ".png").toUri().toString());
+                pieceGrid.getChildren().addAll(pieceTile);
+                for (int img=0; img<=pieces.size();img++) {
+                    Image p = new Image(String.valueOf(pieces.get(img)));
                 pieceTile.setFill(new ImagePattern(p));
+
             }
+                pieceGrid.getRowCount();
             }
         }
 
@@ -118,7 +123,7 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
                 GridPane.setRowIndex(boardTile, i);
                 GridPane.setColumnIndex(boardTile, j);
                 gameBoard.getChildren().addAll(boardTile);
-                System.out.println(GridPane.getColumnIndex(pieces));
+                System.out.println(GridPane.getColumnIndex(pieceGrid));
             }
         }
 
@@ -128,11 +133,17 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         centerHBox.setPadding(new Insets(0, 20, 10, 20));
 //        pieces.setPrefColumns(3); // ?this doesn't work?
         gameBoard.setPrefWidth(centerHBox.getPrefWidth() / 2); // TODO: shorten this
-        pieces.setPrefWidth(centerHBox.getPrefWidth() / 2);
+        pieceGrid.setPrefWidth(centerHBox.getPrefWidth() / 2);
         bottomPane.setPrefWidth(centerHBox.getPrefWidth() / 2);
         bottomPaneTwo.setPrefWidth(centerHBox.getPrefWidth() / 2);
     }
 
+
+    public void loadPieces() {
+        for (int img = 1; img <= 16; img++) {
+            pieces.add(new Image(Paths.get("resources/media/images/" + img + ".png").toUri().toString()));
+        }
+    }
 
     // package-private Getters
     // for controls used by Presenter
@@ -148,8 +159,8 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         return endGame;
     }
 
-    public GridPane getPieces() {
-        return pieces;
+    public GridPane getPieceGrid() {
+        return pieceGrid;
     }
 }
 
