@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import main.java.model.pieces.Pieces;
 
 public class GameWindowView extends BorderPane { // TODO: make the layout responsive(currently fixated on px count) & just overall work on it more/clean up code
     // private Node attributes (controls)
@@ -86,6 +87,7 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         turnCounter.setStyle("-fx-font-size:20");
         turnIndicator.setStyle("-fx-font-size:20");
 
+
         for (int i = 0; i< gridDimension; i++) {
             for (int j=0; j<gridDimension;j++) {
                 Rectangle pieceTile = new Rectangle(setWidthForHBox() / 6, setWidthForHBox() / 6);
@@ -96,14 +98,15 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
             }
         }
 
-        for (int i = 0; i < gridDimension; i++) {
-            for (int j = 0; j <gridDimension; j++) {
+        createGridPane(pieceGrid, 3,3);
+
+        for (int i = 0; i<gridDimension; i++) {
+            for (int j = 0; j<gridDimension; j++) {
                 Rectangle boardTile = new Rectangle(setWidthForHBox() / 6, setWidthForHBox() / 6);
                 boardTile.setStyle("-fx-fill:whitesmoke; -fx-stroke:black; -fx-stroke-width:1");
                 GridPane.setRowIndex(boardTile, i);
                 GridPane.setColumnIndex(boardTile, j);
                 gameBoard.getChildren().addAll(boardTile);
-                System.out.println(GridPane.getColumnIndex(pieceGrid));
             }
         }
     }
@@ -128,6 +131,17 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
 
     public double setWidthForHBox() {
         return GameWindowPresenter.getScreenWidth() / 2;
+    }
+
+    public void createGridPane(GridPane gameBoard, Pieces type, int column, int row) { //For creating a GridPane consisting of our pieces
+
+    }
+    public void createGridPane(GridPane gameBoard, int column, int row) { // TEST
+        Rectangle pieceTile = new Rectangle(setWidthForHBox() / 6, setWidthForHBox() / 6);
+        pieceTile.setStyle("-fx-fill:brown;-fx-stroke:black; -fx-stroke-width:1");
+        GridPane.setRowIndex(pieceTile, column);
+        GridPane.setColumnIndex(pieceTile, row);
+        pieceGrid.getChildren().addAll(pieceTile);
     }
 }
 
