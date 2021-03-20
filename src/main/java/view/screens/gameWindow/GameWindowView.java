@@ -4,13 +4,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameWindowView extends BorderPane { // TODO: make the layout responsive(currently fixated on px count) & just overall work on it more/clean up code
     // private Node attributes (controls)
@@ -31,9 +27,9 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
     HBox centerHBox = new HBox(gameBoard, pieceGrid);
 
     // Bottom pane
-    GridPane bottomPane = new GridPane();
-    GridPane bottomPaneTwo = new GridPane();
-    HBox bottomHBox = new HBox(bottomPane, bottomPaneTwo);
+    GridPane leftBottomPane = new GridPane();
+    GridPane rightBottomPane = new GridPane();
+    HBox bottomHBox = new HBox(leftBottomPane, rightBottomPane);
 
     public GameWindowView() {
         initialiseNodes();
@@ -59,33 +55,31 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         // add/set … methods
         // Insets, padding, alignment, …
         this.setTop(gameTitle);
-        gameTitle.setStyle("-fx-font-weight: BOLD; -fx-font-size: 32");
+        gameTitle.setStyle("-fx-font-weight: BOLD; -fx-font-size: 42");
         BorderPane.setAlignment(gameTitle, Pos.CENTER);
 
         this.setCenter(centerHBox);
         centerHBox.setPrefWidth(745);
         centerHBox.setPadding(new Insets(0, 20, 10, 20));
         gameBoard.setPrefWidth(setWidthForHBox());
-        gameBoard.setAlignment(Pos.CENTER);
+        gameBoard.setAlignment(Pos.CENTER); // will improve it later
         pieceGrid.setPrefWidth(setWidthForHBox());
         pieceGrid.setAlignment(Pos.CENTER);
 
         this.setBottom(bottomHBox);
-        bottomPaneTwo.add(turnIndicator, 0, 0);
-        bottomPaneTwo.setAlignment(Pos.CENTER); //TODO: Center them in the middle vertically
-        bottomPane.add(time, 1, 0);
-        bottomPane.add(timeCounter, 2, 0);
-        bottomPane.add(turn, 1, 1);
-        bottomPane.add(turnCounter, 2, 1);
-        bottomPane.add(saveGame, 0, 2);
-        bottomPane.add(pauseGame, 1, 2);
-        bottomPane.add(endGame, 2, 2);
-//        bottomPane.setHgap(10); // TODO: Find out why this pushes the layout
-//        bottomPane.setVgap(10);
-        bottomPane.setPadding(new Insets(0, 0, 10, 60));
-        bottomPane.setPrefWidth(setWidthForHBox());
-        bottomPaneTwo.setPrefWidth(setWidthForHBox());
+        leftBottomPane.add(time, 1, 0);
+        leftBottomPane.add(timeCounter, 2, 0);
+        leftBottomPane.add(turn, 1, 1);
+        leftBottomPane.add(turnCounter, 2, 1);
+        leftBottomPane.add(saveGame, 0, 2);
+        leftBottomPane.add(pauseGame, 1, 2);
+        leftBottomPane.add(endGame, 2, 2);
+        leftBottomPane.setPrefWidth(setWidthForHBox());
+        leftBottomPane.setAlignment(Pos.TOP_CENTER);
 
+        rightBottomPane.setPrefWidth(setWidthForHBox());
+        rightBottomPane.add(turnIndicator, 0, 0);
+        rightBottomPane.setAlignment(Pos.CENTER); //TODO: Center them in the middle vertically
 
         for (int i = 0; i< gridDimension; i++) {
             for (int j=0; j<gridDimension;j++) {
