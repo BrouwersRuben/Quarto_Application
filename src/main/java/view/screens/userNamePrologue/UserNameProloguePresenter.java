@@ -1,5 +1,7 @@
 package main.java.view.screens.userNamePrologue;
 
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
 import javafx.stage.Window;
 import main.java.model.Quarto;
 import main.java.view.screens.gameWindow.GameWindowPresenter;
@@ -54,10 +56,15 @@ public class UserNameProloguePresenter {
     }
 
     private void setGameWindow() {
+        int width = 1280;
+        int height = 720;
         GameWindowView gameWindowView = new GameWindowView();
         GameWindowPresenter gameWindowPresenter = new GameWindowPresenter(model, gameWindowView);
         view.getScene().setRoot(gameWindowView);
-        gameWindowView.getScene().getWindow().setWidth(625);
-        gameWindowView.getScene().getWindow().setHeight(425);
+        gameWindowView.getScene().getWindow().setWidth(width);
+        gameWindowView.getScene().getWindow().setHeight(height);
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        gameWindowView.getScene().getWindow().setX((screenBounds.getWidth() - width) / 2);
+        gameWindowView.getScene().getWindow().setY((screenBounds.getHeight() - height) / 2);
     }
 }

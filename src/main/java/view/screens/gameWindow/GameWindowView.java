@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
@@ -101,16 +102,14 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
 //                    //i think it is best to just make 11 buttons and add them where needed, because i have to be able to remove them as well, when they are placed on the board
 //                }
                 Rectangle pieceTile = new Rectangle(60, 60);
-                pieceTile.setStyle("-fx-stroke:black; -fx-stroke-width:1");
+                pieceTile.setStyle("-fx-fill:beige;-fx-stroke:black; -fx-stroke-width:1");
                 GridPane.setRowIndex(pieceTile, i);
                 GridPane.setColumnIndex(pieceTile, j);
                 pieceGrid.getChildren().addAll(pieceTile);
-                for (int img=i; img<=16;img++) {
-                    Image p = new Image(Paths.get("resources/media/images/" + img + ".png").toUri().toString());
-                pieceTile.setFill(new ImagePattern(p));
-
-            }
-                pieceGrid.getRowCount();
+//                for (int img=i; img<=16;img++) {
+//                    Image p = new Image(Paths.get("resources/media/images/" + img + ".png").toUri().toString());
+//                pieceTile.setFill(new ImagePattern(p));
+//            }
             }
         }
 
@@ -124,6 +123,14 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
                 System.out.println(GridPane.getColumnIndex(pieceGrid));
             }
         }
+
+
+
+
+
+
+
+
 
         gameTitle.setPadding(new Insets(0, 0, 0, 85)); // top, right, bottom, left
         gameTitle.setStyle("-fx-font-weight: BOLD; -fx-font-size: 32");
