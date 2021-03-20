@@ -56,7 +56,6 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         pauseGame = new Button("Pause");
         saveGame = new Button("Save");
         endGame = new Button("End");
-
         gameTitle = new Label("QUARTO");
         time = new Text("Time: ");
         turn = new Text("Turn: ");
@@ -137,17 +136,10 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         centerHBox.setPrefWidth(745);
         centerHBox.setPadding(new Insets(0, 20, 10, 20));
 //        pieces.setPrefColumns(3); // ?this doesn't work?
-        gameBoard.setPrefWidth(centerHBox.getPrefWidth() / 2); // TODO: shorten this
-        pieceGrid.setPrefWidth(centerHBox.getPrefWidth() / 2);
-        bottomPane.setPrefWidth(centerHBox.getPrefWidth() / 2);
-        bottomPaneTwo.setPrefWidth(centerHBox.getPrefWidth() / 2);
-    }
-
-
-    public void loadPieces() {
-        for (int img = 1; img <= 16; img++) {
-            pieces.add(new Image(Paths.get("resources/media/images/" + img + ".png").toUri().toString()));
-        }
+        gameBoard.setPrefWidth(GameWindowPresenter.getScreenWidth() / 2); // TODO: shorten this
+        pieceGrid.setPrefWidth(GameWindowPresenter.getScreenWidth() / 2);
+        bottomPane.setPrefWidth(GameWindowPresenter.getScreenWidth() / 2);
+        bottomPaneTwo.setPrefWidth(GameWindowPresenter.getScreenWidth() / 2);
     }
 
     // package-private Getters

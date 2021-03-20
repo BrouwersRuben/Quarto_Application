@@ -10,8 +10,8 @@ import java.awt.event.MouseEvent;
 public class GameWindowPresenter {
     private final Quarto model;
     private final GameWindowView view;
-    public static int screenWidth = 1280;
-    public static int screenHeight = 720;
+    public static double screenWidth = 1280;
+    public static double screenHeight = 720;
 
     public GameWindowPresenter(Quarto model, GameWindowView view) {
         this.model = model;
@@ -59,5 +59,13 @@ public class GameWindowPresenter {
     public void addWindowEventHandlers() {
         Window window = view.getScene().getWindow();
         // Add event handlers to window
+    }
+
+    public static double getScreenWidth() {
+        return screenWidth;
+    }
+
+    public static double getScreenHeight() {
+        return screenHeight;
     }
 }
