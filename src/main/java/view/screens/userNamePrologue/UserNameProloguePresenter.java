@@ -56,15 +56,13 @@ public class UserNameProloguePresenter {
     }
 
     private void setGameWindow() {
-        int width = 1280;
-        int height = 720;
         GameWindowView gameWindowView = new GameWindowView();
         GameWindowPresenter gameWindowPresenter = new GameWindowPresenter(model, gameWindowView);
         view.getScene().setRoot(gameWindowView);
-        gameWindowView.getScene().getWindow().setWidth(width);
-        gameWindowView.getScene().getWindow().setHeight(height);
+        gameWindowView.getScene().getWindow().setWidth(GameWindowPresenter.screenWidth);
+        gameWindowView.getScene().getWindow().setHeight(GameWindowPresenter.screenHeight);
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        gameWindowView.getScene().getWindow().setX((screenBounds.getWidth() - width) / 2);
-        gameWindowView.getScene().getWindow().setY((screenBounds.getHeight() - height) / 2);
+        gameWindowView.getScene().getWindow().setX((screenBounds.getWidth() - GameWindowPresenter.screenWidth) / 2);
+        gameWindowView.getScene().getWindow().setY((screenBounds.getHeight() - GameWindowPresenter.screenHeight) / 2);
     }
 }
