@@ -14,6 +14,7 @@ import java.util.List;
 
 public class GameWindowView extends BorderPane { // TODO: make the layout responsive(currently fixated on px count) & just overall work on it more/clean up code
     // private Node attributes (controls)
+    public static final int gridDimension = 4;
     private Button pauseGame;
     private Button saveGame;
     private Button endGame;
@@ -26,8 +27,6 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
 
     // Center pane
     GridPane pieceGrid = new GridPane(); // REMARK: What is this? I think it is best to make this gridpane as well, and make each image a button so it is clickable or something, but just remove the styling
-    public static final int gridDimension = 4;
-
     GridPane gameBoard = new GridPane();
     HBox centerHBox = new HBox(gameBoard, pieceGrid);
 
@@ -35,9 +34,6 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
     GridPane bottomPane = new GridPane();
     GridPane bottomPaneTwo = new GridPane();
     HBox bottomHBox = new HBox(bottomPane, bottomPaneTwo);
-
-    List<Image> pieces = new ArrayList<>(); // Initializing arrayList, to occupy it I've created loadPieces() function
-
 
     public GameWindowView() {
         initialiseNodes();
@@ -57,7 +53,6 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         timeCounter = new Label("test");
         turnCounter = new Label("test");
         turnIndicator = new Label("Your turn!\nSelect a piece!");
-
     }
 
     private void layoutNodes() {
@@ -94,20 +89,11 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
 
         for (int i = 0; i< gridDimension; i++) {
             for (int j=0; j<gridDimension;j++) {
-//                for (int img = 1; img <= 16; img++) {
-//                    pieces.getChildren().add(new ImageView(Paths.get("resources/media/images/" + img + ".png").toUri().toString()));
-//
-//                    //i think it is best to just make 11 buttons and add them where needed, because i have to be able to remove them as well, when they are placed on the board
-//                }
                 Rectangle pieceTile = new Rectangle(setWidthForHBox() / 6, setWidthForHBox() / 6);
                 pieceTile.setStyle("-fx-fill:beige;-fx-stroke:black; -fx-stroke-width:1");
                 GridPane.setRowIndex(pieceTile, i);
                 GridPane.setColumnIndex(pieceTile, j);
                 pieceGrid.getChildren().addAll(pieceTile);
-//                for (int img=i; img<=16;img++) {
-//                    Image p = new Image(Paths.get("resources/media/images/" + img + ".png").toUri().toString());
-//                pieceTile.setFill(new ImagePattern(p));
-//            }
             }
         }
 
