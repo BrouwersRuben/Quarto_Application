@@ -135,7 +135,6 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         gameTitle.setStyle("-fx-font-weight: BOLD; -fx-font-size: 32");
         centerHBox.setPrefWidth(745);
         centerHBox.setPadding(new Insets(0, 20, 10, 20));
-//        pieces.setPrefColumns(3); // ?this doesn't work?
         gameBoard.setPrefWidth(GameWindowPresenter.getScreenWidth() / 2); // TODO: shorten this
         pieceGrid.setPrefWidth(GameWindowPresenter.getScreenWidth() / 2);
         bottomPane.setPrefWidth(GameWindowPresenter.getScreenWidth() / 2);
