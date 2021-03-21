@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import main.java.model.pieces.Pieces;
 
 public class GameWindowView extends BorderPane { // TODO: make the layout responsive(currently fixated on px count) & just overall work on it more/clean up code
@@ -25,12 +24,14 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
     // Center pane
     GridPane pieceGrid = new GridPane(); // REMARK: What is this? I think it is best to make this gridpane as well, and make each image a button so it is clickable or something, but just remove the styling
     GridPane gameBoard = new GridPane();
-    HBox centerHBox = new HBox(gameBoard, pieceGrid);
+    GridPane selectedPiece = new GridPane();
+    HBox centerHBox = new HBox(gameBoard, selectedPiece, pieceGrid);
 
     // Bottom pane
     GridPane leftBottomPane = new GridPane();
     GridPane rightBottomPane = new GridPane();
-    HBox bottomHBox = new HBox(leftBottomPane, rightBottomPane);
+    GridPane filler = new GridPane();
+    HBox bottomHBox = new HBox(leftBottomPane, filler, rightBottomPane);
 
     public GameWindowView() {
         initialiseNodes();
@@ -62,9 +63,11 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         this.setCenter(centerHBox);
         centerHBox.setPrefWidth(745);
         centerHBox.setPadding(new Insets(0, 20, 10, 20));
-        gameBoard.setPrefWidth(setWidthForHBox());
+        gameBoard.setPrefWidth(setWidthForOuterHBox());
         gameBoard.setAlignment(Pos.CENTER); // will improve it later
-        pieceGrid.setPrefWidth(setWidthForHBox());
+        selectedPiece.setPrefWidth(setWidthForInnerHBox());
+        selectedPiece.setAlignment(Pos.CENTER);
+        pieceGrid.setPrefWidth(setWidthForOuterHBox());
         pieceGrid.setAlignment(Pos.CENTER);
 
         this.setBottom(bottomHBox);
@@ -75,10 +78,10 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         leftBottomPane.add(saveGame, 0, 2);
         leftBottomPane.add(pauseGame, 1, 2);
         leftBottomPane.add(endGame, 2, 2);
-        leftBottomPane.setPrefWidth(setWidthForHBox());
+        leftBottomPane.setPrefWidth(setWidthForOuterHBox());
         leftBottomPane.setAlignment(Pos.TOP_CENTER);
 
-        rightBottomPane.setPrefWidth(setWidthForHBox());
+        rightBottomPane.setPrefWidth(setWidthForOuterHBox());
         rightBottomPane.add(turnIndicator, 0, 0);
         rightBottomPane.setAlignment(Pos.CENTER); //TODO: Center them in the middle vertically
         time.setStyle("-fx-font-size:20");
@@ -87,10 +90,12 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         turnCounter.setStyle("-fx-font-size:20");
         turnIndicator.setStyle("-fx-font-size:20");
 
+        filler.setPrefWidth(setWidthForInnerHBox());
+
 
         for (int i = 0; i< gridDimension; i++) {
             for (int j=0; j<gridDimension;j++) {
-                Rectangle pieceTile = new Rectangle(setWidthForHBox() / 6, setWidthForHBox() / 6);
+                Rectangle pieceTile = new Rectangle(setWidthForOuterHBox() / 6, setWidthForOuterHBox() / 6);
                 pieceTile.setStyle("-fx-fill:beige;-fx-stroke:black; -fx-stroke-width:1");
                 GridPane.setRowIndex(pieceTile, i);
                 GridPane.setColumnIndex(pieceTile, j);
@@ -99,10 +104,11 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         }
 
         createGridPane(pieceGrid, 3,3);
+        createGridPane(selectedPiece, 0,0);
 
         for (int i = 0; i<gridDimension; i++) {
             for (int j = 0; j<gridDimension; j++) {
-                Rectangle boardTile = new Rectangle(setWidthForHBox() / 6, setWidthForHBox() / 6);
+                Rectangle boardTile = new Rectangle(setWidthForOuterHBox() / 6, setWidthForOuterHBox() / 6);
                 boardTile.setStyle("-fx-fill:whitesmoke; -fx-stroke:black; -fx-stroke-width:1");
                 GridPane.setRowIndex(boardTile, i);
                 GridPane.setColumnIndex(boardTile, j);
@@ -129,19 +135,23 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         return pieceGrid;
     }
 
-    public double setWidthForHBox() {
-        return GameWindowPresenter.getScreenWidth() / 2;
+    public double setWidthForOuterHBox() {
+        return GameWindowPresenter.getScreenWidth() * 0.45;
     }
+    public double setWidthForInnerHBox() {
+        return GameWindowPresenter.getScreenWidth() * 0.1;
+    }
+
 
     public void createGridPane(GridPane gameBoard, Pieces type, int column, int row) { //For creating a GridPane consisting of our pieces
 
     }
     public void createGridPane(GridPane gameBoard, int column, int row) { // TEST
-        Rectangle pieceTile = new Rectangle(setWidthForHBox() / 6, setWidthForHBox() / 6);
+        Rectangle pieceTile = new Rectangle(setWidthForOuterHBox() / 6, setWidthForOuterHBox() / 6);
         pieceTile.setStyle("-fx-fill:brown;-fx-stroke:black; -fx-stroke-width:1");
         GridPane.setRowIndex(pieceTile, column);
         GridPane.setColumnIndex(pieceTile, row);
-        pieceGrid.getChildren().addAll(pieceTile);
+        gameBoard.getChildren().addAll(pieceTile);
     }
 }
 
