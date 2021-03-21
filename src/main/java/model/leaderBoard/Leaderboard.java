@@ -22,7 +22,7 @@ public class Leaderboard {
     Human player = new Human();
     Quarto game = new Quarto();
 
-    private final int gameTimerSeconds = game.getGameTimerSeconds();
+    //private final int gameTimerSeconds = board.getTimerSeconds();
     // TODO: Get the local date
     //private String date = Date.toString(Calendar.getInstance().getTime());
 

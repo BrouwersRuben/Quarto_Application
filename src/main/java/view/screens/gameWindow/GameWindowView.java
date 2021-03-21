@@ -5,15 +5,19 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import main.java.view.Images;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class GameWindowView extends BorderPane { // TODO: make the layout responsive(currently fixated on px count) & just overall work on it more/clean up code
     // private Node attributes (controls)
+    private ArrayList<Label> labels = new ArrayList<Label>();
     private Button pauseGame;
     private Button saveGame;
     private Button endGame;
@@ -23,6 +27,7 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
     private Label timeCounter;
     private Label turnCounter;
     private Label turnIndicator;
+    private Images piecesImg;
 
     // Center pane
     TilePane pieces = new TilePane(); // REMARK: What is this? I think it is best to make this gridpane as well, and make each image a button so it is clickable or something, but just remove the styling
@@ -88,18 +93,35 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         pieces.setOrientation(Orientation.VERTICAL);
 
 
-        for (int i = 1; i <= 16; i++) {
-            pieces.getChildren().add(new ImageView(Paths.get("resources/media/images/" + i + ".png").toUri().toString()));
-            //i think it is best to just make 11 buttons and add them where needed, because i have to be able to remove them as well, when they are placed on the board
-        }
+        for (int i = 0; i < 16; i++) {
+            int cellCoord = i + 1;
 
-        for (int i = 0; i < numColumns; i++) {
-            for (int j = 0; j < numRows; j++) {
-                Rectangle tile = new Rectangle(60, 60);
-                tile.setStyle("-fx-fill:whitesmoke; -fx-stroke:black; -fx-stroke-width:1");
-                GridPane.setRowIndex(tile, i);
-                GridPane.setColumnIndex(tile, j);
-                gameBoard.getChildren().addAll(tile);
+            switch (i){
+                case 0:
+                    ImageView BFRS = new ImageView(piecesImg.BFRS.getImage());
+                    Label BFRSLabel = new Label(String.valueOf(cellCoord), BFRS);
+                    BFRSLabel.setId("moveable");
+                    labels.add(BFRSLabel);
+                case 1:
+                    ImageView BHRS = new ImageView(piecesImg.BHRS.getImage());
+                    Label BHRSLabel = new Label(String.valueOf(cellCoord), BHRS);
+                    BHRSLabel.setId("moveable");
+                    labels.add(BHRSLabel);
+                case 2:
+                    ImageView BFRT = new ImageView(piecesImg.BFRT.getImage());
+                    Label BFRTLabel = new Label(String.valueOf(cellCoord), BFRT);
+                    BFRTLabel.setId("moveable");
+                    labels.add(BFRTLabel);
+                case 3:
+                    ImageView BHRT = new ImageView(piecesImg.BFRT.getImage());
+                    Label BHRTLabel = new Label(String.valueOf(cellCoord), BHRT);
+                    BHRTLabel.setId("moveable");
+                    labels.add(BHRTLabel);
+                case 3:
+                    ImageView BHRT = new ImageView(piecesImg.BFRT.getImage());
+                    Label BHRTLabel = new Label(String.valueOf(cellCoord), BHRT);
+                    BHRTLabel.setId("moveable");
+                    labels.add(BHRTLabel);
             }
         }
 

@@ -20,7 +20,7 @@ public class Quarto {
     }
 
     // methods with business logic
-    public void setInhand(Piece clickedPiece){
+   /* public void setInhand(Piece clickedPiece){
         if (clickedPiece.pieceStatus() == pieceStatus.OFF_BOARD.toString() || clickedPiece.pieceStatus() == pieceStatus.OFF_BOARD.toString()){
             clickedPiece.setPieceStat(pieceStatus.IN_HAND.getCode());
             board.setRemainingPieces(-1);
@@ -37,16 +37,13 @@ public class Quarto {
             }
 
         }
-    }
+    }*/
 
     public void gameOver(){
         // TODO: Game Over method, timer ran out
     }
 
 // needed getters and setters
-    public int getGameTimerSeconds() {
-        return gameTimerSeconds;
-    }
     public int getAmountOfTurns() {
         return amountOfTurns;
     }
