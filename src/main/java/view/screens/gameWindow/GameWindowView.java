@@ -18,7 +18,7 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
     private Button saveGame;
     private Button endGame;
     private Label gameTitle;
-    private Text time;
+    private Text time; //TODO: STATUSBAR !!!!!
     private Text turn;
     private Label timeCounter;
     private Label turnCounter;

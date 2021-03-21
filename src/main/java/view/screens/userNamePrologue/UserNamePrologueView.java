@@ -33,7 +33,7 @@ public class UserNamePrologueView extends GridPane {
         // label = new Label("...")
         title = new Text("Enter your username!");
         // TODO: Do not allow spaces in username
-        userName = new TextField("Player1");
+        userName = new TextField();
         back = new Button("Back");
         startGame = new Button("Start Game!");
     }
@@ -41,7 +41,6 @@ public class UserNamePrologueView extends GridPane {
     private void layoutNodes() {
         // add/set … methods
         // Insets, padding, alignment, ...
-        // TODO: The set width does not work...
         this.setWidth(425);
         this.setPadding(new Insets(10));
 

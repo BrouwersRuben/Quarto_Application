@@ -2,7 +2,7 @@ package main.java.model.players;
 
 public class Player {
     //TODO: HASQUARTO method??
-    protected boolean hasQuarto;
+    public boolean hasQuarto = false;
 
     //Setters
     public void setHasQuarto(boolean hasQuarto) {

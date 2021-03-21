@@ -1,5 +1,6 @@
 package main.java.model;
 
+import javafx.scene.control.Label;
 import main.java.model.board.Board;
 import main.java.model.board.PieceStatus;
 import main.java.model.pieces.Piece;
@@ -7,7 +8,7 @@ import main.java.model.pieces.Piece;
 public class Quarto {
     protected boolean isRunning;
     protected int amountOfTurns;
-    protected int gameTimerSeconds = 300 /*5 min*/;
+
     // private attributes
     Piece quartoPiece = new Piece();
     PieceStatus pieceStatus;
@@ -19,45 +20,27 @@ public class Quarto {
     }
 
     // methods with business logic
-    public void setInhand(Piece piece){
-        if (piece.pieceStatus() == pieceStatus.OFF_BOARD.toString()){
-            piece.setPieceStat(pieceStatus.IN_HAND.getCode());
+    public void setInhand(Piece clickedPiece){
+        if (clickedPiece.pieceStatus() == pieceStatus.OFF_BOARD.toString() || clickedPiece.pieceStatus() == pieceStatus.OFF_BOARD.toString()){
+            clickedPiece.setPieceStat(pieceStatus.IN_HAND.getCode());
             board.setRemainingPieces(-1);
             board.setRemainingSpots(+1);
         }
     }
 
-    public void playPiece(Piece piece, int column, int row){
+    public void playPiece(Piece piece, int startColumn, int startRow, int endColumn, int endRow){
         if (board.getRemainingSpots()>= 0 && board.getRemainingSpots()< 16){
             if (piece.pieceStatus().equals(pieceStatus.OFF_BOARD.toString()) || piece.pieceStatus().equals(pieceStatus.IN_PLAY.toString())){
                 //This should not be possible, but...
                 System.out.println("There is a problem with the current piece");
-
+                return;
             }
+
         }
     }
 
-    public void startGameTimer() {
-        while (gameTimerSeconds > 0) {
-            try {
-                Thread.sleep(1000);
-                gameTimerSeconds = gameTimerSeconds - 1;
-                //update the timer
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        //maybe quit the game when the user is afk for to long.
-        //reset the timer after every move.
-        if (gameTimerSeconds <= 0) {
-            System.exit(0);
-        }
-    }
-
-    public void resetVariables() {
-        gameTimerSeconds = 300;
-        //all the variables that have to be resetted after each turn.
+    public void gameOver(){
+        // TODO: Game Over method, timer ran out
     }
 
 // needed getters and setters
@@ -86,13 +69,6 @@ public class Quarto {
             return false;
         }
     }
-
-    *//*
-    // TODO: Has quarto method
-    public boolean hasQuarto() {
-
-    }
-     *//*
 
     public void play(int piece) {
         if (quartoPiece.getPieceStat() != 1 || quartoPiece.getPieceStat() != 2) {

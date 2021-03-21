@@ -8,13 +8,13 @@ public class Piece {
     PieceStatus pStatus;
 
 
-    public String pieceStatus(){
+    public int pieceStatus(){
         if (pieceStat == pStatus.IN_HAND.getCode()){
-            return "The piece is in someones hand";
+            return 0;
         } else if (pieceStat == pStatus.IN_PLAY.getCode()){
-            return "The piece is already on the board";
+            return 1;
         } else {
-            return "the piece is free to play";
+            return 2;
         }
     }
 
