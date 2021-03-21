@@ -58,16 +58,20 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         // Insets, padding, alignment, …
         this.setTop(gameTitle);
         gameTitle.setStyle("-fx-font-weight: BOLD; -fx-font-size: 42");
+        gameTitle.setPrefHeight(setHeightForOuterPane());
         BorderPane.setAlignment(gameTitle, Pos.CENTER);
 
         this.setCenter(centerHBox);
         centerHBox.setPrefWidth(745);
         centerHBox.setPadding(new Insets(0, 20, 10, 20));
         gameBoard.setPrefWidth(setWidthForOuterHBox());
+        gameBoard.setPrefHeight(setHeightForCenterPane());
         gameBoard.setAlignment(Pos.CENTER); // will improve it later
         selectedPiece.setPrefWidth(setWidthForInnerHBox());
         selectedPiece.setAlignment(Pos.CENTER);
+        selectedPiece.setPrefHeight(setHeightForCenterPane());
         pieceGrid.setPrefWidth(setWidthForOuterHBox());
+        pieceGrid.setPrefHeight(setHeightForCenterPane());
         pieceGrid.setAlignment(Pos.CENTER);
 
         this.setBottom(bottomHBox);
@@ -79,11 +83,13 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         leftBottomPane.add(pauseGame, 1, 2);
         leftBottomPane.add(endGame, 2, 2);
         leftBottomPane.setPrefWidth(setWidthForOuterHBox());
+        leftBottomPane.setPrefHeight(setHeightForOuterPane());
         leftBottomPane.setAlignment(Pos.TOP_CENTER);
 
         rightBottomPane.setPrefWidth(setWidthForOuterHBox());
+        rightBottomPane.setPrefHeight(setHeightForOuterPane());
         rightBottomPane.add(turnIndicator, 0, 0);
-        rightBottomPane.setAlignment(Pos.CENTER); //TODO: Center them in the middle vertically
+        rightBottomPane.setAlignment(Pos.TOP_CENTER); //TODO: Center them in the middle vertically
         time.setStyle("-fx-font-size:20");
         turn.setStyle("-fx-font-size:20");
         timeCounter.setStyle("-fx-font-size:20");
@@ -91,6 +97,7 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         turnIndicator.setStyle("-fx-font-size:20");
 
         filler.setPrefWidth(setWidthForInnerHBox());
+        filler.setPrefHeight(setHeightForOuterPane());
 
 
         for (int i = 0; i< gridDimension; i++) {
@@ -141,6 +148,15 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
     public double setWidthForInnerHBox() {
         return GameWindowPresenter.getScreenWidth() * 0.1;
     }
+
+    public double setHeightForCenterPane() {
+        return GameWindowPresenter.getScreenHeight() * 0.70;
+    }
+
+    public double setHeightForOuterPane() {
+        return GameWindowPresenter.getScreenHeight() * 0.15;
+    }
+
 
 
     public void createGridPane(GridPane gameBoard, Pieces type, int column, int row) { //For creating a GridPane consisting of our pieces
