@@ -2,11 +2,14 @@ package main.java.view.screens.main;
 
 import javafx.application.Platform;
 import javafx.event.Event;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.stage.Screen;
 import javafx.stage.Window;
 import main.java.model.Quarto;
 import main.java.model.dataBase.Leaderboard;
+import main.java.view.screens.gameWindow.GameWindowPresenter;
 import main.java.view.screens.leaderboard.LeaderboardPresenter;
 import main.java.view.screens.leaderboard.LeaderboardView;
 import main.java.view.screens.tutorial.TutorialPresenter;
@@ -79,7 +82,11 @@ public class QuartoPresenter {
         LeaderboardView leaderboardView = new LeaderboardView();
         LeaderboardPresenter leaderboardPresenter = new LeaderboardPresenter(model, leaderboardView);
         view.getScene().setRoot(leaderboardView);
-        leaderboardView.getScene().getWindow().sizeToScene();
+        leaderboardView.getScene().getWindow().setWidth(1152);
+        leaderboardView.getScene().getWindow().setHeight(648);
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        leaderboardView.getScene().getWindow().setX((screenBounds.getWidth() - GameWindowPresenter.screenWidth) / 2);
+        leaderboardView.getScene().getWindow().setY((screenBounds.getHeight() - GameWindowPresenter.screenHeight) / 2);
     }
 
     private void setUserNamePrologue() {

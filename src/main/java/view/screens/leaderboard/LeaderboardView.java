@@ -104,6 +104,14 @@ public class LeaderboardView extends GridPane {
     public Button getExit() {
         return exit;
     }
+
+    public Label getText(Label text) {
+        return text;
+    }
+    public Label getTextTest() {
+        return p1;
+    }
 }
+
 
 

@@ -5,6 +5,8 @@ import javafx.stage.Window;
 import main.java.model.Quarto;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
+import main.java.view.screens.statisticsWindow.StatisticsPresenter;
+import main.java.view.screens.statisticsWindow.StatisticsView;
 
 public class LeaderboardPresenter {
     private final Quarto model;
@@ -26,6 +28,10 @@ public class LeaderboardPresenter {
             setMainWindow();
             updateView();
         });
+
+        this.view.getTextTest().setOnMouseClicked(event -> {
+            setStatisticsWindow();
+        });
     }
 
     private void updateView() {
@@ -43,6 +49,14 @@ public class LeaderboardPresenter {
         view.getScene().setRoot(quartoView);
         quartoView.getScene().getWindow().setWidth(625);
         quartoView.getScene().getWindow().setHeight(425);
+    }
+
+    private void setStatisticsWindow() {
+        StatisticsView statisticsView = new StatisticsView();
+        StatisticsPresenter statisticsPresenter = new StatisticsPresenter(model, statisticsView);
+        view.getScene().setRoot(statisticsView);
+        statisticsView.getScene().getWindow().setWidth(1152);
+        statisticsView.getScene().getWindow().setHeight(648);
     }
 }
 
