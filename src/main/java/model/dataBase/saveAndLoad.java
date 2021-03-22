@@ -57,9 +57,9 @@ public class saveAndLoad {
 
             } catch (SQLException e) {
                 if (e.getErrorCode() == 942) {
-                    statement.execute("CREATE TABLE board_data /* checks which board tiles are occupied */\n" +
-                            "(\n" +
-                            "    id number(10) default game_data_id_seq.currVal CONSTRAINT board_data_fk REFERENCES game_data (id) ON DELETE CASCADE,\n" +
+                    statement.execute("CREATE TABLE board_data /* checks which board tiles are occupied */" +
+                            "(" +
+                            "    id number(10) default game_data_id_seq.currVal CONSTRAINT board_data_id_fk REFERENCES game_data (id) ON DELETE CASCADE,\n" +
                             "    row_1 varchar2(4) CONSTRAINT board_data_row_1_nn NOT NULL," +
                             "    row_2 varchar2(4) CONSTRAINT board_data_row_2_nn NOT NULL," +
                             "    row_3 varchar2(4) CONSTRAINT board_data_row_3_nn NOT NULL," +
@@ -77,36 +77,33 @@ public class saveAndLoad {
                 if (e.getErrorCode() == 942) {
                     statement.execute("CREATE TABLE piece_attributes" +
                             "(" +
-                            "    piece_ID varchar2(4) CONSTRAINT piece_attributes_piece_ID_pk PRIMARY KEY," +
-                            "    in_play  number(1) CONSTRAINT piece_attributes_in_play_nn NOT NULL"+
+                            "    piece_ID number(2) CONSTRAINT piece_attributes_piece_ID_pk PRIMARY KEY," +
+                            "    piece_status  number(1) CONSTRAINT piece_attributes_in_play_nn NOT NULL"+
                             ")");
                 }
             }
             try {
                 statement.executeQuery("SELECT * FROM pieces");
-
-
             } catch (SQLException e) {
                 if (e.getErrorCode() == 942) {
                     statement.execute("CREATE TABLE pieces"+
                             "(" +
-                            "    id number(10) default game_data_id_seq.currVal CONSTRAINT board_data_fk REFERENCES game_data (id) ON DELETE CASCADE," +
-                            "    piece_ID varchar2(4) CONSTRAINT pieces_piece_ID_fk REFERENCES piece_attributes (piece_ID) ON DELETE CASCADE," +
-                            "    coordinates number(2) CONSTRAINT pieces_coordinates_nn NOT NULL," +
-                            "    is_computer number(1) CONSTRAINT pieces_is_computer_nn NOT NULL" +
-                            ");");
+                            "    id number(10) default game_data_id_seq.currVal CONSTRAINT pieces_id_fk REFERENCES game_data (id) ON DELETE CASCADE," +
+                            "    piece_ID number(2) CONSTRAINT pieces_piece_ID_fk REFERENCES piece_attributes (piece_ID) ON DELETE CASCADE," +
+                            "    coordinates number(2) CONSTRAINT pieces_coordinates_nn NOT NULL"+
+                            ")");
                 }
             }
             try {
-                statement.executeQuery("SELECT * FROM pieces");
+                statement.executeQuery("SELECT * FROM game_statistics");
             } catch (SQLException e) {
                 if (e.getErrorCode() == 942) {
                     statement.execute("CREATE TABLE game_statistics" +
                             "(" +
-                            "    id number(10) default game_data_id_seq.currVal CONSTRAINT board_data_fk REFERENCES game_data (id) ON DELETE CASCADE,\n" +
+                            "    id number(10) default game_data_id_seq.currVal CONSTRAINT game_statistics_id_fk REFERENCES game_data (id) ON DELETE CASCADE," +
                             "    turn number(2) CONSTRAINT game_statistics_turn_nn NOT NULL," +
-                            "    turn_start_time timestamp(10) default SYSTIMESTAMP," +
-                            "    turn_end_time timestamp(10) default SYSTIMESTAMP," +
+                            "    turn_start_time timestamp default SYSTIMESTAMP CONSTRAINT statistics_turn_start_time_nn NOT NULL," +
+                            "    turn_end_time timestamp default SYSTIMESTAMP CONSTRAINT statistics_turn_end_time_nn NOT NULL," +
                             "    score_for_turn number(4) CONSTRAINT game_statistics_score_for_turn_nn NOT NULL" +
                             ")");
                 }
