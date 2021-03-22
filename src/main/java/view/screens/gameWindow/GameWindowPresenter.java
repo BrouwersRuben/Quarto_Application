@@ -53,10 +53,10 @@ public class GameWindowPresenter {
         view.getPlayerTurn().setText("Your turn!\nTo pick a piece");
         view.getAvailablePieces().getChildren().forEach(item -> {
             item.setOnMouseClicked(mouseEvent -> {
-                Image imBlank = new Image("Pieces/0.png");
+                Image imBlank = new Image("media/images/0.png");
                 view.getChosenPiece().getChildren().add(new ImageView(imBlank));
 
-                Image im = new Image("Pieces/" + item.getId() + ".png");
+                Image im = new Image("media/images/" + item.getId() + ".png");
                 view.getChosenPiece().getChildren().add(new ImageView(im));
                 view.getChosenPiece().setId(item.getId());
 
@@ -73,10 +73,10 @@ public class GameWindowPresenter {
             item.setOnMouseClicked(mouseEvent -> {
 
 
-                Image im = new Image("Pieces/" + view.getChosenPiece().getId() + ".png");
+                Image im = new Image("media/images/" + view.getChosenPiece().getId() + ".png");
                 view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
 
-                Image imBlank = new Image("Pieces/0.png");
+                Image imBlank = new Image("media/images/0.png");
                 view.getChosenPiece().getChildren().add(new ImageView(imBlank));
 
             });

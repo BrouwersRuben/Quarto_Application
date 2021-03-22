@@ -76,7 +76,7 @@ public class GameWindowView extends BorderPane {
                 count++;
                 // TODO: how do i count over the different pieces here?
                 String path = "Images.P" + count + ".getImage().getUrl()";
-                this.availablePiecesBack[i][j] = new ImageView(/*path*/"Pieces/"+ count +".png");
+                this.availablePiecesBack[i][j] = new ImageView(/*path*/"media/images/"+ count +".png");
                 this.availablePiecesBack[i][j].setId(String.valueOf(count));
             }
         }
