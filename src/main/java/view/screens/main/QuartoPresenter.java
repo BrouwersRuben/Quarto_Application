@@ -70,7 +70,8 @@ public class QuartoPresenter {
         TutorialView tutorialView = new TutorialView();
         TutorialPresenter tutorialPresenter = new TutorialPresenter(model, tutorialView);
         view.getScene().setRoot(tutorialView);
-        tutorialView.getScene().getWindow().sizeToScene();
+        tutorialView.getScene().getWindow().setHeight(600);
+        tutorialView.getScene().getWindow().setWidth(1000);
     }
 
     private void setLeaderboard() {

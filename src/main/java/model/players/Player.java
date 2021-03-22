@@ -1,7 +1,6 @@
 package main.java.model.players;
 
 public class Player {
-    //TODO: HASQUARTO method??
     public boolean hasQuarto = false;
 
     //Setters

@@ -12,6 +12,8 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
+
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class TutorialView extends BorderPane {;
@@ -23,6 +25,7 @@ public class TutorialView extends BorderPane {;
     private Media media;
     private MediaPlayer player;
     private MediaView playerView;
+    private Path path;
 
     private VBox mediaBox;
     private Slider time;
@@ -38,20 +41,7 @@ public class TutorialView extends BorderPane {;
         // button = new Button("...")
         // label = new Label("...")
         title = new Text("Quarto Tutorial");
-        // TODO: Read this from a textfile
-        body = new Text("Components\n" +
-                "A board with 16 squares\n" +
-                "16 different pieces each with 4 characteristics: light or dark,\n" +
-               "round or square, tall or short, solid or hollow.\n" +
-                "\n" +
-                "Object of the Game\n" +
-                "To establish a line of four pieces, with at least one common\n" +
-                "characteristic on the board.\n" +
-                "\n" +
-                "Game Play\n" +
-                "The players throw dice to see who starts. The first player \n" +
-                "selects one of the 16 pieces and gives it to his opponent.\n" +
-                "Each player takes one turn.\n");
+        body = new Text();
         exit = new Button("Exit");
         media = new Media(Paths.get("resources/media/videos/Quarto.mp4").toUri().toString());
         player = new MediaPlayer(media);
@@ -59,6 +49,7 @@ public class TutorialView extends BorderPane {;
         mediaBox = new VBox();
         time = new Slider();
         playButton = new Button("||");
+        path = Paths.get("resources/tutorial.txt");
     }
 
     private void layoutNodes() {
@@ -74,7 +65,6 @@ public class TutorialView extends BorderPane {;
                 "-fx-font-size: 33;");
 
         body.setStyle("-fx-font-size: 18;");
-        body.maxWidth(520);
         this.setAlignment(body, Pos.TOP_LEFT);
         this.setCenter(body);
         this.setMargin(body, new Insets(30));
@@ -113,5 +103,11 @@ public class TutorialView extends BorderPane {;
     }
     public MediaPlayer getPlayer() {
         return player;
+    }
+    public Text getBody() {
+        return body;
+    }
+    public Path getPath() {
+        return path;
     }
 }

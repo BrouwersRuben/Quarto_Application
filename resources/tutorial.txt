@@ -1,12 +1,17 @@
-Components
+Components:
 A board with 16 squares
-16 different pieces each with 4 characteristics: light or dark, round or square, tall or short, solid or hollow.
+16 different pieces each with 4 characteristics:
+light or dark, round or square, tall or short,
+solid or hollow.
 
-Object of the Game
-To establish a line of four pieces, with at least one common characteristic on the board.
+Object of the Game:
+To establish a line of four pieces, with at
+least one common characteristic on the board.
 
-Game Play
-The players throw dice to see who starts. The first player selects one of the 16 pieces and gives it to his opponent.
+Game Play:
+The players throw dice to see who starts.
+The first player selects one of the 16 pieces
+and gives it to his opponent.
 Each player takes one turn.
 
 

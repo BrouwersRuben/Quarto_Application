@@ -88,43 +88,6 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
 //        bottomPane.setVgap(10);
         bottomPane.setPadding(new Insets(0, 0, 10, 60));
 
-        pieces.setVgap(20);
-        pieces.setHgap(20);
-        pieces.setOrientation(Orientation.VERTICAL);
-
-
-        for (int i = 0; i < 16; i++) {
-            int cellCoord = i + 1;
-
-            switch (i){
-                case 0:
-                    ImageView BFRS = new ImageView(piecesImg.BFRS.getImage());
-                    Label BFRSLabel = new Label(String.valueOf(cellCoord), BFRS);
-                    BFRSLabel.setId("moveable");
-                    labels.add(BFRSLabel);
-                case 1:
-                    ImageView BHRS = new ImageView(piecesImg.BHRS.getImage());
-                    Label BHRSLabel = new Label(String.valueOf(cellCoord), BHRS);
-                    BHRSLabel.setId("moveable");
-                    labels.add(BHRSLabel);
-                case 2:
-                    ImageView BFRT = new ImageView(piecesImg.BFRT.getImage());
-                    Label BFRTLabel = new Label(String.valueOf(cellCoord), BFRT);
-                    BFRTLabel.setId("moveable");
-                    labels.add(BFRTLabel);
-                case 3:
-                    ImageView BHRT = new ImageView(piecesImg.BFRT.getImage());
-                    Label BHRTLabel = new Label(String.valueOf(cellCoord), BHRT);
-                    BHRTLabel.setId("moveable");
-                    labels.add(BHRTLabel);
-                case 3:
-                    ImageView BHRT = new ImageView(piecesImg.BFRT.getImage());
-                    Label BHRTLabel = new Label(String.valueOf(cellCoord), BHRT);
-                    BHRTLabel.setId("moveable");
-                    labels.add(BHRTLabel);
-            }
-        }
-
         gameTitle.setPadding(new Insets(0, 0, 0, 85)); // top, right, bottom, left
         gameTitle.setStyle("-fx-font-weight: BOLD; -fx-font-size: 32");
         centerHBox.setPrefWidth(745);

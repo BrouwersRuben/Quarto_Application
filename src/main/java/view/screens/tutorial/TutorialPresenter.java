@@ -33,13 +33,15 @@ public class TutorialPresenter {
             updateView();
         });
 
+        this.view.getBody().setText(model.readTutorialFile(view.getPath()));
+
         this.view.getPlayButton().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e)
             {
                 MediaPlayer.Status status = view.getPlayer().getStatus();
                 if (status == status.PLAYING) {
                     if (view.getPlayer().getCurrentTime().greaterThanOrEqualTo(view.getPlayer().getTotalDuration())) {
-                        view.getPlayer().seek(view.getPlayer().getStartTime()); // Restart the video
+                        view.getPlayer().seek(view.getPlayer().getStartTime());
                         view.getPlayer().play();
                     } else {
                         view.getPlayer().pause();
@@ -71,6 +73,8 @@ public class TutorialPresenter {
     private void updateView() {
         // fills the view with model data
     }
+
+
 
     private void setMainWindow() {
         QuartoView quartoView = new QuartoView();
