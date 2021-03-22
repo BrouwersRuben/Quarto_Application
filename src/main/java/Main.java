@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import main.java.model.Quarto;
-import main.java.model.leaderBoard.Leaderboard;
+import main.java.model.dataBase.Leaderboard;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 

@@ -76,8 +76,8 @@ CREATE TABLE game_statistics
         CONSTRAINT board_data_fk REFERENCES game_data (id) ON DELETE CASCADE,
     turn           number(2)
         CONSTRAINT game_statistics_turn_nn NOT NULL,
-    turn_start_time timestamp(10) default SYSTIMESTAMP,
-    turn_end_time timestamp(10) default SYSTIMESTAMP,
+    turn_start_time timestamp default SYSTIMESTAMP,
+    turn_end_time timestamp default SYSTIMESTAMP,
     score_for_turn number(4)
         CONSTRAINT game_statistics_score_for_turn_nn NOT NULL
 );
