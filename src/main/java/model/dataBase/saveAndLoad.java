@@ -155,10 +155,10 @@ public class saveAndLoad {
     }
 
     public boolean savedGameExists(String playerName) {
+
         try {
             ods = new OracleDataSource();
             ods.setURL(dbURL);
-
 
             Connection connection = DriverManager.getConnection(dbURL, username, password);
             Statement statement = connection.createStatement();
@@ -178,7 +178,7 @@ public class saveAndLoad {
 
     public Quarto loadGame(String playerName) { // Not sure yet, haven't checked
 
-        game = new Quarto(playerName);
+//        game = new Quarto(playerName);
 
         try {
             ods = new OracleDataSource();
