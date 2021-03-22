@@ -21,6 +21,7 @@ public class saveAndLoad {
     }
 
     public void createTableIfDoesntExist() {
+        System.out.println("Entered table creation method");
         try {
             ods = new OracleDataSource();
             ods.setURL(dbURL);
@@ -116,6 +117,7 @@ public class saveAndLoad {
             //   e.printStackTrace();
             System.out.println("Couldn't connect to database");
         }
+        System.out.println("Exiting table creation method");
     }
 
     public void saveGame() { // TODO: Implement game logic
@@ -216,7 +218,7 @@ public class saveAndLoad {
 
     //this method exists to allow resetting tables through the java, if necessary,
     //but it's not going to be used anywhere else
-    public static void dropTables() {
+    public void dropTables() {
         try {
             ods = new OracleDataSource();
             ods.setURL(dbURL);

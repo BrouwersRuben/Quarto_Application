@@ -7,6 +7,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import main.java.model.Quarto;
 import main.java.model.dataBase.Leaderboard;
+import main.java.model.dataBase.saveAndLoad;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 
