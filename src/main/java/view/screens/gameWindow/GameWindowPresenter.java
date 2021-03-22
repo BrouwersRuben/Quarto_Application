@@ -154,3 +154,17 @@ public class GameWindowPresenter {
         pauseView.getScene().getWindow().setHeight(270);
     }
 }
+
+/*    private EventHandler<ActionEvent> createSimpleEventHandlerForNewWindow(Scene scene) {
+        return (event) -> {
+            Stage stage = new Stage();
+            stage.initOwner(view.getScene().getWindow());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+//            stage.setX(view.getScene().getWindow().getX() + 100);
+//            stage.setY(view.getScene().getWindow().getY() + 100);
+            stage.setTitle("Quarto - Pause screen");
+            stage.showAndWait();
+            //stage.sizeToScene();
+        };
+    }*/
