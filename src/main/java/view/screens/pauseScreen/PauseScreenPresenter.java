@@ -1,4 +1,4 @@
-package main.java.view.screens.userNamePrologue;
+package main.java.view.screens.pauseScreen;
 
 import javafx.stage.Window;
 import main.java.model.Quarto;
@@ -8,11 +8,11 @@ import main.java.view.screens.gameWindow.GameWindowView;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 
-public class UserNameProloguePresenter {
+public class PauseScreenPresenter {
     private final Quarto model;
-    private final UserNamePrologueView view;
+    private final PauseScreenView view;
 
-    public UserNameProloguePresenter(Quarto model, UserNamePrologueView view) {
+    public PauseScreenPresenter(Quarto model, PauseScreenView view) {
         this.model = model;
         this.view = view;
         addEventHandlers();
@@ -24,7 +24,7 @@ public class UserNameProloguePresenter {
         // lambdas) to view controls.
         // In the event handlers: call model methods
         // and updateView().
-        this.view.getBack().setOnAction(event -> {
+        this.view.getMainMenu().setOnAction(event -> {
             setMainWindow();
             updateView();
         });
@@ -32,12 +32,6 @@ public class UserNameProloguePresenter {
         this.view.getStartGame().setOnAction(event -> {
             setGameWindow();
             updateView();
-        });
-
-        this.view.getUserName().setOnTouchReleased(event -> {
-            Human player = new Human();
-            // TODO: Does this work...?
-            player.setName(view.getUserName().toString());
         });
     }
 
@@ -64,6 +58,7 @@ public class UserNameProloguePresenter {
         view.getScene().setRoot(gameWindowView);
         gameWindowView.getScene().getWindow().setWidth(625);
         gameWindowView.getScene().getWindow().setHeight(370);
+        //TODO: the timer start from zero, why??
         gameWindowPresenter.normalTimer();
     }
 }

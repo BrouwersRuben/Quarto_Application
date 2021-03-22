@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import main.java.view.Images;
+import javax.swing.*;
 
 
 public class GameWindowView extends BorderPane {
@@ -16,7 +17,6 @@ public class GameWindowView extends BorderPane {
     private Button saveGame;
     private Button endGame;
     private Label gameTitle;
-    //private Text time; TODO: STATUSBAR !!!!!
     private Text turn;
     private Label turnCounter;
     private Label turnIndicator;
@@ -69,6 +69,8 @@ public class GameWindowView extends BorderPane {
         availablePiecesBack = new ImageView[4][4];
         availablePieces = new GridPane();
         quarto = new Button("QUARTO!!");
+        timer = new Label("00:00");
+
 
         //BottomBox
         pauseGame = new Button("Pause");
@@ -76,9 +78,9 @@ public class GameWindowView extends BorderPane {
         endGame = new Button("End");
 
         playerTurn = new Label();
-        timer = new Label();
     }
 
+    // TODO: put these methods in the model.Board class?
     private void initialiseChosenPiece(){
         this.chosenPieceBack[0] = new ImageView(Images.P0.getImage());
     }
@@ -144,7 +146,7 @@ public class GameWindowView extends BorderPane {
         bottomBox.setMargin(endGame, new Insets(5, 10, 5, 10));
 
 
-        vBox = new VBox(chosenPiece, playerTurn, quarto);
+        vBox = new VBox(chosenPiece, playerTurn, timer, quarto/*, moveCount*/);
         // TODO: This does not work
         this.vBox.setAlignment(Pos.CENTER);
 
@@ -220,6 +222,8 @@ public class GameWindowView extends BorderPane {
     public void setChosenPiece(GridPane chosenPiece) {
         this.chosenPiece = chosenPiece;
     }
-
+    public Label getTimer() {
+        return timer;
+    }
 }
 

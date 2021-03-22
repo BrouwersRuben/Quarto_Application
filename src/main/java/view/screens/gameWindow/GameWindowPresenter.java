@@ -1,5 +1,6 @@
 package main.java.view.screens.gameWindow;
 
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -7,10 +8,22 @@ import javafx.stage.Window;
 import main.java.model.Quarto;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
+import main.java.view.screens.pauseScreen.PauseScreenPresenter;
+import main.java.view.screens.pauseScreen.PauseScreenView;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 public class GameWindowPresenter {
     private final Quarto model;
     private final GameWindowView view;
+
+    // TODO: is there another place to store this? Maybe model?
+    int second = 0, minute = 0;
+    String ddSecond, ddMinute;
+    Timer timer;
 
     public GameWindowPresenter(Quarto model, GameWindowView view) {
         this.model = model;
@@ -19,29 +32,26 @@ public class GameWindowPresenter {
         updateView();
     }
 
-    private void setMainWindow() {
-        QuartoView quartoView = new QuartoView();
-        QuartoPresenter quartoPresenter = new QuartoPresenter(model, quartoView);
-        view.getScene().setRoot(quartoView);
-        quartoView.getScene().getWindow().setWidth(745);
-        quartoView.getScene().getWindow().setHeight(475);
-    }
-
     private void addEventHandlers() {
         // Add event handlers (inner classes or
         // lambdas) to view controls.
         // In the event handlers: call model methods
         // and updateView().
+
         this.view.getPauseGame().setOnAction(event -> {
-            // setPauseWindow(); TODO: need a pause screen for this I assume +something that would stop the view from being updated (for the timer etc.)
+            // setPauseWindow(); TODO: timer restarts instead of continues
+            timerStop();
+            setPauseScreen();
             updateView();
         });
         this.view.getSaveGame().setOnAction(event -> {
             // TODO: some method that updates the database with the current state of the game
+            System.out.println("You have indicated that you would like to save the game");
             updateView();
         });
         this.view.getEndGame().setOnAction(event -> {
             setMainWindow();
+            // TODO: Go to winning/losing screen, also when timer reaches like a minute or 2
             updateView();
         });
         view.getQuarto().setOnAction(event -> {
@@ -72,7 +82,6 @@ public class GameWindowPresenter {
         view.getGameBoard().getChildren().forEach(item -> {
             item.setOnMouseClicked(mouseEvent -> {
 
-
                 Image im = new Image("media/images/" + view.getChosenPiece().getId() + ".png");
                 view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
 
@@ -91,40 +100,57 @@ public class GameWindowPresenter {
     public void addWindowEventHandlers() {
         Window window = view.getScene().getWindow();
         // Add event handlers to window
+
     }
 
-    /* TODO: Timer status bar --> QUARTOmodel
-    public class Timer {
-        protected int gameTimerSeconds = 300 *//*5 min*//*;
-        public boolean timeIsOver = false;
-        public int playerTurn = 0;
-        private Board board;
-        private Player player;
-        private Quarto quarto;
-
-        public Timer(Board _board) {
-            board = _board;
-        }
-
-        public Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+    public void normalTimer(){
+        DecimalFormat dFormat = new DecimalFormat("00");
+        timer = new Timer(1000, new ActionListener() {
             @Override
-            public void handle(ActionEvent event) {
-                if (playerTurn == 1 && !timeIsOver && !player.hasQuarto)
-                {
-                    gameTimerSeconds -= 1;
-                model.getStatusBar().whitePlayerTimer.setText("White timer: " + TimeUnit.SECONDS.toMinutes(gameTimerSeconds) + ":" + (gameTimerSeconds % 60));
-                }
-                if (!timeIsOver && (gameTimerSeconds == 0 || gameTimerSeconds == 0))
-                {
-                    quarto.gameOver();
-                    timeIsOver = true;
-                }
+            public void actionPerformed(ActionEvent e) {
+                  second++;
+
+                  if(second == 60){
+                      second = 0;
+                      minute++;
+                  }
+
+                    ddSecond = dFormat.format(second);
+                    ddMinute = dFormat.format(minute);
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.getTimer().setText(ddMinute + ":" + ddSecond);
+                    }
+                });
             }
-        }));
+
+        });
+        timer.start();
     }
 
-    public void resetTimer() {
-        gameTimerSeconds = 300;
-        //all the variables that have to be resetted after each turn.
-    }*/
+    public void timerStop(){
+        timer.stop();
+    }
+
+    public void timerStart(){
+        timer.start();
+    }
+
+    private void setMainWindow() {
+        QuartoView quartoView = new QuartoView();
+        QuartoPresenter quartoPresenter = new QuartoPresenter(model, quartoView);
+        view.getScene().setRoot(quartoView);
+        quartoView.getScene().getWindow().setWidth(745);
+        quartoView.getScene().getWindow().setHeight(475);
+    }
+
+    private void setPauseScreen() {
+        PauseScreenView pauseView = new PauseScreenView();
+        PauseScreenPresenter pausePresenter = new PauseScreenPresenter(model, pauseView);
+        view.getScene().setRoot(pauseView);
+        pauseView.getScene().getWindow().setWidth(670);
+        pauseView.getScene().getWindow().setHeight(270);
+    }
 }
