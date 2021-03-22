@@ -1,18 +1,12 @@
 package main.java.view.screens.gameWindow;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Window;
-import javafx.util.Duration;
 import main.java.model.Quarto;
-import main.java.model.board.Board;
-import main.java.model.players.Player;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
-
-import java.util.concurrent.TimeUnit;
 
 public class GameWindowPresenter {
     private final Quarto model;
@@ -50,6 +44,44 @@ public class GameWindowPresenter {
             setMainWindow();
             updateView();
         });
+        view.getQuarto().setOnAction(event -> {
+            System.out.println("You have indicated that you saw a quarto");
+            // TODO: Call the hasQuarto method to see if the quarto was right.
+        });
+
+
+        view.getPlayerTurn().setText("Your turn!\nTo pick a piece");
+        view.getAvailablePieces().getChildren().forEach(item -> {
+            item.setOnMouseClicked(mouseEvent -> {
+                Image imBlank = new Image("Pieces/0.png");
+                view.getChosenPiece().getChildren().add(new ImageView(imBlank));
+
+                Image im = new Image("Pieces/" + item.getId() + ".png");
+                view.getChosenPiece().getChildren().add(new ImageView(im));
+                view.getChosenPiece().setId(item.getId());
+
+                // TODO: Switch users
+                //model.setUser1(false);
+
+                // TODO: Add the piece to a used pieces to avoid doubles
+            });
+        });
+
+        view.getPlayerTurn().setText("Their turn!");
+
+        view.getGameBoard().getChildren().forEach(item -> {
+            item.setOnMouseClicked(mouseEvent -> {
+
+
+                Image im = new Image("Pieces/" + view.getChosenPiece().getId() + ".png");
+                view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
+
+                Image imBlank = new Image("Pieces/0.png");
+                view.getChosenPiece().getChildren().add(new ImageView(imBlank));
+
+            });
+        });
+
     }
 
     private void updateView() {
@@ -61,7 +93,7 @@ public class GameWindowPresenter {
         // Add event handlers to window
     }
 
-    /* TODO: Timer status bar
+    /* TODO: Timer status bar --> QUARTOmodel
     public class Timer {
         protected int gameTimerSeconds = 300 *//*5 min*//*;
         public boolean timeIsOver = false;
