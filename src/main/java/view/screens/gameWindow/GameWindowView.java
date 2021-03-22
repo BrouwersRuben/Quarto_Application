@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import main.java.view.Images;
-import javax.swing.*;
 
 
 public class GameWindowView extends BorderPane {

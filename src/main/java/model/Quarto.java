@@ -18,9 +18,8 @@ public class Quarto {
     protected int amountOfTurns;
 
     // private attributes
-    Piece quartoPiece = new Piece();
-    PieceStatus pieceStatus;
-    Board board = new Board();
+    private Piece quartoPiece = new Piece();
+    private Board board = new Board();
 
     public Quarto() {
 // Constructor

@@ -21,9 +21,9 @@ public class GameWindowPresenter {
     private final GameWindowView view;
 
     // TODO: is there another place to store this? Maybe model?
-    int second = 0, minute = 0;
-    String ddSecond, ddMinute;
-    Timer timer;
+    private int second = 0, minute = 0;
+    private String ddSecond, ddMinute;
+    private Timer timer;
 
     public GameWindowPresenter(Quarto model, GameWindowView view) {
         this.model = model;
