@@ -63,6 +63,6 @@ public class UserNameProloguePresenter {
         GameWindowPresenter gameWindowPresenter = new GameWindowPresenter(model, gameWindowView);
         view.getScene().setRoot(gameWindowView);
         gameWindowView.getScene().getWindow().setWidth(625);
-        gameWindowView.getScene().getWindow().setHeight(425);
+        gameWindowView.getScene().getWindow().setHeight(370);
     }
 }

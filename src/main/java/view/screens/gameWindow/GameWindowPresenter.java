@@ -123,7 +123,7 @@ public class GameWindowPresenter {
         }));
     }
 
-    public void reset() {
+    public void resetTimer() {
         gameTimerSeconds = 300;
         //all the variables that have to be resetted after each turn.
     }*/

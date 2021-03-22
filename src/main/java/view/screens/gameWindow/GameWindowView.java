@@ -22,9 +22,7 @@ public class GameWindowView extends BorderPane {
     private Label turnIndicator;
 
     // Bottom pane
-    GridPane bottomPane = new GridPane();
-    GridPane bottomPaneTwo = new GridPane();
-    HBox bottomHBox = new HBox(bottomPane, bottomPaneTwo);
+    private HBox bottomBox;
 
     //GameWindow
     private HBox hBox;
@@ -53,7 +51,32 @@ public class GameWindowView extends BorderPane {
         layoutChosenPiece();
         initialiseAvailablePieces();
         layoutAvailablePieces();
+    }
 
+    private void initialiseNodes() {
+        // create and configure controls
+        // button = new Button("...")
+        // label = new Label("...")
+
+        //Title
+        gameTitle = new Label("QUARTO");
+
+        //GameBoard area
+        gameBoardBack = new ImageView[4][4];
+        gameBoard = new GridPane();
+        chosenPieceBack = new ImageView[1];
+        chosenPiece = new GridPane();
+        availablePiecesBack = new ImageView[4][4];
+        availablePieces = new GridPane();
+        quarto = new Button("QUARTO!!");
+
+        //BottomBox
+        pauseGame = new Button("Pause");
+        saveGame = new Button("Save");
+        endGame = new Button("End");
+
+        playerTurn = new Label();
+        timer = new Label();
     }
 
     private void initialiseChosenPiece(){
@@ -110,61 +133,24 @@ public class GameWindowView extends BorderPane {
         }
     }
 
-
-
-    private void initialiseNodes() {
-        // create and configure controls
-        // button = new Button("...")
-        // label = new Label("...")
-        pauseGame = new Button("Pause");
-        saveGame = new Button("Save");
-        endGame = new Button("End");
-
-        gameTitle = new Label("QUARTO");
-        turn = new Text("Turn: ");
-        turnCounter = new Label("test");
-        turnIndicator = new Label("Your turn!\nSelect a piece!");
-
-        gameBoardBack = new ImageView[4][4];
-        gameBoard = new GridPane();
-
-        chosenPieceBack = new ImageView[1];
-        chosenPiece = new GridPane();
-
-        availablePiecesBack = new ImageView[4][4];
-        availablePieces = new GridPane();
-
-        playerTurn = new Label("Your turn to \npick a piece!");
-
-        quarto = new Button("QUARTO!!");
-
-
-    }
-
     private void layoutNodes() {
         // add/set … methods
         // Insets, padding, alignment, …
-        this.setTop(gameTitle);
-        this.setCenter(hBox);
-        this.setBottom(bottomHBox);
 
-        bottomPaneTwo.add(turnIndicator, 0, 0);
-        bottomPaneTwo.setAlignment(Pos.CENTER); //TODO: Center them in the middle vertically
+        bottomBox = new HBox(saveGame, pauseGame, endGame);
+        bottomBox.setPadding(new Insets(10, 10, 10, 10));
+        bottomBox.setMargin(saveGame, new Insets(5, 10, 5, 10));
+        bottomBox.setMargin(pauseGame, new Insets(5, 10, 5, 10));
+        bottomBox.setMargin(endGame, new Insets(5, 10, 5, 10));
 
-        bottomPane.add(turn, 1, 1);
-        bottomPane.add(turnCounter, 2, 1);
-
-        bottomPane.add(saveGame, 0, 2);
-        bottomPane.add(pauseGame, 1, 2);
-        bottomPane.add(endGame, 2, 2);
-        bottomPane.setPadding(new Insets(0, 0, 10, 60));
 
         vBox = new VBox(chosenPiece, playerTurn, quarto);
-        //vBox.setAlignment(Pos.BASELINE_CENTER);
+        // TODO: This does not work
+        this.vBox.setAlignment(Pos.CENTER);
 
-        VBox.setMargin(chosenPiece, new Insets(10, 10, 10, 10));
-        VBox.setMargin(playerTurn, new Insets(10, 10, 10, 10));
-        VBox.setMargin(quarto, new Insets(10, 10, 10, 10));
+        vBox.setMargin(chosenPiece, new Insets(10, 10, 10, 10));
+        vBox.setMargin(playerTurn, new Insets(10, 10, 10, 10));
+        vBox.setMargin(quarto, new Insets(10, 10, 10, 10));
 
         hBox = new HBox(gameBoard, vBox, availablePieces);
         hBox.setAlignment(Pos.CENTER);
@@ -173,7 +159,15 @@ public class GameWindowView extends BorderPane {
         HBox.setMargin(vBox, new Insets(10, 10, 10, 10));
         HBox.setMargin(availablePieces, new Insets(10, 10, 10, 10));
 
+        this.setTop(gameTitle);
         this.setCenter(hBox);
+        this.setBottom(bottomBox);
+        BorderPane.setAlignment(bottomBox, Pos.BOTTOM_RIGHT);
+
+        gameTitle.setStyle("-fx-font-weight: BOLD; -fx-font-size: 20");
+        BorderPane.setAlignment(gameTitle, Pos.CENTER);
+
+
     }
 
 
