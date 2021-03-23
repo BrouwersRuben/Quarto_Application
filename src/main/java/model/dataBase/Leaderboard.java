@@ -4,10 +4,7 @@ import main.java.model.Quarto;
 import main.java.model.players.Human;
 import oracle.jdbc.pool.OracleDataSource;
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Leaderboard {
 
@@ -18,36 +15,69 @@ public class Leaderboard {
     private static Connection connection = null;
 	public static Statement statement = null;
     private static OracleDataSource ods;
+    private Record[] records;
 
-    Human player = new Human();
-    Quarto game = new Quarto();
-
-    private final int gameTimerSeconds = game.getGameTimerSeconds();
+//    Human player = new Human(); TODO: you have to relocate all of these(I think), idk what they're doing here, this class will be used for loading the leaderboard for the leaderboard screen
+//    Quarto game = new Quarto();
+//    private final int gameTimerSeconds = game.getGameTimerSeconds();
     // TODO: Get the local date
     //private String date = Date.toString(Calendar.getInstance().getTime());
+//    private final int amountOfTurns = game.getAmountOfTurns();
+//    private final String name = player.getName();
+//    private final double score = player.getScore();
 
-    private final int amountOfTurns = game.getAmountOfTurns();
-    private final String name = player.getName();
-    private final double score = player.getScore();
 
-    public void connectToDb() {
+    public void getRecords() {
+        try {
+            ods = new OracleDataSource();
+            ods.setURL(dbURL);
+
+            Connection connection = DriverManager.getConnection(dbURL, username, password);
+            Statement statement = connection.createStatement();
+            int countRecords = 0;
+
+            ResultSet count = statement.executeQuery("SELECT COUNT(*) FROM game_leaderboard");
+            while (count.next()) {
+                countRecords = count.getInt("COUNT(*)");
+            }
+            int maxFive = Math.min(countRecords, 5);
+            records = new Record[maxFive];
+
+
+            ResultSet rows = statement.executeQuery("SELECT * FROM INT_leaderboard" +
+                    " ORDER BY TOP_SCORE DESC");
+            int i = 0;
+            while (rows.next() && i < 5) {
+                records[i] = new Record(rows.getString("PLAYER_NAME"), rows.getInt("TOP_SCORE"), rows.getString("DATE_SUBMITTED"));
+                i++;
+            }
+            statement.close();
+            connection.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            if (throwables.getErrorCode() == 942) {
+                createTable();
+                getRecords();
+            }
+        }
+    }
+
+
+
+    public void createRecordsTable() {
         try {
             ods = new OracleDataSource();
             ods.setURL(dbURL);
             connection = DriverManager.getConnection(dbURL, username, password);
-			if(connection != null) {
-				System.out.println("Connected to the database.");
 
-				/*Statement to make the table:
-				Statement statement = connection.createStatement();
-				statement.execute("CREATE TABLE INT_leaderboard"
-						+ "(player_name VARCHAR2(20),"
-						+ "top_score INTEGER," +
-						"date_submitted DATE DEFAULT SYSDATE)");*/
-			}
+            statement.execute("CREATE TABLE game_leaderboard"+
+                    "(username VARCHAR2(20),"+
+                    "top_score INTEGER)");
+
         } catch (SQLException throwables) {
-        	throwables.printStackTrace();
         }
+
     }
 
 	public void closeDb() {
@@ -81,10 +111,3 @@ public class Leaderboard {
 
 }
 
-/* you have to type
-	ods = new OracleDataSource();
-	ods.setURL(dbURL);
-	Connection connection = DriverManager.getConnection(dbURL, "QUARTOADMIN", "Quarto_Game1");
-	Statement statement = connection.createStatement();
-for every database related method
-*/
