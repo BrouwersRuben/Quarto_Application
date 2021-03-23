@@ -1,6 +1,9 @@
 package main.java.view.screens.gameWindow;
 
 import javafx.application.Platform;
+import javafx.event.Event;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -40,7 +43,7 @@ public class GameWindowPresenter {
 
         this.view.getPauseGame().setOnAction(event -> {
             // setPauseWindow(); TODO: timer restarts instead of continues
-            timerStop();
+            timerStart();
             setPauseScreen();
             updateView();
         });
@@ -50,7 +53,7 @@ public class GameWindowPresenter {
             updateView();
         });
         this.view.getEndGame().setOnAction(event -> {
-            setMainWindow();
+            closingAlert(event);
             // TODO: Go to winning/losing screen, also when timer reaches like a minute or 2
             updateView();
         });
@@ -70,14 +73,14 @@ public class GameWindowPresenter {
                 view.getChosenPiece().getChildren().add(new ImageView(im));
                 view.getChosenPiece().setId(item.getId());
 
-                // TODO: Switch users
+                // TODO: Switch users/Turn taking
                 //model.setUser1(false);
-
+                view.getPlayerTurn().setText("Their turn!");
                 // TODO: Add the piece to a used pieces to avoid doubles
             });
         });
 
-        view.getPlayerTurn().setText("Their turn!");
+//        view.getPlayerTurn().setText("Their turn!");
 
         view.getGameBoard().getChildren().forEach(item -> {
             item.setOnMouseClicked(mouseEvent -> {
@@ -87,6 +90,7 @@ public class GameWindowPresenter {
 
                 Image imBlank = new Image("media/images/0.png");
                 view.getChosenPiece().getChildren().add(new ImageView(imBlank));
+                view.getPlayerTurn().setText("Your turn!");
 
             });
         });
@@ -152,6 +156,22 @@ public class GameWindowPresenter {
         view.getScene().setRoot(pauseView);
         pauseView.getScene().getWindow().setWidth(670);
         pauseView.getScene().getWindow().setHeight(270);
+    }
+    private void closingAlert(Event event) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText("You are about to quit your game!");
+        alert.setContentText("Are you sure you want to quit your game!");
+        alert.setTitle("Closing game alert!");
+        alert.getButtonTypes().clear();
+        ButtonType no = new ButtonType("NO");
+        ButtonType yes = new ButtonType("YES");
+        alert.getButtonTypes().addAll(yes, no);
+        alert.showAndWait();
+        if (alert.getResult() == null || alert.getResult().equals(no)) {
+            event.consume();
+        } else {
+            setMainWindow();
+        }
     }
 }
 

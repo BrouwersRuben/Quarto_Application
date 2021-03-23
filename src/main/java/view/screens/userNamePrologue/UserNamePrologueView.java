@@ -10,6 +10,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 public class UserNamePrologueView extends GridPane {
 
@@ -18,6 +19,7 @@ public class UserNamePrologueView extends GridPane {
 
     // private Node attributes (controls)
     private Text title;
+    private Text error;
     private TextField userName;
     private Button back;
     private Button startGame;
@@ -33,9 +35,11 @@ public class UserNamePrologueView extends GridPane {
         // label = new Label("...")
         title = new Text("Enter your username!");
         // TODO: Do not allow spaces in username
+        // TODO: Cannot be null
         userName = new TextField();
         back = new Button("Back");
         startGame = new Button("Start Game!");
+        error = new Text();
     }
 
     private void layoutNodes() {
@@ -71,6 +75,11 @@ public class UserNamePrologueView extends GridPane {
         this.setHalignment(userName, HPos.CENTER);
         userName.setStyle("-fx-font-size: 13;");
 
+        this.add(error, 1, 4, 3, 1);
+        error.setTextAlignment(TextAlignment.CENTER);
+        this.setHalignment(error, HPos.CENTER);
+        error.setStyle("-fx-font-size: 18; -fx-font-weight: BOLD");
+
         addButton(back, 0, 3, 3, 1);
         addButton(startGame, 2, 3, 3, 1);
     }
@@ -94,6 +103,9 @@ public class UserNamePrologueView extends GridPane {
     }
     public Button getStartGame() {
         return startGame;
+    }
+    public Text getError() {
+        return error;
     }
 }
 
