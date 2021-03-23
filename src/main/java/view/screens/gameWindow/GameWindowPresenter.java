@@ -56,7 +56,7 @@ public class GameWindowPresenter {
         });
         view.getQuarto().setOnAction(event -> {
             System.out.println("You have indicated that you saw a quarto");
-            // TODO: Call the hasQuarto method to see if the quarto was right.
+            model.hasQuarto();
         });
 
         view.getPlayerTurn().setText("Your turn!\nTo pick a piece");
@@ -90,6 +90,8 @@ public class GameWindowPresenter {
         view.getGameBoard().getChildren().forEach(item -> {
             item.setOnMouseClicked(mouseEvent -> {
                 Image im = new Image("media/images/" + view.getChosenPiece().getId() + ".png");
+
+                // TODO: cannot be able to click multiple times with same piece
 
                 if(!model.isUnique(Integer.valueOf(view.getChosenPiece().getId()))){
                     view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
