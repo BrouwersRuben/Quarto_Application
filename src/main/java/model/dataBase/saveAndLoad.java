@@ -20,6 +20,10 @@ public class saveAndLoad {
 
     }
 
+    public saveAndLoad(Quarto game) { // Constructor for initializing and existing game session
+
+    }
+
     public void createTableIfDoesntExist() {
         System.out.println("Entered table creation method");
         try {
@@ -34,7 +38,6 @@ public class saveAndLoad {
 
             } catch (SQLException e) {
                 if (e.getErrorCode() == 942) {
-
 
                     try {
                         statement.execute("CREATE TABLE game_data("+
@@ -226,8 +229,7 @@ public class saveAndLoad {
     }
 
 
-    //this method exists to allow resetting tables through the java, if necessary,
-    //but it's not going to be used anywhere else
+    // This method exists just in case we have to drop the tables, it's not being used for the game itself
     public void dropTables() {
         try {
             ods = new OracleDataSource();
