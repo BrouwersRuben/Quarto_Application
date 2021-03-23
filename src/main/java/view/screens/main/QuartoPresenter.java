@@ -109,7 +109,7 @@ public class QuartoPresenter {
         if (alert.getResult() == null || alert.getResult().equals(no)) {
             event.consume();
         } else {
-            lb.closeDb();
+//            lb.closeDb();
             Platform.exit();
         }
     }

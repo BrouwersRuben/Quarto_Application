@@ -6,7 +6,7 @@ import oracle.jdbc.pool.OracleDataSource;
 import java.io.File;
 import java.sql.*;
 
-public class Leaderboard {
+public class Leaderboard { // Used for retrieving the leaderboard
 
     private static final File WALLET = new File("Wallet_QuartoDatabase");
     private static final String dbURL = "jdbc:oracle:thin:@quartodatabase_medium?TNS_ADMIN=" + WALLET.getAbsolutePath();
@@ -15,7 +15,7 @@ public class Leaderboard {
     private static Connection connection = null;
 	public static Statement statement = null;
     private static OracleDataSource ods;
-    private Record[] records;
+    public static Record[] records;
 
 //    Human player = new Human(); TODO: you have to relocate all of these(I think), idk what they're doing here, this class will be used for loading the leaderboard for the leaderboard screen
 //    Quarto game = new Quarto();
@@ -44,11 +44,13 @@ public class Leaderboard {
             records = new Record[maxFive];
 
 
-            ResultSet rows = statement.executeQuery("SELECT * FROM INT_leaderboard" +
+            ResultSet rows = statement.executeQuery("SELECT * FROM game_leaderboard" +
                     " ORDER BY TOP_SCORE DESC");
             int i = 0;
             while (rows.next() && i < 5) {
-                records[i] = new Record(rows.getString("PLAYER_NAME"), rows.getInt("TOP_SCORE"), rows.getString("DATE_SUBMITTED"));
+                records[i] = new Record(rows.getString("USERNAME"), rows.getInt("TOP_SCORE")); {
+                    System.out.println(records[i]);
+                };
                 i++;
             }
             statement.close();
@@ -57,7 +59,7 @@ public class Leaderboard {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             if (throwables.getErrorCode() == 942) {
-                createTable();
+                createRecordsTable();
                 getRecords();
             }
         }
@@ -65,7 +67,7 @@ public class Leaderboard {
 
 
 
-    public void createRecordsTable() {
+    public void createRecordsTable() { // TODO: Test why this didn't work
         try {
             ods = new OracleDataSource();
             ods.setURL(dbURL);
@@ -75,26 +77,12 @@ public class Leaderboard {
                     "(username VARCHAR2(20),"+
                     "top_score INTEGER)");
 
+            statement.close();
+            connection.close();
+
         } catch (SQLException throwables) {
         }
-
     }
-
-	public void closeDb() {
-		try {
-			if(statement != null && !statement.isClosed()) {
-                statement.close();
-				System.out.println("Closed the database statements.");
-			}
-			if(connection != null && !connection.isClosed()) {
-                connection.close();
-				System.out.println("Closed the database connection.");
-			}
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-	}
-
 
 	/*
 	// TODO: This has to be more to our liking

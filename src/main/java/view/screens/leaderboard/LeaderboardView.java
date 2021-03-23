@@ -10,6 +10,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
+import main.java.model.dataBase.Leaderboard;
 
 public class LeaderboardView extends GridPane {
     // private Node attributes (controls)
@@ -35,11 +36,12 @@ public class LeaderboardView extends GridPane {
         // button = new Button("...")
         // label = new Label("...")
         title = new Text("Leaderboard");
-        p1 = new Label("1. Player1-xxxx");
-        p2 = new Label("2. Player2-xxxx");
-        p3 = new Label("3. Player3-xxxx");
-        p4 = new Label("4. Player4-xxxx");
-        p5 = new Label("5. Player5-xxxx");
+
+        p1 = new Label(Leaderboard.records[0].getUsername()+" - "+Leaderboard.records[0].getScore());
+        p2 = new Label(Leaderboard.records[1].getUsername()+" - "+Leaderboard.records[1].getScore());
+        p3 = new Label(Leaderboard.records[2].getUsername()+" - "+Leaderboard.records[2].getScore());
+        p4 = new Label(Leaderboard.records[3].getUsername()+" - "+Leaderboard.records[3].getScore());
+        p5 = new Label(Leaderboard.records[4].getUsername()+" - "+Leaderboard.records[4].getScore());
         exit = new Button("Back");
     }
 
@@ -105,11 +107,21 @@ public class LeaderboardView extends GridPane {
         return exit;
     }
 
-    public Label getText(Label text) {
-        return text;
-    }
-    public Label getTextTest() {
+    // TODO: Make this better if possible, did it quickly
+    public Label getText1() {
         return p1;
+    }
+    public Label getText2() {
+        return p2;
+    }
+    public Label getText3() {
+        return p3;
+    }
+    public Label getText4() {
+        return p4;
+    }
+    public Label getText5() {
+        return p5;
     }
 }
 

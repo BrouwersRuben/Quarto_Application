@@ -9,6 +9,8 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
+import main.java.model.dataBase.Leaderboard;
+import main.java.view.screens.leaderboard.LeaderboardPresenter;
 
 public class StatisticsView extends GridPane {
     // private Node attributes (controls)
@@ -30,8 +32,8 @@ public class StatisticsView extends GridPane {
         // create and configure controls
         // button = new Button("...")
         // label = new Label("...")
-        playerName = new Label("Player1");
-        playerScore = new Label("score: 2931");
+        playerName = new Label(Leaderboard.records[LeaderboardPresenter.getUsernameClicked()].getUsername());
+        playerScore = new Label(Integer.toString(Leaderboard.records[LeaderboardPresenter.getUsernameClicked()].getScore()));
         stat1 = new Label("avg time spent per round: 8 seconds");
         stat2 = new Label("fastest move: 2 seconds");
         stat3 = new Label("slowest move: 14 seconds");

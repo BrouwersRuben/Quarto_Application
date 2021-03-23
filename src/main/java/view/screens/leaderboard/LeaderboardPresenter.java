@@ -9,8 +9,10 @@ import main.java.view.screens.statisticsWindow.StatisticsPresenter;
 import main.java.view.screens.statisticsWindow.StatisticsView;
 
 public class LeaderboardPresenter {
+    private static int usernameClicked;
     private final Quarto model;
     private final LeaderboardView view;
+
 
     public LeaderboardPresenter(Quarto model, LeaderboardView view) {
         this.model = model;
@@ -28,8 +30,24 @@ public class LeaderboardPresenter {
             setMainWindow();
             updateView();
         });
-
-        this.view.getTextTest().setOnMouseClicked(event -> {
+        this.view.getText1().setOnMouseClicked(event -> {
+            usernameClicked = 0;
+            setStatisticsWindow();
+        });
+        this.view.getText2().setOnMouseClicked(event -> {
+            usernameClicked = 1;
+            setStatisticsWindow();
+        });
+        this.view.getText3().setOnMouseClicked(event -> {
+            usernameClicked = 2;
+            setStatisticsWindow();
+        });
+        this.view.getText4().setOnMouseClicked(event -> {
+            usernameClicked = 3;
+            setStatisticsWindow();
+        });
+        this.view.getText5().setOnMouseClicked(event -> {
+            usernameClicked = 4;
             setStatisticsWindow();
         });
     }
@@ -57,6 +75,10 @@ public class LeaderboardPresenter {
         view.getScene().setRoot(statisticsView);
         statisticsView.getScene().getWindow().setWidth(1152);
         statisticsView.getScene().getWindow().setHeight(648);
+    }
+
+    public static int getUsernameClicked() {
+        return usernameClicked;
     }
 }
 

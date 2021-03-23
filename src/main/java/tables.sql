@@ -79,3 +79,9 @@ CREATE TABLE game_statistics
     score_for_turn number(4)
         CONSTRAINT game_statistics_score_for_turn_nn NOT NULL
 );
+
+CREATE TABLE game_leaderboard
+(
+username VARCHAR2(20),
+top_score INTEGER
+);
