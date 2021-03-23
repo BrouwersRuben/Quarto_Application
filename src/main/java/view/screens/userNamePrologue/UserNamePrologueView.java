@@ -9,6 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
@@ -78,6 +80,7 @@ public class UserNamePrologueView extends GridPane {
         this.add(error, 1, 4, 3, 1);
         error.setTextAlignment(TextAlignment.CENTER);
         this.setHalignment(error, HPos.CENTER);
+        error.setFill(Paint.valueOf("Red"));
         error.setStyle("-fx-font-size: 18; -fx-font-weight: BOLD");
 
         addButton(back, 0, 3, 3, 1);
