@@ -3,6 +3,8 @@ package main.java.model.dataBase;
 import oracle.jdbc.pool.OracleDataSource;
 import java.io.File;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Leaderboard { // Used for retrieving the leaderboard
 
@@ -15,8 +17,9 @@ public class Leaderboard { // Used for retrieving the leaderboard
     private static OracleDataSource ods;
     public static Record[] records;
     public static Statistics[] statistics;
-    public static Statistics[] turnStats;
+    public static List<Integer> turnStats = new ArrayList<Integer>();
     public static long averageTime;
+
 
 //    Human player = new Human(); TODO: you have to relocate all of these(I think), idk what they're doing here, this class will be used for loading the leaderboard for the leaderboard screen
 //    Quarto game = new Quarto();
@@ -37,7 +40,7 @@ public class Leaderboard { // Used for retrieving the leaderboard
             Statement statement = connection.createStatement();
             int countRecords = 0;
 
-            ResultSet count = statement.executeQuery("SELECT COUNT(*) FROM test_game_leaderboard");
+            ResultSet count = statement.executeQuery("SELECT COUNT (*) FROM test_game_leaderboard");
             while (count.next()) {
                 countRecords = count.getInt("COUNT(*)");
             }
@@ -66,7 +69,6 @@ public class Leaderboard { // Used for retrieving the leaderboard
     }
 
 
-
     public void createRecordsTable() { // TODO: Test why this didn't work
         try {
             ods = new OracleDataSource();
@@ -93,23 +95,21 @@ public class Leaderboard { // Used for retrieving the leaderboard
             Connection connection = DriverManager.getConnection(dbURL, username, password);
             Statement statement = connection.createStatement();
 
-            ResultSet rows = statement.executeQuery("SELECT avg(EXTRACT(SECOND FROM (turn_start_time-turn_end_time)) AS difference FROM test_game_statistics WHERE id = "+id);
-            averageTime = rows.getInt("difference");
+            ResultSet average = statement.executeQuery("SELECT AVG(CAST(turn_end_time AS DATE)- CAST(turn_start_time AS DATE))*24*60*60 AS turn FROM test_game_statistics WHERE ID = "+id);
 
+            while (average.next()) {
+                averageTime = average.getInt("turn");
+            }
 
+            ResultSet turns = statement.executeQuery(
+                    "SELECT (CAST(turn_end_time AS DATE)- CAST(turn_start_time AS DATE))*24*60*60 AS seconds FROM test_game_statistics WHERE ID = "+id);
 
-//            int i = 0;
-//            while (rows.next()) {
-//                statistics[i] = new Statistics(rows.getInt("ID"), rows.getInt("TURN"), rows.getTimestamp("turn_start_time"),rows.getTimestamp("turn_end_time"), rows.getInt("score_for_turn"));
-//                {
-//                };
-//                i++;
-//            }
-//
-//            for (int j=0; j < statistics.length; j++) {
-//                turnStats[j] = new Statistics(Statistics.getTurnDifference(statistics[j].getTurn_start_time(), statistics[j].getTurn_end_time()));
-//                System.out.println(turnStats[j]);
-//            }
+            turnStats.clear();
+            int i = 0;
+            while (turns.next()) {
+                turnStats.add(turns.getInt("seconds"));
+                i++;
+            }
 
             statement.close();
             connection.close();

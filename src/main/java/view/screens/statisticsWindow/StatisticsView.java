@@ -11,6 +11,8 @@ import main.java.model.dataBase.Statistics;
 import main.java.model.dataBase.Record;
 import main.java.view.screens.leaderboard.LeaderboardPresenter;
 
+import java.util.Collections;
+
 public class StatisticsView extends GridPane {
     // private Node attributes (controls)
 
@@ -32,10 +34,10 @@ public class StatisticsView extends GridPane {
         // button = new Button("...")
         // label = new Label("...")
         playerName = new Label(Leaderboard.records[LeaderboardPresenter.getUsernameClicked()].getUsername());
-        playerScore = new Label(Integer.toString(Leaderboard.records[LeaderboardPresenter.getUsernameClicked()].getScore()));
-        stat1 = new Label(Long.toString(Leaderboard.averageTime));
-        stat2 = new Label("fastest move: 2 seconds");
-        stat3 = new Label("slowest move: 14 seconds");
+        playerScore = new Label("score: "+(Leaderboard.records[LeaderboardPresenter.getUsernameClicked()].getScore()));
+        stat1 = new Label("average time spent per round: "+(Leaderboard.averageTime));
+        stat2 = new Label("fastest move: "+ Collections.min(Leaderboard.turnStats)+" seconds");
+        stat3 = new Label("slowest move: "+ Collections.max(Leaderboard.turnStats)+" seconds");
         leaderboard = new Button("Return to leaderboard");
 
     }
