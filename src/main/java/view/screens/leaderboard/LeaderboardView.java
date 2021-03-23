@@ -37,11 +37,11 @@ public class LeaderboardView extends GridPane {
         // label = new Label("...")
         title = new Text("Leaderboard");
 
-        p1 = new Label(Leaderboard.records[0].getUsername()+" - "+Leaderboard.records[0].getScore());
-        p2 = new Label(Leaderboard.records[1].getUsername()+" - "+Leaderboard.records[1].getScore());
-        p3 = new Label(Leaderboard.records[2].getUsername()+" - "+Leaderboard.records[2].getScore());
-        p4 = new Label(Leaderboard.records[3].getUsername()+" - "+Leaderboard.records[3].getScore());
-        p5 = new Label(Leaderboard.records[4].getUsername()+" - "+Leaderboard.records[4].getScore());
+        p1 = new Label("1. "+Leaderboard.records[0].getUsername()+" - "+Leaderboard.records[0].getScore());
+        p2 = new Label("2. "+Leaderboard.records[1].getUsername()+" - "+Leaderboard.records[1].getScore());
+        p3 = new Label("3. "+Leaderboard.records[2].getUsername()+" - "+Leaderboard.records[2].getScore());
+        p4 = new Label("4. "+Leaderboard.records[3].getUsername()+" - "+Leaderboard.records[3].getScore());
+        p5 = new Label("5. "+Leaderboard.records[4].getUsername()+" - "+Leaderboard.records[4].getScore());
         exit = new Button("Back");
     }
 
@@ -74,11 +74,11 @@ public class LeaderboardView extends GridPane {
         title.setStyle("-fx-font-weight: BOLD;" +
                 "-fx-font-size: 33;");
 
-        addPlaceHolder(p1, 2);
-        addPlaceHolder(p2, 3);
-        addPlaceHolder(p3, 4);
-        addPlaceHolder(p4, 5);
-        addPlaceHolder(p5, 6);
+        addLabel(p1, 2);
+        addLabel(p2, 3);
+        addLabel(p3, 4);
+        addLabel(p4, 5);
+        addLabel(p5, 6);
 
         // TODO: add a textfield to search specific users
 
@@ -94,7 +94,7 @@ public class LeaderboardView extends GridPane {
         button.setStyle("-fx-font-weight: BOLD");
     }
 
-    private void addPlaceHolder(Label label, int i1){
+    private void addLabel(Label label, int i1){
         this.add(label, 1, i1, 3, 1);
         label.setAlignment(Pos.CENTER);
         this.setHalignment(label, HPos.CENTER);
