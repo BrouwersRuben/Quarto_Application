@@ -35,7 +35,7 @@ public class UserNamePrologueView extends GridPane {
         // create and configure controls
         // button = new Button("...")
         // label = new Label("...")
-        title = new Text("Enter your username!");   
+        title = new Text("Enter your username!");
         userName = new TextField();
         back = new Button("Back");
         startGame = new Button("Start Game!");

@@ -3,6 +3,7 @@ package main.java.model.leaderBoard;
 import main.java.model.Quarto;
 import main.java.model.players.Human;
 import oracle.jdbc.pool.OracleDataSource;
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;

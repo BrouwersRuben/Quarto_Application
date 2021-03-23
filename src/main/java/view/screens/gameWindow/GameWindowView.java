@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import main.java.view.Images;
 
@@ -39,6 +40,7 @@ public class GameWindowView extends BorderPane {
     private Label playerTurn;
     private Label timer;
     private Button quarto;
+    private Text errorLabel;
 
 
     public GameWindowView() {
@@ -73,6 +75,7 @@ public class GameWindowView extends BorderPane {
         availablePieces = new GridPane();
         quarto = new Button("QUARTO!!");
         timer = new Label("00:00");
+        errorLabel = new Text();
 
 
         //BottomBox
@@ -142,13 +145,16 @@ public class GameWindowView extends BorderPane {
         // add/set … methods
         // Insets, padding, alignment, …
 
-        bottomBox = new HBox(saveGame, pauseGame, endGame, userName);
+        bottomBox = new HBox(saveGame, pauseGame, endGame, userName, errorLabel);
         bottomBox.setPadding(new Insets(10, 10, 10, 10));
         bottomBox.setMargin(saveGame, new Insets(5, 10, 5, 10));
         bottomBox.setMargin(pauseGame, new Insets(5, 10, 5, 10));
         bottomBox.setMargin(endGame, new Insets(5, 10, 5, 10));
         bottomBox.setMargin(userName, new Insets(5, 10, 5, 10));
+        bottomBox.setMargin(errorLabel, new Insets(5, 10, 5, 10));
         userName.setStyle("-fx-font-size: 15");
+        errorLabel.setStyle("-fx-font-size: 15;");
+        errorLabel.setFill(Paint.valueOf("Red"));
 
 
         vBox = new VBox(chosenPiece, playerTurn, timer, quarto/*, moveCount*/);
@@ -221,6 +227,9 @@ public class GameWindowView extends BorderPane {
     }
     public Text getUserName() {
         return userName;
+    }
+    public Text getErrorLabel() {
+        return errorLabel;
     }
 }
 

@@ -80,10 +80,13 @@ public class GameWindowPresenter {
 
                 if (model.isUnique(Integer.valueOf(piece.getId()))){
                     model.addToListOnBoard(Integer.valueOf(piece.getId()));
+                    view.getErrorLabel().setText("");
                 } else {
-                    System.err.println("This piece is already inPlay");
+                    view.getErrorLabel().setText("This piece is already on the board");
                     view.getChosenPiece().setId("0");
                 }
+
+                System.out.println();
             });
         });
 
@@ -96,8 +99,9 @@ public class GameWindowPresenter {
                 if(!model.isUnique(Integer.valueOf(view.getChosenPiece().getId()))){
                     view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
                     view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
+                    view.getErrorLabel().setText("");
                 } else {
-                    System.err.println("This piece is already on the board");
+                    view.getErrorLabel().setText("This piece is already on the board");
                 }
 
                 view.getPlayerTurn().setText("Your turn!");

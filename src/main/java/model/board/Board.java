@@ -1,14 +1,10 @@
 package main.java.model.board;
 
-import main.java.model.pieces.Piece;
-
 import java.util.ArrayList;
-import java.util.TreeSet;
 
 public class Board {
     private final int columns = 4;
     private final int rows = 4;
-    // TODO: Piece??
     private ArrayList<Integer> piecesOnBoard = new ArrayList<>();
     private int remainingPieces = 16;
     private int remainingSpots = 0;
@@ -40,10 +36,6 @@ public class Board {
     }
 
     //Setters
-
-    /*public void setPiecesOnBoard(TreeSet<Integer> piecesOnBoard) {
-        this.piecesOnBoard = piecesOnBoard;
-    }*/
     public void setRemainingPieces(int remainingPieces) {
         this.remainingPieces = remainingPieces;
     }
