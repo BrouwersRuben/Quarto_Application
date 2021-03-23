@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Window;
 import main.java.model.Quarto;
+import main.java.model.players.Human;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 import main.java.view.screens.pauseScreen.PauseScreenPresenter;
@@ -61,6 +62,10 @@ public class GameWindowPresenter {
             System.out.println("You have indicated that you saw a quarto");
             // TODO: Call the hasQuarto method to see if the quarto was right.
         });
+
+        Human player = new Human();
+        // TODO: This does not work yet
+        view.getUserName().setText("Username: " + player.getName());
 
 
         view.getPlayerTurn().setText("Your turn!\nTo pick a piece");

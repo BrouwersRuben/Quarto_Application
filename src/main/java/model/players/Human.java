@@ -4,7 +4,7 @@ public class Human extends Player {
 
     Player human = new Player();
 
-    protected String name;
+    String name;
     protected int score;
     protected boolean startsFirst;
     //human.hasquarto;

@@ -16,9 +16,12 @@ public class GameWindowView extends BorderPane {
     private Button saveGame;
     private Button endGame;
     private Label gameTitle;
+    // TODO: This does not work yet
     private Text turn;
     private Label turnCounter;
     private Label turnIndicator;
+
+    private Text userName;
 
     // Bottom pane
     private HBox bottomBox;
@@ -75,6 +78,7 @@ public class GameWindowView extends BorderPane {
         pauseGame = new Button("Pause");
         saveGame = new Button("Save");
         endGame = new Button("End");
+        userName = new Text();
 
         playerTurn = new Label();
     }
@@ -138,11 +142,12 @@ public class GameWindowView extends BorderPane {
         // add/set … methods
         // Insets, padding, alignment, …
 
-        bottomBox = new HBox(saveGame, pauseGame, endGame);
+        bottomBox = new HBox(saveGame, pauseGame, endGame, userName);
         bottomBox.setPadding(new Insets(10, 10, 10, 10));
         bottomBox.setMargin(saveGame, new Insets(5, 10, 5, 10));
         bottomBox.setMargin(pauseGame, new Insets(5, 10, 5, 10));
         bottomBox.setMargin(endGame, new Insets(5, 10, 5, 10));
+        bottomBox.setMargin(userName, new Insets(5, 10, 5, 10));
 
 
         vBox = new VBox(chosenPiece, playerTurn, timer, quarto/*, moveCount*/);
@@ -223,6 +228,9 @@ public class GameWindowView extends BorderPane {
     }
     public Label getTimer() {
         return timer;
+    }
+    public Text getUserName() {
+        return userName;
     }
 }
 
