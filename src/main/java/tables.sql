@@ -111,7 +111,7 @@ CREATE TABLE test_game_statistics
 
 INSERT INTO test_game_leaderboard (id, username, top_score)
 VALUES (1, 'username6', 999);
-INSERT INTO test_game_leaderboard (id, username, top_score)
+INSERT INTO TEST_GAME_LEADERBOARD (id, username, top_score)
 VALUES (2, 'username1', 29);
 INSERT INTO test_game_leaderboard (id, username, top_score)
 VALUES (3, 'username2', 27);

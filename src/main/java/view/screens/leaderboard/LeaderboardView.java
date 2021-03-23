@@ -36,7 +36,7 @@ public class LeaderboardView extends GridPane {
         // button = new Button("...")
         // label = new Label("...")
         title = new Text("Leaderboard");
-
+        // TODO: these labels won't initialise if there's not 5 entries in the table ( ARRAYOUTOFBOUNDS )
         p1 = new Label("1. "+Leaderboard.records[0].getUsername()+" - "+Leaderboard.records[0].getScore());
         p2 = new Label("2. "+Leaderboard.records[1].getUsername()+" - "+Leaderboard.records[1].getScore());
         p3 = new Label("3. "+Leaderboard.records[2].getUsername()+" - "+Leaderboard.records[2].getScore());

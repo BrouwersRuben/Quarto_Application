@@ -228,6 +228,7 @@ public class saveAndLoad {
             statement.execute("DROP TABLE piece_attributes");
             statement.execute("DROP TABLE pieces");
             statement.execute("DROP TABLE game_statistics");
+            statement.execute("DROP TABLE game_leaderboard");
 
             System.out.println("Tables dropped.");
 

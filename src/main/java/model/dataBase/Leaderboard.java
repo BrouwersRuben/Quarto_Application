@@ -1,7 +1,5 @@
 package main.java.model.dataBase;
 
-import main.java.model.Quarto;
-import main.java.model.players.Human;
 import oracle.jdbc.pool.OracleDataSource;
 import java.io.File;
 import java.sql.*;
@@ -16,6 +14,9 @@ public class Leaderboard { // Used for retrieving the leaderboard
 	public static Statement statement = null;
     private static OracleDataSource ods;
     public static Record[] records;
+    public static Statistics[] statistics;
+    public static Statistics[] turnStats;
+    public static long averageTime;
 
 //    Human player = new Human(); TODO: you have to relocate all of these(I think), idk what they're doing here, this class will be used for loading the leaderboard for the leaderboard screen
 //    Quarto game = new Quarto();
@@ -48,8 +49,7 @@ public class Leaderboard { // Used for retrieving the leaderboard
                     " ORDER BY TOP_SCORE DESC");
             int i = 0;
             while (rows.next() && i < 5) {
-                records[i] = new Record(rows.getString("USERNAME"), rows.getInt("TOP_SCORE")); {
-                    System.out.println(records[i]);
+                records[i] = new Record(rows.getInt("ID"), rows.getString("USERNAME"), rows.getInt("TOP_SCORE")); {
                 };
                 i++;
             }
@@ -74,7 +74,67 @@ public class Leaderboard { // Used for retrieving the leaderboard
             connection = DriverManager.getConnection(dbURL, username, password);
 
             statement.execute("CREATE TABLE test_game_leaderboard"+
-                    "(username VARCHAR2(20),"+
+                    "(id NUMBER(10), " +
+                    "username VARCHAR2(20),"+
+                    "top_score INTEGER)");
+
+            statement.close();
+            connection.close();
+
+        } catch (SQLException throwables) {
+        }
+    }
+
+    public void getStatistics(int id) {
+        try {
+            ods = new OracleDataSource();
+            ods.setURL(dbURL);
+
+            Connection connection = DriverManager.getConnection(dbURL, username, password);
+            Statement statement = connection.createStatement();
+
+            ResultSet rows = statement.executeQuery("SELECT avg(EXTRACT(SECOND FROM (turn_start_time-turn_end_time)) AS difference FROM test_game_statistics WHERE id = "+id);
+            averageTime = rows.getInt("difference");
+
+
+
+//            int i = 0;
+//            while (rows.next()) {
+//                statistics[i] = new Statistics(rows.getInt("ID"), rows.getInt("TURN"), rows.getTimestamp("turn_start_time"),rows.getTimestamp("turn_end_time"), rows.getInt("score_for_turn"));
+//                {
+//                };
+//                i++;
+//            }
+//
+//            for (int j=0; j < statistics.length; j++) {
+//                turnStats[j] = new Statistics(Statistics.getTurnDifference(statistics[j].getTurn_start_time(), statistics[j].getTurn_end_time()));
+//                System.out.println(turnStats[j]);
+//            }
+
+            statement.close();
+            connection.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            if (throwables.getErrorCode() == 942) {
+                createStatisticsTable();
+                getRecords();
+            }
+        }
+    }
+
+    private void createStatisticsTable() {
+        try {
+            ods = new OracleDataSource();
+            ods.setURL(dbURL);
+            connection = DriverManager.getConnection(dbURL, username, password);
+
+            statement.execute("CREATE TABLE test_game_statistics"+
+                    "(id NUMBER(10), " +
+                    "turn NUMBER(2)," +
+                    "turn_start_time timestamp  default SYSTIMESTAMP,"+
+                    "turn_end_time   timestamp  default SYSTIMESTAMP,"+
+                    "username VARCHAR2(20),"+
                     "top_score INTEGER)");
 
             statement.close();

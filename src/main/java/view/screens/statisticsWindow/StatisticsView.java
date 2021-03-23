@@ -1,15 +1,14 @@
 package main.java.view.screens.statisticsWindow;
 
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.text.Text;
 import main.java.model.dataBase.Leaderboard;
+import main.java.model.dataBase.Statistics;
+import main.java.model.dataBase.Record;
 import main.java.view.screens.leaderboard.LeaderboardPresenter;
 
 public class StatisticsView extends GridPane {
@@ -34,7 +33,7 @@ public class StatisticsView extends GridPane {
         // label = new Label("...")
         playerName = new Label(Leaderboard.records[LeaderboardPresenter.getUsernameClicked()].getUsername());
         playerScore = new Label(Integer.toString(Leaderboard.records[LeaderboardPresenter.getUsernameClicked()].getScore()));
-        stat1 = new Label("avg time spent per round: 8 seconds");
+        stat1 = new Label(Long.toString(Leaderboard.averageTime));
         stat2 = new Label("fastest move: 2 seconds");
         stat3 = new Label("slowest move: 14 seconds");
         leaderboard = new Button("Return to leaderboard");
