@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Window;
 import main.java.model.Quarto;
 import main.java.model.players.Human;
+import main.java.view.Images;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 import main.java.view.screens.pauseScreen.PauseScreenPresenter;
@@ -63,17 +64,17 @@ public class GameWindowPresenter {
             // TODO: Call the hasQuarto method to see if the quarto was right.
         });
 
-        Human player = new Human();
         // TODO: Calling the username does not work
-        view.getUserName().setText("Username: " + player.getName());
+        view.getUserName().setText("Username: " + model.getUserName());
 
 
         view.getPlayerTurn().setText("Your turn!\nTo pick a piece");
         view.getAvailablePieces().getChildren().forEach(item -> {
             item.setOnMouseClicked(mouseEvent -> {
-                Image imBlank = new Image("media/images/0.png");
-                //Image imBlank = Images.P0;
-                view.getChosenPiece().getChildren().add(new ImageView(imBlank));
+                view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
+
+                //this does not work
+                //Image im = new Image(Images.item.getID().getImage());
 
                 Image im = new Image("media/images/" + item.getId() + ".png");
                 view.getChosenPiece().getChildren().add(new ImageView(im));
@@ -82,12 +83,12 @@ public class GameWindowPresenter {
                 // TODO: Switch users/Turn taking
                 //model.setUser1(false);
                 //model!!
+
                 view.getPlayerTurn().setText("Their turn!");
+
                 // TODO: Add the piece to a used pieces to avoid doubles
             });
         });
-
-//        view.getPlayerTurn().setText("Their turn!");
 
         view.getGameBoard().getChildren().forEach(item -> {
             item.setOnMouseClicked(mouseEvent -> {
@@ -95,8 +96,8 @@ public class GameWindowPresenter {
                 Image im = new Image("media/images/" + view.getChosenPiece().getId() + ".png");
                 view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
 
-                Image imBlank = new Image("media/images/0.png");
-                view.getChosenPiece().getChildren().add(new ImageView(imBlank));
+                view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
+
                 view.getPlayerTurn().setText("Your turn!");
 
                 //model.placePiece() --> row column (pieceID enum value)
@@ -189,17 +190,3 @@ public class GameWindowPresenter {
         }
     }
 }
-
-/*    private EventHandler<ActionEvent> createSimpleEventHandlerForNewWindow(Scene scene) {
-        return (event) -> {
-            Stage stage = new Stage();
-            stage.initOwner(view.getScene().getWindow());
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(scene);
-//            stage.setX(view.getScene().getWindow().getX() + 100);
-//            stage.setY(view.getScene().getWindow().getY() + 100);
-            stage.setTitle("Quarto - Pause screen");
-            stage.showAndWait();
-            //stage.sizeToScene();
-        };
-    }*/

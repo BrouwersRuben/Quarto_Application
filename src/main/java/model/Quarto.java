@@ -4,6 +4,7 @@ import javafx.scene.control.Label;
 import main.java.model.board.Board;
 import main.java.model.board.PieceStatus;
 import main.java.model.pieces.Piece;
+import main.java.model.players.Human;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,6 +21,7 @@ public class Quarto {
     // private attributes
     private Piece quartoPiece = new Piece();
     private Board board = new Board();
+    private Human player = new Human();
     //has to have a human, and a bridge between the model and the view
 
     public Quarto() {
@@ -52,6 +54,14 @@ public class Quarto {
         } catch(FileNotFoundException e){
             return "An error occurred!";
         }
+    }
+
+    public String getUserName(){
+        return player.getName();
+    }
+
+    public void setUserName(String name){
+        player.setName(name);
     }
 
     public boolean hasQuarto(){

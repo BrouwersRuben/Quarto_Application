@@ -22,8 +22,6 @@ public class GameWindowView extends BorderPane {
     private Label turnCounter;
     private Label turnIndicator;
 
-    private ImageView test;
-
     private Text userName;
 
     // Bottom pane
@@ -84,8 +82,6 @@ public class GameWindowView extends BorderPane {
         userName = new Text();
 
         playerTurn = new Label();
-
-        test = new ImageView(Images.P1.getImage());
     }
 
     // TODO: put these methods in the model.Board class?
@@ -153,13 +149,12 @@ public class GameWindowView extends BorderPane {
         bottomBox.setMargin(pauseGame, new Insets(5, 10, 5, 10));
         bottomBox.setMargin(endGame, new Insets(5, 10, 5, 10));
         bottomBox.setMargin(userName, new Insets(5, 10, 5, 10));
+        userName.setStyle("-fx-font-size: 15");
 
 
-        vBox = new VBox(chosenPiece, playerTurn, timer, quarto, test/*, moveCount*/);
-        // TODO: Alignment issues
+        vBox = new VBox(chosenPiece, playerTurn, timer, quarto/*, moveCount*/);
         chosenPiece.setAlignment(Pos.CENTER);
         this.vBox.setAlignment(Pos.TOP_CENTER);
-        test.setStyle("-fx-background-color: white");
 
         vBox.setMargin(chosenPiece, new Insets(10, 10, 10, 10));
         vBox.setMargin(playerTurn, new Insets(10, 10, 10, 10));

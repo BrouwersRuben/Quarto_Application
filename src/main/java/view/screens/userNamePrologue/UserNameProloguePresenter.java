@@ -30,17 +30,15 @@ public class UserNameProloguePresenter {
         });
 
         this.view.getStartGame().setOnAction(event -> {
+            model.setUserName(view.getUserName().getText());
             if(view.getUserName().getText().trim().isEmpty()){
                 this.view.getError().setText("This cannot be empty!");
-            } else if (!view.getUserName().getText().trim().isEmpty()){
+            } else if (view.getUserName().getText().length()>15){
+                this.view.getError().setText("Your username cannot be this long");
+            } else {
                 setGameWindow();
             }
             updateView();
-        });
-
-        this.view.getUserName().setOnTouchReleased(event -> {
-            // TODO: Does this work...?
-            //model.setHumanPlayer(view.getUserName().getText());
         });
     }
 
