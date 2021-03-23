@@ -54,7 +54,7 @@ public class Quarto {
     }
 
     public boolean hasQuarto(){
-        // TODO: Make this thing
+        // TODO: Make the hasQuarto
         return false;
     }
 

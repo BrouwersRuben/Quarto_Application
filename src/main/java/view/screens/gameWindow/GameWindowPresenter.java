@@ -64,7 +64,7 @@ public class GameWindowPresenter {
         });
 
         Human player = new Human();
-        // TODO: This does not work yet
+        // TODO: Calling the username does not work
         view.getUserName().setText("Username: " + player.getName());
 
 

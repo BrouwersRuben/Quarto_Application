@@ -16,7 +16,7 @@ public class GameWindowView extends BorderPane {
     private Button saveGame;
     private Button endGame;
     private Label gameTitle;
-    // TODO: This does not work yet
+    // TODO: TurnCounter?? Ideas
     private Text turn;
     private Label turnCounter;
     private Label turnIndicator;
@@ -151,7 +151,7 @@ public class GameWindowView extends BorderPane {
 
 
         vBox = new VBox(chosenPiece, playerTurn, timer, quarto/*, moveCount*/);
-        // TODO: This does not work
+        // TODO: Alignment issues
         this.vBox.setAlignment(Pos.CENTER);
 
         vBox.setMargin(chosenPiece, new Insets(10, 10, 10, 10));
@@ -175,17 +175,6 @@ public class GameWindowView extends BorderPane {
 
 
     }
-
-
-/*        gameTitle.setPadding(new Insets(0, 0, 0, 85)); // top, right, bottom, left
-        gameTitle.setStyle("-fx-font-weight: BOLD; -fx-font-size: 32");
-        centerHBox.setPrefWidth(745);
-        centerHBox.setPadding(new Insets(0, 20, 10, 20));
-        pieces.setPrefColumns(3); // ?this doesn't work?
-        gameBoard.setPrefWidth(centerHBox.getPrefWidth() / 2); // TODO: shorten this
-        pieces.setPrefWidth(centerHBox.getPrefWidth() / 2);
-        bottomPane.setPrefWidth(centerHBox.getPrefWidth() / 2);
-        bottomPaneTwo.setPrefWidth(centerHBox.getPrefWidth() / 2);*/
 
 
     // package-private Getters

@@ -37,7 +37,6 @@ public class UserNamePrologueView extends GridPane {
         // label = new Label("...")
         title = new Text("Enter your username!");
         // TODO: Do not allow spaces in username
-        // TODO: Cannot be null
         userName = new TextField();
         back = new Button("Back");
         startGame = new Button("Start Game!");
