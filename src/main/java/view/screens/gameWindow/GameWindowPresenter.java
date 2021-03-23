@@ -72,6 +72,7 @@ public class GameWindowPresenter {
         view.getAvailablePieces().getChildren().forEach(item -> {
             item.setOnMouseClicked(mouseEvent -> {
                 Image imBlank = new Image("media/images/0.png");
+                //Image imBlank = Images.P0;
                 view.getChosenPiece().getChildren().add(new ImageView(imBlank));
 
                 Image im = new Image("media/images/" + item.getId() + ".png");
@@ -80,6 +81,7 @@ public class GameWindowPresenter {
 
                 // TODO: Switch users/Turn taking
                 //model.setUser1(false);
+                //model!!
                 view.getPlayerTurn().setText("Their turn!");
                 // TODO: Add the piece to a used pieces to avoid doubles
             });
@@ -97,6 +99,12 @@ public class GameWindowPresenter {
                 view.getChosenPiece().getChildren().add(new ImageView(imBlank));
                 view.getPlayerTurn().setText("Your turn!");
 
+                //model.placePiece() --> row column (pieceID enum value)
+                //boolean? validity
+                //or
+                //model.pieceIsValid()
+                //Model ==> Set/Collection
+
             });
         });
 
@@ -104,6 +112,8 @@ public class GameWindowPresenter {
 
     private void updateView() {
         // fills the view with model data
+        //view.getUserName().setText(model.getUserName);
+        //view.
     }
 
     public void addWindowEventHandlers() {

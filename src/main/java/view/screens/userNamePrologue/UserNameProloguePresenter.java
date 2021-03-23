@@ -39,9 +39,8 @@ public class UserNameProloguePresenter {
         });
 
         this.view.getUserName().setOnTouchReleased(event -> {
-            Human player = new Human();
             // TODO: Does this work...?
-            player.setName(view.getUserName().getText());
+            //model.setHumanPlayer(view.getUserName().getText());
         });
     }
 

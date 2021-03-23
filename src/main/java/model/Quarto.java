@@ -20,6 +20,7 @@ public class Quarto {
     // private attributes
     private Piece quartoPiece = new Piece();
     private Board board = new Board();
+    //has to have a human, and a bridge between the model and the view
 
     public Quarto() {
 // Constructor

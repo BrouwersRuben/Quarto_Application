@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -20,6 +21,8 @@ public class GameWindowView extends BorderPane {
     private Text turn;
     private Label turnCounter;
     private Label turnIndicator;
+
+    private ImageView test;
 
     private Text userName;
 
@@ -81,6 +84,8 @@ public class GameWindowView extends BorderPane {
         userName = new Text();
 
         playerTurn = new Label();
+
+        test = new ImageView(Images.P1.getImage());
     }
 
     // TODO: put these methods in the model.Board class?
@@ -150,9 +155,11 @@ public class GameWindowView extends BorderPane {
         bottomBox.setMargin(userName, new Insets(5, 10, 5, 10));
 
 
-        vBox = new VBox(chosenPiece, playerTurn, timer, quarto/*, moveCount*/);
+        vBox = new VBox(chosenPiece, playerTurn, timer, quarto, test/*, moveCount*/);
         // TODO: Alignment issues
-        this.vBox.setAlignment(Pos.CENTER);
+        chosenPiece.setAlignment(Pos.CENTER);
+        this.vBox.setAlignment(Pos.TOP_CENTER);
+        test.setStyle("-fx-background-color: white");
 
         vBox.setMargin(chosenPiece, new Insets(10, 10, 10, 10));
         vBox.setMargin(playerTurn, new Insets(10, 10, 10, 10));

@@ -41,5 +41,7 @@ public enum Images {
     public Image getImage() {
         return this.image;
     }
+
+    //similar in the model side
 }
 
