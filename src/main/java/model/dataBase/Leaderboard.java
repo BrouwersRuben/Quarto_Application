@@ -36,7 +36,7 @@ public class Leaderboard { // Used for retrieving the leaderboard
             Statement statement = connection.createStatement();
             int countRecords = 0;
 
-            ResultSet count = statement.executeQuery("SELECT COUNT(*) FROM game_leaderboard");
+            ResultSet count = statement.executeQuery("SELECT COUNT(*) FROM test_game_leaderboard");
             while (count.next()) {
                 countRecords = count.getInt("COUNT(*)");
             }
@@ -44,7 +44,7 @@ public class Leaderboard { // Used for retrieving the leaderboard
             records = new Record[maxFive];
 
 
-            ResultSet rows = statement.executeQuery("SELECT * FROM game_leaderboard" +
+            ResultSet rows = statement.executeQuery("SELECT * FROM test_game_leaderboard" +
                     " ORDER BY TOP_SCORE DESC");
             int i = 0;
             while (rows.next() && i < 5) {
@@ -73,7 +73,7 @@ public class Leaderboard { // Used for retrieving the leaderboard
             ods.setURL(dbURL);
             connection = DriverManager.getConnection(dbURL, username, password);
 
-            statement.execute("CREATE TABLE game_leaderboard"+
+            statement.execute("CREATE TABLE test_game_leaderboard"+
                     "(username VARCHAR2(20),"+
                     "top_score INTEGER)");
 

@@ -52,9 +52,9 @@ CREATE TABLE board_data /* checks which board tiles are occupied */
 
 CREATE TABLE piece_attributes
 (
-    piece_ID number(2)
+    piece_ID     number(2)
         CONSTRAINT piece_attributes_piece_ID_pk PRIMARY KEY, /* set as primary*/
-    piece_status  number(1) /* in-play: 1 , out-of-play: -1, currently selected: 0*/
+    piece_status number(1) /* in-play: 1 , out-of-play: -1, currently selected: 0*/
         CONSTRAINT piece_attributes_in_play_nn NOT NULL
 );
 
@@ -70,18 +70,54 @@ CREATE TABLE pieces
 
 CREATE TABLE game_statistics
 (
-    id             number(10) default game_data_id_seq.currVal
+    id              number(10) default game_data_id_seq.currVal
         CONSTRAINT game_statistics_id_fk REFERENCES game_data (id) ON DELETE CASCADE,
-    turn           number(2)
+    turn            number(2)
         CONSTRAINT game_statistics_turn_nn NOT NULL,
-    turn_start_time timestamp default SYSTIMESTAMP CONSTRAINT statistics_turn_start_time_nn NOT NULL,
-    turn_end_time timestamp default SYSTIMESTAMP CONSTRAINT statistics_turn_end_time_nn NOT NULL,
-    score_for_turn number(4)
+    turn_start_time timestamp  default SYSTIMESTAMP
+        CONSTRAINT statistics_turn_start_time_nn NOT NULL,
+    turn_end_time   timestamp  default SYSTIMESTAMP
+        CONSTRAINT statistics_turn_end_time_nn NOT NULL,
+    score_for_turn  number(4)
         CONSTRAINT game_statistics_score_for_turn_nn NOT NULL
 );
 
 CREATE TABLE game_leaderboard
 (
-username VARCHAR2(20),
-top_score INTEGER
+    id        number(10) default game_data_id_seq.currVal
+        CONSTRAINT game_leaderboard_id_fk REFERENCES game_data (id) ON DELETE CASCADE,
+    username  VARCHAR2(20)
+        CONSTRAINT game_leaderboard_username_nn NOT NULL,
+    top_score INTEGER
 );
+
+
+
+CREATE TABLE test_game_leaderboard
+(
+    id        number(10),
+    username  VARCHAR2(20),
+    top_score INTEGER
+);
+
+CREATE TABLE test_game_statistics
+(
+    id              number(10),
+    turn            number(2),
+    turn_start_time timestamp  default SYSTIMESTAMP,
+    turn_end_time   timestamp  default SYSTIMESTAMP,
+    score_for_turn  number(4)
+);
+
+INSERT INTO test_game_leaderboard (id, username, top_score)
+VALUES (1, 'username6', 999);
+INSERT INTO test_game_leaderboard (id, username, top_score)
+VALUES (2, 'username1', 29);
+INSERT INTO test_game_leaderboard (id, username, top_score)
+VALUES (3, 'username2', 27);
+INSERT INTO test_game_leaderboard (id, username, top_score)
+VALUES (4, 'username3', 20);
+INSERT INTO test_game_leaderboard (id, username, top_score)
+VALUES (5, 'username4', 19);
+INSERT INTO test_game_leaderboard (id, username, top_score)
+VALUES (6, 'username5', 17);
