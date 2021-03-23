@@ -1,18 +1,15 @@
 package main.java.model;
 
-import javafx.scene.control.Label;
 import main.java.model.board.Board;
-import main.java.model.board.PieceStatus;
 import main.java.model.pieces.Piece;
 import main.java.model.players.Human;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 public class Quarto {
     protected boolean isRunning;
@@ -71,6 +68,19 @@ public class Quarto {
 
     public void gameOver(){
         // TODO: Game Over method, timer ran out
+    }
+
+    public void addToListOnBoard(Integer pieceId){
+        board.setPiecesOnBoard(pieceId);
+    }
+
+    public boolean isUnique(Integer pieceId){
+        for(int i = 0; i < board.getPiecesOnBoard().size(); i++){
+            if (pieceId.equals(board.getPiecesOnBoard().get(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
 // needed getters and setters

@@ -7,9 +7,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Window;
 import main.java.model.Quarto;
-import main.java.model.players.Human;
 import main.java.view.Images;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
@@ -24,11 +24,6 @@ import java.text.DecimalFormat;
 public class GameWindowPresenter {
     private final Quarto model;
     private final GameWindowView view;
-
-    // TODO: is there another place to store this? Maybe model?
-    private int second = 0, minute = 0;
-    private String ddSecond, ddMinute;
-    private Timer timer;
 
     public GameWindowPresenter(Quarto model, GameWindowView view) {
         this.model = model;
@@ -64,39 +59,44 @@ public class GameWindowPresenter {
             // TODO: Call the hasQuarto method to see if the quarto was right.
         });
 
-        // TODO: Calling the username does not work
-        view.getUserName().setText("Username: " + model.getUserName());
-
-
         view.getPlayerTurn().setText("Your turn!\nTo pick a piece");
-        view.getAvailablePieces().getChildren().forEach(item -> {
-            item.setOnMouseClicked(mouseEvent -> {
+
+        view.getAvailablePieces().getChildren().forEach(piece -> {
+            piece.setOnMouseClicked(mouseEvent -> {
                 view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
 
                 //this does not work
-                //Image im = new Image(Images.item.getID().getImage());
+                //Image im = new Image(Images.piece.getID().getImage());
 
-                Image im = new Image("media/images/" + item.getId() + ".png");
+                Image im = new Image("media/images/" + piece.getId() + ".png");
                 view.getChosenPiece().getChildren().add(new ImageView(im));
-                view.getChosenPiece().setId(item.getId());
+                view.getChosenPiece().setId(piece.getId());
 
                 // TODO: Switch users/Turn taking
                 //model.setUser1(false);
-                //model!!
 
                 view.getPlayerTurn().setText("Their turn!");
 
-                // TODO: Add the piece to a used pieces to avoid doubles
+
+                if (model.isUnique(Integer.valueOf(piece.getId()))){
+                    model.addToListOnBoard(Integer.valueOf(piece.getId()));
+                } else {
+                    System.err.println("This piece is already inPlay");
+                    view.getChosenPiece().setId("0");
+                }
             });
         });
 
         view.getGameBoard().getChildren().forEach(item -> {
             item.setOnMouseClicked(mouseEvent -> {
-
                 Image im = new Image("media/images/" + view.getChosenPiece().getId() + ".png");
-                view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
 
-                view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
+                if(!model.isUnique(Integer.valueOf(view.getChosenPiece().getId()))){
+                    view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
+                    view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
+                } else {
+                    System.err.println("This piece is already on the board");
+                }
 
                 view.getPlayerTurn().setText("Your turn!");
 
@@ -115,6 +115,7 @@ public class GameWindowPresenter {
         // fills the view with model data
         //view.getUserName().setText(model.getUserName);
         //view.
+        view.getUserName().setText("Username: " + model.getUserName());
     }
 
     public void addWindowEventHandlers() {
@@ -122,6 +123,11 @@ public class GameWindowPresenter {
         // Add event handlers to window
 
     }
+
+    // TODO: is there another place to store this? Maybe model?
+    private int second = 0, minute = 0;
+    private String ddSecond, ddMinute;
+    private Timer timer;
 
     public void normalTimer(){
         DecimalFormat dFormat = new DecimalFormat("00");
@@ -183,6 +189,8 @@ public class GameWindowPresenter {
         ButtonType yes = new ButtonType("YES");
         alert.getButtonTypes().addAll(yes, no);
         alert.showAndWait();
+        // TODO: This does not work (modality)
+        //alert.initModality(Modality.WINDOW_MODAL);
         if (alert.getResult() == null || alert.getResult().equals(no)) {
             event.consume();
         } else {
