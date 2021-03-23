@@ -109,6 +109,19 @@ public class saveAndLoad {
                 }
             }
 
+            try {
+                statement.executeQuery("SELECT * FROM game_leaderboard");
+            } catch (SQLException e) {
+                if (e.getErrorCode() == 942) {
+                    statement.execute("CREATE TABLE game_leaderboard" +
+                            "(" +
+                            "    id number(10) default game_data_id_seq.currVal CONSTRAINT game_leaderboard_id_fk REFERENCES game_data (id) ON DELETE CASCADE," +
+                            "    username varchar2(20) CONSTRAINT game_leaderboard_username_nn NOT NULL," +
+                            "    top_score INTEGER CONSTRAINT game_leaderboard_top_score_nn NOT NULL" +
+                            ")");
+                }
+            }
+
         } catch (SQLException e) {
 
             //   e.printStackTrace();

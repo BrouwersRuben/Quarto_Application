@@ -39,7 +39,6 @@ public class StatisticsView extends GridPane {
         stat2 = new Label("fastest move: "+ Collections.min(Leaderboard.turnStats)+" seconds");
         stat3 = new Label("slowest move: "+ Collections.max(Leaderboard.turnStats)+" seconds");
         leaderboard = new Button("Return to leaderboard");
-
     }
 
     private void layoutNodes() {
