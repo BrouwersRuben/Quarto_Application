@@ -10,7 +10,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
-import main.java.model.dataBase.Leaderboard;
 
 public class LeaderboardView extends GridPane {
     // private Node attributes (controls)
@@ -37,11 +36,11 @@ public class LeaderboardView extends GridPane {
         // label = new Label("...")
         title = new Text("Leaderboard");
         // TODO: these labels won't initialise if there's not 5 entries in the table ( ARRAYOUTOFBOUNDS )
-        p1 = new Label("1. "+Leaderboard.records[0].getUsername()+" - "+Leaderboard.records[0].getScore());
-        p2 = new Label("2. "+Leaderboard.records[1].getUsername()+" - "+Leaderboard.records[1].getScore());
-        p3 = new Label("3. "+Leaderboard.records[2].getUsername()+" - "+Leaderboard.records[2].getScore());
-        p4 = new Label("4. "+Leaderboard.records[3].getUsername()+" - "+Leaderboard.records[3].getScore());
-        p5 = new Label("5. "+Leaderboard.records[4].getUsername()+" - "+Leaderboard.records[4].getScore());
+        p1 = new Label();
+        p2 = new Label();
+        p3 = new Label();
+        p4 = new Label();
+        p5 = new Label();
         exit = new Button("Back");
     }
 
@@ -107,7 +106,6 @@ public class LeaderboardView extends GridPane {
         return exit;
     }
 
-    // TODO: Make this better if possible, did it quickly
     public Label getText1() {
         return p1;
     }

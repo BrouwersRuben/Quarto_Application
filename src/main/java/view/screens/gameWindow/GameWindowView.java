@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
-import main.java.model.pieces.Pieces;
 
 public class GameWindowView extends BorderPane { // TODO: make the layout responsive(currently fixated on px count) & just overall work on it more/clean up code
     // private Node attributes (controls)
@@ -157,11 +156,6 @@ public class GameWindowView extends BorderPane { // TODO: make the layout respon
         return GameWindowPresenter.getScreenHeight() * 0.15;
     }
 
-
-
-    public void createGridPane(GridPane gameBoard, Pieces type, int column, int row) { //For creating a GridPane consisting of our pieces
-
-    }
     public void createGridPane(GridPane gameBoard, int column, int row) { // TEST
         Rectangle pieceTile = new Rectangle(setWidthForOuterHBox() / 6, setWidthForOuterHBox() / 6);
         pieceTile.setStyle("-fx-fill:brown;-fx-stroke:black; -fx-stroke-width:1");

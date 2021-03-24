@@ -28,6 +28,7 @@ public class LeaderboardPresenter {
         // lambdas) to view controls.
         // In the event handlers: call model methods
         // and updateView().
+
         this.view.getExit().setOnAction(event -> {
             setMainWindow();
             updateView();
@@ -61,6 +62,11 @@ public class LeaderboardPresenter {
 
     private void updateView() {
         // fills the view with model data
+        this.view.getText1().setText("1. "+Leaderboard.records[0].getUsername()+" - "+Leaderboard.records[0].getScore());
+        this.view.getText2().setText("2. "+Leaderboard.records[1].getUsername()+" - "+Leaderboard.records[1].getScore());
+        this.view.getText3().setText("3. "+Leaderboard.records[2].getUsername()+" - "+Leaderboard.records[2].getScore());
+        this.view.getText4().setText("4. "+Leaderboard.records[3].getUsername()+" - "+Leaderboard.records[3].getScore());
+        this.view.getText5().setText("5. "+Leaderboard.records[4].getUsername()+" - "+Leaderboard.records[4].getScore());
     }
 
     public void addWindowEventHandlers() {
