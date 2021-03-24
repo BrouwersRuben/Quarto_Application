@@ -6,6 +6,8 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
 import javafx.stage.Window;
 import main.java.model.Quarto;
@@ -15,6 +17,7 @@ import main.java.view.screens.main.QuartoView;
 import main.java.view.screens.userNamePrologue.UserNameProloguePresenter;
 import main.java.view.screens.userNamePrologue.UserNamePrologueView;
 
+import java.nio.file.Paths;
 import java.util.Collections;
 
 public class winLoseWindowPresenter {
@@ -69,6 +72,21 @@ public class winLoseWindowPresenter {
         series1.setName("this game");
         view.getLineChart().getData().addAll(series1);
 
+        private Label updateWinOrLose() {
+            if (model.getWinState()) {
+                return new Label("VICTORY");
+            } else {
+                return new Label("DEFEAT");
+            }
+        }
+
+        private ImageView updateEndGameStatus() {
+            if (model.getWinState()) {
+                return new ImageView(Paths.get("resources/media/images/victory.png").toUri().toString());
+            } else {
+                return new ImageView(Paths.get("resources/media/images/defeat.png").toUri().toString());
+            }
+        }
     }
 
     public void addWindowEventHandlers() {

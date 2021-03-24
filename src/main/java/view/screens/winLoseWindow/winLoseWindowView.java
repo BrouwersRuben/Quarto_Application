@@ -99,21 +99,7 @@ public class winLoseWindowView extends GridPane {
         this.add(image, i1, i2);
     }
 
-    private Label updateWinOrLose(boolean hasWon) {
-        if (hasWon) {
-            return new Label("VICTORY");
-        } else {
-            return new Label("DEFEAT");
-        }
-    }
 
-    private ImageView updateEndGameStatus(boolean hasWon) {
-        if (hasWon) {
-            return new ImageView(Paths.get("resources/media/images/victory.png").toUri().toString());
-        } else {
-            return new ImageView(Paths.get("resources/media/images/defeat.png").toUri().toString());
-        }
-    }
     // package-private Getters
     // for controls used by Presenter
     public Button getMainMenu() {

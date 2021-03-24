@@ -4,8 +4,8 @@ public class Player {
     public boolean hasQuarto = false;
 
     //Setters
-    public void setHasQuarto(boolean hasQuarto) {
-        this.hasQuarto = hasQuarto;
+    public boolean setHasQuarto(boolean hasQuarto) {
+        return this.hasQuarto=hasQuarto;
     }
 
     //Getters

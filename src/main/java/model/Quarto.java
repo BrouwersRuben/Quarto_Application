@@ -123,6 +123,18 @@ public class Quarto {
         return false;
     }
 
+    public boolean setWon() {
+        return player.setHasQuarto(true);
+    }
+
+    public boolean setLost() {
+        return player.setHasQuarto(false);
+    }
+
+    public boolean getWinState() {
+        return player.isHasQuarto();
+    }
+
     public void gameOver(){
         // TODO: Game Over method, timer ran out
     }

@@ -62,6 +62,13 @@ public class GameWindowPresenter {
         });
         view.getWinScreen().setOnAction(event -> {
             System.out.println("Showing the victory screen");
+            model.setWon();
+            setWinLoseWindow();
+            updateView();
+        });
+        view.getLoseScreen().setOnAction(event -> {
+            System.out.println("Showing the defeat screen");
+            model.setLost();
             setWinLoseWindow();
             updateView();
         });
