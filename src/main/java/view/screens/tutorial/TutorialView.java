@@ -81,7 +81,6 @@ public class TutorialView extends BorderPane {;
 
         mediaBox.getChildren().add(playerView);
         mediaBox.getChildren().add(time);
-        // TODO: Maybe change this button into in icon
         mediaBox.getChildren().add(playButton);
         playerView.setFitWidth(500);
         mediaBox.setAlignment(Pos.CENTER);

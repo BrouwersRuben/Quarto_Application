@@ -38,7 +38,7 @@ public class StatisticsView extends GridPane {
     private void layoutNodes() {
         // add/set … methods
         // Insets, padding, alignment, …
-        addLabel(playerName,0,0); // TODO: fix this redundant initialization, when I'm overriding the style below
+        addLabel(playerName,0,0);
         playerName.setStyle("-fx-font-size:48; -fx-font-weight: bold");
         addLabel(playerScore,0,1);
         addLabel(stat1, 0,2);

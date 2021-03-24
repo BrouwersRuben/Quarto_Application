@@ -53,7 +53,7 @@ public class GameWindowPresenter {
         });
         this.view.getEndGame().setOnAction(event -> {
             closingAlert(event);
-            // TODO: Go to winning/losing screen, also when timer reaches like a minute or 2
+
             updateView();
         });
         view.getQuarto().setOnAction(event -> {
@@ -63,6 +63,7 @@ public class GameWindowPresenter {
         view.getWinScreen().setOnAction(event -> {
             System.out.println("Showing the victory screen");
             model.setWon();
+            // TODO: Go to winning/losing screen, also when timer reaches like a minute or 2
             //Temp
             model.getStatistics(model.getRecordsUserId(0));
             setWinLoseWindow();
@@ -71,6 +72,7 @@ public class GameWindowPresenter {
         view.getLoseScreen().setOnAction(event -> {
             System.out.println("Showing the defeat screen");
             model.setLost();
+            // TODO: Go to winning/losing screen, also when timer reaches like a minute or 2
             //Temp
             model.getStatistics(model.getRecordsUserId(3));
             setWinLoseWindow();
@@ -111,8 +113,6 @@ public class GameWindowPresenter {
         view.getGameBoard().getChildren().forEach(item -> {
             item.setOnMouseClicked(mouseEvent -> {
                 Image im = new Image("media/images/" + view.getChosenPiece().getId() + ".png");
-
-                // TODO: cannot be able to click multiple times with same piece
 
                 if(!model.isUnique(Integer.valueOf(view.getChosenPiece().getId()))){
                     view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));

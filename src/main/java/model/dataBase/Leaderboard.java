@@ -78,7 +78,7 @@ public class Leaderboard { // Used for retrieving the leaderboard
     }
 
 
-    public void createRecordsTable() { // TODO: Test why this didn't work
+    public void createRecordsTable() {
         try {
             ods = new OracleDataSource();
             ods.setURL(dbURL);

@@ -36,7 +36,6 @@ public class QuartoView extends GridPane {
         leaderboard = new Button("Leaderboard");
         tutorial = new Button("Tutorial");
         exit = new Button("Exit");
-        // TODO: Cool font? without css?
         title = new Text("QUARTO");
     }
 

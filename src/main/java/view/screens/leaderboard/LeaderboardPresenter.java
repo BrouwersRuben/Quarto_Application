@@ -62,7 +62,6 @@ public class LeaderboardPresenter {
 
     private void updateView() {
         // fills the view with model data
-        //TODO: make more efficient
         this.view.getText1().setText(model.getRecords(0));
         this.view.getText2().setText(model.getRecords(1));
         this.view.getText3().setText(model.getRecords(2));
