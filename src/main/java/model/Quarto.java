@@ -24,12 +24,8 @@ public class Quarto {
         leaderboard.getStatistics(id);
     }
 
-    public String getRecordsScore(int i){
-        return String.valueOf(Leaderboard.records[i].getScore());
-    }
-
-    public String getRecordsUserName(int i){
-        return Leaderboard.records[i].getUsername();
+    public String getRecords(int i){
+        return String.format("%d. %s - %d", i+1, Leaderboard.records[i].getUsername(), Leaderboard.records[i].getScore());
     }
 
     public int getRecordsUserId(int i){

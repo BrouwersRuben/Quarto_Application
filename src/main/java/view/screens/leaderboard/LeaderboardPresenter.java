@@ -63,11 +63,11 @@ public class LeaderboardPresenter {
     private void updateView() {
         // fills the view with model data
         //TODO: make more efficient
-        this.view.getText1().setText("1. " + model.getRecordsUserName(0) + " - "+ model.getRecordsScore(0));
-        this.view.getText2().setText("2. " + model.getRecordsUserName(1) + " - "+ model.getRecordsScore(1));
-        this.view.getText3().setText("3. " + model.getRecordsUserName(2) + " - "+ model.getRecordsScore(2));
-        this.view.getText4().setText("4. " + model.getRecordsUserName(3) + " - "+ model.getRecordsScore(3));
-        this.view.getText5().setText("5. " + model.getRecordsUserName(4) + " - "+ model.getRecordsScore(4));
+        this.view.getText1().setText(model.getRecords(0));
+        this.view.getText2().setText(model.getRecords(1));
+        this.view.getText3().setText(model.getRecords(2));
+        this.view.getText4().setText(model.getRecords(3));
+        this.view.getText5().setText(model.getRecords(4));
     }
 
     public void addWindowEventHandlers() {
