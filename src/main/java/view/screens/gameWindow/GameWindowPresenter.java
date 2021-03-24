@@ -203,4 +203,15 @@ public class GameWindowPresenter {
             setMainWindow();
         }
     }
+
+    private void setWinLoseWindow() {
+        winLoseWindowView winLoseView = new winLoseWindowView();
+        winLoseWindowPresenter winLosePresenter = new winLoseWindowPresenter(model, winLoseView);
+        view.getScene().setRoot(winLoseView);
+        winLoseView.getScene().getWindow().setWidth(1152);
+        winLoseView.getScene().getWindow().setHeight(648);
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        winLoseView.getScene().getWindow().setX((screenBounds.getWidth() - GameWindowPresenter.screenWidth) / 2);
+        winLoseView.getScene().getWindow().setY((screenBounds.getHeight() - GameWindowPresenter.screenHeight) / 2);
+    }
 }

@@ -1,6 +1,9 @@
 package main.java.model;
 
 import main.java.model.board.Board;
+import main.java.model.board.PieceStatus;
+import main.java.model.dataBase.Leaderboard;
+import main.java.model.dataBase.saveAndLoad;
 import main.java.model.pieces.Piece;
 import main.java.model.players.Human;
 
@@ -11,11 +14,18 @@ import java.nio.file.Path;
 import java.util.Scanner;
 import java.util.TreeSet;
 
+import java.util.Collections;
+
 public class Quarto {
     protected boolean isRunning;
     protected int amountOfTurns;
 
     // private attributes
+    private Leaderboard leaderboard = new Leaderboard();
+    private Board newBoard = new Board();
+    private Piece quartoPiece = new Piece();
+    private PieceStatus pieceStatus;
+    private saveAndLoad createTable = new saveAndLoad();
     private Piece quartoPiece = new Piece();
     private Board board = new Board();
     private Human player = new Human();
@@ -25,6 +35,62 @@ public class Quarto {
 // Constructor
 
     }
+    public void createTableIfDoesntExist(){
+        createTable.createTableIfDoesntExist();
+    }
+
+    public void getStatistics(int id){
+        leaderboard.getStatistics(id);
+    }
+
+    public String getRecords(int i){
+        return String.format("%d. %s - %d", i+1, Leaderboard.records[i].getUsername(), Leaderboard.records[i].getScore());
+    }
+
+    public String getRecordsUserName(int i){
+        return Leaderboard.records[i].getUsername();
+    }
+
+    public int getRecordsUserScore(int i){
+        return Leaderboard.records[i].getScore();
+    }
+
+    public Long getAverageTime(){
+        return Leaderboard.averageTime;
+    }
+
+    public int getFastestMove(){
+        return Collections.min(Leaderboard.turnStats);
+    }
+
+    public int getSlowestMove(){
+        return Collections.max(Leaderboard.turnStats);
+    }
+
+    public int getRecordsUserId(int i){
+        return Leaderboard.records[i].getId();
+    }
+
+    public int getTurnStatsSize(){
+        return Leaderboard.turnStats.size();
+    }
+
+    public int getTurnstats(int i){
+        return Leaderboard.turnStats.get(i);
+    }
+
+    // methods with business logic
+    public boolean pass(int piece) {
+        if (piece < 0 || piece > 15) {
+            System.out.println("Non existant");
+            return false;
+        }
+
+        if (newBoard.getPieceStatus()[piece] == PieceStatus.OFF_BOARD.getCode()) {
+            newBoard.setPieceInHand(piece);
+            newBoard.getPieceStatus()[piece] = PieceStatus.IN_HAND.getCode();
+            newBoard.setRemainingPieces(-1);
+            return true;
     //Business logic
     public String checkIfTutorialExist(Path path){
         if (Files.exists(path) && Files.isRegularFile(path)){
@@ -84,6 +150,11 @@ public class Quarto {
     }
 
 // needed getters and setters
+
+    public int getGameTimerSeconds() {
+        return gameTimerSeconds;
+    }
+
     public int getAmountOfTurns() {
         return amountOfTurns;
     }

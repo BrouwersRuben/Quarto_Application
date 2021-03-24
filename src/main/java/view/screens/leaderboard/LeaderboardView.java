@@ -36,11 +36,12 @@ public class LeaderboardView extends GridPane {
         // button = new Button("...")
         // label = new Label("...")
         title = new Text("Leaderboard");
-        p1 = new Label("1. Player1-xxxx");
-        p2 = new Label("2. Player2-xxxx");
-        p3 = new Label("3. Player3-xxxx");
-        p4 = new Label("4. Player4-xxxx");
-        p5 = new Label("5. Player5-xxxx");
+        // TODO: these labels won't initialise if there's not 5 entries in the table ( ARRAYOUTOFBOUNDS )
+        p1 = new Label();
+        p2 = new Label();
+        p3 = new Label();
+        p4 = new Label();
+        p5 = new Label();
         exit = new Button("Back");
 //        pane = new GridPane();
     }
@@ -75,11 +76,11 @@ public class LeaderboardView extends GridPane {
         title.setStyle("-fx-font-weight: BOLD;" +
                 "-fx-font-size: 33;");
 
-        addPlaceHolder(p1, 2);
-        addPlaceHolder(p2, 3);
-        addPlaceHolder(p3, 4);
-        addPlaceHolder(p4, 5);
-        addPlaceHolder(p5, 6);
+        addLabel(p1, 2);
+        addLabel(p2, 3);
+        addLabel(p3, 4);
+        addLabel(p4, 5);
+        addLabel(p5, 6);
 
         addButton(exit, 1, 7, 3, 1);
     }
@@ -93,7 +94,7 @@ public class LeaderboardView extends GridPane {
         button.setStyle("-fx-font-weight: BOLD");
     }
 
-    private void addPlaceHolder(Label label, int i1){
+    private void addLabel(Label label, int i1){
         this.add(label, 1, i1, 3, 1);
         label.setAlignment(Pos.CENTER);
         this.setHalignment(label, HPos.CENTER);
@@ -105,6 +106,23 @@ public class LeaderboardView extends GridPane {
     public Button getExit() {
         return exit;
     }
+
+    public Label getText1() {
+        return p1;
+    }
+    public Label getText2() {
+        return p2;
+    }
+    public Label getText3() {
+        return p3;
+    }
+    public Label getText4() {
+        return p4;
+    }
+    public Label getText5() {
+        return p5;
+    }
 }
+
 
 
