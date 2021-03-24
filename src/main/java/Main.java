@@ -43,6 +43,7 @@ public class Main extends Application {
         Leaderboard leaderboard = new Leaderboard();
 //        leaderboard.connectToDb();
         leaderboard.getRecords();
+
         Application.launch(args);
     }
 

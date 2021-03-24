@@ -1,7 +1,10 @@
 package main.java.view.screens.statisticsWindow;
 
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
 import javafx.stage.Window;
 import main.java.model.Quarto;
+import main.java.view.screens.gameWindow.GameWindowPresenter;
 import main.java.view.screens.leaderboard.LeaderboardPresenter;
 import main.java.view.screens.leaderboard.LeaderboardView;
 import main.java.view.screens.main.QuartoPresenter;
@@ -39,5 +42,8 @@ public class StatisticsPresenter {
         view.getScene().setRoot(leaderboardView);
         leaderboardView.getScene().getWindow().setWidth(1152);
         leaderboardView.getScene().getWindow().setHeight(648);
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        leaderboardView.getScene().getWindow().setX((screenBounds.getWidth() - GameWindowPresenter.screenWidth) / 2);
+        leaderboardView.getScene().getWindow().setY((screenBounds.getHeight() - GameWindowPresenter.screenHeight) / 2);
     }
 }
