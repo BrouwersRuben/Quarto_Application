@@ -17,6 +17,8 @@ public class GameWindowView extends BorderPane {
     private Button pauseGame;
     private Button saveGame;
     private Button endGame;
+    private Button winScreen;
+    private Button loseScreen;
     private Label gameTitle;
     // TODO: TurnCounter?? Ideas
     private Text turn;
@@ -83,6 +85,8 @@ public class GameWindowView extends BorderPane {
         saveGame = new Button("Save");
         endGame = new Button("End");
         userName = new Text();
+        winScreen = new Button("WIN");
+        loseScreen = new Button("LOSE");
 
         playerTurn = new Label();
     }
@@ -145,13 +149,15 @@ public class GameWindowView extends BorderPane {
         // add/set … methods
         // Insets, padding, alignment, …
 
-        bottomBox = new HBox(saveGame, pauseGame, endGame, userName, errorLabel);
+        bottomBox = new HBox(saveGame, pauseGame, endGame, userName, errorLabel, winScreen, loseScreen);
         bottomBox.setPadding(new Insets(10, 10, 10, 10));
         bottomBox.setMargin(saveGame, new Insets(5, 10, 5, 10));
         bottomBox.setMargin(pauseGame, new Insets(5, 10, 5, 10));
         bottomBox.setMargin(endGame, new Insets(5, 10, 5, 10));
         bottomBox.setMargin(userName, new Insets(5, 10, 5, 10));
         bottomBox.setMargin(errorLabel, new Insets(5, 10, 5, 10));
+        bottomBox.setMargin(winScreen, new Insets(5, 10, 5, 10));
+        bottomBox.setMargin(loseScreen, new Insets(5, 10, 5, 10));
         userName.setStyle("-fx-font-size: 15");
         errorLabel.setStyle("-fx-font-size: 15;");
         errorLabel.setFill(Paint.valueOf("Red"));
@@ -193,6 +199,14 @@ public class GameWindowView extends BorderPane {
 
     public Button getSaveGame() {
         return saveGame;
+    }
+
+    public Button getWinScreen() {
+        return winScreen;
+    }
+
+    public Button getLoseScreen() {
+        return loseScreen;
     }
 
     public Button getEndGame() {

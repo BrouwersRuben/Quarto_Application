@@ -60,6 +60,11 @@ public class GameWindowPresenter {
             System.out.println("You have indicated that you saw a quarto");
             model.hasQuarto();
         });
+        view.getWinScreen().setOnAction(event -> {
+            System.out.println("Showing the victory screen");
+            setWinLoseWindow();
+            updateView();
+        });
 
         view.getPlayerTurn().setText("Your turn!\nTo pick a piece");
 

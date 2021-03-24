@@ -20,6 +20,9 @@ public class Quarto {
     protected boolean isRunning;
     protected int amountOfTurns;
 
+    public double width = 1158;
+
+
     // private attributes
     private Leaderboard leaderboard = new Leaderboard();
     private Board newBoard = new Board();
