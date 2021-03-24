@@ -32,8 +32,6 @@ public class winLoseWindowView extends GridPane {
     private Button playAgain;
     private Button exitGame;
     private final double numRows = 7;
-    private final boolean testTrue=true;
-    private final boolean testFalse=false;
 
     public winLoseWindowView() {
         initialiseNodes();
