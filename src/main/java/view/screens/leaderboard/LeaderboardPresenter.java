@@ -87,8 +87,8 @@ public class LeaderboardPresenter {
         StatisticsView statisticsView = new StatisticsView();
         StatisticsPresenter statisticsPresenter = new StatisticsPresenter(model, statisticsView);
         view.getScene().setRoot(statisticsView);
-        statisticsView.getScene().getWindow().setWidth(1152);
-        statisticsView.getScene().getWindow().setHeight(648);
+        statisticsView.getScene().getWindow().setWidth(625);
+        statisticsView.getScene().getWindow().setHeight(425);
     }
 
     public static int getUsernameClicked() {

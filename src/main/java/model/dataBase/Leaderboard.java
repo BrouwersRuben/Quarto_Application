@@ -29,11 +29,11 @@ public class Leaderboard { // Used for retrieving the leaderboard
                 System.out.println("Connected to the database.");
 
                 //Statement to make the table:
-                Statement statement = connection.createStatement();
-                statement.execute("CREATE TABLE INT_leaderboard"
-                        + "(player_name VARCHAR2(20),"
-                        + "top_score INTEGER," +
-                        "date_submitted DATE DEFAULT SYSDATE)");
+//                Statement statement = connection.createStatement();
+//                statement.execute("CREATE TABLE INT_leaderboard"
+//                        + "(player_name VARCHAR2(20),"
+//                        + "top_score INTEGER," +
+//                        "date_submitted DATE DEFAULT SYSDATE)");
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -167,19 +167,6 @@ public class Leaderboard { // Used for retrieving the leaderboard
             ex.printStackTrace();
         }
     }
-
-	/*
-	// TODO: This has to be more to our liking
-	 public static void endGame() {
-        try {
-                    String insertPlayerData = "INSERT INTO INT_leaderboard (player_name, end_time, score) VALUES ('" + playerName + "', CURRENT_TIMESTAMP, " + gameScore + ")";
-            statement.execute(insertPlayerData);
-            System.out.println("Successfully inserted the player named " + playerName + " to the database.");
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-	 */
 
 }
 

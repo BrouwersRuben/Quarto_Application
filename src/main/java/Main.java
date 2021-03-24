@@ -41,9 +41,8 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         Leaderboard leaderboard = new Leaderboard();
-//        leaderboard.connectToDb();
+        leaderboard.connectToDb();
         leaderboard.getRecords();
-
         Application.launch(args);
     }
 
