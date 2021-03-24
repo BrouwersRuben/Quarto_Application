@@ -72,7 +72,6 @@ public class Quarto {
 
     public void addToListOnBoard(Integer pieceId){
         board.setPiecesOnBoard(pieceId);
-        System.out.println(board.getPiecesOnBoard());
     }
 
     public boolean isUnique(Integer pieceId){
