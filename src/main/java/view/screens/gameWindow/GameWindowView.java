@@ -17,6 +17,7 @@ public class GameWindowView extends BorderPane {
     private Button pauseGame;
     private Button saveGame;
     private Button endGame;
+    // TODO: set top next to Quarto
     private Button winScreen;
     private Button loseScreen;
     private Label gameTitle;
