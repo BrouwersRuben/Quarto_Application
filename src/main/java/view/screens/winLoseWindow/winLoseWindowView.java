@@ -44,8 +44,8 @@ public class winLoseWindowView extends GridPane {
         // create and configure controls
         // button = new Button("...")
         // label = new Label("...")
-        winOrLose = new Label("defeat");
-        endGameStatus = new ImageView(Paths.get("resources/media/images/defeat.png").toUri().toString());
+        winOrLose = updateWinOrLose(false);
+        endGameStatus = updateEndGameStatus(false);
         playerScore = new Label("score: "+ Leaderboard.records[0].getScore());
         stat1 = new Label("average time spent per round: "+(Leaderboard.averageTime));
         stat2 = new Label("fastest move: "+ Collections.min(Leaderboard.turnStats)+ "seconds");
@@ -112,21 +112,21 @@ public class winLoseWindowView extends GridPane {
         this.add(image, i1, i2);
     }
 
-//    private Label updateWinOrLose(boolean hasWon) {
-//        if (hasWon=true) {
-//            return new Label("VICTORY");
-//        } else {
-//            return new Label("DEFEAT");
-//        }
-//    }
-//
-//    private ImageView updateEndGameStatus(boolean hasWon) {
-//        if (hasWon=true) {
-//            return new ImageView(Paths.get("resources/media/images/victory.png").toUri().toString());
-//        } else {
-//            return new ImageView(Paths.get("resources/media/images/defeat.png").toUri().toString());
-//        }
-//    }
+    private Label updateWinOrLose(boolean hasWon) {
+        if (hasWon) {
+            return new Label("VICTORY");
+        } else {
+            return new Label("DEFEAT");
+        }
+    }
+
+    private ImageView updateEndGameStatus(boolean hasWon) {
+        if (hasWon) {
+            return new ImageView(Paths.get("resources/media/images/victory.png").toUri().toString());
+        } else {
+            return new ImageView(Paths.get("resources/media/images/defeat.png").toUri().toString());
+        }
+    }
     // package-private Getters
     // for controls used by Presenter
     public Button getMainMenu() {
