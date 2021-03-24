@@ -173,6 +173,12 @@ public class GameWindowView extends BorderPane {
         HBox.setMargin(availablePieces, new Insets(10, 10, 10, 10));
 
         this.setTop(gameTitle);
+        this.setCenter(hBox);
+        this.setBottom(bottomBox);
+        BorderPane.setAlignment(bottomBox, Pos.BOTTOM_RIGHT);
+
+        gameTitle.setStyle("-fx-font-weight: BOLD; -fx-font-size: 20");
+        BorderPane.setAlignment(gameTitle, Pos.CENTER);
 
 
         }
