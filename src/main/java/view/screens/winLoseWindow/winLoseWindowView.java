@@ -2,14 +2,21 @@ package main.java.view.screens.winLoseWindow;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import main.java.model.dataBase.Leaderboard;
+import main.java.view.screens.leaderboard.LeaderboardPresenter;
 
 import java.io.FileInputStream;
 import java.nio.file.Paths;
+import java.util.Collections;
 
 public class winLoseWindowView extends GridPane {
     // private Node attributes (controls)
@@ -20,6 +27,7 @@ public class winLoseWindowView extends GridPane {
     private Label stat1;
     private Label stat2;
     private Label stat3;
+    private LineChart lineChart;
     private Button mainMenu;
     private Button playAgain;
     private Button exitGame;
@@ -38,10 +46,21 @@ public class winLoseWindowView extends GridPane {
         // label = new Label("...")
         winOrLose = new Label("defeat");
         endGameStatus = new ImageView(Paths.get("resources/media/images/defeat.png").toUri().toString());
-        playerScore = new Label("Placeholder");
-        stat1 = new Label("average time spent per round: placeholder");
-        stat2 = new Label("fastest move: placeholder");
-        stat3 = new Label("slowest move: placeholder");
+        playerScore = new Label("score: "+ Leaderboard.records[0].getScore());
+        stat1 = new Label("average time spent per round: "+(Leaderboard.averageTime));
+        stat2 = new Label("fastest move: "+ Collections.min(Leaderboard.turnStats)+ "seconds");
+        stat3 = new Label("slowest move: "+ Collections.max(Leaderboard.turnStats)+" seconds");
+
+        lineChart = new LineChart<>(new CategoryAxis(), new NumberAxis());
+        lineChart.setTitle("Time spent per move");
+        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+        series1.setName("this game");
+        for (int i=0; i <Leaderboard.turnStats.size(); i++) {
+            String turn = ""+(i+1);
+            series1.getData().add(new XYChart.Data<>(turn, Leaderboard.turnStats.get(i)));
+        }
+        lineChart.getData().addAll(series1);
+
         mainMenu = new Button("Return to the main menu");
         playAgain = new Button("Play again");
         exitGame = new Button("Exit");
@@ -59,9 +78,10 @@ public class winLoseWindowView extends GridPane {
         addLabel(stat1, 0,3);
         addLabel(stat2, 0,4);
         addLabel(stat3, 0,5);
-        addButton(mainMenu, 1, 6, 3, 2);
-        addButton(playAgain, 0,6,3,2);
-        addButton(exitGame, 2,6,3,2);
+        addLineChart(lineChart,0,6);
+        addButton(mainMenu, 1, 7, 3, 2);
+        addButton(playAgain, 0,7,3,2);
+        addButton(exitGame, 2,7,3,2);
 //        getColumnConstraints().add(new ColumnConstraints(100)); // column 0 is 100 wide
 //        getColumnConstraints().add(new ColumnConstraints(200));
 
@@ -75,6 +95,10 @@ public class winLoseWindowView extends GridPane {
     private void addButton(Button button, int i1, int i2, int i3, int i4) {
         this.add(button, i1, i2, i3, i4);
         button.setStyle("-fx-font-weight: BOLD");
+    }
+
+    private void addLineChart(LineChart lineChart, int i1, int i2) {
+        this.add(lineChart, i1, i2);
     }
 
     private void addLabel(Label label, int i1, int i2) {

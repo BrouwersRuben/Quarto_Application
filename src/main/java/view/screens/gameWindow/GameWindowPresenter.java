@@ -4,6 +4,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import javafx.stage.Window;
 import main.java.model.Quarto;
+import main.java.model.dataBase.Leaderboard;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 import main.java.view.screens.winLoseWindow.winLoseWindowPresenter;
@@ -16,6 +17,7 @@ public class GameWindowPresenter {
     private final GameWindowView view;
     public static double screenWidth = 1152;
     public static double screenHeight = 648;
+    Leaderboard leaderboard = new Leaderboard();
 
     public GameWindowPresenter(Quarto model, GameWindowView view) {
         this.model = model;
@@ -35,6 +37,7 @@ public class GameWindowPresenter {
         });
         this.view.getSaveGame().setOnAction(event -> {
             // TODO: some method that updates the database with the current state of the game
+            leaderboard.getStatistics(Leaderboard.records[0].getId()); // Temporary (to load the values)
             setWinLoseWindow();
             updateView();
         });
