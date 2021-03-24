@@ -26,7 +26,6 @@ public class Quarto {
     private Piece quartoPiece = new Piece();
     private PieceStatus pieceStatus;
     private saveAndLoad createTable = new saveAndLoad();
-    private Piece quartoPiece = new Piece();
     private Board board = new Board();
     private Human player = new Human();
     //has to have a human, and a bridge between the model and the view
@@ -79,19 +78,8 @@ public class Quarto {
         return Leaderboard.turnStats.get(i);
     }
 
-    // methods with business logic
-    public boolean pass(int piece) {
-        if (piece < 0 || piece > 15) {
-            System.out.println("Non existant");
-            return false;
-        }
-
-        if (newBoard.getPieceStatus()[piece] == PieceStatus.OFF_BOARD.getCode()) {
-            newBoard.setPieceInHand(piece);
-            newBoard.getPieceStatus()[piece] = PieceStatus.IN_HAND.getCode();
-            newBoard.setRemainingPieces(-1);
-            return true;
     //Business logic
+
     public String checkIfTutorialExist(Path path){
         if (Files.exists(path) && Files.isRegularFile(path)){
             return "The File exist and is a regular file.";
@@ -149,14 +137,9 @@ public class Quarto {
         return true;
     }
 
-// needed getters and setters
-
-    public int getGameTimerSeconds() {
-        return gameTimerSeconds;
+    public void closeDB(){
+        leaderboard.closeDb();
     }
 
-    public int getAmountOfTurns() {
-        return amountOfTurns;
-    }
 
 }

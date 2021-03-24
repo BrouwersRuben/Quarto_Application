@@ -82,8 +82,8 @@ public class winLoseWindowPresenter {
         view.getScene().setRoot(userNamePrologueView);
         userNamePrologueView.getScene().getWindow().sizeToScene();
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        userNamePrologueView.getScene().getWindow().setX((screenBounds.getWidth() - GameWindowPresenter.screenWidth) / 2);
-        userNamePrologueView.getScene().getWindow().setY((screenBounds.getHeight() - GameWindowPresenter.screenHeight) / 2);
+//        userNamePrologueView.getScene().getWindow().setX((screenBounds.getWidth() - GameWindowPresenter.screenWidth) / 2);
+//        userNamePrologueView.getScene().getWindow().setY((screenBounds.getHeight() - GameWindowPresenter.screenHeight) / 2);
     }
 
     private void setMainWindow() {
@@ -93,8 +93,8 @@ public class winLoseWindowPresenter {
         quartoView.getScene().getWindow().setWidth(625);
         quartoView.getScene().getWindow().setHeight(425);
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        quartoView.getScene().getWindow().setX((screenBounds.getWidth() - GameWindowPresenter.screenWidth) / 2);
-        quartoView.getScene().getWindow().setY((screenBounds.getHeight() - GameWindowPresenter.screenHeight) / 2);
+//        quartoView.getScene().getWindow().setX((screenBounds.getWidth() - GameWindowPresenter.screenWidth) / 2);
+//        quartoView.getScene().getWindow().setY((screenBounds.getHeight() - GameWindowPresenter.screenHeight) / 2);
     }
 
     private void closingAlert(Event event) {

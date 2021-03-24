@@ -173,55 +173,10 @@ public class GameWindowView extends BorderPane {
         HBox.setMargin(availablePieces, new Insets(10, 10, 10, 10));
 
         this.setTop(gameTitle);
-        this.setCenter(centerHBox);
-        this.setBottom(bottomHBox);
-
-        bottomPaneTwo.add(turnIndicator, 0, 0);
-        bottomPaneTwo.setAlignment(Pos.CENTER); //TODO: Center them in the middle vertically
-
-        bottomPane.add(time, 1, 0);
-        bottomPane.add(timeCounter, 2, 0);
-
-        bottomPane.add(turn, 1, 1);
-        bottomPane.add(turnCounter, 2, 1);
-
-        bottomPane.add(saveGame, 0, 2);
-        bottomPane.add(pauseGame, 1, 2);
-        bottomPane.add(endGame, 2, 2);
-//        bottomPane.setHgap(10); // TODO: Find out why this pushes the layout
-//        bottomPane.setVgap(10);
-        bottomPane.setPadding(new Insets(0, 0, 10, 60));
-
-        pieces.setVgap(20);
-        pieces.setHgap(20);
-        pieces.setOrientation(Orientation.VERTICAL);
 
 
-        for (int i = 1; i <= 16; i++) {
-            pieces.getChildren().add(new ImageView(Paths.get("resources/media/images/" + i + ".png").toUri().toString()));
-            //i think it is best to just make 11 buttons and add them where needed, because i have to be able to remove them as well, when they are placed on the board
         }
 
-        for (int i = 0; i < numColumns; i++) {
-            for (int j = 0; j < numRows; j++) {
-                Rectangle tile = new Rectangle(60, 60);
-                tile.setStyle("-fx-fill:whitesmoke; -fx-stroke:black; -fx-stroke-width:1");
-                GridPane.setRowIndex(tile, i);
-                GridPane.setColumnIndex(tile, j);
-                gameBoard.getChildren().addAll(tile);
-            }
-        }
-
-        gameTitle.setPadding(new Insets(0, 0, 0, 85)); // top, right, bottom, left
-        gameTitle.setStyle("-fx-font-weight: BOLD; -fx-font-size: 32");
-        centerHBox.setPrefWidth(745);
-        centerHBox.setPadding(new Insets(0, 20, 10, 20));
-        pieces.setPrefColumns(3); // ?this doesn't work?
-        gameBoard.setPrefWidth(centerHBox.getPrefWidth() / 2); // TODO: shorten this
-        pieces.setPrefWidth(centerHBox.getPrefWidth() / 2);
-        bottomPane.setPrefWidth(centerHBox.getPrefWidth() / 2);
-        bottomPaneTwo.setPrefWidth(centerHBox.getPrefWidth() / 2);
-    }
 
 
     // package-private Getters

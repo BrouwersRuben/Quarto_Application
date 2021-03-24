@@ -48,7 +48,7 @@ public class StatisticsPresenter {
         leaderboardView.getScene().getWindow().setWidth(1152);
         leaderboardView.getScene().getWindow().setHeight(648);
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        leaderboardView.getScene().getWindow().setX((screenBounds.getWidth() - GameWindowPresenter.screenWidth) / 2);
-        leaderboardView.getScene().getWindow().setY((screenBounds.getHeight() - GameWindowPresenter.screenHeight) / 2);
+//        leaderboardView.getScene().getWindow().setX((screenBounds.getWidth() - GameWindowPresenter.screenWidth) / 2);
+//        leaderboardView.getScene().getWindow().setY((screenBounds.getHeight() - GameWindowPresenter.screenHeight) / 2);
     }
 }

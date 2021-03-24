@@ -2,12 +2,14 @@ package main.java.view.screens.gameWindow;
 
 import javafx.application.Platform;
 import javafx.event.Event;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Window;
 import main.java.model.Quarto;
 import main.java.view.Images;
@@ -15,6 +17,8 @@ import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 import main.java.view.screens.pauseScreen.PauseScreenPresenter;
 import main.java.view.screens.pauseScreen.PauseScreenView;
+import main.java.view.screens.winLoseWindow.winLoseWindowPresenter;
+import main.java.view.screens.winLoseWindow.winLoseWindowView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -211,7 +215,7 @@ public class GameWindowPresenter {
         winLoseView.getScene().getWindow().setWidth(1152);
         winLoseView.getScene().getWindow().setHeight(648);
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        winLoseView.getScene().getWindow().setX((screenBounds.getWidth() - GameWindowPresenter.screenWidth) / 2);
-        winLoseView.getScene().getWindow().setY((screenBounds.getHeight() - GameWindowPresenter.screenHeight) / 2);
+//        winLoseView.getScene().getWindow().setX((screenBounds.getWidth() - GameWindowPresenter.screenWidth) / 2);
+//        winLoseView.getScene().getWindow().setY((screenBounds.getHeight() - GameWindowPresenter.screenHeight) / 2);
     }
 }

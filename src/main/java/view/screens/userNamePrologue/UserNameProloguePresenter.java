@@ -40,8 +40,6 @@ public class UserNameProloguePresenter {
             }
             updateView();
         });
-
-        // TODO: Set gameWindow
     }
 
     private void updateView() {

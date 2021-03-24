@@ -20,16 +20,25 @@ public class Leaderboard { // Used for retrieving the leaderboard
     public static List<Integer> turnStats = new ArrayList<Integer>();
     public static long averageTime;
 
+    public void connectToDb() {
+        try {
+            ods = new OracleDataSource();
+            ods.setURL(dbURL);
+            connection = DriverManager.getConnection(dbURL, username, password);
+            if(connection != null) {
+                System.out.println("Connected to the database.");
 
-//    Human player = new Human(); TODO: you have to relocate all of these(I think), idk what they're doing here, this class will be used for loading the leaderboard for the leaderboard screen
-//    Quarto game = new Quarto();
-//    private final int gameTimerSeconds = game.getGameTimerSeconds();
-    // TODO: Get the local date
-    //private String date = Date.toString(Calendar.getInstance().getTime());
-//    private final int amountOfTurns = game.getAmountOfTurns();
-//    private final String name = player.getName();
-//    private final double score = player.getScore();
-
+                //Statement to make the table:
+                Statement statement = connection.createStatement();
+                statement.execute("CREATE TABLE INT_leaderboard"
+                        + "(player_name VARCHAR2(20),"
+                        + "top_score INTEGER," +
+                        "date_submitted DATE DEFAULT SYSDATE)");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
     public void getRecords() {
         try {
@@ -141,6 +150,21 @@ public class Leaderboard { // Used for retrieving the leaderboard
             connection.close();
 
         } catch (SQLException throwables) {
+        }
+    }
+
+    public void closeDb() {
+        try {
+            if(statement != null && !statement.isClosed()) {
+                statement.close();
+                System.out.println("Closed the database statements.");
+            }
+            if(connection != null && !connection.isClosed()) {
+                connection.close();
+                System.out.println("Closed the database connection.");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 
