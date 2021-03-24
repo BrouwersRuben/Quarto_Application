@@ -2,6 +2,7 @@ package main.java.model;
 
 import main.java.model.board.Board;
 import main.java.model.board.PieceStatus;
+import main.java.model.dataBase.Leaderboard;
 import main.java.model.pieces.Piece;
 
 public class Quarto {
@@ -9,6 +10,7 @@ public class Quarto {
     protected int amountOfTurns;
     protected int gameTimerSeconds = 300 /*5 min*/;
     // private attributes
+    Leaderboard leaderboard = new Leaderboard();
     Board newBoard = new Board();
     Piece quartoPiece = new Piece();
     PieceStatus pieceStatus;
@@ -16,6 +18,10 @@ public class Quarto {
     public Quarto() {
 // Constructor
 
+    }
+
+    public void getStatistics(int id){
+        leaderboard.getStatistics(id);
     }
 
     // methods with business logic

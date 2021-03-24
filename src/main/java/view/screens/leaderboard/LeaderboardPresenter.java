@@ -11,7 +11,6 @@ import main.java.view.screens.statisticsWindow.StatisticsView;
 
 public class LeaderboardPresenter {
     private static int usernameClicked;
-    Leaderboard leaderboard = new Leaderboard();
     private final Quarto model;
     private final LeaderboardView view;
 
@@ -35,27 +34,27 @@ public class LeaderboardPresenter {
         });
         this.view.getText1().setOnMouseClicked(event -> {
             usernameClicked = 0;
-            leaderboard.getStatistics(Leaderboard.records[usernameClicked].getId()); // give id from the selected one
+            model.getStatistics(Leaderboard.records[usernameClicked].getId()); // give id from the selected one
             setStatisticsWindow();
         });
         this.view.getText2().setOnMouseClicked(event -> {
             usernameClicked = 1;
-            leaderboard.getStatistics(Leaderboard.records[usernameClicked].getId());
+            model.getStatistics(Leaderboard.records[usernameClicked].getId());
             setStatisticsWindow();
         });
         this.view.getText3().setOnMouseClicked(event -> {
             usernameClicked = 2;
-            leaderboard.getStatistics(Leaderboard.records[usernameClicked].getId());
+            model.getStatistics(Leaderboard.records[usernameClicked].getId());
             setStatisticsWindow();
         });
         this.view.getText4().setOnMouseClicked(event -> {
             usernameClicked = 3;
-            leaderboard.getStatistics(Leaderboard.records[usernameClicked].getId());
+            model.getStatistics(Leaderboard.records[usernameClicked].getId());
             setStatisticsWindow();
         });
         this.view.getText5().setOnMouseClicked(event -> {
             usernameClicked = 4;
-            leaderboard.getStatistics(Leaderboard.records[usernameClicked].getId());
+            model.getStatistics(Leaderboard.records[usernameClicked].getId());
             setStatisticsWindow();
         });
     }
