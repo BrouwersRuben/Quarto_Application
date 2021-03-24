@@ -5,6 +5,8 @@ import main.java.model.board.PieceStatus;
 import main.java.model.dataBase.Leaderboard;
 import main.java.model.pieces.Piece;
 
+import java.util.Collections;
+
 public class Quarto {
     protected boolean isRunning;
     protected int amountOfTurns;
@@ -26,6 +28,26 @@ public class Quarto {
 
     public String getRecords(int i){
         return String.format("%d. %s - %d", i+1, Leaderboard.records[i].getUsername(), Leaderboard.records[i].getScore());
+    }
+
+    public String getRecordsUserName(int i){
+        return Leaderboard.records[i].getUsername();
+    }
+
+    public int getRecordsUserScore(int i){
+        return Leaderboard.records[i].getScore();
+    }
+
+    public Long getAverageTime(){
+        return Leaderboard.averageTime;
+    }
+
+    public int getFastestMove(){
+        return Collections.min(Leaderboard.turnStats);
+    }
+
+    public int getSlowestMove(){
+        return Collections.max(Leaderboard.turnStats);
     }
 
     public int getRecordsUserId(int i){

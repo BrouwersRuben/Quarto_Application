@@ -6,12 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import main.java.model.dataBase.Leaderboard;
-import main.java.model.dataBase.Statistics;
-import main.java.model.dataBase.Record;
-import main.java.view.screens.leaderboard.LeaderboardPresenter;
-
-import java.util.Collections;
 
 public class StatisticsView extends GridPane {
     // private Node attributes (controls)
@@ -33,11 +27,11 @@ public class StatisticsView extends GridPane {
         // create and configure controls
         // button = new Button("...")
         // label = new Label("...")
-        playerName = new Label(Leaderboard.records[LeaderboardPresenter.getUsernameClicked()].getUsername());
-        playerScore = new Label("score: "+(Leaderboard.records[LeaderboardPresenter.getUsernameClicked()].getScore()));
-        stat1 = new Label("average time spent per round: "+(Leaderboard.averageTime));
-        stat2 = new Label("fastest move: "+ Collections.min(Leaderboard.turnStats)+" seconds");
-        stat3 = new Label("slowest move: "+ Collections.max(Leaderboard.turnStats)+" seconds");
+        playerName = new Label();
+        playerScore = new Label();
+        stat1 = new Label();
+        stat2 = new Label();
+        stat3 = new Label();
         leaderboard = new Button("Return to leaderboard");
     }
 
@@ -85,7 +79,20 @@ public class StatisticsView extends GridPane {
     public Button getLeaderboard() {
         return leaderboard;
     }
-
-
+    public Label getPlayerName() {
+        return playerName;
+    }
+    public Label getPlayerScore() {
+        return playerScore;
+    }
+    public Label getStat1() {
+        return stat1;
+    }
+    public Label getStat2() {
+        return stat2;
+    }
+    public Label getStat3() {
+        return stat3;
+    }
 }
 

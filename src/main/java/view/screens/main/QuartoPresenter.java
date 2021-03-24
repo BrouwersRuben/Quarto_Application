@@ -6,9 +6,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Screen;
-import javafx.stage.Window;
 import main.java.model.Quarto;
-import main.java.model.dataBase.Leaderboard;
 import main.java.view.screens.gameWindow.GameWindowPresenter;
 import main.java.view.screens.leaderboard.LeaderboardPresenter;
 import main.java.view.screens.leaderboard.LeaderboardView;
@@ -22,7 +20,6 @@ public class QuartoPresenter {
     private final QuartoView view;
     private final Quarto model;
     // Is it call the leaderboard class to have the closeDb() here
-    private final Leaderboard lb = new Leaderboard();
 
     public QuartoPresenter(Quarto model, QuartoView view) {
         this.model = model;
