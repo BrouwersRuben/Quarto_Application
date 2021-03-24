@@ -7,6 +7,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
 import javafx.stage.Window;
@@ -71,22 +72,8 @@ public class winLoseWindowPresenter {
 
         series1.setName("this game");
         view.getLineChart().getData().addAll(series1);
-
-        private Label updateWinOrLose() {
-            if (model.getWinState()) {
-                return new Label("VICTORY");
-            } else {
-                return new Label("DEFEAT");
-            }
-        }
-
-        private ImageView updateEndGameStatus() {
-            if (model.getWinState()) {
-                return new ImageView(Paths.get("resources/media/images/victory.png").toUri().toString());
-            } else {
-                return new ImageView(Paths.get("resources/media/images/defeat.png").toUri().toString());
-            }
-        }
+        view.getWinOrLose().setText(model.getWinState() ? "Victory" : "Defeat");
+        view.getEndGameStatus().setImage(model.getWinState() ? new Image(Paths.get("resources/media/images/victory.png").toUri().toString()) : new Image(Paths.get("resources/media/images/defeat.png").toUri().toString()));
     }
 
     public void addWindowEventHandlers() {

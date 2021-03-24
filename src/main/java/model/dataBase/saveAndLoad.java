@@ -25,7 +25,6 @@ public class saveAndLoad {
     }
 
     public void createTableIfDoesntExist() {
-        System.out.println("Entered table creation method");
         try {
             ods = new OracleDataSource();
             ods.setURL(dbURL);
@@ -130,7 +129,6 @@ public class saveAndLoad {
             //   e.printStackTrace();
             System.out.println("Couldn't connect to database");
         }
-        System.out.println("Exiting table creation method");
     }
 
     public void saveGame() { // TODO: Implement game logic

@@ -1,21 +1,25 @@
 package main.java.view.screens.winLoseWindow;
 
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
+import main.java.model.dataBase.Leaderboard;
 
 import java.nio.file.Paths;
 import java.util.Collections;
 
-public class winLoseWindowView extends GridPane {
+public class winLoseWindowView extends BorderPane {
     // private Node attributes (controls)
+    private VBox vBox;
+    private HBox hBox;
 
     private Label winOrLose;
     private ImageView endGameStatus;
@@ -38,8 +42,8 @@ public class winLoseWindowView extends GridPane {
         // create and configure controls
         // button = new Button("...")
         // label = new Label("...")
-        winOrLose = updateWinOrLose(false);
-        endGameStatus = updateEndGameStatus(false);
+        winOrLose = new Label();
+        endGameStatus =  new ImageView();
         playerScore = new Label();
         stat1 = new Label();
         stat2 = new Label();
@@ -56,48 +60,46 @@ public class winLoseWindowView extends GridPane {
     private void layoutNodes() {
         // add/set … methods
         // Insets, padding, alignment, …
-        setAlignment(Pos.CENTER);
-        addLabel(winOrLose, 0,0);
-        addImageView(endGameStatus,0,1);
-        endGameStatus.setFitHeight(100);
-        endGameStatus.setFitWidth(100);
-        addLabel(playerScore,0,2);
-        addLabel(stat1, 0,3);
-        addLabel(stat2, 0,4);
-        addLabel(stat3, 0,5);
-        addLineChart(lineChart,0,6);
-        addButton(mainMenu, 1, 7, 3, 2);
-        addButton(playAgain, 0,7,3,2);
-        addButton(exitGame, 2,7,3,2);
-//        getColumnConstraints().add(new ColumnConstraints(100)); // column 0 is 100 wide
-//        getColumnConstraints().add(new ColumnConstraints(200));
 
-        for (int i = 0; i < numRows; i++) {
-            RowConstraints rowConst = new RowConstraints();
-            rowConst.setPercentHeight(100.0 / numRows);
-            this.getRowConstraints().add(rowConst);
-        }
+        labelStyle(playerScore);
+        playerScore.setPadding(new Insets(17, 17, 17, 17));
+        labelStyle(stat1);
+        stat1.setPadding(new Insets(17, 17, 17, 17));
+        labelStyle(stat2);
+        stat2.setPadding(new Insets(17, 17, 17, 17));
+        labelStyle(stat3);
+        stat3.setPadding(new Insets(17, 17, 17, 17));
+
+        endGameStatus.setFitHeight(125);
+        endGameStatus.setFitWidth(125);
+        winOrLose.setStyle("-fx-font-size: 35; fx-font-weight: BOLD");
+        vBox = new VBox(winOrLose, endGameStatus, playerScore, stat1, stat2, stat3);
+        vBox.setAlignment(Pos.CENTER);
+        this.setCenter(vBox);
+
+        mainMenu.setStyle("-fx-font-weight: BOLD; -fx-font-size: 13");
+        playAgain.setStyle("-fx-font-weight: BOLD; -fx-font-size: 13");
+        exitGame.setStyle("-fx-font-weight: BOLD; -fx-font-size: 13");
+        HBox.setMargin(mainMenu, new Insets(17, 17, 17, 17));
+        HBox.setMargin(playAgain, new Insets(17, 17, 17, 17));
+        HBox.setMargin(exitGame, new Insets(17, 17, 17, 17));
+        hBox = new HBox(mainMenu, playAgain, exitGame);
+        hBox.setAlignment(Pos.CENTER);
+        BorderPane.setMargin(hBox, new Insets(17, 17, 17, 17));
+
+        this.setBottom(hBox);
+        lineChart.setMaxWidth(500);
+        lineChart.setMaxHeight(500);
+        BorderPane.setAlignment(lineChart, Pos.CENTER);
+        BorderPane.setMargin(lineChart, new Insets(17, 17, 17, 17));
+        this.setRight(lineChart);
     }
 
-    private void addButton(Button button, int i1, int i2, int i3, int i4) {
-        this.add(button, i1, i2, i3, i4);
-        button.setStyle("-fx-font-weight: BOLD");
-    }
-
-    private void addLineChart(LineChart lineChart, int i1, int i2) {
-        this.add(lineChart, i1, i2);
-    }
-
-    private void addLabel(Label label, int i1, int i2) {
-        this.add(label, i1, i2);
+    private void labelStyle(Label label) {
         label.setAlignment(Pos.CENTER);
-        this.setHalignment(label, HPos.CENTER);
-        label.setStyle("-fx-font-size: 24");
+        label.setStyle("-fx-font-size: 17");
     }
 
-    private void addImageView(ImageView image, int i1, int i2) {
-        this.add(image, i1, i2);
-    }
 
 
     // package-private Getters
