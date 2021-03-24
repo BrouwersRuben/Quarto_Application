@@ -4,7 +4,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import javafx.stage.Window;
 import main.java.model.Quarto;
-import main.java.model.dataBase.saveAndLoad;
 import main.java.view.screens.gameWindow.GameWindowPresenter;
 import main.java.view.screens.gameWindow.GameWindowView;
 import main.java.view.screens.main.QuartoPresenter;
@@ -32,8 +31,7 @@ public class UserNameProloguePresenter {
         });
 
         this.view.getStartGame().setOnAction(event -> {
-            saveAndLoad createTable = new saveAndLoad();
-            createTable.createTableIfDoesntExist();
+            model.createTableIfDoesntExist();
             setGameWindow();
             updateView();
         });

@@ -3,6 +3,7 @@ package main.java.view.screens.winLoseWindow;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Screen;
@@ -13,6 +14,8 @@ import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 import main.java.view.screens.userNamePrologue.UserNameProloguePresenter;
 import main.java.view.screens.userNamePrologue.UserNamePrologueView;
+
+import java.util.Collections;
 
 public class winLoseWindowPresenter {
     private final Quarto model;
@@ -50,6 +53,22 @@ public class winLoseWindowPresenter {
 
     private void updateView() {
         // fills the view with model data
+        view.getPlayerScore().setText("score: " + String.valueOf(model.getRecordsUserScore(0)));
+        view.getStat1().setText("average time spent per round: "+ model.getAverageTime());
+        view.getStat2().setText("fastest move: "+ model.getFastestMove() + "seconds");
+        view.getStat3().setText("slowest move: "+ model.getSlowestMove() + "seconds");
+
+        //TODO: ask lecturers
+        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+
+        for (int i = 0; i < model.getTurnStatsSize() ; i++) {
+            String turn = ""+(i+1);
+            series1.getData().add(new XYChart.Data<>(turn, model.getTurnstats(i)));
+        }
+
+        series1.setName("this game");
+        view.getLineChart().getData().addAll(series1);
+
     }
 
     public void addWindowEventHandlers() {
@@ -94,5 +113,9 @@ public class winLoseWindowPresenter {
 //            lb.closeDb();
             Platform.exit();
         }
+    }
+
+    public int getTurnStatsSize(){
+        return model.getTurnStatsSize();
     }
 }

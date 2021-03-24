@@ -3,6 +3,7 @@ package main.java.model;
 import main.java.model.board.Board;
 import main.java.model.board.PieceStatus;
 import main.java.model.dataBase.Leaderboard;
+import main.java.model.dataBase.saveAndLoad;
 import main.java.model.pieces.Piece;
 
 import java.util.Collections;
@@ -12,14 +13,18 @@ public class Quarto {
     protected int amountOfTurns;
     protected int gameTimerSeconds = 300 /*5 min*/;
     // private attributes
-    Leaderboard leaderboard = new Leaderboard();
-    Board newBoard = new Board();
-    Piece quartoPiece = new Piece();
-    PieceStatus pieceStatus;
+    private Leaderboard leaderboard = new Leaderboard();
+    private Board newBoard = new Board();
+    private Piece quartoPiece = new Piece();
+    private PieceStatus pieceStatus;
+    private saveAndLoad createTable = new saveAndLoad();
 
     public Quarto() {
 // Constructor
 
+    }
+    public void createTableIfDoesntExist(){
+        createTable.createTableIfDoesntExist();
     }
 
     public void getStatistics(int id){
@@ -52,6 +57,14 @@ public class Quarto {
 
     public int getRecordsUserId(int i){
         return Leaderboard.records[i].getId();
+    }
+
+    public int getTurnStatsSize(){
+        return Leaderboard.turnStats.size();
+    }
+
+    public int getTurnstats(int i){
+        return Leaderboard.turnStats.get(i);
     }
 
     // methods with business logic
