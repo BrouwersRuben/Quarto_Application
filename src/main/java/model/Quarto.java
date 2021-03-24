@@ -24,6 +24,18 @@ public class Quarto {
         leaderboard.getStatistics(id);
     }
 
+    public String getRecordsScore(int i){
+        return String.valueOf(Leaderboard.records[i].getScore());
+    }
+
+    public String getRecordsUserName(int i){
+        return Leaderboard.records[i].getUsername();
+    }
+
+    public int getRecordsUserId(int i){
+        return Leaderboard.records[i].getId();
+    }
+
     // methods with business logic
     public boolean pass(int piece) {
         if (piece < 0 || piece > 15) {

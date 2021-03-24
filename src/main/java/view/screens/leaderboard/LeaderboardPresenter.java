@@ -3,7 +3,6 @@ package main.java.view.screens.leaderboard;
 
 import javafx.stage.Window;
 import main.java.model.Quarto;
-import main.java.model.dataBase.Leaderboard;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 import main.java.view.screens.statisticsWindow.StatisticsPresenter;
@@ -32,40 +31,43 @@ public class LeaderboardPresenter {
             setMainWindow();
             updateView();
         });
+
+        //TODO: feels kinda redundant
         this.view.getText1().setOnMouseClicked(event -> {
             usernameClicked = 0;
-            model.getStatistics(Leaderboard.records[usernameClicked].getId()); // give id from the selected one
+            model.getStatistics(model.getRecordsUserId(usernameClicked)); // give id from the selected one
             setStatisticsWindow();
         });
         this.view.getText2().setOnMouseClicked(event -> {
             usernameClicked = 1;
-            model.getStatistics(Leaderboard.records[usernameClicked].getId());
+            model.getStatistics(model.getRecordsUserId(usernameClicked));
             setStatisticsWindow();
         });
         this.view.getText3().setOnMouseClicked(event -> {
             usernameClicked = 2;
-            model.getStatistics(Leaderboard.records[usernameClicked].getId());
+            model.getStatistics(model.getRecordsUserId(usernameClicked));
             setStatisticsWindow();
         });
         this.view.getText4().setOnMouseClicked(event -> {
             usernameClicked = 3;
-            model.getStatistics(Leaderboard.records[usernameClicked].getId());
+            model.getStatistics(model.getRecordsUserId(usernameClicked));
             setStatisticsWindow();
         });
         this.view.getText5().setOnMouseClicked(event -> {
             usernameClicked = 4;
-            model.getStatistics(Leaderboard.records[usernameClicked].getId());
+            model.getStatistics(model.getRecordsUserId(usernameClicked));
             setStatisticsWindow();
         });
     }
 
     private void updateView() {
         // fills the view with model data
-        this.view.getText1().setText("1. "+Leaderboard.records[0].getUsername()+" - "+Leaderboard.records[0].getScore());
-        this.view.getText2().setText("2. "+Leaderboard.records[1].getUsername()+" - "+Leaderboard.records[1].getScore());
-        this.view.getText3().setText("3. "+Leaderboard.records[2].getUsername()+" - "+Leaderboard.records[2].getScore());
-        this.view.getText4().setText("4. "+Leaderboard.records[3].getUsername()+" - "+Leaderboard.records[3].getScore());
-        this.view.getText5().setText("5. "+Leaderboard.records[4].getUsername()+" - "+Leaderboard.records[4].getScore());
+        //TODO: make more efficient
+        this.view.getText1().setText("1. " + model.getRecordsUserName(0) + " - "+ model.getRecordsScore(0));
+        this.view.getText2().setText("2. " + model.getRecordsUserName(1) + " - "+ model.getRecordsScore(1));
+        this.view.getText3().setText("3. " + model.getRecordsUserName(2) + " - "+ model.getRecordsScore(2));
+        this.view.getText4().setText("4. " + model.getRecordsUserName(3) + " - "+ model.getRecordsScore(3));
+        this.view.getText5().setText("5. " + model.getRecordsUserName(4) + " - "+ model.getRecordsScore(4));
     }
 
     public void addWindowEventHandlers() {
