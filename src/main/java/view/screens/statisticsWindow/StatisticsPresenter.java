@@ -1,14 +1,9 @@
 package main.java.view.screens.statisticsWindow;
 
-import javafx.geometry.Rectangle2D;
-import javafx.stage.Screen;
 import javafx.stage.Window;
 import main.java.model.Quarto;
-import main.java.view.screens.gameWindow.GameWindowPresenter;
 import main.java.view.screens.leaderboard.LeaderboardPresenter;
 import main.java.view.screens.leaderboard.LeaderboardView;
-
-import java.util.Collections;
 
 public class StatisticsPresenter {
     private final Quarto model;

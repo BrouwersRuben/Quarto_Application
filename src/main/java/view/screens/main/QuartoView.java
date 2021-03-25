@@ -7,12 +7,10 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class QuartoView extends GridPane {
     // private Node attributes (controls)
-
     private final int numColums = 5;
     private final int numRows = 8;
 
@@ -21,7 +19,6 @@ public class QuartoView extends GridPane {
     private Button leaderboard;
     private Button tutorial;
     private Button exit;
-    private Font font;
 
     public QuartoView() {
         initialiseNodes();
@@ -82,8 +79,8 @@ public class QuartoView extends GridPane {
         button.setStyle("-fx-font-weight: BOLD");
     }
 
-// package-private Getters
-// for controls used by Presenter
+    // package-private Getters
+    // for controls used by Presenter
     public Text getTitle() {
         return title;
     }

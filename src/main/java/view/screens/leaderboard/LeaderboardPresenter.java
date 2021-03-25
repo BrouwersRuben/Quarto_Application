@@ -9,6 +9,7 @@ import main.java.view.screens.statisticsWindow.StatisticsPresenter;
 import main.java.view.screens.statisticsWindow.StatisticsView;
 
 public class LeaderboardPresenter {
+    // TODO: is this needed?
     private static int usernameClicked;
     private final Quarto model;
     private final LeaderboardView view;
@@ -31,7 +32,6 @@ public class LeaderboardPresenter {
             setMainWindow();
             updateView();
         });
-
         //TODO: feels kinda redundant
         this.view.getText1().setOnMouseClicked(event -> {
             usernameClicked = 0;

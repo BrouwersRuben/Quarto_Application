@@ -12,36 +12,37 @@ public enum Images {
 
     P0("0", "media/images/0.png"),
 
-    P1("BFRS", "media/images/1.png"),
-    P2("BHRS", "media/images/2.png"),
-    P3("BFRT","media/images/3.png"),
-    P4("BHRT","media/images/4.png"),
-    P5("BFTS","media/images/5.png"),
-    P6("BHTS","media/images/6.png"),
-    P7("BFTL","media/images/7.png"),
-    P8("BHTL","media/images/8.png"),
+    P1( "media/images/1.png", "BFRS"),
+    P2( "media/images/2.png", "BHRS"),
+    P3("media/images/3.png", "BFRT"),
+    P4("media/images/4.png", "BHRT"),
+    P5("media/images/5.png", "BFTS"),
+    P6("media/images/6.png", "BHTS"),
+    P7("media/images/7.png", "BFTL"),
+    P8("media/images/8.png", "BHTL"),
 
-    P9("GFRS","media/images/9.png"),
-    P10("GHRS","media/images/10.png"),
-    P11("GFRT","media/images/11.png"),
-    P12("GHRT","media/images/12.png"),
-    P13("GFTS","media/images/13.png"),
-    P14("GHTS","media/images/14.png"),
-    P15("GFTL","media/images/15.png"),
-    P16("GHTL","media/images/16.png");
+    P9("media/images/9.png", "GFRS"),
+    P10("media/images/10.png", "GHRS"),
+    P11("media/images/11.png", "GFRT"),
+    P12("media/images/12.png", "GHRT"),
+    P13("media/images/13.png", "GFTS"),
+    P14("media/images/14.png", "GHTS"),
+    P15("media/images/15.png", "GFTL"),
+    P16("media/images/16.png", "GHTL");
 
 
-    private final Image image;
+    private final Image piece;
     private final String pieceName;
 
-    Images(String name,String url) {
-        this.image = new Image(url);
-        this.pieceName = name;
+    Images(String path, String id) {
+        this.piece = new Image(path);
+        this.pieceName = id;
     }
     public Image getImage() {
-        return this.image;
+        return this.piece;
     }
-
-    //similar in the model side
+    public String getPieceName() {
+        return pieceName;
+    }
 }
 

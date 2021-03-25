@@ -156,5 +156,10 @@ public class Quarto {
         leaderboard.closeDb();
     }
 
+    public void dataBaseInit(){
+        leaderboard.connectToDb();
+        leaderboard.getRecords();
+    }
+
 
 }

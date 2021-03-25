@@ -16,7 +16,6 @@ public class QuartoPresenter {
 
     private final QuartoView view;
     private final Quarto model;
-    // Is it call the leaderboard class to have the closeDb() here
 
     public QuartoPresenter(Quarto model, QuartoView view) {
         this.model = model;
@@ -27,16 +26,14 @@ public class QuartoPresenter {
 
     public void addWindowEventHandlers() {
         // Add event handlers to window
-        view.getScene().getWindow().setOnCloseRequest(event -> {
-            closingAlert(event);
-        });
+        view.getScene().getWindow().setOnCloseRequest(this::closingAlert);
     }
 
     private void addEventHandlers() {
-// Adds event handlers (inner classes or lambdas)
-// to view controls
-// Event handlers: call model methods and
-// update the view.
+        // Adds event handlers (inner classes or lambdas)
+        // to view controls
+        // Event handlers: call model methods and
+        // update the view.
 
         this.view.getStartGame().setOnAction(event -> {
             setUserNamePrologue();

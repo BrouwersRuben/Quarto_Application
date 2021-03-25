@@ -6,7 +6,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -43,16 +42,11 @@ public class LeaderboardView extends GridPane {
         p4 = new Label();
         p5 = new Label();
         exit = new Button("Back");
-//        pane = new GridPane();
     }
 
     private void layoutNodes() {
         // add/set … methods
         // Insets, padding, alignment, …
-
-//        this.setCenter(pane);
-
-
         this.setPadding(new Insets(10));
 
         for (int i = 0; i < numColumns; i++) {

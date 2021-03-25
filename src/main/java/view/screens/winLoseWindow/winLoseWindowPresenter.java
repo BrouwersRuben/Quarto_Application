@@ -6,20 +6,15 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
 import javafx.stage.Window;
 import main.java.model.Quarto;
-import main.java.view.screens.gameWindow.GameWindowPresenter;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 import main.java.view.screens.userNamePrologue.UserNameProloguePresenter;
 import main.java.view.screens.userNamePrologue.UserNamePrologueView;
-
 import java.nio.file.Paths;
-import java.util.Collections;
 
 public class winLoseWindowPresenter {
     private final Quarto model;
@@ -41,12 +36,10 @@ public class winLoseWindowPresenter {
             setUserNamePrologue();
             updateView();
         });
-
         this.view.getMainMenu().setOnAction(event -> {
             setMainWindow();
             updateView();
         });
-
         this.view.getExitGame().setOnAction(event -> {
             closingAlert(event);
             updateView();
@@ -57,7 +50,7 @@ public class winLoseWindowPresenter {
 
     private void updateView() {
         // fills the view with model data
-        view.getPlayerScore().setText("score: " + String.valueOf(model.getRecordsUserScore(0)));
+        view.getPlayerScore().setText("score: " + model.getRecordsUserScore(0));
         view.getStat1().setText("average time spent per round: "+ model.getAverageTime());
         view.getStat2().setText("fastest move: "+ model.getFastestMove() + "seconds");
         view.getStat3().setText("slowest move: "+ model.getSlowestMove() + "seconds");
@@ -115,7 +108,7 @@ public class winLoseWindowPresenter {
         if (alert.getResult() == null || alert.getResult().equals(no)) {
             event.consume();
         } else {
-//            lb.closeDb();
+            model.closeDB();
             Platform.exit();
         }
     }

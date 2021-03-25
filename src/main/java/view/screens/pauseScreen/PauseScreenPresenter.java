@@ -2,7 +2,6 @@ package main.java.view.screens.pauseScreen;
 
 import javafx.stage.Window;
 import main.java.model.Quarto;
-import main.java.model.players.Human;
 import main.java.view.screens.gameWindow.GameWindowPresenter;
 import main.java.view.screens.gameWindow.GameWindowView;
 import main.java.view.screens.main.QuartoPresenter;
@@ -28,7 +27,6 @@ public class PauseScreenPresenter {
             setMainWindow();
             updateView();
         });
-
         this.view.getStartGame().setOnAction(event -> {
             setGameWindow();
             updateView();

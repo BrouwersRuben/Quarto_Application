@@ -16,8 +16,7 @@ public class Leaderboard { // Used for retrieving the leaderboard
 	public static Statement statement = null;
     private static OracleDataSource ods;
     public static Record[] records;
-    public static Statistics[] statistics;
-    public static List<Integer> turnStats = new ArrayList<Integer>();
+    public static List<Integer> turnStats = new ArrayList<>();
     public static long averageTime;
 
     public void connectToDb() {
@@ -62,7 +61,7 @@ public class Leaderboard { // Used for retrieving the leaderboard
             int i = 0;
             while (rows.next() && i < 5) {
                 records[i] = new Record(rows.getInt("ID"), rows.getString("USERNAME"), rows.getInt("TOP_SCORE")); {
-                };
+                }
                 i++;
             }
             statement.close();
@@ -93,6 +92,7 @@ public class Leaderboard { // Used for retrieving the leaderboard
             connection.close();
 
         } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 
@@ -150,6 +150,7 @@ public class Leaderboard { // Used for retrieving the leaderboard
             connection.close();
 
         } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 

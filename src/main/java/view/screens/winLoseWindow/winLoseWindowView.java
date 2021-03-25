@@ -1,20 +1,15 @@
 package main.java.view.screens.winLoseWindow;
 
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import main.java.model.dataBase.Leaderboard;
 
-import java.nio.file.Paths;
-import java.util.Collections;
 
 public class winLoseWindowView extends BorderPane {
     // private Node attributes (controls)
@@ -99,8 +94,6 @@ public class winLoseWindowView extends BorderPane {
         label.setAlignment(Pos.CENTER);
         label.setStyle("-fx-font-size: 17");
     }
-
-
 
     // package-private Getters
     // for controls used by Presenter
