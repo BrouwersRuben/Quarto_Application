@@ -192,8 +192,6 @@ public class GameWindowView extends BorderPane {
 
         }
 
-
-
     // package-private Getters
     // for controls used by Presenter
     public Button getPauseGame() {
