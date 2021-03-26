@@ -1,4 +1,3 @@
-
 package main.java.view.screens.tutorial;
 
 import javafx.geometry.Insets;
@@ -16,7 +15,8 @@ import javafx.scene.text.Text;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class TutorialView extends BorderPane {;
+public class TutorialView extends BorderPane {
+    ;
 
     // private Node attributes (controls)
     private Text title;
@@ -36,7 +36,7 @@ public class TutorialView extends BorderPane {;
         layoutNodes();
     }
 
-    private void initialiseNodes(){
+    private void initialiseNodes() {
         // create and configure controls
         // button = new Button("...")
         // label = new Label("...")
@@ -59,25 +59,25 @@ public class TutorialView extends BorderPane {;
         this.setPadding(new Insets(20, 20, 10, 20));
 
         this.setTop(title);
-        this.setAlignment(title, Pos.TOP_CENTER);
-        this.setMargin(exit, new Insets(15));
+        setAlignment(title, Pos.TOP_CENTER);
+        setMargin(exit, new Insets(15));
         title.setStyle("-fx-font-weight: BOLD;" +
                 "-fx-font-size: 33;");
 
         body.setStyle("-fx-font-size: 18;");
-        this.setAlignment(body, Pos.TOP_LEFT);
+        setAlignment(body, Pos.TOP_LEFT);
         this.setCenter(body);
-        this.setMargin(body, new Insets(30));
+        setMargin(body, new Insets(30));
 
         exit.setPrefWidth(200);
         exit.setPrefHeight(25);
         this.setBottom(exit);
-        this.setMargin(exit, new Insets(25));
-        this.setAlignment(exit, Pos.BOTTOM_CENTER);
+        setMargin(exit, new Insets(25));
+        setAlignment(exit, Pos.BOTTOM_CENTER);
 
         player.play();
         this.setRight(mediaBox);
-        this.setAlignment(mediaBox, Pos.CENTER);
+        setAlignment(mediaBox, Pos.CENTER);
 
         mediaBox.getChildren().add(playerView);
         mediaBox.getChildren().add(time);
@@ -85,7 +85,7 @@ public class TutorialView extends BorderPane {;
         playerView.setFitWidth(500);
         mediaBox.setAlignment(Pos.CENTER);
         mediaBox.setPadding(new Insets(5, 10, 5, 10));
-        mediaBox.setVgrow(time, Priority.ALWAYS);
+        VBox.setVgrow(time, Priority.ALWAYS);
     }
 
     // package-private Getters
@@ -94,18 +94,23 @@ public class TutorialView extends BorderPane {;
     public Button getExit() {
         return exit;
     }
+
     public Slider getTime() {
         return time;
     }
+
     public Button getPlayButton() {
         return playButton;
     }
+
     public MediaPlayer getPlayer() {
         return player;
     }
+
     public Text getBody() {
         return body;
     }
+
     public Path getPath() {
         return path;
     }

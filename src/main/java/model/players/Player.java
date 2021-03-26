@@ -5,7 +5,7 @@ public class Player {
 
     //Setters
     public boolean setHasQuarto(boolean hasQuarto) {
-        return this.hasQuarto=hasQuarto;
+        return this.hasQuarto = hasQuarto;
     }
 
     //Getters

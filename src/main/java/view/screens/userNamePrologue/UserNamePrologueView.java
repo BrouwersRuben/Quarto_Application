@@ -64,19 +64,19 @@ public class UserNamePrologueView extends GridPane {
         this.setWidth(900);
 
         title.textAlignmentProperty();
-        this.add(title, 1, 1, 3, 1 );
-        this.setHalignment(title, HPos.CENTER);
+        this.add(title, 1, 1, 3, 1);
+        setHalignment(title, HPos.CENTER);
         title.setStyle("-fx-font-size: 25;");
 
-        this.add(userName, 1, 2, 3, 1 );
+        this.add(userName, 1, 2, 3, 1);
         userName.setPrefWidth(300);
         userName.setAlignment(Pos.CENTER);
-        this.setHalignment(userName, HPos.CENTER);
+        setHalignment(userName, HPos.CENTER);
         userName.setStyle("-fx-font-size: 13;");
 
         this.add(error, 1, 4, 3, 1);
         error.setTextAlignment(TextAlignment.CENTER);
-        this.setHalignment(error, HPos.CENTER);
+        setHalignment(error, HPos.CENTER);
         error.setFill(Paint.valueOf("Red"));
         error.setStyle("-fx-font-size: 18; -fx-font-weight: BOLD");
 
@@ -84,12 +84,12 @@ public class UserNamePrologueView extends GridPane {
         addButton(startGame, 2, 3, 3, 1);
     }
 
-    private void addButton(Button button, int i1, int i2, int i3, int i4){
-        this.add(button, i1, i2, i3, i4 );
+    private void addButton(Button button, int i1, int i2, int i3, int i4) {
+        this.add(button, i1, i2, i3, i4);
         button.setPrefHeight(25);
         button.setPrefWidth(200);
         button.setAlignment(Pos.CENTER);
-        this.setHalignment(button, HPos.CENTER);
+        setHalignment(button, HPos.CENTER);
         button.setStyle("-fx-font-weight: BOLD");
     }
 
@@ -98,12 +98,15 @@ public class UserNamePrologueView extends GridPane {
     public TextField getUserName() {
         return userName;
     }
+
     public Button getBack() {
         return back;
     }
+
     public Button getStartGame() {
         return startGame;
     }
+
     public Text getError() {
         return error;
     }

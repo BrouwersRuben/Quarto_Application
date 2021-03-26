@@ -1,9 +1,9 @@
 package main.java.model.dataBase;
 
 public class Record {
-    private int id;
-    private String username;
-    private int score;
+    private final int id;
+    private final String username;
+    private final int score;
 
     public Record(int id, String username, int score) {
         this.id = id;

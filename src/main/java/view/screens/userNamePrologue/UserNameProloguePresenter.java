@@ -29,10 +29,10 @@ public class UserNameProloguePresenter {
         });
 
         this.view.getStartGame().setOnAction(event -> {
-            model.setUserName(view.getUserName().getText().replaceAll("\\s+",""));
-            if(view.getUserName().getText().trim().isEmpty()){
+            model.setUserName(view.getUserName().getText().replaceAll("\\s+", ""));
+            if (view.getUserName().getText().trim().isEmpty()) {
                 this.view.getError().setText("This cannot be empty!");
-            } else if (view.getUserName().getText().length()>15){
+            } else if (view.getUserName().getText().length() > 15) {
                 this.view.getError().setText("Your username cannot be this long");
             } else {
                 setGameWindow();

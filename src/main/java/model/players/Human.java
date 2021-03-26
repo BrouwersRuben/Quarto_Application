@@ -2,11 +2,10 @@ package main.java.model.players;
 
 public class Human extends Player {
 
-    Player human = new Player();
-
-    String name;
     protected int score;
     protected boolean startsFirst;
+    Player human = new Player();
+    String name;
     //human.hasquarto;
 
     public Human() {
@@ -23,20 +22,24 @@ public class Human extends Player {
     public String getName() {
         return name;
     }
-    public int getScore() {
-        return score;
-    }
-    public boolean isStartsFirst() {
-        return startsFirst;     
-    }
 
     //Setters
     public void setName(String name) {
         this.name = name;
     }
+
+    public int getScore() {
+        return score;
+    }
+
     public void setScore(int score) {
         this.score = score;
     }
+
+    public boolean isStartsFirst() {
+        return startsFirst;
+    }
+
     public void setStartsFirst(boolean startsFirst) {
         this.startsFirst = startsFirst;
     }

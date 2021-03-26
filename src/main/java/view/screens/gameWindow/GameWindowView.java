@@ -52,7 +52,7 @@ public class GameWindowView extends BorderPane {
         resetVariables();
     }
 
-    private void resetVariables(){
+    private void resetVariables() {
         initialiseGameBoard();
         layoutGameboard();
         initialiseChosenPiece();
@@ -92,32 +92,32 @@ public class GameWindowView extends BorderPane {
         playerTurn = new Label();
     }
 
-    private void initialiseChosenPiece(){
+    private void initialiseChosenPiece() {
         this.chosenPieceBack[0] = new ImageView(Images.P0.getImage());
     }
 
-    private void initialiseGameBoard(){
-        for (int i = 0; i < this.gameBoardBack.length; i++){
-            for (int j = 0; j < this.gameBoardBack[i].length; j++){
+    private void initialiseGameBoard() {
+        for (int i = 0; i < this.gameBoardBack.length; i++) {
+            for (int j = 0; j < this.gameBoardBack[i].length; j++) {
                 this.gameBoardBack[i][j] = new ImageView(Images.P0.getImage());
                 this.gameBoardBack[i][j].setId("free");
             }
         }
     }
 
-    private void initialiseAvailablePieces(){
+    private void initialiseAvailablePieces() {
         int count = 0;
-        for (int i = 0; i < this.availablePiecesBack.length; i++){
-            for (int j = 0; j < this.availablePiecesBack[i].length; j++){
+        for (int i = 0; i < this.availablePiecesBack.length; i++) {
+            for (int j = 0; j < this.availablePiecesBack[i].length; j++) {
                 count++;
                 String path = "Images.P" + count + ".getImage().getUrl()";
-                this.availablePiecesBack[i][j] = new ImageView(/*path*/"media/images/"+ count +".png");
+                this.availablePiecesBack[i][j] = new ImageView(/*path*/"media/images/" + count + ".png");
                 this.availablePiecesBack[i][j].setId(String.valueOf(count));
             }
         }
     }
 
-    private void layoutChosenPiece(){
+    private void layoutChosenPiece() {
         this.chosenPiece.setGridLinesVisible(true);
         this.chosenPiece.setPadding(new Insets(5.0));
         this.chosenPiece.add(this.chosenPieceBack[0], 0, 0);
@@ -151,13 +151,13 @@ public class GameWindowView extends BorderPane {
 
         bottomBox = new HBox(saveGame, pauseGame, endGame, userName, errorLabel, winScreen, loseScreen);
         bottomBox.setPadding(new Insets(10, 10, 10, 10));
-        bottomBox.setMargin(saveGame, new Insets(5, 10, 5, 10));
-        bottomBox.setMargin(pauseGame, new Insets(5, 10, 5, 10));
-        bottomBox.setMargin(endGame, new Insets(5, 10, 5, 10));
-        bottomBox.setMargin(userName, new Insets(5, 10, 5, 10));
-        bottomBox.setMargin(errorLabel, new Insets(5, 10, 5, 10));
-        bottomBox.setMargin(winScreen, new Insets(5, 10, 5, 10));
-        bottomBox.setMargin(loseScreen, new Insets(5, 10, 5, 10));
+        HBox.setMargin(saveGame, new Insets(5, 10, 5, 10));
+        HBox.setMargin(pauseGame, new Insets(5, 10, 5, 10));
+        HBox.setMargin(endGame, new Insets(5, 10, 5, 10));
+        HBox.setMargin(userName, new Insets(5, 10, 5, 10));
+        HBox.setMargin(errorLabel, new Insets(5, 10, 5, 10));
+        HBox.setMargin(winScreen, new Insets(5, 10, 5, 10));
+        HBox.setMargin(loseScreen, new Insets(5, 10, 5, 10));
         userName.setStyle("-fx-font-size: 15");
         errorLabel.setStyle("-fx-font-size: 15;");
         errorLabel.setFill(Paint.valueOf("Red"));
@@ -167,9 +167,9 @@ public class GameWindowView extends BorderPane {
         chosenPiece.setAlignment(Pos.CENTER);
         this.vBox.setAlignment(Pos.TOP_CENTER);
 
-        vBox.setMargin(chosenPiece, new Insets(10, 10, 10, 10));
-        vBox.setMargin(playerTurn, new Insets(10, 10, 10, 10));
-        vBox.setMargin(quarto, new Insets(10, 10, 10, 10));
+        VBox.setMargin(chosenPiece, new Insets(10, 10, 10, 10));
+        VBox.setMargin(playerTurn, new Insets(10, 10, 10, 10));
+        VBox.setMargin(quarto, new Insets(10, 10, 10, 10));
 
         hBox = new HBox(gameBoard, vBox, availablePieces);
         hBox.setAlignment(Pos.CENTER);
@@ -187,7 +187,7 @@ public class GameWindowView extends BorderPane {
         BorderPane.setAlignment(gameTitle, Pos.CENTER);
 
 
-        }
+    }
 
     // package-private Getters
     // for controls used by Presenter
@@ -210,39 +210,51 @@ public class GameWindowView extends BorderPane {
     public Button getEndGame() {
         return endGame;
     }
+
     public Label getPlayerTurn() {
         return playerTurn;
     }
+
     public GridPane getGameBoard() {
         return gameBoard;
     }
+
     public GridPane getAvailablePieces() {
         return availablePieces;
     }
+
     public GridPane getChosenPiece() {
         return chosenPiece;
     }
-    public ImageView[][] getGameBoardBack() {
-        return gameBoardBack;
-    }
-    public ImageView[] getChosenPieceBack() {
-        return chosenPieceBack;
-    }
-    public ImageView[][] getAvailablePiecesBack() {
-        return availablePiecesBack;
-    }
-    public Button getQuarto() {
-        return quarto;
-    }
+
     public void setChosenPiece(GridPane chosenPiece) {
         this.chosenPiece = chosenPiece;
     }
+
+    public ImageView[][] getGameBoardBack() {
+        return gameBoardBack;
+    }
+
+    public ImageView[] getChosenPieceBack() {
+        return chosenPieceBack;
+    }
+
+    public ImageView[][] getAvailablePiecesBack() {
+        return availablePiecesBack;
+    }
+
+    public Button getQuarto() {
+        return quarto;
+    }
+
     public Label getTimer() {
         return timer;
     }
+
     public Text getUserName() {
         return userName;
     }
+
     public Text getErrorLabel() {
         return errorLabel;
     }

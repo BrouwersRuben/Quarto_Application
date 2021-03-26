@@ -8,14 +8,16 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 
 public class winLoseWindowView extends BorderPane {
+    private final double numRows = 7;
     // private Node attributes (controls)
     private VBox vBox;
     private HBox hBox;
-
     private Label winOrLose;
     private ImageView endGameStatus;
     private Label playerScore;
@@ -26,7 +28,6 @@ public class winLoseWindowView extends BorderPane {
     private Button mainMenu;
     private Button playAgain;
     private Button exitGame;
-    private final double numRows = 7;
 
     public winLoseWindowView() {
         initialiseNodes();
@@ -38,7 +39,7 @@ public class winLoseWindowView extends BorderPane {
         // button = new Button("...")
         // label = new Label("...")
         winOrLose = new Label();
-        endGameStatus =  new ImageView();
+        endGameStatus = new ImageView();
         playerScore = new Label();
         stat1 = new Label();
         stat2 = new Label();
@@ -104,27 +105,35 @@ public class winLoseWindowView extends BorderPane {
     public Button getPlayAgain() {
         return playAgain;
     }
+
     public Button getExitGame() {
         return exitGame;
     }
+
     public Label getWinOrLose() {
         return winOrLose;
     }
+
     public ImageView getEndGameStatus() {
         return endGameStatus;
     }
+
     public Label getPlayerScore() {
         return playerScore;
     }
+
     public Label getStat1() {
         return stat1;
     }
+
     public Label getStat2() {
         return stat2;
     }
+
     public Label getStat3() {
         return stat3;
     }
+
     public LineChart getLineChart() {
         return lineChart;
     }

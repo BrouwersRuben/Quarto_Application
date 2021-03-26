@@ -16,7 +16,7 @@ public class LeaderboardView extends GridPane {
     private final int numColumns = 5;
     private final int numRows = 9;
 
-//    private GridPane pane;
+    //    private GridPane pane;
     private Text title;
     private Label p1;
     private Label p2;
@@ -65,8 +65,8 @@ public class LeaderboardView extends GridPane {
         this.setVgap(8);
 
         title.textAlignmentProperty();
-        this.add(title, 1, 1, 3, 1 );
-        this.setHalignment(title, HPos.CENTER);
+        this.add(title, 1, 1, 3, 1);
+        setHalignment(title, HPos.CENTER);
         title.setStyle("-fx-font-weight: BOLD;" +
                 "-fx-font-size: 33;");
 
@@ -79,19 +79,19 @@ public class LeaderboardView extends GridPane {
         addButton(exit, 1, 7, 3, 1);
     }
 
-    private void addButton(Button button, int i1, int i2, int i3, int i4){
-        this.add(button, i1, i2, i3, i4 );
+    private void addButton(Button button, int i1, int i2, int i3, int i4) {
+        this.add(button, i1, i2, i3, i4);
         button.setPrefHeight(25);
         button.setPrefWidth(200);
         button.setAlignment(Pos.CENTER);
-        this.setHalignment(button, HPos.CENTER);
+        setHalignment(button, HPos.CENTER);
         button.setStyle("-fx-font-weight: BOLD");
     }
 
-    private void addLabel(Label label, int i1){
+    private void addLabel(Label label, int i1) {
         this.add(label, 1, i1, 3, 1);
         label.setAlignment(Pos.CENTER);
-        this.setHalignment(label, HPos.CENTER);
+        setHalignment(label, HPos.CENTER);
         label.setStyle("-fx-font-size: 17;");
     }
 
@@ -104,15 +104,19 @@ public class LeaderboardView extends GridPane {
     public Label getText1() {
         return p1;
     }
+
     public Label getText2() {
         return p2;
     }
+
     public Label getText3() {
         return p3;
     }
+
     public Label getText4() {
         return p4;
     }
+
     public Label getText5() {
         return p5;
     }

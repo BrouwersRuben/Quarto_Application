@@ -21,6 +21,10 @@ public class LeaderboardPresenter {
         updateView();
     }
 
+    public static int getUsernameClicked() {
+        return usernameClicked;
+    }
+
     private void addEventHandlers() {
         // Add event handlers (inner classes or
         // lambdas) to view controls.
@@ -86,10 +90,6 @@ public class LeaderboardPresenter {
         view.getScene().setRoot(statisticsView);
         statisticsView.getScene().getWindow().setWidth(625);
         statisticsView.getScene().getWindow().setHeight(425);
-    }
-
-    public static int getUsernameClicked() {
-        return usernameClicked;
     }
 }
 

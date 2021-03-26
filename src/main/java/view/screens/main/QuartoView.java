@@ -59,23 +59,23 @@ public class QuartoView extends GridPane {
         this.setVgap(8);
 
         title.textAlignmentProperty();
-        this.add(title, 1, 1, 3, 1 );
-        this.setHalignment(title, HPos.CENTER);
+        this.add(title, 1, 1, 3, 1);
+        setHalignment(title, HPos.CENTER);
         title.setStyle("-fx-font-weight: BOLD;" +
-                        "-fx-font-size: 45;");
+                "-fx-font-size: 45;");
 
-        addButton(startGame, 1, 3, 3, 1 );
+        addButton(startGame, 1, 3, 3, 1);
         addButton(leaderboard, 1, 4, 3, 1);
         addButton(tutorial, 1, 5, 3, 1);
         addButton(exit, 1, 6, 3, 1);
     }
 
-    private void addButton(Button button, int i1, int i2, int i3, int i4){
-        this.add(button, i1, i2, i3, i4 );
+    private void addButton(Button button, int i1, int i2, int i3, int i4) {
+        this.add(button, i1, i2, i3, i4);
         button.setPrefHeight(25);
         button.setPrefWidth(200);
         button.setAlignment(Pos.CENTER);
-        this.setHalignment(button, HPos.CENTER);
+        setHalignment(button, HPos.CENTER);
         button.setStyle("-fx-font-weight: BOLD");
     }
 
@@ -84,15 +84,19 @@ public class QuartoView extends GridPane {
     public Text getTitle() {
         return title;
     }
+
     public Button getStartGame() {
         return startGame;
     }
+
     public Button getLeaderboard() {
         return leaderboard;
     }
+
     public Button getTutorial() {
         return tutorial;
     }
+
     public Button getExit() {
         return exit;
     }

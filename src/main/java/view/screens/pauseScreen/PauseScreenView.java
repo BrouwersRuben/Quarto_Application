@@ -17,7 +17,7 @@ public class PauseScreenView extends GridPane {
 
     // private Node attributes (controls)
     private Text title;
-//    private Label passedTime;
+    //    private Label passedTime;
     private Button startGame;
     private Button mainMenu;
 
@@ -59,20 +59,20 @@ public class PauseScreenView extends GridPane {
         this.setWidth(900);
 
         title.textAlignmentProperty();
-        this.add(title, 1, 1, 3, 1 );
-        this.setHalignment(title, HPos.CENTER);
+        this.add(title, 1, 1, 3, 1);
+        setHalignment(title, HPos.CENTER);
         title.setStyle("-fx-font-size: 25;");
 
         addButton(mainMenu, 0, 3, 3, 1);
         addButton(startGame, 2, 3, 3, 1);
     }
 
-    private void addButton(Button button, int i1, int i2, int i3, int i4){
-        this.add(button, i1, i2, i3, i4 );
+    private void addButton(Button button, int i1, int i2, int i3, int i4) {
+        this.add(button, i1, i2, i3, i4);
         button.setPrefHeight(25);
         button.setPrefWidth(200);
         button.setAlignment(Pos.CENTER);
-        this.setHalignment(button, HPos.CENTER);
+        setHalignment(button, HPos.CENTER);
         button.setStyle("-fx-font-weight: BOLD");
     }
 
@@ -81,9 +81,11 @@ public class PauseScreenView extends GridPane {
     public Text getTitle() {
         return title;
     }
+
     public Button getStartGame() {
         return startGame;
     }
+
     public Button getMainMenu() {
         return mainMenu;
     }

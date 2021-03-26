@@ -26,9 +26,9 @@ public class StatisticsPresenter {
     private void updateView() {
         view.getPlayerName().setText(model.getRecordsUserName(LeaderboardPresenter.getUsernameClicked()));
         view.getPlayerScore().setText("score: " + (model.getRecordsUserScore(LeaderboardPresenter.getUsernameClicked())));
-        view.getStat1().setText("average time spent per round: "+(model.getAverageTime()));
-        view.getStat2().setText("fastest move: "+ model.getFastestMove() +" seconds");
-        view.getStat3().setText("slowest move: "+ model.getSlowestMove() +" seconds");
+        view.getStat1().setText("average time spent per round: " + (model.getAverageTime()));
+        view.getStat2().setText("fastest move: " + model.getFastestMove() + " seconds");
+        view.getStat3().setText("slowest move: " + model.getSlowestMove() + " seconds");
     }
 
     public void addWindowEventHandlers() {

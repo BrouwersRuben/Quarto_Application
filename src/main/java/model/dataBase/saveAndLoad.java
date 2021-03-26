@@ -1,7 +1,6 @@
 package main.java.model.dataBase;
 
 import main.java.model.Quarto;
-import main.java.model.players.Human;
 import oracle.jdbc.pool.OracleDataSource;
 
 import java.io.File;
@@ -10,9 +9,9 @@ import java.sql.*;
 public class saveAndLoad {
     private static final File WALLET = new File("Wallet_QuartoDatabase");
     private static final String dbURL = "jdbc:oracle:thin:@quartodatabase_medium?TNS_ADMIN=" + WALLET.getAbsolutePath();
+    private static OracleDataSource ods;
     private final String username = "QUARTOADMIN";
     private final String password = "Quarto_Game1";
-    private static OracleDataSource ods;
     private Quarto game;
 
 
@@ -39,7 +38,7 @@ public class saveAndLoad {
                 if (e.getErrorCode() == 942) {
 
                     try {
-                        statement.execute("CREATE TABLE game_data("+
+                        statement.execute("CREATE TABLE game_data(" +
                                 "    id number(10) default game_data_id_seq.nextVal CONSTRAINT game_data_id_pk PRIMARY KEY," +
                                 "    username varchar2(20) CONSTRAINT game_data_username_nn NOT NULL," +
                                 "    time_played number(4) CONSTRAINT game_data_time_played_nn NOT NULL," +
@@ -66,7 +65,7 @@ public class saveAndLoad {
                             "    row_2 varchar2(4) CONSTRAINT board_data_row_2_nn NOT NULL," +
                             "    row_3 varchar2(4) CONSTRAINT board_data_row_3_nn NOT NULL," +
                             "    row_4 varchar2(4) CONSTRAINT board_data_row_4_nn NOT NULL," +
-                            "    CONSTRAINT board_data_rows_ck CHECK (regexp_like(row_1 || row_2 || row_3 || row_4, '^[01]{16}$'))"+
+                            "    CONSTRAINT board_data_rows_ck CHECK (regexp_like(row_1 || row_2 || row_3 || row_4, '^[01]{16}$'))" +
                             "    /* ^ - start of line | [01] 0's or 1's | {16} 16 consecutive times | $ - end of line */" +
                             ")");
                 }
@@ -80,7 +79,7 @@ public class saveAndLoad {
                     statement.execute("CREATE TABLE piece_attributes" +
                             "(" +
                             "    piece_ID number(2) CONSTRAINT piece_attributes_piece_ID_pk PRIMARY KEY," +
-                            "    piece_status  number(1) CONSTRAINT piece_attributes_in_play_nn NOT NULL"+
+                            "    piece_status  number(1) CONSTRAINT piece_attributes_in_play_nn NOT NULL" +
                             ")");
                 }
             }
@@ -88,11 +87,11 @@ public class saveAndLoad {
                 statement.executeQuery("SELECT * FROM pieces");
             } catch (SQLException e) {
                 if (e.getErrorCode() == 942) {
-                    statement.execute("CREATE TABLE pieces"+
+                    statement.execute("CREATE TABLE pieces" +
                             "(" +
                             "    id number(10) default game_data_id_seq.currVal CONSTRAINT pieces_id_fk REFERENCES game_data (id) ON DELETE CASCADE," +
                             "    piece_ID number(2) CONSTRAINT pieces_piece_ID_fk REFERENCES piece_attributes (piece_ID) ON DELETE CASCADE," +
-                            "    coordinates number(2) CONSTRAINT pieces_coordinates_nn NOT NULL"+
+                            "    coordinates number(2) CONSTRAINT pieces_coordinates_nn NOT NULL" +
                             ")");
                 }
             }
@@ -176,7 +175,7 @@ public class saveAndLoad {
             Connection connection = DriverManager.getConnection(dbURL, username, password);
             Statement statement = connection.createStatement();
 
-            ResultSet count = statement.executeQuery("SELECT COUNT(*) FROM game_data WHERE LOWER(username)='"+playerName.toLowerCase()+"'");
+            ResultSet count = statement.executeQuery("SELECT COUNT(*) FROM game_data WHERE LOWER(username)='" + playerName.toLowerCase() + "'");
 
             return count.next() && count.getInt(1) > 0;
 
@@ -203,7 +202,7 @@ public class saveAndLoad {
 
             ResultSet gameTable = statement.executeQuery("SELECT id, username, time_played, game_difficulty, has_quarto " +
                     "FROM game_data " +
-                    "WHERE LOWER(username)='"+playerName.toLowerCase()+"'");
+                    "WHERE LOWER(username)='" + playerName.toLowerCase() + "'");
 
             gameTable.next();
 

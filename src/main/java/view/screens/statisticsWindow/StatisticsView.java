@@ -12,13 +12,13 @@ public class StatisticsView extends GridPane {
 
     //TODO: styling
 
+    private final double numRows = 6;
     private Label playerName;
     private Label playerScore;
     private Label stat1;
     private Label stat2;
     private Label stat3;
     private Button leaderboard;
-    private final double numRows = 6;
 
     public StatisticsView() {
         initialiseNodes();
@@ -40,12 +40,12 @@ public class StatisticsView extends GridPane {
     private void layoutNodes() {
         // add/set … methods
         // Insets, padding, alignment, …
-        addLabel(playerName,0,0);
+        addLabel(playerName, 0, 0);
         playerName.setStyle("-fx-font-size:48; -fx-font-weight: bold");
-        addLabel(playerScore,0,1);
-        addLabel(stat1, 0,2);
-        addLabel(stat2, 0,3);
-        addLabel(stat3, 0,4);
+        addLabel(playerScore, 0, 1);
+        addLabel(stat1, 0, 2);
+        addLabel(stat2, 0, 3);
+        addLabel(stat3, 0, 4);
         addButton(leaderboard, 0, 5, 3, 2);
 //        getColumnConstraints().add(new ColumnConstraints(100)); // column 0 is 100 wide
 //        getColumnConstraints().add(new ColumnConstraints(200));
@@ -65,14 +65,14 @@ public class StatisticsView extends GridPane {
         button.setPrefHeight(30);
         button.setPrefWidth(400);
         button.setAlignment(Pos.CENTER);
-        this.setHalignment(button, HPos.CENTER);
+        setHalignment(button, HPos.CENTER);
         button.setStyle("-fx-font-weight: BOLD");
     }
 
     private void addLabel(Label label, int i1, int i2) {
         this.add(label, i1, i2);
         label.setAlignment(Pos.CENTER);
-        this.setHalignment(label, HPos.CENTER);
+        setHalignment(label, HPos.CENTER);
         label.setStyle("-fx-font-size: 24");
     }
 
@@ -81,18 +81,23 @@ public class StatisticsView extends GridPane {
     public Button getLeaderboard() {
         return leaderboard;
     }
+
     public Label getPlayerName() {
         return playerName;
     }
+
     public Label getPlayerScore() {
         return playerScore;
     }
+
     public Label getStat1() {
         return stat1;
     }
+
     public Label getStat2() {
         return stat2;
     }
+
     public Label getStat3() {
         return stat3;
     }

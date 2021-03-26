@@ -1,15 +1,15 @@
 package main.java.model.pieces;
 
 public enum Length {
-	SHORT(0), TALL(1);
+    SHORT(0), TALL(1);
 
-	private final int code;
+    private final int code;
 
-	Length(int code) {
-		this.code = code;
-	}
+    Length(int code) {
+        this.code = code;
+    }
 
-	public int getCode() {
-		return code;
-	}
+    public int getCode() {
+        return code;
+    }
 }

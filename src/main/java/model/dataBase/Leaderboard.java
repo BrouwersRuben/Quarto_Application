@@ -1,6 +1,7 @@
 package main.java.model.dataBase;
 
 import oracle.jdbc.pool.OracleDataSource;
+
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,21 +11,21 @@ public class Leaderboard { // Used for retrieving the leaderboard
 
     private static final File WALLET = new File("Wallet_QuartoDatabase");
     private static final String dbURL = "jdbc:oracle:thin:@quartodatabase_medium?TNS_ADMIN=" + WALLET.getAbsolutePath();
-    private final String username = "QUARTOADMIN";
-    private final String password = "Quarto_Game1";
-    private static Connection connection = null;
-	public static Statement statement = null;
-    private static OracleDataSource ods;
+    public static Statement statement = null;
     public static Record[] records;
     public static List<Integer> turnStats = new ArrayList<>();
     public static long averageTime;
+    private static Connection connection = null;
+    private static OracleDataSource ods;
+    private final String username = "QUARTOADMIN";
+    private final String password = "Quarto_Game1";
 
     public void connectToDb() {
         try {
             ods = new OracleDataSource();
             ods.setURL(dbURL);
             connection = DriverManager.getConnection(dbURL, username, password);
-            if(connection != null) {
+            if (connection != null) {
                 System.out.println("Connected to the database.");
 
                 //Statement to make the table:
@@ -60,7 +61,8 @@ public class Leaderboard { // Used for retrieving the leaderboard
                     " ORDER BY TOP_SCORE DESC");
             int i = 0;
             while (rows.next() && i < 5) {
-                records[i] = new Record(rows.getInt("ID"), rows.getString("USERNAME"), rows.getInt("TOP_SCORE")); {
+                records[i] = new Record(rows.getInt("ID"), rows.getString("USERNAME"), rows.getInt("TOP_SCORE"));
+                {
                 }
                 i++;
             }
@@ -83,9 +85,9 @@ public class Leaderboard { // Used for retrieving the leaderboard
             ods.setURL(dbURL);
             connection = DriverManager.getConnection(dbURL, username, password);
 
-            statement.execute("CREATE TABLE test_game_leaderboard"+
+            statement.execute("CREATE TABLE test_game_leaderboard" +
                     "(id NUMBER(10), " +
-                    "username VARCHAR2(20),"+
+                    "username VARCHAR2(20)," +
                     "top_score INTEGER)");
 
             statement.close();
@@ -104,14 +106,14 @@ public class Leaderboard { // Used for retrieving the leaderboard
             Connection connection = DriverManager.getConnection(dbURL, username, password);
             Statement statement = connection.createStatement();
 
-            ResultSet average = statement.executeQuery("SELECT AVG(CAST(turn_end_time AS DATE)- CAST(turn_start_time AS DATE))*24*60*60 AS turn FROM test_game_statistics WHERE ID = "+id);
+            ResultSet average = statement.executeQuery("SELECT AVG(CAST(turn_end_time AS DATE)- CAST(turn_start_time AS DATE))*24*60*60 AS turn FROM test_game_statistics WHERE ID = " + id);
 
             while (average.next()) {
                 averageTime = average.getInt("turn");
             }
 
             ResultSet turns = statement.executeQuery(
-                    "SELECT (CAST(turn_end_time AS DATE)- CAST(turn_start_time AS DATE))*24*60*60 AS seconds FROM test_game_statistics WHERE ID = "+id);
+                    "SELECT (CAST(turn_end_time AS DATE)- CAST(turn_start_time AS DATE))*24*60*60 AS seconds FROM test_game_statistics WHERE ID = " + id);
 
             turnStats.clear();
             int i = 0;
@@ -138,12 +140,12 @@ public class Leaderboard { // Used for retrieving the leaderboard
             ods.setURL(dbURL);
             connection = DriverManager.getConnection(dbURL, username, password);
 
-            statement.execute("CREATE TABLE test_game_statistics"+
+            statement.execute("CREATE TABLE test_game_statistics" +
                     "(id NUMBER(10), " +
                     "turn NUMBER(2)," +
-                    "turn_start_time timestamp  default SYSTIMESTAMP,"+
-                    "turn_end_time   timestamp  default SYSTIMESTAMP,"+
-                    "username VARCHAR2(20),"+
+                    "turn_start_time timestamp  default SYSTIMESTAMP," +
+                    "turn_end_time   timestamp  default SYSTIMESTAMP," +
+                    "username VARCHAR2(20)," +
                     "top_score INTEGER)");
 
             statement.close();
@@ -156,11 +158,11 @@ public class Leaderboard { // Used for retrieving the leaderboard
 
     public void closeDb() {
         try {
-            if(statement != null && !statement.isClosed()) {
+            if (statement != null && !statement.isClosed()) {
                 statement.close();
                 System.out.println("Closed the database statements.");
             }
-            if(connection != null && !connection.isClosed()) {
+            if (connection != null && !connection.isClosed()) {
                 connection.close();
                 System.out.println("Closed the database connection.");
             }

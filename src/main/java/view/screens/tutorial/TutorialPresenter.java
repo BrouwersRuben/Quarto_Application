@@ -11,8 +11,8 @@ import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 
 public class TutorialPresenter {
-    private Quarto model;
-    private TutorialView view;
+    private final Quarto model;
+    private final TutorialView view;
 
     public TutorialPresenter(Quarto model, TutorialView view) {
         this.model = model;
@@ -36,10 +36,9 @@ public class TutorialPresenter {
         this.view.getBody().setText(model.readTutorialFile(view.getPath()));
 
         this.view.getPlayButton().setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e)
-            {
+            public void handle(ActionEvent e) {
                 MediaPlayer.Status status = view.getPlayer().getStatus();
-                if (status == status.PLAYING) {
+                if (status == MediaPlayer.Status.PLAYING) {
                     if (view.getPlayer().getCurrentTime().greaterThanOrEqualTo(view.getPlayer().getTotalDuration())) {
                         view.getPlayer().seek(view.getPlayer().getStartTime());
                         view.getPlayer().play();
@@ -48,21 +47,19 @@ public class TutorialPresenter {
                         view.getPlayButton().setText(">");
                     }
                 }
-                if (status == status.HALTED || status == status.STOPPED || status == status.PAUSED) {
+                if (status == MediaPlayer.Status.HALTED || status == MediaPlayer.Status.STOPPED || status == MediaPlayer.Status.PAUSED) {
                     view.getPlayer().play();
                     view.getPlayButton().setText("||");
                 }
             }
         });
         view.getPlayer().currentTimeProperty().addListener(new InvalidationListener() {
-            public void invalidated(Observable ov)
-            {
+            public void invalidated(Observable ov) {
                 updatesValues();
             }
         });
         view.getTime().valueProperty().addListener(new InvalidationListener() {
-            public void invalidated(Observable ov)
-            {
+            public void invalidated(Observable ov) {
                 if (view.getTime().isPressed()) {
                     view.getPlayer().seek(view.getPlayer().getMedia().getDuration().multiply(view.getTime().getValue() / 100));
                 }
@@ -73,7 +70,6 @@ public class TutorialPresenter {
     private void updateView() {
         // fills the view with model data
     }
-
 
 
     private void setMainWindow() {
@@ -95,4 +91,4 @@ public class TutorialPresenter {
         });
     }
 
-    }
+}

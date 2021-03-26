@@ -7,7 +7,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Modality;
 import javafx.stage.Window;
 import main.java.model.Quarto;
 import main.java.view.Images;
@@ -98,7 +97,7 @@ public class GameWindowPresenter {
                 view.getPlayerTurn().setText("Their turn!");
 
 
-                if (model.isUnique(Integer.valueOf(piece.getId()))){
+                if (model.isUnique(Integer.valueOf(piece.getId()))) {
                     model.addToListOnBoard(Integer.valueOf(piece.getId()));
                     view.getErrorLabel().setText("");
                 } else {
@@ -112,7 +111,7 @@ public class GameWindowPresenter {
             item.setOnMouseClicked(mouseEvent -> {
                 Image im = new Image("media/images/" + view.getChosenPiece().getId() + ".png");
 
-                if(!model.isUnique(Integer.valueOf(view.getChosenPiece().getId()))){
+                if (!model.isUnique(Integer.valueOf(view.getChosenPiece().getId()))) {
                     view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
                     view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
                     view.getErrorLabel().setText("");
@@ -138,7 +137,7 @@ public class GameWindowPresenter {
 
     }
 
-    public void normalTimer(){
+    public void normalTimer() {
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -178,6 +177,7 @@ public class GameWindowPresenter {
         pauseView.getScene().getWindow().setWidth(670);
         pauseView.getScene().getWindow().setHeight(270);
     }
+
     private void closingAlert(Event event) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText("You are about to quit your game!");

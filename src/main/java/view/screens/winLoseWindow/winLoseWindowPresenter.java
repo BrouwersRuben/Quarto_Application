@@ -14,6 +14,7 @@ import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 import main.java.view.screens.userNamePrologue.UserNameProloguePresenter;
 import main.java.view.screens.userNamePrologue.UserNamePrologueView;
+
 import java.nio.file.Paths;
 
 public class winLoseWindowPresenter {
@@ -51,14 +52,14 @@ public class winLoseWindowPresenter {
     private void updateView() {
         // fills the view with model data
         view.getPlayerScore().setText("score: " + model.getRecordsUserScore(0));
-        view.getStat1().setText("average time spent per round: "+ model.getAverageTime());
-        view.getStat2().setText("fastest move: "+ model.getFastestMove() + "seconds");
-        view.getStat3().setText("slowest move: "+ model.getSlowestMove() + "seconds");
+        view.getStat1().setText("average time spent per round: " + model.getAverageTime());
+        view.getStat2().setText("fastest move: " + model.getFastestMove() + "seconds");
+        view.getStat3().setText("slowest move: " + model.getSlowestMove() + "seconds");
 
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
 
-        for (int i = 0; i < model.getTurnStatsSize() ; i++) {
-            String turn = ""+(i+1);
+        for (int i = 0; i < model.getTurnStatsSize(); i++) {
+            String turn = "" + (i + 1);
             series1.getData().add(new XYChart.Data<>(turn, model.getTurnstats(i)));
         }
 
@@ -112,7 +113,7 @@ public class winLoseWindowPresenter {
         }
     }
 
-    public int getTurnStatsSize(){
+    public int getTurnStatsSize() {
         return model.getTurnStatsSize();
     }
 }

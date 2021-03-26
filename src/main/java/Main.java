@@ -14,6 +14,10 @@ public class Main extends Application {
     protected int gameTimerSeconds;
     Stage window;
 
+    public static void main(String[] args) {
+        Application.launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) {
         window = primaryStage;
@@ -34,9 +38,5 @@ public class Main extends Application {
         window.setScene(scene);
         presenter.addWindowEventHandlers();
         window.show();
-    }
-
-    public static void main(String[] args) {
-        Application.launch(args);
     }
 }

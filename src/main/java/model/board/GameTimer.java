@@ -1,9 +1,9 @@
 package main.java.model.board;
 
-import javax.swing.*;
 import java.text.DecimalFormat;
 
 public class GameTimer {
+    private final DecimalFormat dFormat = new DecimalFormat("00");
     private int second = 0, minute = 0;
     private String ddSecond, ddMinute;
 
@@ -11,12 +11,10 @@ public class GameTimer {
         timerIncrement();
     }
 
-    private final DecimalFormat dFormat = new DecimalFormat("00");
-
-    public void timerIncrement(){
+    public void timerIncrement() {
         second++;
 
-        if(second == 60){
+        if (second == 60) {
             second = 0;
             minute++;
         }
