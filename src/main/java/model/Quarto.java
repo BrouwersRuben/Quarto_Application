@@ -16,14 +16,10 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Quarto {
-    public double width = 1158;
     protected boolean isRunning;
     protected int amountOfTurns;
     // private attributes
     private final Leaderboard leaderboard = new Leaderboard();
-    private final Board newBoard = new Board();
-    private final Piece quartoPiece = new Piece();
-    private PieceStatus pieceStatus;
     private final saveAndLoad createTable = new saveAndLoad();
     private final Board board = new Board();
     private final Human player = new Human();
