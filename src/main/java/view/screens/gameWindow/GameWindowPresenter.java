@@ -40,6 +40,13 @@ public class GameWindowPresenter {
         // In the event handlers: call model methods
         // and updateView().
 
+        if (minute == 2){
+            model.setLost();
+            //Temp
+            model.getStatistics(model.getRecordsUserId(3));
+            setWinLoseWindow();
+        }
+
         this.view.getPauseGame().setOnAction(event -> {
             // setPauseWindow(); TODO: timer restarts instead of continues
             timerStart();
@@ -70,12 +77,10 @@ public class GameWindowPresenter {
         });
         view.getLoseScreen().setOnAction(event -> {
             System.out.println("Showing the defeat screen");
-            if (minute == 2){
-                model.setLost();
-                //Temp
-                model.getStatistics(model.getRecordsUserId(3));
-                setWinLoseWindow();
-            }
+            model.setLost();
+            //Temp
+            model.getStatistics(model.getRecordsUserId(3));
+            setWinLoseWindow();
             updateView();
         });
 
