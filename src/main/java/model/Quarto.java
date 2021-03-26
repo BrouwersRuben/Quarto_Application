@@ -1,6 +1,7 @@
 package main.java.model;
 
 import main.java.model.board.Board;
+import main.java.model.board.GameTimer;
 import main.java.model.board.PieceStatus;
 import main.java.model.dataBase.Leaderboard;
 import main.java.model.dataBase.saveAndLoad;
@@ -31,6 +32,7 @@ public class Quarto {
     private saveAndLoad createTable = new saveAndLoad();
     private Board board = new Board();
     private Human player = new Human();
+    private GameTimer timer = new GameTimer();
     //has to have a human, and a bridge between the model and the view
 
     public Quarto() {
@@ -159,6 +161,18 @@ public class Quarto {
     public void dataBaseInit(){
         leaderboard.connectToDb();
         leaderboard.getRecords();
+    }
+
+    public void timerIncrement(){
+        timer.timerIncrement();
+    }
+
+    public String ddMinute(){
+        return timer.getDdMinute();
+    }
+
+    public String ddSecond(){
+        return timer.getDdSecond();
     }
 
 

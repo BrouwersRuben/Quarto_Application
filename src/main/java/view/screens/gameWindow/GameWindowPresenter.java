@@ -26,6 +26,7 @@ import java.text.DecimalFormat;
 public class GameWindowPresenter {
     private final Quarto model;
     private final GameWindowView view;
+    private Timer timer;
 
     public GameWindowPresenter(Quarto model, GameWindowView view) {
         this.model = model;
@@ -39,13 +40,6 @@ public class GameWindowPresenter {
         // lambdas) to view controls.
         // In the event handlers: call model methods
         // and updateView().
-
-        if (minute == 2){
-            model.setLost();
-            //Temp
-            model.getStatistics(model.getRecordsUserId(3));
-            setWinLoseWindow();
-        }
 
         this.view.getPauseGame().setOnAction(event -> {
             // setPauseWindow(); TODO: timer restarts instead of continues
@@ -154,29 +148,16 @@ public class GameWindowPresenter {
     }
 
     // TODO: is there another place to store this? Maybe model?
-    private int second = 0, minute = 0;
-    private String ddSecond, ddMinute;
-    private Timer timer;
 
     public void normalTimer(){
-        DecimalFormat dFormat = new DecimalFormat("00");
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                  second++;
-
-                  if(second == 60){
-                      second = 0;
-                      minute++;
-                  }
-
-                    ddSecond = dFormat.format(second);
-                    ddMinute = dFormat.format(minute);
-
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        view.getTimer().setText(ddMinute + ":" + ddSecond);
+                        model.timerIncrement();
+                        view.getTimer().setText(model.ddMinute() + ":" + model.ddSecond());
                     }
                 });
             }
