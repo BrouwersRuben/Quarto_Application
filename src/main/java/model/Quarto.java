@@ -138,7 +138,9 @@ public class Quarto {
     }
 
     public void gameOver(){
-        // TODO: Game Over method, timer ran out
+        if (timer.getDdMinute().equals("02")){
+            player.setHasQuarto(false);
+        }
     }
 
     public void addToListOnBoard(Integer pieceId){
