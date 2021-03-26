@@ -57,6 +57,5 @@ public class PauseScreenPresenter {
         gameWindowView.getScene().getWindow().setWidth(625);
         gameWindowView.getScene().getWindow().setHeight(370);
         //TODO: the timer start from zero, why??
-        gameWindowPresenter.normalTimer();
     }
 }

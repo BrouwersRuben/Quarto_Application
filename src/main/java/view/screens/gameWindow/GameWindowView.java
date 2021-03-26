@@ -19,11 +19,9 @@ public class GameWindowView extends BorderPane {
     private Button pauseGame;
     private Button saveGame;
     private Button endGame;
-    // TODO: set top next to Quarto
     private Button winScreen;
     private Button loseScreen;
     private Label gameTitle;
-    // TODO: TurnCounter?? Ideas
     private Text turn;
     private Label turnCounter;
     private Label turnIndicator;
@@ -94,7 +92,6 @@ public class GameWindowView extends BorderPane {
         playerTurn = new Label();
     }
 
-    // TODO: put these methods in the model.Board class?
     private void initialiseChosenPiece(){
         this.chosenPieceBack[0] = new ImageView(Images.P0.getImage());
     }

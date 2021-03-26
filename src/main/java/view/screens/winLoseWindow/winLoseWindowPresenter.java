@@ -55,7 +55,6 @@ public class winLoseWindowPresenter {
         view.getStat2().setText("fastest move: "+ model.getFastestMove() + "seconds");
         view.getStat3().setText("slowest move: "+ model.getSlowestMove() + "seconds");
 
-        //TODO: ask lecturers where this has to go
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
 
         for (int i = 0; i < model.getTurnStatsSize() ; i++) {

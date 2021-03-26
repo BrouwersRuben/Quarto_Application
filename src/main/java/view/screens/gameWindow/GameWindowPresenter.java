@@ -21,7 +21,6 @@ import main.java.view.screens.winLoseWindow.winLoseWindowView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DecimalFormat;
 
 public class GameWindowPresenter {
     private final Quarto model;
@@ -43,7 +42,7 @@ public class GameWindowPresenter {
 
         this.view.getPauseGame().setOnAction(event -> {
             // setPauseWindow(); TODO: timer restarts instead of continues
-            timerStart();
+            //timerStart();
             setPauseScreen();
             updateView();
         });
@@ -54,27 +53,29 @@ public class GameWindowPresenter {
         });
         this.view.getEndGame().setOnAction(event -> {
             closingAlert(event);
-
             updateView();
         });
         view.getQuarto().setOnAction(event -> {
             System.out.println("You have indicated that you saw a quarto");
+            //Hasquarto has to be called here, to check if what the user saw was correct
             model.hasQuarto();
         });
         view.getWinScreen().setOnAction(event -> {
-            System.out.println("Showing the victory screen");
             model.setWon();
+
             //Temp
             model.getStatistics(model.getRecordsUserId(0));
             setWinLoseWindow();
+
             updateView();
         });
         view.getLoseScreen().setOnAction(event -> {
-            System.out.println("Showing the defeat screen");
             model.setLost();
+
             //Temp
             model.getStatistics(model.getRecordsUserId(3));
             setWinLoseWindow();
+
             updateView();
         });
 
@@ -123,12 +124,6 @@ public class GameWindowPresenter {
 
                 view.getPlayerTurn().setText("Your turn!");
 
-                //model.placePiece() --> row column (pieceID enum value)
-                //boolean? validity
-                //or
-                //model.pieceIsValid()
-                //Model ==> Set/Collection
-
             });
         });
 
@@ -136,8 +131,6 @@ public class GameWindowPresenter {
 
     private void updateView() {
         // fills the view with model data
-        //view.getUserName().setText(model.getUserName);
-        //view.
         view.getUserName().setText("Username: " + model.getUserName());
     }
 
@@ -146,8 +139,6 @@ public class GameWindowPresenter {
         // Add event handlers to window
 
     }
-
-    // TODO: is there another place to store this? Maybe model?
 
     public void normalTimer(){
         timer = new Timer(1000, new ActionListener() {
@@ -166,13 +157,13 @@ public class GameWindowPresenter {
         timer.start();
     }
 
-    public void timerStop(){
-        timer.stop();
-    }
-
-    public void timerStart(){
-        timer.start();
-    }
+//    public void timerStop(){
+//        timer.stop();
+//    }
+//
+//    public void timerStart(){
+//        timer.start();
+//    }
 
     private void setMainWindow() {
         QuartoView quartoView = new QuartoView();

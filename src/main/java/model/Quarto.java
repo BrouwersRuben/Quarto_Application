@@ -120,9 +120,13 @@ public class Quarto {
         player.setName(name);
     }
 
-    public boolean hasQuarto(){
-        // TODO: Make the hasQuarto
-        return false;
+    public void hasQuarto(){
+        // TODO: hasQuarto
+        /*if (hasquarto == true){
+            player.setHasQuarto(true);
+        } else {
+            player.setHasQuarto(false);
+        }*/
     }
 
     public boolean setWon() {
