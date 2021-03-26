@@ -105,8 +105,6 @@ public class GameWindowPresenter {
                     view.getErrorLabel().setText("This piece is already on the board");
                     view.getChosenPiece().setId("0");
                 }
-
-                System.out.println();
             });
         });
 
