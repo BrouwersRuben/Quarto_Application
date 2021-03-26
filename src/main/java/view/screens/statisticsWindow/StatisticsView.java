@@ -10,6 +10,8 @@ import javafx.scene.layout.RowConstraints;
 public class StatisticsView extends GridPane {
     // private Node attributes (controls)
 
+    //TODO: styling
+
     private Label playerName;
     private Label playerScore;
     private Label stat1;

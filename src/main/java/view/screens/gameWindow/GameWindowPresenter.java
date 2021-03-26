@@ -63,7 +63,6 @@ public class GameWindowPresenter {
         view.getWinScreen().setOnAction(event -> {
             System.out.println("Showing the victory screen");
             model.setWon();
-            // TODO: Go to winning/losing screen, also when timer reaches like a minute or 2
             //Temp
             model.getStatistics(model.getRecordsUserId(0));
             setWinLoseWindow();
@@ -71,11 +70,12 @@ public class GameWindowPresenter {
         });
         view.getLoseScreen().setOnAction(event -> {
             System.out.println("Showing the defeat screen");
-            model.setLost();
-            // TODO: Go to winning/losing screen, also when timer reaches like a minute or 2
-            //Temp
-            model.getStatistics(model.getRecordsUserId(3));
-            setWinLoseWindow();
+            if (minute == 2){
+                model.setLost();
+                //Temp
+                model.getStatistics(model.getRecordsUserId(3));
+                setWinLoseWindow();
+            }
             updateView();
         });
 
