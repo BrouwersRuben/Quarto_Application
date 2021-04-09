@@ -6,7 +6,7 @@ import oracle.jdbc.pool.OracleDataSource;
 import java.io.File;
 import java.sql.*;
 
-public class saveAndLoad {
+public class SaveAndLoad {
     private static final File WALLET = new File("Wallet_QuartoDatabase");
     private static final String dbURL = "jdbc:oracle:thin:@quartodatabase_medium?TNS_ADMIN=" + WALLET.getAbsolutePath();
     private static OracleDataSource ods;
@@ -15,14 +15,15 @@ public class saveAndLoad {
     private Quarto game;
 
 
-    public saveAndLoad() { // Constructor for initializing the game session
+    public SaveAndLoad() { // Constructor for initializing the game session
 
     }
 
-    public saveAndLoad(Quarto game) { // Constructor for initializing and existing game session
+    public SaveAndLoad(Quarto game) { // Constructor for initializing and existing game session
 
     }
 
+    //TODO: Make smaller and rename
     public void createTableIfDoesntExist() {
         try {
             ods = new OracleDataSource();

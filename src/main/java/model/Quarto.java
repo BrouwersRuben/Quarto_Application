@@ -2,10 +2,8 @@ package main.java.model;
 
 import main.java.model.board.Board;
 import main.java.model.board.GameTimer;
-import main.java.model.board.PieceStatus;
 import main.java.model.dataBase.Leaderboard;
-import main.java.model.dataBase.saveAndLoad;
-import main.java.model.pieces.Piece;
+import main.java.model.dataBase.SaveAndLoad;
 import main.java.model.players.Human;
 
 import java.io.File;
@@ -20,7 +18,7 @@ public class Quarto {
     protected int amountOfTurns;
     // private attributes
     private final Leaderboard leaderboard = new Leaderboard();
-    private final saveAndLoad createTable = new saveAndLoad();
+    private final SaveAndLoad createTable = new SaveAndLoad();
     private final Board board = new Board();
     private final Human player = new Human();
     private final GameTimer timer = new GameTimer();
@@ -36,7 +34,7 @@ public class Quarto {
     }
 
     public void getStatistics(int id) {
-        leaderboard.getStatistics(id);
+        leaderboard.loadStatistics(id);
     }
 
     public String getRecords(int i) {

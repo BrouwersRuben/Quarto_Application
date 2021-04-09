@@ -1,7 +1,7 @@
 package main.java.model.players;
 
 public class Player {
-    public boolean hasQuarto = false;
+    private boolean hasQuarto = false;
 
     //Setters
     public boolean setHasQuarto(boolean hasQuarto) {

@@ -29,7 +29,6 @@ public class UserNameProloguePresenter {
         });
 
         this.view.getStartGame().setOnAction(event -> {
-            model.setUserName(view.getUserName().getText().replaceAll("\\s+", ""));
             if (view.getUserName().getText().trim().isEmpty()) {
                 this.view.getError().setText("This cannot be empty!");
             } else if (view.getUserName().getText().length() > 15) {
@@ -37,6 +36,7 @@ public class UserNameProloguePresenter {
             } else {
                 setGameWindow();
                 model.createTableIfDoesntExist();
+                model.setUserName(view.getUserName().getText().replaceAll("\\s+", ""));
             }
             updateView();
         });

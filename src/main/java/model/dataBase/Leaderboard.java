@@ -98,7 +98,7 @@ public class Leaderboard { // Used for retrieving the leaderboard
         }
     }
 
-    public void getStatistics(int id) {
+    public void loadStatistics(int id) {
         try {
             ods = new OracleDataSource();
             ods.setURL(dbURL);

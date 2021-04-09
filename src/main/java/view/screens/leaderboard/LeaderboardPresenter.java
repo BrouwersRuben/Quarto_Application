@@ -35,30 +35,22 @@ public class LeaderboardPresenter {
             setMainWindow();
             updateView();
         });
-        this.view.getText1().setOnMouseClicked(event -> {
-            usernameClicked = 0;
-            model.getStatistics(model.getRecordsUserId(usernameClicked)); // give id from the selected one
-            setStatisticsWindow();
-        });
-        this.view.getText2().setOnMouseClicked(event -> {
-            usernameClicked = 1;
-            model.getStatistics(model.getRecordsUserId(usernameClicked));
-            setStatisticsWindow();
-        });
-        this.view.getText3().setOnMouseClicked(event -> {
-            usernameClicked = 2;
-            model.getStatistics(model.getRecordsUserId(usernameClicked));
-            setStatisticsWindow();
-        });
-        this.view.getText4().setOnMouseClicked(event -> {
-            usernameClicked = 3;
-            model.getStatistics(model.getRecordsUserId(usernameClicked));
-            setStatisticsWindow();
+
+        //TODO: Cqn this be made more streamlined?
+        this.view.getText5().setOnMouseClicked(event -> {
+            setUsernameClicked(0);
         });
         this.view.getText5().setOnMouseClicked(event -> {
-            usernameClicked = 4;
-            model.getStatistics(model.getRecordsUserId(usernameClicked));
-            setStatisticsWindow();
+            setUsernameClicked(1);
+        });
+        this.view.getText5().setOnMouseClicked(event -> {
+            setUsernameClicked(2);
+        });
+        this.view.getText5().setOnMouseClicked(event -> {
+            setUsernameClicked(3);
+        });
+        this.view.getText5().setOnMouseClicked(event -> {
+            setUsernameClicked(4);
         });
     }
 
@@ -90,6 +82,11 @@ public class LeaderboardPresenter {
         view.getScene().setRoot(statisticsView);
         statisticsView.getScene().getWindow().setWidth(625);
         statisticsView.getScene().getWindow().setHeight(425);
+    }
+
+    private void setUsernameClicked(int usernameClicked){
+        model.getStatistics(model.getRecordsUserId(usernameClicked));
+        setStatisticsWindow();
     }
 }
 
