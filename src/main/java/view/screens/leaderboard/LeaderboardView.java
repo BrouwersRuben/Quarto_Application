@@ -97,27 +97,27 @@ public class LeaderboardView extends GridPane {
 
     // package-private Getters
     // for controls used by Presenter
-    public Button getExit() {
+    Button getExit() {
         return exit;
     }
 
-    public Label getText1() {
+    Label getText1() {
         return p1;
     }
 
-    public Label getText2() {
+    Label getText2() {
         return p2;
     }
 
-    public Label getText3() {
+    Label getText3() {
         return p3;
     }
 
-    public Label getText4() {
+    Label getText4() {
         return p4;
     }
 
-    public Label getText5() {
+    Label getText5() {
         return p5;
     }
 }

@@ -81,23 +81,23 @@ public class QuartoView extends GridPane {
 
     // package-private Getters
     // for controls used by Presenter
-    public Text getTitle() {
+    Text getTitle() {
         return title;
     }
 
-    public Button getStartGame() {
+    Button getStartGame() {
         return startGame;
     }
 
-    public Button getLeaderboard() {
+    Button getLeaderboard() {
         return leaderboard;
     }
 
-    public Button getTutorial() {
+    Button getTutorial() {
         return tutorial;
     }
 
-    public Button getExit() {
+    Button getExit() {
         return exit;
     }
 }

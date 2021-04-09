@@ -98,43 +98,43 @@ public class winLoseWindowView extends BorderPane {
 
     // package-private Getters
     // for controls used by Presenter
-    public Button getMainMenu() {
+    Button getMainMenu() {
         return mainMenu;
     }
 
-    public Button getPlayAgain() {
+    Button getPlayAgain() {
         return playAgain;
     }
 
-    public Button getExitGame() {
+    Button getExitGame() {
         return exitGame;
     }
 
-    public Label getWinOrLose() {
+    Label getWinOrLose() {
         return winOrLose;
     }
 
-    public ImageView getEndGameStatus() {
+    ImageView getEndGameStatus() {
         return endGameStatus;
     }
 
-    public Label getPlayerScore() {
+    Label getPlayerScore() {
         return playerScore;
     }
 
-    public Label getStat1() {
+    Label getStat1() {
         return stat1;
     }
 
-    public Label getStat2() {
+    Label getStat2() {
         return stat2;
     }
 
-    public Label getStat3() {
+    Label getStat3() {
         return stat3;
     }
 
-    public LineChart getLineChart() {
+    LineChart getLineChart() {
         return lineChart;
     }
 }

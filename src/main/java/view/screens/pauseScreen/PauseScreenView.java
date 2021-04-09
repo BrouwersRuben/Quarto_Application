@@ -78,15 +78,15 @@ public class PauseScreenView extends GridPane {
 
     // package-private Getters
     // for controls used by Presenter
-    public Text getTitle() {
+    Text getTitle() {
         return title;
     }
 
-    public Button getStartGame() {
+    Button getStartGame() {
         return startGame;
     }
 
-    public Button getMainMenu() {
+    Button getMainMenu() {
         return mainMenu;
     }
 }

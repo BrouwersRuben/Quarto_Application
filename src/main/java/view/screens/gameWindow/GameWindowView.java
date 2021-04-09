@@ -191,71 +191,71 @@ public class GameWindowView extends BorderPane {
 
     // package-private Getters
     // for controls used by Presenter
-    public Button getPauseGame() {
+    Button getPauseGame() {
         return pauseGame;
     }
 
-    public Button getSaveGame() {
+    Button getSaveGame() {
         return saveGame;
     }
 
-    public Button getWinScreen() {
+    Button getWinScreen() {
         return winScreen;
     }
 
-    public Button getLoseScreen() {
+    Button getLoseScreen() {
         return loseScreen;
     }
 
-    public Button getEndGame() {
+    Button getEndGame() {
         return endGame;
     }
 
-    public Label getPlayerTurn() {
+    Label getPlayerTurn() {
         return playerTurn;
     }
 
-    public GridPane getGameBoard() {
+    GridPane getGameBoard() {
         return gameBoard;
     }
 
-    public GridPane getAvailablePieces() {
+    GridPane getAvailablePieces() {
         return availablePieces;
     }
 
-    public GridPane getChosenPiece() {
+    GridPane getChosenPiece() {
         return chosenPiece;
     }
 
-    public void setChosenPiece(GridPane chosenPiece) {
+    void setChosenPiece(GridPane chosenPiece) {
         this.chosenPiece = chosenPiece;
     }
 
-    public ImageView[][] getGameBoardBack() {
+    ImageView[][] getGameBoardBack() {
         return gameBoardBack;
     }
 
-    public ImageView[] getChosenPieceBack() {
+    ImageView[] getChosenPieceBack() {
         return chosenPieceBack;
     }
 
-    public ImageView[][] getAvailablePiecesBack() {
+    ImageView[][] getAvailablePiecesBack() {
         return availablePiecesBack;
     }
 
-    public Button getQuarto() {
+    Button getQuarto() {
         return quarto;
     }
 
-    public Label getTimer() {
+    Label getTimer() {
         return timer;
     }
 
-    public Text getUserName() {
+    Text getUserName() {
         return userName;
     }
 
-    public Text getErrorLabel() {
+    Text getErrorLabel() {
         return errorLabel;
     }
 }

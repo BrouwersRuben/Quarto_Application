@@ -91,27 +91,27 @@ public class TutorialView extends BorderPane {
     // package-private Getters
 // for controls used by Presenter
 
-    public Button getExit() {
+    Button getExit() {
         return exit;
     }
 
-    public Slider getTime() {
+    Slider getTime() {
         return time;
     }
 
-    public Button getPlayButton() {
+    Button getPlayButton() {
         return playButton;
     }
 
-    public MediaPlayer getPlayer() {
+    MediaPlayer getPlayer() {
         return player;
     }
 
-    public Text getBody() {
+    Text getBody() {
         return body;
     }
 
-    public Path getPath() {
+    Path getPath() {
         return path;
     }
 }

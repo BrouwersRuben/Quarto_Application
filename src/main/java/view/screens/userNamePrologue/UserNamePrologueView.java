@@ -95,19 +95,19 @@ public class UserNamePrologueView extends GridPane {
 
     // package-private Getters
     // for controls used by Presenter
-    public TextField getUserName() {
+    TextField getUserName() {
         return userName;
     }
 
-    public Button getBack() {
+    Button getBack() {
         return back;
     }
 
-    public Button getStartGame() {
+    Button getStartGame() {
         return startGame;
     }
 
-    public Text getError() {
+    Text getError() {
         return error;
     }
 }

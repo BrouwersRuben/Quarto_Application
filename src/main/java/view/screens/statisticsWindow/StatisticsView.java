@@ -78,27 +78,27 @@ public class StatisticsView extends GridPane {
 
     // package-private Getters
     // for controls used by Presenter
-    public Button getLeaderboard() {
+    Button getLeaderboard() {
         return leaderboard;
     }
 
-    public Label getPlayerName() {
+    Label getPlayerName() {
         return playerName;
     }
 
-    public Label getPlayerScore() {
+    Label getPlayerScore() {
         return playerScore;
     }
 
-    public Label getStat1() {
+    Label getStat1() {
         return stat1;
     }
 
-    public Label getStat2() {
+    Label getStat2() {
         return stat2;
     }
 
-    public Label getStat3() {
+    Label getStat3() {
         return stat3;
     }
 }
