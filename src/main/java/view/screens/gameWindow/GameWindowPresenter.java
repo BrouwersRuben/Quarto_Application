@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Window;
 import main.java.model.Quarto;
+import main.java.model.board.Board;
 import main.java.view.Images;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
@@ -20,6 +21,8 @@ import main.java.view.screens.winLoseWindow.winLoseWindowView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import static java.lang.Integer.parseInt;
 
 public class GameWindowPresenter {
     private final Quarto model;
@@ -82,6 +85,7 @@ public class GameWindowPresenter {
 
         view.getAvailablePieces().getChildren().forEach(piece -> {
             piece.setOnMouseClicked(mouseEvent -> {
+                view.getErrorLabel().setText("");
                 view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
 
                 //this does not work
@@ -90,37 +94,59 @@ public class GameWindowPresenter {
                 Image im = new Image("media/images/" + piece.getId() + ".png");
                 view.getChosenPiece().getChildren().add(new ImageView(im));
                 view.getChosenPiece().setId(piece.getId());
-
-                // TODO: Switch users/Turn taking
-                //model.setUser1(false);
-
-                view.getPlayerTurn().setText("Their turn!");
+                System.out.println(piece.getId()); // for testing purposes
 
 
-                if (model.isUnique(Integer.valueOf(piece.getId()))) {
-                    model.addToListOnBoard(Integer.valueOf(piece.getId()));
-                    view.getErrorLabel().setText("");
-                } else {
+
+                if (!model.isUnique(Integer.valueOf(piece.getId()))) {
+//                    model.addToListOnBoard(Integer.valueOf(piece.getId()));
+//                    view.getErrorLabel().setText("");
                     view.getErrorLabel().setText("This piece is already on the board");
-                    view.getChosenPiece().setId("0");
                 }
             });
+            // TODO: Switch users/Turn taking
+            //model.setUser1(false);
+
+            view.getPlayerTurn().setText("Their turn!");
+
+//            model.aiMove();
         });
 
         view.getGameBoard().getChildren().forEach(item -> {
             item.setOnMouseClicked(mouseEvent -> {
                 Image im = new Image("media/images/" + view.getChosenPiece().getId() + ".png");
 
-                if (!model.isUnique(Integer.valueOf(view.getChosenPiece().getId()))) {
+
+
+                System.out.println(view.getChosenPiece().getId()+" ŠEIT");
+
+                if (model.isUnique(Integer.valueOf(view.getChosenPiece().getId()))) {
                     view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
                     view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
+                    model.addToListOnBoard(Integer.valueOf(view.getChosenPiece().getId()));
+//                   view.getChosenPiece().setId("0"); // what does this do exactly ?
                     view.getErrorLabel().setText("");
+
+                    // testing
+                    System.out.println("piece "+view.getChosenPiece().getId()+" has been set on tile "+GridPane.getRowIndex(item)+" "+GridPane.getColumnIndex(item));
+                    // updates board tiles array
+                    model.setUsedTiles(parseInt(view.getChosenPiece().getId()), GridPane.getRowIndex(item), GridPane.getColumnIndex(item));
+                    model.removeRemainingPieces(Integer.valueOf(view.getChosenPiece().getId()));
+
+                    System.out.println("\nAI is now making the move.");
+
+
+//                    System.out.println("\nAI has selected a piece for you to play.");
+//                    Image ai = new Image("media/images/"+model.selectRandomPiece()+".png");
+//                    view.getChosenPiece().getChildren().add(new ImageView(ai));
+
+
                 } else {
                     view.getErrorLabel().setText("This piece is already on the board");
                 }
 
                 view.getPlayerTurn().setText("Your turn!");
-
+//                model.aiMove();
             });
         });
 
@@ -136,6 +162,11 @@ public class GameWindowPresenter {
         // Add event handlers to window
 
     }
+
+//    public void setAIPiece() {
+//        int piece = model.aiMove();
+//
+//    }
 
     public void normalTimer() {
         timer = new Timer(1000, new ActionListener() {

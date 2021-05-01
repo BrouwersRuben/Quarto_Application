@@ -1,7 +1,7 @@
 package main.java.model.board;
 
 public enum PieceStatus {
-    OFF_BOARD(0), IN_PLAY(1), IN_HAND(2);
+    OFF_BOARD(-1), IN_PLAY(1), IN_HAND(2);
 
     private final int code;
 

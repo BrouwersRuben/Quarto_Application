@@ -186,7 +186,6 @@ public class GameWindowView extends BorderPane {
         gameTitle.setStyle("-fx-font-weight: BOLD; -fx-font-size: 20");
         BorderPane.setAlignment(gameTitle, Pos.CENTER);
 
-
     }
 
     // package-private Getters

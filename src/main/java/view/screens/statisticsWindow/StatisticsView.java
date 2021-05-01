@@ -4,6 +4,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
@@ -47,7 +48,7 @@ public class StatisticsView extends GridPane {
         addLabel(stat2, 0, 3);
         addLabel(stat3, 0, 4);
         addButton(leaderboard, 0, 5, 3, 2);
-//        getColumnConstraints().add(new ColumnConstraints(100)); // column 0 is 100 wide
+        getColumnConstraints().add(new ColumnConstraints(100)); // column 0 is 100 wide
 //        getColumnConstraints().add(new ColumnConstraints(200));
 
         for (int i = 0; i < numRows; i++) {

@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import main.java.model.Quarto;
+import main.java.model.board.Board;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 
@@ -38,5 +39,6 @@ public class Main extends Application {
         window.setScene(scene);
         presenter.addWindowEventHandlers();
         window.show();
+        model.startGame(); // should be ran when we press start game, but for now doesn't matter
     }
 }
