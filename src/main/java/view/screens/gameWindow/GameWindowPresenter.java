@@ -131,7 +131,7 @@ public class GameWindowPresenter {
                 System.out.println(view.getChosenPiece().getId()+" ŠEIT");
 
                 if (model.isUnique(Integer.valueOf(view.getChosenPiece().getId()))) {
-                    view.getGameBoard().add(new ImageView(im), GridPane.getRowIndex(item), GridPane.getColumnIndex(item));
+                    view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
                     view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
                     model.addToListOnBoard(Integer.valueOf(view.getChosenPiece().getId()));
 //                   view.getChosenPiece().setId("0"); // what does this do exactly ?
@@ -140,7 +140,7 @@ public class GameWindowPresenter {
                     // testing
                     System.out.println("piece "+view.getChosenPiece().getId()+" has been set on tile "+GridPane.getRowIndex(item)+" "+GridPane.getColumnIndex(item));
                     // updates board tiles array
-                    model.setUsedTiles(parseInt(view.getChosenPiece().getId()), GridPane.getRowIndex(item), GridPane.getColumnIndex(item));
+                    model.setUsedTiles(parseInt(view.getChosenPiece().getId()), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
                     model.removeRemainingPieces(Integer.valueOf(view.getChosenPiece().getId()));
                     model.setPlayerTurn(false);
                     updateView();
