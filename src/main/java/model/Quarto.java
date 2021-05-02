@@ -64,13 +64,17 @@ public class Quarto {
     // TODO: GAME LOGIC
 
     public void startGame() {
-        // if game doesn't exist
+        // if starting new game
+        String username = getUserName();
         pieces.fillRemainingPieces();
+
+
+
 
     }
 
-    public void isGameOver() {
-
+    public boolean isGameOver() {
+        return pieces.getRemainingPieces().size() == 0;
     }
 
     public String turnIndicator() {

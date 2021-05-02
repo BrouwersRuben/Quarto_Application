@@ -37,6 +37,7 @@ public class UserNameProloguePresenter {
                 setGameWindow();
                 model.createTableIfDoesntExist();
                 model.setUserName(view.getUserName().getText().replaceAll("\\s+", ""));
+                model.startGame();
             }
             updateView();
         });

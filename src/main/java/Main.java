@@ -39,6 +39,5 @@ public class Main extends Application {
         window.setScene(scene);
         presenter.addWindowEventHandlers();
         window.show();
-        model.startGame(); // should be ran when we press start game, but for now doesn't matter
     }
 }

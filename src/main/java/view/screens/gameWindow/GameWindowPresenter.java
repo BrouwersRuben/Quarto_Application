@@ -118,6 +118,10 @@ public class GameWindowPresenter {
 //                        view.getPlayerTurn().setText("Your turn!");
                         model.setPlayerTurn(true);
                         updateView();
+
+                        if (model.isGameOver()) {
+                            setWinLoseWindow();
+                        }
                     }
                 });
             });
@@ -144,8 +148,12 @@ public class GameWindowPresenter {
                     model.removeRemainingPieces(Integer.valueOf(view.getChosenPiece().getId()));
                     model.setPlayerTurn(false);
                     updateView();
-                    System.out.println("\nAI is now making the move.");
 
+                    if (model.isGameOver()) {
+                        //TODO: Can't set winlosewindow cause database is not linked with game
+//                        setWinLoseWindow();
+                        System.out.println("Game is over, no more pieces remaining.");
+                    }
 
                 } else {
                     view.getErrorLabel().setText("This piece is already on the board");
