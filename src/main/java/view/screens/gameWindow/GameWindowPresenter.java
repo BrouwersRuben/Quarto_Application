@@ -7,9 +7,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Window;
 import main.java.model.Quarto;
-import main.java.model.board.Board;
 import main.java.view.Images;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
@@ -83,40 +83,56 @@ public class GameWindowPresenter {
 
         view.getPlayerTurn().setText("Your turn!\nTo pick a piece");
 
-        view.getAvailablePieces().getChildren().forEach(piece -> {
-            piece.setOnMouseClicked(mouseEvent -> {
-                view.getErrorLabel().setText("");
-                view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
-
-                //this does not work
-                //Image im = new Image(Images.piece.getID().getImage());
-
-                Image im = new Image("media/images/" + piece.getId() + ".png");
-                view.getChosenPiece().getChildren().add(new ImageView(im));
-                view.getChosenPiece().setId(piece.getId());
-                System.out.println(piece.getId()); // for testing purposes
+        //* TODO: 1. Game Starts, 2. Whoever starts selects a piece, 3. Piece gets placed on board.
 
 
+        while (model.retrieveRemainingPieces().size()!=0) {
+            view.getAvailablePieces().getChildren().forEach(piece -> {
+                piece.setOnMouseClicked(mouseEvent -> {
 
-                if (!model.isUnique(Integer.valueOf(piece.getId()))) {
-//                    model.addToListOnBoard(Integer.valueOf(piece.getId()));
-//                    view.getErrorLabel().setText("");
-                    view.getErrorLabel().setText("This piece is already on the board");
-                }
+                    view.getErrorLabel().setText("");
+                    view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
+
+                    Image im = new Image("media/images/" + piece.getId() + ".png");
+                    view.getChosenPiece().getChildren().add(new ImageView(im));
+                    view.getChosenPiece().setId(piece.getId());
+                    System.out.println(piece.getId()); // for testing purposes
+
+
+                    if (!model.isUnique(Integer.valueOf(piece.getId()))) {
+                        view.getErrorLabel().setText("This piece is already on the board");
+                        System.out.println("iegāja pie valid mouse false");
+                    } else {
+                        System.out.println("iegāja pie validmouse true");
+
+                        // Here the computer makes the move, based on the piece that was given to him.
+                        model.generateValidCoordinates();
+                        view.getGameBoard().add(new ImageView(im), model.getX(), model.getY());
+                        view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
+                        model.addToListOnBoard(Integer.valueOf(view.getChosenPiece().getId()));
+                        model.setUsedTiles(parseInt(view.getChosenPiece().getId()), model.getX(), model.getY());
+                        model.removeRemainingPieces(Integer.valueOf(view.getChosenPiece().getId()));
+
+                    }
+                });
+
+//            if (model.isValidMouseRelease()) {
+//                System.out.println("iegāja pie release ar vērtību: "+model.isValidMouseRelease());
+//                piece.setOnMouseReleased(e -> {
+//                    System.out.println("Mouse has been released");
+//                });
+//            }
+
+                view.getPlayerTurn().setText("Their turn!");
+
             });
-            // TODO: Switch users/Turn taking
-            //model.setUser1(false);
 
-            view.getPlayerTurn().setText("Their turn!");
-
-//            model.aiMove();
-        });
+        }
 
         view.getGameBoard().getChildren().forEach(item -> {
             item.setOnMouseClicked(mouseEvent -> {
+
                 Image im = new Image("media/images/" + view.getChosenPiece().getId() + ".png");
-
-
 
                 System.out.println(view.getChosenPiece().getId()+" ŠEIT");
 
@@ -132,6 +148,7 @@ public class GameWindowPresenter {
                     // updates board tiles array
                     model.setUsedTiles(parseInt(view.getChosenPiece().getId()), GridPane.getRowIndex(item), GridPane.getColumnIndex(item));
                     model.removeRemainingPieces(Integer.valueOf(view.getChosenPiece().getId()));
+
 
                     System.out.println("\nAI is now making the move.");
 
@@ -149,7 +166,7 @@ public class GameWindowPresenter {
 //                model.aiMove();
             });
         });
-
+        setWinLoseWindow();
     }
 
     private void updateView() {

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Board {
     private ArrayList<Integer> piecesOnBoard = new ArrayList<>();
     private int[] pieceStatus = new int[16];
-    private ArrayList<Integer> remainingPieces = new ArrayList<Integer>(); // TODO: PLACE IT IN THE CORRECT PLACE. maybe Board.class ?
     private ArrayList<ArrayList<Integer>> usedTiles = new ArrayList<>();
     private ArrayList<String> remainingTiles = new ArrayList<String>();
 
@@ -23,12 +22,7 @@ public class Board {
 //        setUsedTiles(usedTiles);
 //    }
 
-    public void fillRemainingPieces() {
-        for (int i=1; i<17; i++) {
-            remainingPieces.add(i);
-        }
-        System.out.println("\nCreating new remaining pieces arraylist\n"+remainingPieces);
-    }
+
 
 
 
@@ -52,14 +46,6 @@ public class Board {
     }
 
     // GETTERS AND SETTERS
-
-    public ArrayList<Integer> getRemainingPieces() {
-        return remainingPieces;
-    }
-
-    public void setRemainingPieces(ArrayList<Integer> remainingPieces) {
-        this.remainingPieces = remainingPieces;
-    }
 
     public ArrayList<ArrayList<Integer>> getUsedTiles() {
         return usedTiles;

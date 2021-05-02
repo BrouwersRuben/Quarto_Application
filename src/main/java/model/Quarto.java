@@ -2,6 +2,7 @@ package main.java.model;
 
 import main.java.model.board.Board;
 import main.java.model.board.GameTimer;
+import main.java.model.board.Pieces;
 import main.java.model.dataBase.Leaderboard;
 import main.java.model.dataBase.SaveAndLoad;
 import main.java.model.players.Human;
@@ -19,11 +20,22 @@ public class Quarto {
     private final Leaderboard leaderboard = new Leaderboard();
     private final SaveAndLoad createTable = new SaveAndLoad();
     private final Board board = new Board();
+    private final Pieces pieces = new Pieces();
     private final Human player = new Human();
     private final GameTimer timer = new GameTimer();
-    private Random random; // for generating random AI move (temporary, maybe? makes no sense to place it board.class)
+    private final Random random = new Random(); // for generating random AI move (temporary, maybe? makes no sense to place it board.class)
     //has to have a human, and a bridge between the model and the view
 
+    private int x;
+    private int y;
+
+    public int getX() { return x; }
+
+    public int getY() { return y; }
+
+    public void setX(int x) { this.x = x; }
+
+    public void setY(int y) { this.y = y; }
 
 
     public Quarto() {
@@ -35,9 +47,15 @@ public class Quarto {
 
     public void startGame() {
         // if game doesn't exist
-        board.fillRemainingPieces();
+        pieces.fillRemainingPieces();
 
     }
+
+    public ArrayList<Integer> retrieveRemainingPieces() {
+        return pieces.getRemainingPieces();
+    }
+
+
 
     public void createRemainingPieces() {
 
@@ -63,27 +81,22 @@ public class Quarto {
     // TODO: PLACE IN CORRECT CLASS
 
     public int selectRandomPiece() {
-        return board.getRemainingPieces().get(random.nextInt(board.getRemainingPieces().size()));
+        return pieces.getRemainingPieces().get(random.nextInt(pieces.getRemainingPieces().size()));
     }
 
-    public int generateXCoordinate() {
-        int x = random.nextInt(4);
+    // TODO: Should this be in board class or nah ?
+    // Randomized coordinates
+    public void generateValidCoordinates() {
+        x = random.nextInt(4);
+        y = random.nextInt(4);
 
         for (int i=0; i<board.getUsedTiles().size(); i++) {
-            if (board.getUsedTiles().get(i).get(2)!=x) {
-                break;
+            if (board.getUsedTiles().get(i).get(2) == y && board.getUsedTiles().get(i).get(1) == x) {
+                generateValidCoordinates(); // This is so fucked, but it works
             }
-        } return x;
-    }
-
-    public int generateYCoordinate() {
-        int y = random.nextInt(4);
-
-        for (int i=0; i<board.getUsedTiles().size(); i++) {
-            if (board.getUsedTiles().get(i).get(3)!=y) {
-                break;
-            }
-        } return y;
+        }
+        setX(x);
+        setY(y);
     }
 
 
@@ -107,10 +120,10 @@ public class Quarto {
 //    }
 
     public void removeRemainingPieces(Integer pieceID) {
-        while (board.getRemainingPieces().contains(pieceID)) {
-            board.getRemainingPieces().remove(pieceID);
+        while (pieces.getRemainingPieces().contains(pieceID)) {
+            pieces.getRemainingPieces().remove(pieceID);
         }
-        System.out.println(board.getRemainingPieces());
+        System.out.println(pieces.getRemainingPieces());
     }
 
 
