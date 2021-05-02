@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Pieces {
-    private ArrayList<Integer> remainingPieces = new ArrayList<Integer>();
+    private final ArrayList<Integer> remainingPieces = new ArrayList<Integer>();
 
     public void fillRemainingPieces() {
         for (int i=1; i<17; i++) {
@@ -17,7 +17,4 @@ public class Pieces {
         return remainingPieces;
     }
 
-    public void setRemainingPieces(ArrayList<Integer> remainingPieces) {
-        this.remainingPieces = remainingPieces;
-    }
 }

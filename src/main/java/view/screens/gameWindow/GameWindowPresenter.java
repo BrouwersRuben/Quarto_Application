@@ -81,17 +81,17 @@ public class GameWindowPresenter {
             updateView();
         });
 
-        view.getPlayerTurn().setText("Your turn!\nTo pick a piece");
+//        view.getPlayerTurn().setText("Their turn!"); this does nothing
 
         //* TODO: 1. Game Starts, 2. Whoever starts selects a piece, 3. Piece gets placed on board.
+        // TODO: LOOP BETWEEN PLAYER AND COMPUTER
 
 
-        while (model.retrieveRemainingPieces().size()!=0) {
             view.getAvailablePieces().getChildren().forEach(piece -> {
                 piece.setOnMouseClicked(mouseEvent -> {
 
                     view.getErrorLabel().setText("");
-                    view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
+                    view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage())); // empty placeholder for *selected piece*
 
                     Image im = new Image("media/images/" + piece.getId() + ".png");
                     view.getChosenPiece().getChildren().add(new ImageView(im));
@@ -110,21 +110,18 @@ public class GameWindowPresenter {
                         model.setUsedTiles(parseInt(view.getChosenPiece().getId()), model.getX(), model.getY());
                         model.removeRemainingPieces(Integer.valueOf(view.getChosenPiece().getId()));
 
+                        // Computer selects the piece you have to place
+                        int temporary = model.selectRandomPiece();
+                        im = new Image("media/images/" +temporary+ ".png");
+                        view.getChosenPiece().getChildren().add(new ImageView(im));
+                        view.getChosenPiece().setId(String.valueOf(temporary));
+//                        view.getPlayerTurn().setText("Your turn!");
+                        model.setPlayerTurn(true);
+                        updateView();
                     }
                 });
-
-//            if (model.isValidMouseRelease()) {
-//                System.out.println("iegāja pie release ar vērtību: "+model.isValidMouseRelease());
-//                piece.setOnMouseReleased(e -> {
-//                    System.out.println("Mouse has been released");
-//                });
-//            }
-
-                view.getPlayerTurn().setText("Their turn!");
-
             });
 
-        }
 
         view.getGameBoard().getChildren().forEach(item -> {
             item.setOnMouseClicked(mouseEvent -> {
@@ -134,7 +131,7 @@ public class GameWindowPresenter {
                 System.out.println(view.getChosenPiece().getId()+" ŠEIT");
 
                 if (model.isUnique(Integer.valueOf(view.getChosenPiece().getId()))) {
-                    view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
+                    view.getGameBoard().add(new ImageView(im), GridPane.getRowIndex(item), GridPane.getColumnIndex(item));
                     view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
                     model.addToListOnBoard(Integer.valueOf(view.getChosenPiece().getId()));
 //                   view.getChosenPiece().setId("0"); // what does this do exactly ?
@@ -145,30 +142,22 @@ public class GameWindowPresenter {
                     // updates board tiles array
                     model.setUsedTiles(parseInt(view.getChosenPiece().getId()), GridPane.getRowIndex(item), GridPane.getColumnIndex(item));
                     model.removeRemainingPieces(Integer.valueOf(view.getChosenPiece().getId()));
-
-
+                    model.setPlayerTurn(false);
+                    updateView();
                     System.out.println("\nAI is now making the move.");
-
-
-//                    System.out.println("\nAI has selected a piece for you to play.");
-//                    Image ai = new Image("media/images/"+model.selectRandomPiece()+".png");
-//                    view.getChosenPiece().getChildren().add(new ImageView(ai));
 
 
                 } else {
                     view.getErrorLabel().setText("This piece is already on the board");
                 }
-
-                view.getPlayerTurn().setText("Your turn!");
-//                model.aiMove();
             });
         });
-        setWinLoseWindow();
     }
 
     private void updateView() {
         // fills the view with model data
         view.getUserName().setText("Username: " + model.getUserName());
+        view.getPlayerTurn().setText(model.turnIndicator());
     }
 
     public void addWindowEventHandlers() {

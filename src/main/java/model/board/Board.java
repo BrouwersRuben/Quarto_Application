@@ -6,28 +6,6 @@ public class Board {
     private ArrayList<Integer> piecesOnBoard = new ArrayList<>();
     private int[] pieceStatus = new int[16];
     private ArrayList<ArrayList<Integer>> usedTiles = new ArrayList<>();
-    private ArrayList<String> remainingTiles = new ArrayList<String>();
-
-//    public void fillNewTileStatus() { // 16 tiles, 2 values for (1 - status, 2 - piece ID)
-//        for (int i=0; i<16; i++) {
-//            usedTiles.add(new ArrayList<>());
-//            for (int j=0; j<2; j++) {
-//                usedTiles.get(i).add(j, -1);
-//            }
-//        }
-//        System.out.println("\nCreating new board tile arraylist");
-//        System.out.println("Size: "+ usedTiles.size());
-//        System.out.println("Size of first array: "+ usedTiles.get(0).size());
-//        System.out.println(usedTiles);
-//        setUsedTiles(usedTiles);
-//    }
-
-
-
-
-
-
-
 
     //Getters
     public int[] getPieceStatus() {
@@ -49,17 +27,5 @@ public class Board {
 
     public ArrayList<ArrayList<Integer>> getUsedTiles() {
         return usedTiles;
-    }
-
-    public void setUsedTiles(ArrayList<ArrayList<Integer>> usedTiles) {
-        this.usedTiles = usedTiles;
-    }
-
-    public ArrayList<String> getRemainingTiles() {
-        return remainingTiles;
-    }
-
-    public void setRemainingTiles(ArrayList<String> remainingTiles) {
-        this.remainingTiles = remainingTiles;
     }
 }

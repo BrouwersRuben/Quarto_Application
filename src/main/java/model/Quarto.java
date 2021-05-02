@@ -26,6 +26,13 @@ public class Quarto {
     private final Random random = new Random(); // for generating random AI move (temporary, maybe? makes no sense to place it board.class)
     //has to have a human, and a bridge between the model and the view
 
+    public Quarto() {
+// Constructor
+
+    }
+    // TODO: AI RANDOMIZED COORDINATE GENERATION
+    boolean playerTurn;
+    boolean validCoordinates=false;
     private int x;
     private int y;
 
@@ -37,11 +44,22 @@ public class Quarto {
 
     public void setY(int y) { this.y = y; }
 
+    // TODO: Should this be in board class or nah ?
+    // Randomized coordinates
+    public void generateValidCoordinates() {
 
-    public Quarto() {
-// Constructor
+        x = random.nextInt(4);
+        y = random.nextInt(4);
 
+        for (int i=0; i<board.getUsedTiles().size(); i++) {
+            if (board.getUsedTiles().get(i).get(1) == x && board.getUsedTiles().get(i).get(2) == y) {
+                generateValidCoordinates(); // This is so fucked, but it works
+            }
+        }
+        setX(x);
+        setY(y);
     }
+
 
     // TODO: GAME LOGIC
 
@@ -51,15 +69,29 @@ public class Quarto {
 
     }
 
+    public void isGameOver() {
+
+    }
+
+    public String turnIndicator() {
+        if (playerTurn) {
+            return "Your turn!";
+        } else {
+            return "Their turn!";
+        }
+    }
+
+    public boolean isPlayerTurn() { return playerTurn; }
+    public void setPlayerTurn(boolean playerTurn) { this.playerTurn = playerTurn; }
+
     public ArrayList<Integer> retrieveRemainingPieces() {
         return pieces.getRemainingPieces();
     }
 
-
-
-    public void createRemainingPieces() {
-
+    public int selectRandomPiece() {
+        return pieces.getRemainingPieces().get(random.nextInt(pieces.getRemainingPieces().size()));
     }
+
 
     public void setUsedTiles(int pieceID, int pieceRow, int pieceColumn) {
         ArrayList<Integer> temporary = new ArrayList<>();
@@ -68,56 +100,9 @@ public class Quarto {
         temporary.add(pieceColumn);
         board.getUsedTiles().add(temporary);
         System.out.println(board.getUsedTiles());
-        System.out.println(board.getUsedTiles().get(0).get(0));
     }
-
-//    public void generateCoordinates() { // TODO: PLACE IT IN THE CORRECT CLASS
-//        int temporary = random.nextInt(board.getRemainingTiles().size());
-//        int x = board.getRemainingTiles().get(temporary).charAt(0);
-//        int y = board.getRemainingTiles().get(temporary).charAt(1);
-//        int piece = board.getRemainingPieces().get(random.nextInt(board.getRemainingPieces().size()));
-//    }
 
     // TODO: PLACE IN CORRECT CLASS
-
-    public int selectRandomPiece() {
-        return pieces.getRemainingPieces().get(random.nextInt(pieces.getRemainingPieces().size()));
-    }
-
-    // TODO: Should this be in board class or nah ?
-    // Randomized coordinates
-    public void generateValidCoordinates() {
-        x = random.nextInt(4);
-        y = random.nextInt(4);
-
-        for (int i=0; i<board.getUsedTiles().size(); i++) {
-            if (board.getUsedTiles().get(i).get(2) == y && board.getUsedTiles().get(i).get(1) == x) {
-                generateValidCoordinates(); // This is so fucked, but it works
-            }
-        }
-        setX(x);
-        setY(y);
-    }
-
-
-//    public void setPieces(int pieceID, int pieceRow, int pieceColumn, int pieceStatus) { // 2D array rows first
-//        int tile = 0;
-//        if (pieceRow==0) {
-//            tile=pieceColumn;
-//        } else if (pieceRow==1) {
-//            tile=pieceColumn+4;
-//        } else if (pieceRow==2) {
-//            tile=pieceColumn+8;
-//        } else if (pieceRow==3) {
-//            tile=pieceColumn+12;
-//        }
-//
-//
-//        board.getUsedTiles().add(new ArrayList<Integer>(pieceID, pieceRow, pieceColumn));
-//        board.getUsedTiles().get(0).add(1, pieceRow);
-//        board.getUsedTiles().get(0).add(2, pieceColumn);
-//        System.out.println(board.getUsedTiles());
-//    }
 
     public void removeRemainingPieces(Integer pieceID) {
         while (pieces.getRemainingPieces().contains(pieceID)) {
