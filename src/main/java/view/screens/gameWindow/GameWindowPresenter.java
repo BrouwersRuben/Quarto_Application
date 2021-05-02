@@ -101,10 +101,7 @@ public class GameWindowPresenter {
 
                     if (!model.isUnique(Integer.valueOf(piece.getId()))) {
                         view.getErrorLabel().setText("This piece is already on the board");
-                        System.out.println("iegāja pie valid mouse false");
                     } else {
-                        System.out.println("iegāja pie validmouse true");
-
                         // Here the computer makes the move, based on the piece that was given to him.
                         model.generateValidCoordinates();
                         view.getGameBoard().add(new ImageView(im), model.getX(), model.getY());
