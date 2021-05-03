@@ -12,31 +12,37 @@ public enum Images {
 
     P0("0", "media/images/0.png"),
 
-    P1("BFRS", "media/images/1.png"),
-    P2("BHRS", "media/images/2.png"),
-    P3("BFRT", "media/images/3.png"),
-    P4("BHRT", "media/images/4.png"),
-    P5("BFTS", "media/images/5.png"),
-    P6("BHTS", "media/images/6.png"),
-    P7("BFTL", "media/images/7.png"),
-    P8("BHTL", "media/images/8.png"),
+    P1("BFRS", "media/images/1.png", true,true,true,false),
+    P2("BHRS", "media/images/2.png", true, false,true,false),
+    P3("BFRT", "media/images/3.png", true,true,true,true),
+    P4("BHRT", "media/images/4.png",true,false,true,true),
+    P5("BFTS", "media/images/5.png",true,true,false,false),
+    P6("BHTS", "media/images/6.png",true,false,false,false),
+    P7("BFTL", "media/images/7.png",true,true,false,true),
+    P8("BHTL", "media/images/8.png",true,false,false,true),
 
-    P9("GFRS", "media/images/9.png"),
-    P10("GHRS", "media/images/10.png"),
-    P11("GFRT", "media/images/11.png"),
-    P12("GHRT", "media/images/12.png"),
-    P13("GFTS", "media/images/13.png"),
-    P14("GHTS", "media/images/14.png"),
-    P15("GFTL", "media/images/15.png"),
-    P16("GHTL", "media/images/16.png");
+    P9("GFRS", "media/images/9.png", false,true,true,false),
+    P10("GHRS", "media/images/10.png", false, false,true,false),
+    P11("GFRT", "media/images/11.png", false, true,true,true),
+    P12("GHRT", "media/images/12.png", false,false,true,true),
+    P13("GFTS", "media/images/13.png",false,true,false,false),
+    P14("GHTS", "media/images/14.png", false,false,false,false),
+    P15("GFTL", "media/images/15.png",false,true,false,true),
+    P16("GHTL", "media/images/16.png",false,false,false,true);
 
 
     private final Image image;
     private final String pieceName;
 
-    Images(String name, String url) {
+    // color(blue=true, green=false), fill(full=true, hollow=false), shape(round=true, triangle=false), height(long=true, short=false)
+    Images(String name, String url, boolean color, boolean fill, boolean shape, boolean height) {
         this.image = new Image(url);
         this.pieceName = name;
+    }
+
+    Images(String name, String url) {
+        this.pieceName = name;
+        this.image = new Image(url);
     }
 
     public Image getImage() {
