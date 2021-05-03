@@ -67,13 +67,28 @@ public class Quarto {
         // if starting new game
         String username = getUserName();
         pieces.fillRemainingPieces();
-
-
-
-
+        board.fillWinningLines();
     }
 
+    // Check after each turn
     public boolean isGameOver() {
+        System.out.println("Here is the current game status: "+board.getBoardStatus());
+
+            for (int j=0; j<board.getWinningLines().size(); j++) {
+                StringBuilder sb = new StringBuilder();
+                 for (int k = 0; k<board.getWinningLines().get(j).size(); k++) {
+                    if (board.getBoardStatus().get(board.getWinningLines().get(j).get(k)) == 1 ) {
+                        sb.append("1");
+                        if (sb.toString().equals("1111")) {
+                            System.out.println("there's a line");
+                            return true;
+                        }
+                    }
+                }
+            }
+
+
+        // Checking if draw (when no pieces left and no winning line)
         return pieces.getRemainingPieces().size() == 0;
     }
 
@@ -103,7 +118,33 @@ public class Quarto {
         temporary.add(pieceRow);
         temporary.add(pieceColumn);
         board.getUsedTiles().add(temporary);
-        System.out.println(board.getUsedTiles());
+        System.out.println("Coordinates for pieces: "+board.getUsedTiles());
+    }
+
+    // TODO: NOTE: IM COUNTING TILES LEFT TO RIGHT
+    /*                example
+    //              board[4][4]:
+    //    0 | 1 | 2 | 3
+    //    -------+--------+--------+-------
+    //    4 | 5 | 6 | 7
+    //    -------+--------+--------+-------
+    //    [0][2] | [1][2] | [2][2] | [3][2]
+    //    -------+--------+--------+-------
+    //    [0][3] | [1][3] | [2][3] | [3][3]
+     */
+    public void setCoordinatesToBoardStatus(int pieceColumn, int pieceRow) {
+        int tempNumber = 999; // for testing, can be whatever (0)
+        if (pieceRow==0) {
+            tempNumber=pieceColumn;
+        } else if (pieceRow==1) {
+            tempNumber=pieceColumn+4;
+        } else if (pieceRow==2) {
+            tempNumber=pieceColumn+8;
+        } else if (pieceRow==3) {
+            tempNumber =pieceColumn+12;
+        }
+        board.getBoardStatus().set(tempNumber, 1);
+        System.out.println("Board status: "+board.getBoardStatus());
     }
 
     // TODO: PLACE IN CORRECT CLASS
@@ -112,7 +153,7 @@ public class Quarto {
         while (pieces.getRemainingPieces().contains(pieceID)) {
             pieces.getRemainingPieces().remove(pieceID);
         }
-        System.out.println(pieces.getRemainingPieces());
+        System.out.println("Remaining pieces: "+pieces.getRemainingPieces());
     }
 
 

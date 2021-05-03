@@ -108,6 +108,7 @@ public class GameWindowPresenter {
                         view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
                         model.addToListOnBoard(Integer.valueOf(view.getChosenPiece().getId()));
                         model.setUsedTiles(parseInt(view.getChosenPiece().getId()), model.getX(), model.getY());
+                        model.setCoordinatesToBoardStatus(model.getX(), model.getY());
                         model.removeRemainingPieces(Integer.valueOf(view.getChosenPiece().getId()));
 
                         // Computer selects the piece you have to place
@@ -120,7 +121,9 @@ public class GameWindowPresenter {
                         updateView();
 
                         if (model.isGameOver()) {
-                            setWinLoseWindow();
+//                            setWinLoseWindow();
+                            System.out.println("Game is over! Thank you for playing!");
+                            // TODO: here it should end game/show winLoseScreen
                         }
                     }
                 });
@@ -132,8 +135,6 @@ public class GameWindowPresenter {
 
                 Image im = new Image("media/images/" + view.getChosenPiece().getId() + ".png");
 
-                System.out.println(view.getChosenPiece().getId()+" ŠEIT");
-
                 if (model.isUnique(Integer.valueOf(view.getChosenPiece().getId()))) {
                     view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
                     view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
@@ -142,9 +143,10 @@ public class GameWindowPresenter {
                     view.getErrorLabel().setText("");
 
                     // testing
-                    System.out.println("piece "+view.getChosenPiece().getId()+" has been set on tile "+GridPane.getRowIndex(item)+" "+GridPane.getColumnIndex(item));
+                    System.out.println("\nPiece "+view.getChosenPiece().getId()+" has been set on tile "+GridPane.getColumnIndex(item)+" "+GridPane.getRowIndex(item));
                     // updates board tiles array
                     model.setUsedTiles(parseInt(view.getChosenPiece().getId()), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
+                    model.setCoordinatesToBoardStatus(GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
                     model.removeRemainingPieces(Integer.valueOf(view.getChosenPiece().getId()));
                     model.setPlayerTurn(false);
                     updateView();
@@ -152,7 +154,7 @@ public class GameWindowPresenter {
                     if (model.isGameOver()) {
                         //TODO: Can't set winlosewindow cause database is not linked with game
 //                        setWinLoseWindow();
-                        System.out.println("Game is over, no more pieces remaining.");
+                        System.out.println("Game is over! Thank you for playing!");
                     }
 
                 } else {
