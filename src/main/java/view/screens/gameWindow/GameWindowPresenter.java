@@ -32,8 +32,8 @@ public class GameWindowPresenter {
     public GameWindowPresenter(Quarto model, GameWindowView view) {
         this.model = model;
         this.view = view;
-        addEventHandlers();
         updateView();
+        addEventHandlers();
     }
 
     private void addEventHandlers() {
@@ -42,12 +42,6 @@ public class GameWindowPresenter {
         // In the event handlers: call model methods
         // and updateView().
 
-        this.view.getPauseGame().setOnAction(event -> {
-            // setPauseWindow(); TODO: timer restarts instead of continues
-            //timerStart();
-            setPauseScreen();
-            updateView();
-        });
         this.view.getSaveGame().setOnAction(event -> {
             // TODO: some method that updates the database with the current state of the game
             System.out.println("You have indicated that you would like to save the game");
@@ -56,11 +50,6 @@ public class GameWindowPresenter {
         this.view.getEndGame().setOnAction(event -> {
             closingAlert(event);
             updateView();
-        });
-        view.getQuarto().setOnAction(event -> {
-            System.out.println("You have indicated that you saw a quarto");
-            //Hasquarto has to be called here, to check if what the user saw was correct
-//            model.hasQuarto();
         });
         view.getWinScreen().setOnAction(event -> {
             model.setWon();

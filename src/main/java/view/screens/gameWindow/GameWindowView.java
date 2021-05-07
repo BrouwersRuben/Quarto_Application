@@ -16,7 +16,6 @@ import main.java.view.Images;
 
 public class GameWindowView extends BorderPane {
     // private Node attributes (controls)
-    private Button pauseGame;
     private Button saveGame;
     private Button endGame;
     private Button winScreen;
@@ -42,7 +41,6 @@ public class GameWindowView extends BorderPane {
     private ImageView[][] availablePiecesBack;
     private Label playerTurn;
     private Label timer;
-    private Button quarto;
     private Text errorLabel;
 
 
@@ -76,13 +74,11 @@ public class GameWindowView extends BorderPane {
         chosenPiece = new GridPane();
         availablePiecesBack = new ImageView[4][4];
         availablePieces = new GridPane();
-        quarto = new Button("QUARTO!!");
         timer = new Label("00:00");
         errorLabel = new Text();
 
 
         //BottomBox
-        pauseGame = new Button("Pause");
         saveGame = new Button("Save");
         endGame = new Button("End");
         userName = new Text();
@@ -149,10 +145,9 @@ public class GameWindowView extends BorderPane {
         // add/set … methods
         // Insets, padding, alignment, …
 
-        bottomBox = new HBox(saveGame, pauseGame, endGame, userName, errorLabel, winScreen, loseScreen);
+        bottomBox = new HBox(saveGame, endGame, userName, errorLabel, winScreen, loseScreen);
         bottomBox.setPadding(new Insets(10, 10, 10, 10));
         HBox.setMargin(saveGame, new Insets(5, 10, 5, 10));
-        HBox.setMargin(pauseGame, new Insets(5, 10, 5, 10));
         HBox.setMargin(endGame, new Insets(5, 10, 5, 10));
         HBox.setMargin(userName, new Insets(5, 10, 5, 10));
         HBox.setMargin(errorLabel, new Insets(5, 10, 5, 10));
@@ -163,13 +158,12 @@ public class GameWindowView extends BorderPane {
         errorLabel.setFill(Paint.valueOf("Red"));
 
 
-        vBox = new VBox(chosenPiece, playerTurn, timer, quarto/*, moveCount*/);
+        vBox = new VBox(chosenPiece, playerTurn, timer/*, moveCount*/);
         chosenPiece.setAlignment(Pos.CENTER);
         this.vBox.setAlignment(Pos.TOP_CENTER);
 
         VBox.setMargin(chosenPiece, new Insets(10, 10, 10, 10));
         VBox.setMargin(playerTurn, new Insets(10, 10, 10, 10));
-        VBox.setMargin(quarto, new Insets(10, 10, 10, 10));
 
         hBox = new HBox(gameBoard, vBox, availablePieces);
         hBox.setAlignment(Pos.CENTER);
@@ -190,9 +184,6 @@ public class GameWindowView extends BorderPane {
 
     // package-private Getters
     // for controls used by Presenter
-    Button getPauseGame() {
-        return pauseGame;
-    }
 
     Button getSaveGame() {
         return saveGame;
@@ -240,10 +231,6 @@ public class GameWindowView extends BorderPane {
 
     ImageView[][] getAvailablePiecesBack() {
         return availablePiecesBack;
-    }
-
-    Button getQuarto() {
-        return quarto;
     }
 
     Label getTimer() {
