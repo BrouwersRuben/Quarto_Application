@@ -2,6 +2,12 @@ package main.java.model.board;
 
 import java.text.DecimalFormat;
 
+/**
+ * Class for dealing with the built-in game timer.
+ * @author Ruben Brouwers
+ * @version 1.0
+ */
+
 public class GameTimer {
     private final DecimalFormat dFormat = new DecimalFormat("00");
     private int second = 0, minute = 0;
@@ -11,6 +17,9 @@ public class GameTimer {
         timerIncrement();
     }
 
+    /**
+     * Method which displays the timer in minutes and seconds.
+     */
     public void timerIncrement() {
         second++;
 

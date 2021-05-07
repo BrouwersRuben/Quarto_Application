@@ -1,8 +1,13 @@
 package main.java.model.board;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
+/**
+ * This class keeps track of the remaining pieces from which
+ * the players can choose to make their next move.
+ * @version 1.0
+ * @author Rodžers Ušackis
+ */
 public class Pieces {
     private final ArrayList<Integer> remainingPieces = new ArrayList<Integer>();
 
@@ -16,5 +21,4 @@ public class Pieces {
     public ArrayList<Integer> getRemainingPieces() {
         return remainingPieces;
     }
-
 }

@@ -1,21 +1,28 @@
 package main.java.model.board;
-
 import java.util.ArrayList;
 import java.util.Collections;
+
+/**
+ * This is the class responsible for dealing with the game board related things, such as
+ * the tiles which are occupied, what pieces are on there and what the winning lines are.
+ * Use this class to store and retrieve data from the appropriate arraylists.
+ * @version 1.0
+ * @author Rodžers Ušackis
+ * @author Ruben Brouwers
+ */
 
 public class Board {
     private ArrayList<Integer> piecesOnBoard = new ArrayList<>();
     private int[] pieceStatus = new int[16];
     private ArrayList<ArrayList<Integer>> usedTiles = new ArrayList<>();
-
-    // 16n's - 0's representing an empty board, if a piece is added n is changed to 1
+    // 16 - 0's representing an empty board, if a piece is added n is changed to 1
     private ArrayList<Integer> boardStatus = new ArrayList<>(Collections.nCopies(16,0));
-
-    // winning lines which we'll compare with the boardStatus
-
     private final ArrayList<ArrayList<Integer>> winningLines = new ArrayList<>();
 
-
+    /**
+     * Fills the winningLines arraylist.
+     * Use case is to compare the winning lines to the active game (boardStatus), to identify if the game is won.
+     */
     public void fillWinningLines() {
         for (String line : lines) {
             ArrayList<Integer> temporary = new ArrayList<Integer>();
@@ -57,16 +64,6 @@ public class Board {
         return piecesOnBoard;
     }
 
-    //Setters
-    public void setPieceStatus(int[] pieceStatus) {
-        this.pieceStatus = pieceStatus;
-    }
-    public void setPiecesOnBoard(int id) {
-        piecesOnBoard.add(id);
-    }
-
-    // GETTERS AND SETTERS
-
     public ArrayList<ArrayList<Integer>> getUsedTiles() {
         return usedTiles;
     }
@@ -79,7 +76,13 @@ public class Board {
         return winningLines;
     }
 
-
+    //Setters
+    public void setPieceStatus(int[] pieceStatus) {
+        this.pieceStatus = pieceStatus;
+    }
+    public void setPiecesOnBoard(int id) {
+        piecesOnBoard.add(id);
+    }
 }
 
 

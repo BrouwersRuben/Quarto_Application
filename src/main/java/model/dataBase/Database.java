@@ -6,6 +6,13 @@ import oracle.jdbc.pool.OracleDataSource;
 import java.io.File;
 import java.sql.*;
 
+/**
+ * A class which is responsible for most of the database related
+ * methods, such as connecting, disconnecting, creating tables, saving and loading games.
+ * @author Rodžers Ušackis
+ * @version 1.0
+ */
+
 public class Database {
     private static final File WALLET = new File("Wallet_QuartoDatabase");
     private static final String dbURL = "jdbc:oracle:thin:@quartodatabase_medium?TNS_ADMIN=" + WALLET.getAbsolutePath();
@@ -22,9 +29,11 @@ public class Database {
     }
 
     public Database(Quarto game) { // Constructor for initializing and existing game session
-
     }
 
+    /**
+     * Establishes a connection between the database and the application.
+     */
     public void connectToDb() {
         try {
             ods = new OracleDataSource();
@@ -45,6 +54,9 @@ public class Database {
         }
     }
 
+    /**
+     * Terminates the connection between the database and the application.
+     */
     public void closeDb() {
         try {
             if (statement != null && !statement.isClosed()) {
@@ -60,7 +72,10 @@ public class Database {
         }
     }
 
-    //TODO: Make smaller and rename
+    /**
+     * Makes sure the necessary tables for the game functionality are present and if they are not
+     * then they are created.
+     */
     public void createTableIfDoesntExist() {
         try {
             ods = new OracleDataSource();
@@ -171,6 +186,9 @@ public class Database {
         }
     }
 
+    /**
+     * A method for saving the game state when asked by the user.
+     */
     public void saveGame() { // TODO: Implement game logic
         try {
             ods = new OracleDataSource();
@@ -207,6 +225,12 @@ public class Database {
 
     }
 
+    /**
+     * A method that checks if a save file exists when the user requests to start a game
+     * from a previously saved match point.
+     * @param playerName
+     * @return
+     */
     public boolean savedGameExists(String playerName) {
 
         try {
@@ -229,6 +253,11 @@ public class Database {
         }
     }
 
+    /**
+     * A method that loads the game, when it is confirmed that the save file exists.
+     * @param playerName
+     * @return
+     */
     public Quarto loadGame(String playerName) { // Not sure yet, haven't checked
 
 //        game = new Quarto(playerName);
@@ -267,7 +296,9 @@ public class Database {
     }
 
 
-    // This method exists just in case we have to drop the tables, it's not being used for the game itself
+    /**
+     * A method to drop tables just in case it is necessary.
+     */
     public void dropTables() {
         try {
             ods = new OracleDataSource();

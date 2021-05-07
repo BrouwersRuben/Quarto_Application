@@ -1,5 +1,10 @@
 package main.java.model.dataBase;
 
+/**
+ * Class to save a record by a specific player or to override an existing one with a better one.
+ * @author Rodžers Ušackis
+ * @version 1.0
+ */
 public class Record {
     private final int id;
     private final String username;

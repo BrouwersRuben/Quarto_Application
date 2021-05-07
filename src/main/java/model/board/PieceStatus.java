@@ -1,5 +1,10 @@
 package main.java.model.board;
 
+/**
+ * Class which is used to identify each pieces game status, for loading purposes.
+ * @version 1.0
+ * @author Ruben Brouwers
+ */
 public enum PieceStatus {
     OFF_BOARD(-1), IN_PLAY(1), IN_HAND(2);
 

@@ -15,24 +15,30 @@ import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.util.*;
 
+/**
+ * This is the class which is responsible for the functionality of the game.
+ * It contains all of the necessary objects of the other classes to make use of them
+ * in a combined environment.
+ * @author Rodžers Ušackis
+ * @author Ruben Brouwers
+ * @version 1.0
+ */
 public class Quarto {
     protected boolean isRunning;
     protected int amountOfTurns;
-    // private attributes
     private final Leaderboard leaderboard = new Leaderboard();
     private final Database database = new Database();
     private final Board board = new Board();
     private final Pieces pieces = new Pieces();
     private final Human player = new Human();
     private final GameTimer timer = new GameTimer();
-    private final Random random = new Random(); // for generating random AI move (temporary, maybe? makes no sense to place it board.class)
-    //has to have a human, and a bridge between the model and the view
+    private final Random random = new Random();
 
     public Quarto() {
-// Constructor
+    // Constructor
 
     }
-    // TODO: AI RANDOMIZED COORDINATE GENERATION
+
     boolean playerTurn;
     boolean validCoordinates=false;
     private int x;
@@ -46,8 +52,10 @@ public class Quarto {
 
     public void setY(int y) { this.y = y; }
 
-    // TODO: Should this be in board class or nah ?
-    // Randomized coordinates
+    /**
+     * Method which makes sure that the coordinates AI generates are valid.
+     * If they are not, the process is repeated until the AI finds an unoccupied tile.
+     */
     public void generateValidCoordinates() {
 
         x = random.nextInt(4);
@@ -55,7 +63,7 @@ public class Quarto {
 
         for (int i=0; i<board.getUsedTiles().size(); i++) {
             if (board.getUsedTiles().get(i).get(1) == x && board.getUsedTiles().get(i).get(2) == y) {
-                generateValidCoordinates(); // This is so fucked, but it works
+                generateValidCoordinates();
             }
         }
         setX(x);
@@ -63,8 +71,9 @@ public class Quarto {
     }
 
 
-    // TODO: GAME LOGIC
-
+    /**
+     * Here the game is initialized.
+     */
     public void startGame() {
         // if starting new game
         String username = getUserName();
@@ -73,7 +82,11 @@ public class Quarto {
 
     }
 
-    // Check after each turn
+    /**
+     * Method which checks if the game is over or not by
+     * comparing the current board status with the pre-set winning lines.
+     * @return
+     */
     public boolean isGameOver() {
         System.out.println("Here is the current game status: "+board.getBoardStatus());
 
@@ -81,6 +94,7 @@ public class Quarto {
                 StringBuilder sb = new StringBuilder();
                  for (int k = 0; k<board.getWinningLines().get(j).size(); k++) {
                     if (board.getBoardStatus().get(board.getWinningLines().get(j).get(k)) == 1 ) {
+
                         sb.append("1");
                         if (sb.toString().equals("1111")) {
                             System.out.println("there's a line");
@@ -89,8 +103,6 @@ public class Quarto {
                     }
                 }
             }
-
-
         // Checking if draw (when no pieces left and no winning line)
         return pieces.getRemainingPieces().size() == 0;
     }
@@ -110,11 +122,20 @@ public class Quarto {
         return pieces.getRemainingPieces();
     }
 
+    /**
+     * Method to help AI select a piece for the player to place on the board.
+     * @return
+     */
     public int selectRandomPiece() {
         return pieces.getRemainingPieces().get(random.nextInt(pieces.getRemainingPieces().size()));
     }
 
-
+    /**
+     * Method to save which piece is placed on which row and column.
+     * @param pieceID
+     * @param pieceRow
+     * @param pieceColumn
+     */
     public void setUsedTiles(int pieceID, int pieceRow, int pieceColumn) {
         ArrayList<Integer> temporary = new ArrayList<>();
         temporary.add(pieceID);
@@ -124,17 +145,12 @@ public class Quarto {
         System.out.println("Coordinates for pieces: "+board.getUsedTiles());
     }
 
-    // TODO: NOTE: IM COUNTING TILES LEFT TO RIGHT
-    /*                example
-    //              board[4][4]:
-    //    0 | 1 | 2 | 3
-    //    -------+--------+--------+-------
-    //    4 | 5 | 6 | 7
-    //    -------+--------+--------+-------
-    //    [0][2] | [1][2] | [2][2] | [3][2]
-    //    -------+--------+--------+-------
-    //    [0][3] | [1][3] | [2][3] | [3][3]
+    /**
+     * A method which declares whether a board tile is occupied or not
+     * with 1's and 0's.
+     * This is later on used to compare the board state to possible winning lines/combinations.
      */
+
     public void setCoordinatesToBoardStatus(int pieceColumn, int pieceRow) {
         int tempNumber = 999; // for testing, can be whatever (0)
         if (pieceRow==0) {
@@ -150,8 +166,9 @@ public class Quarto {
         System.out.println("Board status: "+board.getBoardStatus());
     }
 
-    // TODO: PLACE IN CORRECT CLASS
-
+    /**
+     * Keeps track of which pieces the AI can pick for the player to make a turn with.
+     */
     public void removeRemainingPieces(Integer pieceID) {
         while (pieces.getRemainingPieces().contains(pieceID)) {
             pieces.getRemainingPieces().remove(pieceID);
@@ -159,8 +176,11 @@ public class Quarto {
         System.out.println("Remaining pieces: "+pieces.getRemainingPieces());
     }
 
-    public void createTurnData(int playerID, int turnID, Timestamp turnStart, Timestamp turnEnd) {
-        Statistics statistics = new Statistics(playerID, turnID, turnStart, turnEnd);
+    /**
+     * Creates an object which is used for entering advanced statistics data into the database.
+     */
+    public void createTurnData(int playerID, int turnID, Timestamp turnStart, Timestamp turnEnd, double score) {
+        Statistics statistics = new Statistics(playerID, turnID, turnStart, turnEnd, score);
     }
 
 
@@ -209,7 +229,9 @@ public class Quarto {
     }
 
     //Business logic
-
+    /**
+     * Checks if the file containing the tutorial of the game exists in our game module.
+     */
     public String checkIfTutorialExist(Path path) {
         if (Files.exists(path) && Files.isRegularFile(path)) {
             return "The File exist and is a regular file.";
@@ -220,6 +242,9 @@ public class Quarto {
         }
     }
 
+    /**
+     * Displays the tutorial.
+     */
     public String readTutorialFile(Path path) {
         checkIfTutorialExist(path);
         try {
@@ -298,6 +323,11 @@ public class Quarto {
         board.setPiecesOnBoard(pieceId);
     }
 
+    /**
+     * Checks if the piece which the user has selected has been already placed or not.
+     * @param pieceId The identifier of the piece which was selected.
+     * @return
+     */
     public boolean isUnique(Integer pieceId) {
         for (int i = 0; i < board.getPiecesOnBoard().size(); i++) {
             if (pieceId.equals(board.getPiecesOnBoard().get(i))) {

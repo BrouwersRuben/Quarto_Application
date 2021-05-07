@@ -19,6 +19,6 @@
         <jarDirectory url="file://$MODULE_DIR$/lib/drivers_oracle_ojdbc8" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="javaFX" level="project" />
+    <orderEntry type="library" name="javafx" level="project" />
   </component>
 </module>
