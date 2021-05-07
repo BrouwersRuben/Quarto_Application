@@ -2,7 +2,7 @@ package main.java.model;
 
 import main.java.model.board.Board;
 import main.java.model.board.GameTimer;
-import main.java.model.board.Pieces;
+import main.java.model.board.RemainingPieces;
 import main.java.model.dataBase.Leaderboard;
 import main.java.model.dataBase.Database;
 import main.java.model.dataBase.Statistics;
@@ -29,7 +29,7 @@ public class Quarto {
     private final Leaderboard leaderboard = new Leaderboard();
     private final Database database = new Database();
     private final Board board = new Board();
-    private final Pieces pieces = new Pieces();
+    private final RemainingPieces pieces = new RemainingPieces();
     private final Human player = new Human();
     private final GameTimer timer = new GameTimer();
     private final Random random = new Random();
@@ -105,6 +105,10 @@ public class Quarto {
             }
         // Checking if draw (when no pieces left and no winning line).
         return pieces.getRemainingPieces().size() == 0;
+    }
+
+    public int comparePieces(){
+        return 0;
     }
 
     public String turnIndicator() {
@@ -269,37 +273,6 @@ public class Quarto {
     public void setUserName(String name) {
         player.setName(name);
     }
-
-
-
-    // WIN CONDITION
-
-//    public boolean hasQuarto() {
-//        // TODO: hasQuarto
-//        /*if (hasquarto == true){
-//            player.setHasQuarto(true);
-//        } else {
-//            player.setHasQuarto(false);
-//        }*/
-////        if (checkRows() == true || checkColumns() == true || checkDiagonals() == true) {
-////            return true;
-////        } else {
-////            return false;
-////        }
-//        return false;
-//    }
-//    public boolean checkRows() {
-//        for (int offset=0; offset<3; offset++) {
-//            if (tileArray[offset] == tileArray[offset+1] && tileArray[offset] == tileArray[offset+2] && tileArray[offset] == tileArray[offset+3] && tileArray[offset] == 1) {
-//                return true;
-//            } else {
-//                return false;
-//            }
-//    }
-//    public boolean checkColumns() { return true; }
-//    public boolean checkDiagonals() { return true; }
-
-
 
     public boolean setWon() {
         return player.setHasQuarto(true);

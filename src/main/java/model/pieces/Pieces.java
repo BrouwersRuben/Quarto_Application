@@ -1,11 +1,8 @@
-package main.java.view;
+package main.java.model.pieces;
 
 import javafx.scene.image.Image;
-import main.java.model.pieces.Color;
 
-import java.util.EnumSet;
-
-public enum Images {
+public enum Pieces {
     // From here the images needed can be called
 
     //1: Blue or Green
@@ -44,7 +41,7 @@ public enum Images {
     private boolean height;
 
     // color(blue=true, green=false), fill(full=true, hollow=false), shape(round=true, triangle=false), height(long=true, short=false)
-    Images(String name, String url, boolean color, boolean fill, boolean shape, boolean height) {
+    Pieces(String name, String url, boolean color, boolean fill, boolean shape, boolean height) {
         this.image = new Image(url);
         this.pieceName = name;
         this.color = color;
@@ -54,7 +51,7 @@ public enum Images {
 
     }
 
-    Images(String name, String url) {
+    Pieces(String name, String url) {
         this.pieceName = name;
         this.image = new Image(url);
     }
@@ -75,5 +72,3 @@ public enum Images {
 
     public boolean isHeight() { return height; }
 }
-
-// not pushing

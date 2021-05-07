@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author Rodžers Ušackis
  * @author Ruben Brouwers
  */
-public class Pieces {
+public class RemainingPieces {
     private final ArrayList<Integer> remainingPieces = new ArrayList<Integer>();
 
     public void fillRemainingPieces() {

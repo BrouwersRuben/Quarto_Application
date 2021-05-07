@@ -7,10 +7,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Paint;
 import javafx.stage.Window;
 import main.java.model.Quarto;
-import main.java.view.Images;
+import main.java.model.pieces.Pieces;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 import main.java.view.screens.pauseScreen.PauseScreenPresenter;
@@ -80,7 +79,7 @@ public class GameWindowPresenter {
                 piece.setOnMouseClicked(mouseEvent -> {
 
                     view.getErrorLabel().setText("");
-                    view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage())); // empty placeholder for *selected piece*
+                    view.getChosenPiece().getChildren().add(new ImageView(Pieces.P0.getImage())); // empty placeholder for *selected piece*
 
                     Image im = new Image("media/images/" + piece.getId() + ".png");
                     view.getChosenPiece().getChildren().add(new ImageView(im));
@@ -94,7 +93,7 @@ public class GameWindowPresenter {
                         // Here the computer makes the move, based on the piece that was given to him.
                         model.generateValidCoordinates();
                         view.getGameBoard().add(new ImageView(im), model.getX(), model.getY());
-                        view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
+                        view.getChosenPiece().getChildren().add(new ImageView(Pieces.P0.getImage()));
                         model.addToListOnBoard(Integer.valueOf(view.getChosenPiece().getId()));
                         model.setUsedTiles(parseInt(view.getChosenPiece().getId()), model.getX(), model.getY());
                         model.setCoordinatesToBoardStatus(model.getX(), model.getY());
@@ -128,7 +127,7 @@ public class GameWindowPresenter {
 
                 if (model.isUnique(Integer.valueOf(view.getChosenPiece().getId()))) {
                     view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
-                    view.getChosenPiece().getChildren().add(new ImageView(Images.P0.getImage()));
+                    view.getChosenPiece().getChildren().add(new ImageView(Pieces.P0.getImage()));
                     model.addToListOnBoard(Integer.valueOf(view.getChosenPiece().getId()));
 //                   view.getChosenPiece().setId("0"); // what does this do exactly ?
                     view.getErrorLabel().setText("");
@@ -141,6 +140,13 @@ public class GameWindowPresenter {
                     model.removeRemainingPieces(Integer.valueOf(view.getChosenPiece().getId()));
                     model.setPlayerTurn(false);
                     updateView();
+
+                    //We ran out of time to implement the compare method we talked about with Mr. de Rijke, but we managed to check if lines were filled. Ultimately we
+                    //wanted to hand in the finished game... But this has to do for this sprint, we are activly working on finding a solution for the problems we are facing
+                    //with the programming right now
+
+                    //here is the link to the whiteboard we used to visualize our thoughts on how the remainder of the game logic has to be. (or at least the stuff we failed to implement)
+                    //https://wbd.ms/share/v2/aHR0cHM6Ly93aGl0ZWJvYXJkLm1pY3Jvc29mdC5jb20vYXBpL3YxLjAvd2hpdGVib2FyZHMvcmVkZWVtLzZhZjI5ZjEzMDMxODQzNGM5YTM0YmM5NWUyYTFjODEwX2VkMWZjNTdmLThhOTctNDdlNy05ZGUxLTkzMDJkZmQ3ODZhZQ==
 
                     if (model.isGameOver()) {
                         //TODO: Can't set winlosewindow cause database is not linked with game

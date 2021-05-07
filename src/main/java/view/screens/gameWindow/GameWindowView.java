@@ -11,7 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import main.java.view.Images;
+import main.java.model.pieces.Pieces;
 
 
 public class GameWindowView extends BorderPane {
@@ -89,13 +89,13 @@ public class GameWindowView extends BorderPane {
     }
 
     private void initialiseChosenPiece() {
-        this.chosenPieceBack[0] = new ImageView(Images.P0.getImage());
+        this.chosenPieceBack[0] = new ImageView(Pieces.P0.getImage());
     }
 
     private void initialiseGameBoard() {
         for (int i = 0; i < this.gameBoardBack.length; i++) {
             for (int j = 0; j < this.gameBoardBack[i].length; j++) {
-                this.gameBoardBack[i][j] = new ImageView(Images.P0.getImage());
+                this.gameBoardBack[i][j] = new ImageView(Pieces.P0.getImage());
                 this.gameBoardBack[i][j].setId("free");
             }
         }
