@@ -111,6 +111,8 @@ public class GameWindowPresenter {
 
                         if (model.isGameOver()) {
                             model.setLost();
+
+                            //Temporary solution
                             model.getStatistics(model.getRecordsUserId(3));
                             setWinLoseWindow();
                             System.out.println("Game is over! Thank you for playing!");
@@ -146,7 +148,7 @@ public class GameWindowPresenter {
                         //TODO: Can't set winlosewindow cause database is not linked with game
                         model.setWon();
 
-                        //Temp
+                        //Temporary solution
                         model.getStatistics(model.getRecordsUserId(0));
                         setWinLoseWindow();
                         System.out.println("Game is over! Thank you for playing!");
