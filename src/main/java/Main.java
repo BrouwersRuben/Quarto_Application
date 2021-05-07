@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import main.java.model.Quarto;
-import main.java.model.board.Board;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 
@@ -28,7 +27,7 @@ public class Main extends Application {
 
         window.setTitle("Quarto");
         final Quarto model = new Quarto();
-        model.dataBaseInit();
+        model.openDB();
         final QuartoView view = new QuartoView();
         final QuartoPresenter presenter = new QuartoPresenter(model, view);
         final Scene scene = new Scene(view);

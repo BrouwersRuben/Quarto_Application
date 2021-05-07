@@ -60,7 +60,7 @@ public class GameWindowPresenter {
         view.getQuarto().setOnAction(event -> {
             System.out.println("You have indicated that you saw a quarto");
             //Hasquarto has to be called here, to check if what the user saw was correct
-            model.hasQuarto();
+//            model.hasQuarto();
         });
         view.getWinScreen().setOnAction(event -> {
             model.setWon();
@@ -121,7 +121,9 @@ public class GameWindowPresenter {
                         updateView();
 
                         if (model.isGameOver()) {
-//                            setWinLoseWindow();
+                            model.setLost();
+                            model.getStatistics(model.getRecordsUserId(3));
+                            setWinLoseWindow();
                             System.out.println("Game is over! Thank you for playing!");
                             // TODO: here it should end game/show winLoseScreen
                         }
@@ -153,6 +155,7 @@ public class GameWindowPresenter {
 
                     if (model.isGameOver()) {
                         //TODO: Can't set winlosewindow cause database is not linked with game
+                        model.setWon();
 //                        setWinLoseWindow();
                         System.out.println("Game is over! Thank you for playing!");
                     }

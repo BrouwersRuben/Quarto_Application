@@ -4,13 +4,15 @@ import main.java.model.board.Board;
 import main.java.model.board.GameTimer;
 import main.java.model.board.Pieces;
 import main.java.model.dataBase.Leaderboard;
-import main.java.model.dataBase.SaveAndLoad;
+import main.java.model.dataBase.Database;
+import main.java.model.dataBase.Statistics;
 import main.java.model.players.Human;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Timestamp;
 import java.util.*;
 
 public class Quarto {
@@ -18,7 +20,7 @@ public class Quarto {
     protected int amountOfTurns;
     // private attributes
     private final Leaderboard leaderboard = new Leaderboard();
-    private final SaveAndLoad createTable = new SaveAndLoad();
+    private final Database database = new Database();
     private final Board board = new Board();
     private final Pieces pieces = new Pieces();
     private final Human player = new Human();
@@ -68,6 +70,7 @@ public class Quarto {
         String username = getUserName();
         pieces.fillRemainingPieces();
         board.fillWinningLines();
+
     }
 
     // Check after each turn
@@ -156,13 +159,17 @@ public class Quarto {
         System.out.println("Remaining pieces: "+pieces.getRemainingPieces());
     }
 
+    public void createTurnData(int playerID, int turnID, Timestamp turnStart, Timestamp turnEnd) {
+        Statistics statistics = new Statistics(playerID, turnID, turnStart, turnEnd);
+    }
+
 
     public void createTableIfDoesntExist() {
-        createTable.createTableIfDoesntExist();
+        database.createTableIfDoesntExist();
     }
 
     public void getStatistics(int id) {
-        leaderboard.loadStatistics(id);
+        leaderboard.getStatistics(id);
     }
 
     public String getRecords(int i) {
@@ -242,20 +249,20 @@ public class Quarto {
 
     // WIN CONDITION
 
-    public boolean hasQuarto() {
-        // TODO: hasQuarto
-        /*if (hasquarto == true){
-            player.setHasQuarto(true);
-        } else {
-            player.setHasQuarto(false);
-        }*/
-//        if (checkRows() == true || checkColumns() == true || checkDiagonals() == true) {
-//            return true;
+//    public boolean hasQuarto() {
+//        // TODO: hasQuarto
+//        /*if (hasquarto == true){
+//            player.setHasQuarto(true);
 //        } else {
-//            return false;
-//        }
-        return false;
-    }
+//            player.setHasQuarto(false);
+//        }*/
+////        if (checkRows() == true || checkColumns() == true || checkDiagonals() == true) {
+////            return true;
+////        } else {
+////            return false;
+////        }
+//        return false;
+//    }
 //    public boolean checkRows() {
 //        for (int offset=0; offset<3; offset++) {
 //            if (tileArray[offset] == tileArray[offset+1] && tileArray[offset] == tileArray[offset+2] && tileArray[offset] == tileArray[offset+3] && tileArray[offset] == 1) {
@@ -301,12 +308,12 @@ public class Quarto {
     }
 
     public void closeDB() {
-        leaderboard.closeDb();
+        database.closeDb();
     }
 
-    public void dataBaseInit() {
-        leaderboard.connectToDb();
-        leaderboard.getRecords();
+    public void openDB() {
+        database.connectToDb();
+        leaderboard.getLeaderboard();
     }
 
     public void timerIncrement() {

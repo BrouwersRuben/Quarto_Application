@@ -88,7 +88,9 @@ CREATE TABLE game_leaderboard
         CONSTRAINT game_leaderboard_id_fk REFERENCES game_data (id) ON DELETE CASCADE,
     username  VARCHAR2(20)
         CONSTRAINT game_leaderboard_username_nn NOT NULL,
-    top_score INTEGER
+--     top_score INTEGER
+    top_score number(4)
+        CONSTRAINT game_leaderboard_top_score_nn NOT NULL
 );
 
 

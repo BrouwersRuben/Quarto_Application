@@ -6,21 +6,58 @@ import oracle.jdbc.pool.OracleDataSource;
 import java.io.File;
 import java.sql.*;
 
-public class SaveAndLoad {
+public class Database {
     private static final File WALLET = new File("Wallet_QuartoDatabase");
     private static final String dbURL = "jdbc:oracle:thin:@quartodatabase_medium?TNS_ADMIN=" + WALLET.getAbsolutePath();
     private static OracleDataSource ods;
+    public static Statement statement = null;
+    private static Connection connection = null;
     private final String username = "QUARTOADMIN";
     private final String password = "Quarto_Game1";
     private Quarto game;
 
 
-    public SaveAndLoad() { // Constructor for initializing the game session
+    public Database() { // Constructor for initializing the game session
 
     }
 
-    public SaveAndLoad(Quarto game) { // Constructor for initializing and existing game session
+    public Database(Quarto game) { // Constructor for initializing and existing game session
 
+    }
+
+    public void connectToDb() {
+        try {
+            ods = new OracleDataSource();
+            ods.setURL(dbURL);
+            connection = DriverManager.getConnection(dbURL, username, password);
+            if (connection != null) {
+                System.out.println("Connected to the database.");
+
+                //Statement to make the table:
+//                Statement statement = connection.createStatement();
+//                statement.execute("CREATE TABLE INT_leaderboard"
+//                        + "(player_name VARCHAR2(20),"
+//                        + "top_score INTEGER," +
+//                        "date_submitted DATE DEFAULT SYSDATE)");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void closeDb() {
+        try {
+            if (statement != null && !statement.isClosed()) {
+                statement.close();
+                System.out.println("Closed the database statements.");
+            }
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+                System.out.println("Closed the database connection.");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     //TODO: Make smaller and rename
@@ -117,9 +154,12 @@ public class SaveAndLoad {
                 if (e.getErrorCode() == 942) {
                     statement.execute("CREATE TABLE game_leaderboard" +
                             "(" +
-                            "    id number(10) default game_data_id_seq.currVal CONSTRAINT game_leaderboard_id_fk REFERENCES game_data (id) ON DELETE CASCADE," +
-                            "    username varchar2(20) CONSTRAINT game_leaderboard_username_nn NOT NULL," +
-                            "    top_score INTEGER CONSTRAINT game_leaderboard_top_score_nn NOT NULL" +
+                            "    id number(10) default game_data_id_seq.currVal " +
+                            " CONSTRAINT game_leaderboard_id_fk REFERENCES game_data (id) ON DELETE CASCADE," +
+                            "    username varchar2(20) " +
+                            " CONSTRAINT game_leaderboard_username_nn NOT NULL," +
+                            "    top_score number(4)" +
+                            " CONSTRAINT game_leaderboard_top_score_nn NOT NULL" +
                             ")");
                 }
             }
