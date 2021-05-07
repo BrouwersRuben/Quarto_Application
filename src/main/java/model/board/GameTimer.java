@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 /**
  * Class for dealing with the built-in game timer.
+ * @author Rodžers Ušackis
  * @author Ruben Brouwers
  * @version 1.0
  */

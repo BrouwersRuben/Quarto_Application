@@ -3,6 +3,7 @@ package main.java.model.dataBase;
 /**
  * Class to save a record by a specific player or to override an existing one with a better one.
  * @author Rodžers Ušackis
+ * @author Ruben Brouwers
  * @version 1.0
  */
 public class Record {

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 /**
  * The class which saves turn based statistics for the end screen and the advanced statistics screen.
  * @author Rodžers Ušackis
+ * @author Ruben Brouwers
  * @version 1.0
  */
 public class Statistics {

@@ -10,6 +10,7 @@ import java.sql.*;
  * A class which is responsible for most of the database related
  * methods, such as connecting, disconnecting, creating tables, saving and loading games.
  * @author Rodžers Ušackis
+ * @author Ruben Brouwers
  * @version 1.0
  */
 

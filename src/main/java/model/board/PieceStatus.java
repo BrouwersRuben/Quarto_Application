@@ -3,6 +3,7 @@ package main.java.model.board;
 /**
  * Class which is used to identify each pieces game status, for loading purposes.
  * @version 1.0
+ * @author Rodžers Ušackis
  * @author Ruben Brouwers
  */
 public enum PieceStatus {
