@@ -11,6 +11,7 @@ import java.util.List;
  * This class is used for the leaderboard screen and the win/loss screen to
  * display basic and advanced statistics.
  * @author Rodžers Ušackis
+ * @author Ruben Brouwers
  * @version 1.0
  */
 public class Leaderboard { // Used for retrieving the leaderboard

@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * the players can choose to make their next move.
  * @version 1.0
  * @author Rodžers Ušackis
+ * @author Ruben Brouwers
  */
 public class Pieces {
     private final ArrayList<Integer> remainingPieces = new ArrayList<Integer>();
