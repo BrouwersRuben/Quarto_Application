@@ -33,11 +33,20 @@ public enum Images {
 
     private final Image image;
     private final String pieceName;
+    private boolean color;
+    private boolean fill;
+    private boolean shape;
+    private boolean height;
 
     // color(blue=true, green=false), fill(full=true, hollow=false), shape(round=true, triangle=false), height(long=true, short=false)
     Images(String name, String url, boolean color, boolean fill, boolean shape, boolean height) {
         this.image = new Image(url);
         this.pieceName = name;
+        this.color = color;
+        this.fill = fill;
+        this.shape = shape;
+        this.height = height;
+
     }
 
     Images(String name, String url) {
