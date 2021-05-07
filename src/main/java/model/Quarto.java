@@ -103,7 +103,7 @@ public class Quarto {
                     }
                 }
             }
-        // Checking if draw (when no pieces left and no winning line)
+        // Checking if draw (when no pieces left and no winning line).
         return pieces.getRemainingPieces().size() == 0;
     }
 
