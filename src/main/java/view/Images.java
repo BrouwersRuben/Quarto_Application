@@ -61,5 +61,13 @@ public enum Images {
     public String getPieceName() {
         return pieceName;
     }
+
+    public boolean isColor() { return color; }
+
+    public boolean isFill() { return fill; }
+
+    public boolean isShape() { return shape; }
+
+    public boolean isHeight() { return height; }
 }
 
