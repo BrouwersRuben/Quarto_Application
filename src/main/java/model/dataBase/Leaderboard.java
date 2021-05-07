@@ -77,14 +77,14 @@ public class Leaderboard { // Used for retrieving the leaderboard
             Connection connection = DriverManager.getConnection(dbURL, username, password);
             Statement statement = connection.createStatement();
 
-            ResultSet average = statement.executeQuery("SELECT AVG(CAST(turn_end_time AS DATE)- CAST(turn_start_time AS DATE))*24*60*60 AS turn FROM game_statistics WHERE ID = " + id);
+            ResultSet average = statement.executeQuery("SELECT AVG(CAST(turn_end_time AS DATE)- CAST(turn_start_time AS DATE))*24*60*60 AS turn FROM test_game_statistics WHERE ID = " + id);
 
             while (average.next()) {
                 averageTime = average.getInt("turn");
             }
 
             ResultSet turns = statement.executeQuery(
-                    "SELECT (CAST(turn_end_time AS DATE)- CAST(turn_start_time AS DATE))*24*60*60 AS seconds FROM game_statistics WHERE ID = " + id);
+                    "SELECT (CAST(turn_end_time AS DATE)- CAST(turn_start_time AS DATE))*24*60*60 AS seconds FROM test_game_statistics WHERE ID = " + id);
 
             turnStats.clear();
             int i = 0;

@@ -1,6 +1,9 @@
 package main.java.view;
 
 import javafx.scene.image.Image;
+import main.java.model.pieces.Color;
+
+import java.util.EnumSet;
 
 public enum Images {
     // From here the images needed can be called
@@ -29,6 +32,8 @@ public enum Images {
     P14("GHTS", "media/images/14.png", false,false,false,false),
     P15("GFTL", "media/images/15.png",false,true,false,true),
     P16("GHTL", "media/images/16.png",false,false,false,true);
+
+
 
 
     private final Image image;
