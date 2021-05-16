@@ -107,7 +107,7 @@ public class Quarto {
                     if (board.getBoardStatus().get(board.getWinningLines().get(j).get(k)) == 1 ) {
                         sb.append("1");
                         if (sb.toString().equals("1111")) {
-                            System.out.println("there's a line");
+                            System.out.println("There's a line. Checking if it's quarto...");
                             if (isItAQuarto(board.getWinningLines().get(j))) {
                                 return true;
                             }
@@ -116,7 +116,12 @@ public class Quarto {
                 }
             }
         // Checking if draw (when no pieces left and no winning line).
-        return remainingPieces.getRemainingPieces().size() == 0;
+        if (remainingPieces.getRemainingPieces().size() == 0) {
+            return true;
+        } else {
+            System.out.println("It wasn't Quarto.");
+            return false;
+        }
     }
 
     public boolean isItAQuarto(ArrayList<Integer> integers) {
