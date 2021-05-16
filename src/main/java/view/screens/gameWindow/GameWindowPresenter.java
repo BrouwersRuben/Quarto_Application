@@ -79,7 +79,7 @@ public class GameWindowPresenter {
                 piece.setOnMouseClicked(mouseEvent -> {
 
                     view.getErrorLabel().setText("");
-                    view.getChosenPiece().getChildren().add(new ImageView(Pieces.P0.getImage())); // empty placeholder for *selected piece*
+                    view.getChosenPiece().getChildren().add(new ImageView(model.getPlaceHolder())); // empty placeholder for *selected piece*
 
                     Image im = new Image("media/images/" + piece.getId() + ".png");
                     view.getChosenPiece().getChildren().add(new ImageView(im));
@@ -93,7 +93,7 @@ public class GameWindowPresenter {
                         // Here the computer makes the move, based on the piece that was given to him.
                         model.generateValidCoordinates();
                         view.getGameBoard().add(new ImageView(im), model.getX(), model.getY());
-                        view.getChosenPiece().getChildren().add(new ImageView(Pieces.P0.getImage()));
+                        view.getChosenPiece().getChildren().add(new ImageView(model.getPlaceHolder()));
                         model.addToListOnBoard(Integer.valueOf(view.getChosenPiece().getId()));
                         model.setUsedTiles(parseInt(view.getChosenPiece().getId()), model.getX(), model.getY());
                         model.setCoordinatesToBoardStatus(model.getX(), model.getY());
@@ -129,7 +129,7 @@ public class GameWindowPresenter {
 
                 if (model.isUnique(Integer.valueOf(view.getChosenPiece().getId()))) {
                     view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
-                    view.getChosenPiece().getChildren().add(new ImageView(Pieces.P0.getImage()));
+                    view.getChosenPiece().getChildren().add(new ImageView(model.getPlaceHolder()));
                     model.addToListOnBoard(Integer.valueOf(view.getChosenPiece().getId()));
 //                   view.getChosenPiece().setId("0"); // what does this do exactly ?
                     view.getErrorLabel().setText("");

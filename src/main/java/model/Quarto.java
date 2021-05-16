@@ -6,6 +6,7 @@ import main.java.model.board.RemainingPieces;
 import main.java.model.dataBase.Leaderboard;
 import main.java.model.dataBase.Database;
 import main.java.model.dataBase.Statistics;
+import main.java.model.pieces.Pieces;
 import main.java.model.players.Human;
 
 import java.io.File;
@@ -29,10 +30,11 @@ public class Quarto {
     private final Leaderboard leaderboard = new Leaderboard();
     private final Database database = new Database();
     private final Board board = new Board();
-    private final RemainingPieces pieces = new RemainingPieces();
+    private final RemainingPieces remainingPieces = new RemainingPieces();
     private final Human player = new Human();
     private final GameTimer timer = new GameTimer();
     private final Random random = new Random();
+
 
     public Quarto() {
     // Constructor
@@ -77,10 +79,19 @@ public class Quarto {
     public void startGame() {
         // if starting new game
         String username = getUserName();
-        pieces.fillRemainingPieces();
+        remainingPieces.fillRemainingPieces();
+        remainingPieces.fillPieces();
         board.fillWinningLines();
-
     }
+
+    public Pieces getPiece(int piece) {
+        return remainingPieces.getPieces().get(piece);
+    }
+
+    public String getPlaceHolder() {
+        return remainingPieces.getPlaceHolder();
+    }
+
 
     /**
      * Method which checks if the game is over or not by
@@ -94,18 +105,39 @@ public class Quarto {
                 StringBuilder sb = new StringBuilder();
                  for (int k = 0; k<board.getWinningLines().get(j).size(); k++) {
                     if (board.getBoardStatus().get(board.getWinningLines().get(j).get(k)) == 1 ) {
-
                         sb.append("1");
                         if (sb.toString().equals("1111")) {
                             System.out.println("there's a line");
-                            return true;
+                            if (isItAQuarto(board.getWinningLines().get(j))) {
+                                return true;
+                            }
                         }
                     }
                 }
             }
         // Checking if draw (when no pieces left and no winning line).
-        return pieces.getRemainingPieces().size() == 0;
+        return remainingPieces.getRemainingPieces().size() == 0;
     }
+
+    public boolean isItAQuarto(ArrayList<Integer> integers) {
+        int first = integers.get(0);
+        int second = integers.get(1);
+        int third = integers.get(2);
+        int fourth = integers.get(3);
+
+        if (remainingPieces.getPieces().get(first).getFill()==remainingPieces.getPieces().get(second).getFill() && remainingPieces.getPieces().get(first).getFill()==remainingPieces.getPieces().get(third).getFill() && remainingPieces.getPieces().get(first).getFill()==remainingPieces.getPieces().get(fourth).getFill()) {
+            return true;
+        } else if (remainingPieces.getPieces().get(first).getColor()==remainingPieces.getPieces().get(second).getColor() && remainingPieces.getPieces().get(first).getColor()==remainingPieces.getPieces().get(third).getColor() && remainingPieces.getPieces().get(first).getColor()==remainingPieces.getPieces().get(fourth).getColor()) {
+            return true;
+        } else if (remainingPieces.getPieces().get(first).getShape()==remainingPieces.getPieces().get(second).getShape() && remainingPieces.getPieces().get(first).getShape()==remainingPieces.getPieces().get(third).getShape() && remainingPieces.getPieces().get(first).getShape()==remainingPieces.getPieces().get(fourth).getShape()) {
+            return true;
+        } else if (remainingPieces.getPieces().get(first).getLength()==remainingPieces.getPieces().get(second).getLength() && remainingPieces.getPieces().get(first).getLength()==remainingPieces.getPieces().get(third).getLength() && remainingPieces.getPieces().get(first).getLength()==remainingPieces.getPieces().get(fourth).getLength()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     public int comparePieces(){
         return 0;
@@ -123,7 +155,7 @@ public class Quarto {
     public void setPlayerTurn(boolean playerTurn) { this.playerTurn = playerTurn; }
 
     public ArrayList<Integer> retrieveRemainingPieces() {
-        return pieces.getRemainingPieces();
+        return remainingPieces.getRemainingPieces();
     }
 
     /**
@@ -131,7 +163,7 @@ public class Quarto {
      * @return
      */
     public int selectRandomPiece() {
-        return pieces.getRemainingPieces().get(random.nextInt(pieces.getRemainingPieces().size()));
+        return remainingPieces.getRemainingPieces().get(random.nextInt(remainingPieces.getRemainingPieces().size()));
     }
 
     /**
@@ -167,17 +199,16 @@ public class Quarto {
             tempNumber =pieceColumn+12;
         }
         board.getBoardStatus().set(tempNumber, 1);
-        System.out.println("Board status: "+board.getBoardStatus());
     }
 
     /**
      * Keeps track of which pieces the AI can pick for the player to make a turn with.
      */
     public void removeRemainingPieces(Integer pieceID) {
-        while (pieces.getRemainingPieces().contains(pieceID)) {
-            pieces.getRemainingPieces().remove(pieceID);
+        while (remainingPieces.getRemainingPieces().contains(pieceID)) {
+            remainingPieces.getRemainingPieces().remove(pieceID);
         }
-        System.out.println("Remaining pieces: "+pieces.getRemainingPieces());
+        System.out.println("Remaining pieces: "+ remainingPieces.getRemainingPieces());
     }
 
     /**
