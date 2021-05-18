@@ -55,34 +55,9 @@ public class Quarto {
      * Method which makes sure that the coordinates AI generates are valid.
      * If they are not, the process is repeated until the AI finds an unoccupied tile.
      */
-//    public void generateValidCoordinates() {
+
 //        //TODO: NOT WORKING. maybe you can figure it out
-////        boolean conditionMet=false;
-////
-////        do {
-////            x = random.nextInt(4);
-////            y = random.nextInt(4);
-////            for (int i = 0; i < board.getUsedTiles().size(); i++) {
-////                if (!board.getUsedTiles().get(i).get(1).equals(x) && !board.getUsedTiles().get(i).get(2).equals(y)) {
-////                    conditionMet=true;
-////                }
-////            }
-////        }
-////        while ((!conditionMet));
-////        setX(x);
-////        setY(y);
-//        x = random.nextInt(4);
-//        y = random.nextInt(4);
-//
-//        for (int i=0; i<board.getUsedTiles().size(); i++) {
-//            if (board.getUsedTiles().get(i).get(1).equals(x) && board.getUsedTiles().get(i).get(2).equals(y)) {
-//                generateValidCoordinates();
-//            } else {
-//                setX(x);
-//                setY(y);
-//            }
-//        }
-//    }
+
 
     public void generateValidCoordinates() {
 
