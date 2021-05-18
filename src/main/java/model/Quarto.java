@@ -32,9 +32,10 @@ public class Quarto {
     private final Database database = new Database();
     private final Board board = new Board();
     private final RemainingPieces remainingPieces = new RemainingPieces();
-    private static final Human player = new Human();
+    private final Human player = new Human();
     private final GameTimer timer = new GameTimer();
     private final Random random = new Random();
+    private boolean playerTurn=false;
 
 
     public Quarto() {
@@ -42,7 +43,7 @@ public class Quarto {
 
     }
 
-    boolean playerTurn;
+
     private int x;
     private int y;
 
@@ -50,6 +51,17 @@ public class Quarto {
     public int getY() { return y; }
     public void setX(int x) { this.x = x; }
     public void setY(int y) { this.y = y; }
+
+
+    // TODO: TESTING
+    // who starts first
+    public void setPlayerTurn(boolean value) {
+        player.setPlayerTurn(value);
+    }
+
+    public boolean getPlayerTurn() {
+        return player.getPlayerTurn();
+    }
 
     /**
      * Method which makes sure that the coordinates AI generates are valid.
@@ -104,7 +116,7 @@ public class Quarto {
         for (int j = 0; j < board.getWinningLines().size(); j++) {
             if (isThereALine(j)) {
                 System.out.println("There's a line. Checking if it's quarto...");
-                if (isItAQuarto(board.getWinningLines().get(j), j)) {
+                if (isItAQuarto(board.getWinningLines().get(j))) {
                     database.saveRecord(username);
                     return true;
                 }
@@ -119,11 +131,11 @@ public class Quarto {
         }
     }
 
-    public boolean isItAQuarto(ArrayList<Integer> integers, int line) {
-        int first = findCorrespondingPiece(line, integers.get(0));
-        int second = findCorrespondingPiece(line, integers.get(1));
-        int third = findCorrespondingPiece(line, integers.get(2));
-        int fourth = findCorrespondingPiece(line, integers.get(3));
+    public boolean isItAQuarto(ArrayList<Integer> integers) {
+        int first = findCorrespondingPiece(integers.get(0));
+        int second = findCorrespondingPiece(integers.get(1));
+        int third = findCorrespondingPiece(integers.get(2));
+        int fourth = findCorrespondingPiece(integers.get(3));
 
         if (remainingPieces.getPieces().get(first).getFill()==remainingPieces.getPieces().get(second).getFill() && remainingPieces.getPieces().get(first).getFill()==remainingPieces.getPieces().get(third).getFill() && remainingPieces.getPieces().get(first).getFill()==remainingPieces.getPieces().get(fourth).getFill()) {
             return true;
@@ -145,7 +157,7 @@ public class Quarto {
                 board.getBoardStatus().get(board.getWinningLines().get(line).get(3)) == 1;
     }
 
-    public int findCorrespondingPiece(int line, int tile) {
+    public int findCorrespondingPiece(int tile) {
         int piece = 0;
 
         for (int j = 0; j < board.getUsedTiles().size(); j++) {
@@ -162,13 +174,6 @@ public class Quarto {
         } else {
             return "Their turn!";
         }
-    }
-
-    public boolean isPlayerTurn() { return playerTurn; }
-    public void setPlayerTurn(boolean playerTurn) { this.playerTurn = playerTurn; }
-
-    public ArrayList<Integer> retrieveRemainingPieces() {
-        return remainingPieces.getRemainingPieces();
     }
 
     /**

@@ -19,4 +19,7 @@ public class Player {
     public boolean isHasQuarto() {
         return hasQuarto;
     }
+
+
+
 }

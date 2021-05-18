@@ -76,7 +76,7 @@ public class GameWindowPresenter {
 
             view.getAvailablePieces().getChildren().forEach(piece -> {
                 piece.setOnMouseClicked(mouseEvent -> {
-
+                if(!model.getPlayerTurn()) {
                     view.getErrorLabel().setText("");
                     view.getChosenPiece().getChildren().add(new ImageView(model.getPlaceHolder())); // empty placeholder for *selected piece*
 
@@ -100,12 +100,10 @@ public class GameWindowPresenter {
 
                         // Computer selects the piece you have to place
                         int temporary = model.selectRandomPiece();
-                        im = new Image("media/images/" +temporary+ ".png");
+                        im = new Image("media/images/" + temporary + ".png");
                         view.getChosenPiece().getChildren().add(new ImageView(im));
                         view.getChosenPiece().setId(String.valueOf(temporary));
 //                        view.getPlayerTurn().setText("Your turn!");
-                        model.setPlayerTurn(true);
-                        updateView();
 
                         if (model.isGameOver()) {
                             model.setLost();
@@ -116,51 +114,59 @@ public class GameWindowPresenter {
                             System.out.println("Game is over! Thank you for playing!");
                             // TODO: here it should end game/show winLoseScreen
                         }
+
+                        model.setPlayerTurn(true);
+                        updateView();
                     }
+                }
                 });
             });
 
 
         view.getGameBoard().getChildren().forEach(item -> {
             item.setOnMouseClicked(mouseEvent -> {
+                if(model.getPlayerTurn()) {
+                    Image im = new Image("media/images/" + view.getChosenPiece().getId() + ".png");
 
-                Image im = new Image("media/images/" + view.getChosenPiece().getId() + ".png");
-
-                if (model.isUnique(Integer.valueOf(view.getChosenPiece().getId()))) {
-                    view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
-                    view.getChosenPiece().getChildren().add(new ImageView(model.getPlaceHolder()));
-                    model.addToListOnBoard(Integer.valueOf(view.getChosenPiece().getId()));
+                    if (model.isUnique(Integer.valueOf(view.getChosenPiece().getId()))) {
+                        view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
+                        view.getChosenPiece().getChildren().add(new ImageView(model.getPlaceHolder()));
+                        model.addToListOnBoard(Integer.valueOf(view.getChosenPiece().getId()));
 //                   view.getChosenPiece().setId("0"); // what does this do exactly ?
-                    view.getErrorLabel().setText("");
+                        view.getErrorLabel().setText("");
 
-                    // testing
-                    System.out.println("\nPiece "+view.getChosenPiece().getId()+" has been set on tile "+GridPane.getColumnIndex(item)+" "+GridPane.getRowIndex(item));
-                    // updates board tiles array
-                    model.updateBoardStatusAndUsedPieces(parseInt(view.getChosenPiece().getId()), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
-                    model.removeRemainingPieces(Integer.valueOf(view.getChosenPiece().getId()));
-                    model.setPlayerTurn(false);
-                    System.out.println("Player made move.");
-                    updateView();
+                        // testing
+                        System.out.println("\nPiece " + view.getChosenPiece().getId() + " has been set on tile " + GridPane.getColumnIndex(item) + " " + GridPane.getRowIndex(item));
+                        // updates board tiles array
+                        model.updateBoardStatusAndUsedPieces(parseInt(view.getChosenPiece().getId()), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
+                        model.removeRemainingPieces(Integer.valueOf(view.getChosenPiece().getId()));
+                        model.setPlayerTurn(false);
+                        System.out.println("Player made move.");
 
-                    //We ran out of time to implement the compare method we talked about with Mr. de Rijke, but we managed to check if lines were filled. Ultimately we
-                    //wanted to hand in the finished game... But this has to do for this sprint, we are activly working on finding a solution for the problems we are facing
-                    //with the programming right now
 
-                    //here is the link to the whiteboard we used to visualize our thoughts on how the remainder of the game logic has to be. (or at least the stuff we failed to implement)
-                    //https://wbd.ms/share/v2/aHR0cHM6Ly93aGl0ZWJvYXJkLm1pY3Jvc29mdC5jb20vYXBpL3YxLjAvd2hpdGVib2FyZHMvcmVkZWVtLzZhZjI5ZjEzMDMxODQzNGM5YTM0YmM5NWUyYTFjODEwX2VkMWZjNTdmLThhOTctNDdlNy05ZGUxLTkzMDJkZmQ3ODZhZQ==
+                        //We ran out of time to implement the compare method we talked about with Mr. de Rijke, but we managed to check if lines were filled. Ultimately we
+                        //wanted to hand in the finished game... But this has to do for this sprint, we are activly working on finding a solution for the problems we are facing
+                        //with the programming right now
 
-                    if (model.isGameOver()) {
-                        //TODO: Can't set winlosewindow cause database is not linked with game
-                        model.setWon();
+                        //here is the link to the whiteboard we used to visualize our thoughts on how the remainder of the game logic has to be. (or at least the stuff we failed to implement)
+                        //https://wbd.ms/share/v2/aHR0cHM6Ly93aGl0ZWJvYXJkLm1pY3Jvc29mdC5jb20vYXBpL3YxLjAvd2hpdGVib2FyZHMvcmVkZWVtLzZhZjI5ZjEzMDMxODQzNGM5YTM0YmM5NWUyYTFjODEwX2VkMWZjNTdmLThhOTctNDdlNy05ZGUxLTkzMDJkZmQ3ODZhZQ==
 
-                        //Temporary solution
-                        model.getStatistics(model.getRecordsUserId(0));
-                        setWinLoseWindow();
-                        System.out.println("Game is over! Thank you for playing!");
+                        if (model.isGameOver()) {
+                            //TODO: Can't set winlosewindow cause database is not linked with game
+                            model.setWon();
+
+                            //Temporary solution
+                            model.getStatistics(model.getRecordsUserId(0));
+                            setWinLoseWindow();
+                            System.out.println("Game is over! Thank you for playing!");
+                        }
+
+                    } else {
+                        view.getErrorLabel().setText("This piece is already on the board");
                     }
 
-                } else {
-                    view.getErrorLabel().setText("This piece is already on the board");
+                    model.setPlayerTurn(false);
+                    updateView();
                 }
             });
         });
