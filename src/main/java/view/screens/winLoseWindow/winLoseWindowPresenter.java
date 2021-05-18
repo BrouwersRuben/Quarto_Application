@@ -60,7 +60,7 @@ public class winLoseWindowPresenter {
 
         for (int i = 0; i < model.getTurnStatsSize(); i++) {
             String turn = "" + (i + 1);
-            series1.getData().add(new XYChart.Data<>(turn, model.getTurnstats(i)));
+            series1.getData().add(new XYChart.Data<>(turn, model.getTurnStats(i)));
         }
 
         series1.setName("this game");

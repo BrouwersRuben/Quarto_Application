@@ -26,22 +26,22 @@ public class RemainingPieces {
     }
 
     public void fillPieces() {
-        pieces.add(new Pieces("media/images/1.png", pieceColor.BLUE, pieceShape.ROUND, pieceFill.FILLED, pieceLength.SHORT));
-        pieces.add(new Pieces("media/images/2.png", pieceColor.BLUE, pieceShape.ROUND, pieceFill.HOLLOW, pieceLength.SHORT));
-        pieces.add(new Pieces("media/images/3.png", pieceColor.BLUE, pieceShape.ROUND, pieceFill.FILLED, pieceLength.TALL));
-        pieces.add(new Pieces("media/images/4.png", pieceColor.BLUE, pieceShape.ROUND, pieceFill.HOLLOW, pieceLength.TALL));
-        pieces.add(new Pieces("media/images/5.png", pieceColor.BLUE, pieceShape.TRIANGLE, pieceFill.FILLED, pieceLength.SHORT));
-        pieces.add(new Pieces("media/images/6.png", pieceColor.BLUE, pieceShape.TRIANGLE, pieceFill.HOLLOW, pieceLength.SHORT));
-        pieces.add(new Pieces("media/images/7.png", pieceColor.BLUE, pieceShape.TRIANGLE, pieceFill.FILLED, pieceLength.TALL));
-        pieces.add(new Pieces("media/images/8.png", pieceColor.BLUE, pieceShape.TRIANGLE, pieceFill.HOLLOW, pieceLength.TALL));
-        pieces.add(new Pieces("media/images/9.png", pieceColor.GREEN, pieceShape.ROUND, pieceFill.FILLED, pieceLength.SHORT));
-        pieces.add(new Pieces("media/images/10.png", pieceColor.GREEN, pieceShape.ROUND, pieceFill.HOLLOW, pieceLength.SHORT));
-        pieces.add(new Pieces("media/images/11.png", pieceColor.GREEN, pieceShape.ROUND, pieceFill.FILLED, pieceLength.TALL));
-        pieces.add(new Pieces("media/images/12.png", pieceColor.GREEN, pieceShape.ROUND, pieceFill.HOLLOW, pieceLength.TALL));
-        pieces.add(new Pieces("media/images/13.png", pieceColor.GREEN, pieceShape.TRIANGLE, pieceFill.FILLED, pieceLength.SHORT));
-        pieces.add(new Pieces("media/images/14.png", pieceColor.GREEN, pieceShape.TRIANGLE, pieceFill.HOLLOW, pieceLength.SHORT));
-        pieces.add(new Pieces("media/images/15.png", pieceColor.GREEN, pieceShape.TRIANGLE, pieceFill.FILLED, pieceLength.TALL));
-        pieces.add(new Pieces("media/images/16.png", pieceColor.GREEN, pieceShape.TRIANGLE, pieceFill.HOLLOW, pieceLength.TALL));
+        pieces.add(new Pieces("media/images/1.png", PieceColor.BLUE, PieceShape.ROUND, PieceFill.FILLED, PieceLength.SHORT));
+        pieces.add(new Pieces("media/images/2.png", PieceColor.BLUE, PieceShape.ROUND, PieceFill.HOLLOW, PieceLength.SHORT));
+        pieces.add(new Pieces("media/images/3.png", PieceColor.BLUE, PieceShape.ROUND, PieceFill.FILLED, PieceLength.TALL));
+        pieces.add(new Pieces("media/images/4.png", PieceColor.BLUE, PieceShape.ROUND, PieceFill.HOLLOW, PieceLength.TALL));
+        pieces.add(new Pieces("media/images/5.png", PieceColor.BLUE, PieceShape.TRIANGLE, PieceFill.FILLED, PieceLength.SHORT));
+        pieces.add(new Pieces("media/images/6.png", PieceColor.BLUE, PieceShape.TRIANGLE, PieceFill.HOLLOW, PieceLength.SHORT));
+        pieces.add(new Pieces("media/images/7.png", PieceColor.BLUE, PieceShape.TRIANGLE, PieceFill.FILLED, PieceLength.TALL));
+        pieces.add(new Pieces("media/images/8.png", PieceColor.BLUE, PieceShape.TRIANGLE, PieceFill.HOLLOW, PieceLength.TALL));
+        pieces.add(new Pieces("media/images/9.png", PieceColor.GREEN, PieceShape.ROUND, PieceFill.FILLED, PieceLength.SHORT));
+        pieces.add(new Pieces("media/images/10.png", PieceColor.GREEN, PieceShape.ROUND, PieceFill.HOLLOW, PieceLength.SHORT));
+        pieces.add(new Pieces("media/images/11.png", PieceColor.GREEN, PieceShape.ROUND, PieceFill.FILLED, PieceLength.TALL));
+        pieces.add(new Pieces("media/images/12.png", PieceColor.GREEN, PieceShape.ROUND, PieceFill.HOLLOW, PieceLength.TALL));
+        pieces.add(new Pieces("media/images/13.png", PieceColor.GREEN, PieceShape.TRIANGLE, PieceFill.FILLED, PieceLength.SHORT));
+        pieces.add(new Pieces("media/images/14.png", PieceColor.GREEN, PieceShape.TRIANGLE, PieceFill.HOLLOW, PieceLength.SHORT));
+        pieces.add(new Pieces("media/images/15.png", PieceColor.GREEN, PieceShape.TRIANGLE, PieceFill.FILLED, PieceLength.TALL));
+        pieces.add(new Pieces("media/images/16.png", PieceColor.GREEN, PieceShape.TRIANGLE, PieceFill.HOLLOW, PieceLength.TALL));
     }
 
     public ArrayList<Integer> getRemainingPieces() {

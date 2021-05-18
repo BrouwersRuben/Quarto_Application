@@ -1,11 +1,11 @@
 package main.java.model.pieces;
 
-public enum pieceColor {
+public enum PieceColor {
     BLUE("BLUE"), GREEN("GREEN");
 
     private final String color;
 
-    pieceColor(String color) {
+    PieceColor(String color) {
         this.color = color;
     }
 }

@@ -6,7 +6,6 @@ import main.java.model.board.RemainingPieces;
 import main.java.model.dataBase.Leaderboard;
 import main.java.model.dataBase.Database;
 import main.java.model.dataBase.Statistics;
-import main.java.model.pieces.Pieces;
 import main.java.model.players.Human;
 
 import java.io.File;
@@ -27,11 +26,13 @@ import java.util.*;
 public class Quarto {
     protected boolean isRunning;
     protected int amountOfTurns;
+    protected int gameID;
+    protected String username;
     private final Leaderboard leaderboard = new Leaderboard();
     private final Database database = new Database();
     private final Board board = new Board();
     private final RemainingPieces remainingPieces = new RemainingPieces();
-    private final Human player = new Human();
+    private static final Human player = new Human();
     private final GameTimer timer = new GameTimer();
     private final Random random = new Random();
 
@@ -42,22 +43,47 @@ public class Quarto {
     }
 
     boolean playerTurn;
-    boolean validCoordinates=false;
     private int x;
     private int y;
 
     public int getX() { return x; }
-
     public int getY() { return y; }
-
     public void setX(int x) { this.x = x; }
-
     public void setY(int y) { this.y = y; }
 
     /**
      * Method which makes sure that the coordinates AI generates are valid.
      * If they are not, the process is repeated until the AI finds an unoccupied tile.
      */
+//    public void generateValidCoordinates() {
+//        //TODO: NOT WORKING. maybe you can figure it out
+////        boolean conditionMet=false;
+////
+////        do {
+////            x = random.nextInt(4);
+////            y = random.nextInt(4);
+////            for (int i = 0; i < board.getUsedTiles().size(); i++) {
+////                if (!board.getUsedTiles().get(i).get(1).equals(x) && !board.getUsedTiles().get(i).get(2).equals(y)) {
+////                    conditionMet=true;
+////                }
+////            }
+////        }
+////        while ((!conditionMet));
+////        setX(x);
+////        setY(y);
+//        x = random.nextInt(4);
+//        y = random.nextInt(4);
+//
+//        for (int i=0; i<board.getUsedTiles().size(); i++) {
+//            if (board.getUsedTiles().get(i).get(1).equals(x) && board.getUsedTiles().get(i).get(2).equals(y)) {
+//                generateValidCoordinates();
+//            } else {
+//                setX(x);
+//                setY(y);
+//            }
+//        }
+//    }
+
     public void generateValidCoordinates() {
 
         x = random.nextInt(4);
@@ -78,19 +104,18 @@ public class Quarto {
      */
     public void startGame() {
         // if starting new game
-        String username = getUserName();
+        username = getUserName();
+
         remainingPieces.fillRemainingPieces();
         remainingPieces.fillPieces();
         board.fillWinningLines();
     }
 
-    public Pieces getPiece(int piece) {
-        return remainingPieces.getPieces().get(piece);
+    public void saveGame() {
+
     }
 
-    public String getPlaceHolder() {
-        return remainingPieces.getPlaceHolder();
-    }
+
 
 
     /**
@@ -99,22 +124,17 @@ public class Quarto {
      * @return
      */
     public boolean isGameOver() {
-        System.out.println("Here is the current game status: "+board.getBoardStatus());
+        System.out.println("Here is the current game status: " + board.getBoardStatus());
 
-            for (int j=0; j<board.getWinningLines().size(); j++) {
-                StringBuilder sb = new StringBuilder();
-                 for (int k = 0; k<board.getWinningLines().get(j).size(); k++) {
-                    if (board.getBoardStatus().get(board.getWinningLines().get(j).get(k)) == 1 ) {
-                        sb.append("1");
-                        if (sb.toString().equals("1111")) {
-                            System.out.println("There's a line. Checking if it's quarto...");
-                            if (isItAQuarto(board.getWinningLines().get(j))) {
-                                return true;
-                            }
-                        }
-                    }
+        for (int j = 0; j < board.getWinningLines().size(); j++) {
+            if (isThereALine(j)) {
+                System.out.println("There's a line. Checking if it's quarto...");
+                if (isItAQuarto(board.getWinningLines().get(j), j)) {
+                    database.saveRecord(username);
+                    return true;
                 }
             }
+        }
         // Checking if draw (when no pieces left and no winning line).
         if (remainingPieces.getRemainingPieces().size() == 0) {
             return true;
@@ -124,11 +144,15 @@ public class Quarto {
         }
     }
 
-    public boolean isItAQuarto(ArrayList<Integer> integers) {
-        int first = integers.get(0);
-        int second = integers.get(1);
-        int third = integers.get(2);
-        int fourth = integers.get(3);
+    public boolean isItAQuarto(ArrayList<Integer> integers, int line) {
+        int first = findCorrespondingPiece(line, integers.get(0));
+        int second = findCorrespondingPiece(line, integers.get(1));
+        int third = findCorrespondingPiece(line, integers.get(2));
+        int fourth = findCorrespondingPiece(line, integers.get(3));
+
+        System.out.println(first+" AND "+second+" AND "+third+" AND "+fourth);
+        System.out.println(remainingPieces.getPieces().get(0).getFill()+" TE "+remainingPieces.getPieces().get(1).getFill());
+        System.out.println(remainingPieces.getPieces().get(first).getFill()+" AND "+ remainingPieces.getPieces().get(second).getFill()+" AND "+remainingPieces.getPieces().get(third).getFill()+" AND "+ remainingPieces.getPieces().get(fourth).getFill());
 
         if (remainingPieces.getPieces().get(first).getFill()==remainingPieces.getPieces().get(second).getFill() && remainingPieces.getPieces().get(first).getFill()==remainingPieces.getPieces().get(third).getFill() && remainingPieces.getPieces().get(first).getFill()==remainingPieces.getPieces().get(fourth).getFill()) {
             return true;
@@ -143,9 +167,23 @@ public class Quarto {
         }
     }
 
+    public boolean isThereALine(int line) {
+        return board.getBoardStatus().get(board.getWinningLines().get(line).get(0)) == 1 &&
+                board.getBoardStatus().get(board.getWinningLines().get(line).get(1)) == 1 &&
+                board.getBoardStatus().get(board.getWinningLines().get(line).get(2)) == 1 &&
+                board.getBoardStatus().get(board.getWinningLines().get(line).get(3)) == 1;
+    }
 
-    public int comparePieces(){
-        return 0;
+    public int findCorrespondingPiece(int line, int tile) {
+        int piece = 0;
+
+        for (int j = 0; j < board.getUsedTiles().size(); j++) {
+            if (tile==(board.getUsedTiles().get(j).get(3))) {
+                piece = board.getUsedTiles().get(j).get(0)-1;
+                System.out.println("Piece for " + board.getWinningLines().get(line) + " tile is: " + piece);
+            }
+        }
+        return piece;
     }
 
     public String turnIndicator() {
@@ -171,20 +209,20 @@ public class Quarto {
         return remainingPieces.getRemainingPieces().get(random.nextInt(remainingPieces.getRemainingPieces().size()));
     }
 
-    /**
-     * Method to save which piece is placed on which row and column.
-     * @param pieceID
-     * @param pieceRow
-     * @param pieceColumn
-     */
-    public void setUsedTiles(int pieceID, int pieceRow, int pieceColumn) {
-        ArrayList<Integer> temporary = new ArrayList<>();
-        temporary.add(pieceID);
-        temporary.add(pieceRow);
-        temporary.add(pieceColumn);
-        board.getUsedTiles().add(temporary);
-        System.out.println("Coordinates for pieces: "+board.getUsedTiles());
-    }
+//    /**
+//     * Method to save which piece is placed on which row and column.
+//     * @param pieceID
+//     * @param pieceRow
+//     * @param pieceColumn
+//     */
+//    public void setUsedTiles(int pieceID, int pieceRow, int pieceColumn) {
+//        ArrayList<Integer> temporary = new ArrayList<>();
+//        temporary.add(pieceID);
+//        temporary.add(pieceRow);
+//        temporary.add(pieceColumn);
+//        board.getUsedTiles().add(temporary);
+//        System.out.println("Coordinates for pieces: "+board.getUsedTiles());
+//    }
 
     /**
      * A method which declares whether a board tile is occupied or not
@@ -192,8 +230,8 @@ public class Quarto {
      * This is later on used to compare the board state to possible winning lines/combinations.
      */
 
-    public void setCoordinatesToBoardStatus(int pieceColumn, int pieceRow) {
-        int tempNumber = 999; // for testing, can be whatever (0)
+    public int convertCoordinates(int pieceColumn, int pieceRow) {
+        int tempNumber=0; // for testing, can be whatever (0)
         if (pieceRow==0) {
             tempNumber=pieceColumn;
         } else if (pieceRow==1) {
@@ -203,7 +241,19 @@ public class Quarto {
         } else if (pieceRow==3) {
             tempNumber =pieceColumn+12;
         }
-        board.getBoardStatus().set(tempNumber, 1);
+        return tempNumber;
+    }
+
+    public void updateBoardStatusAndUsedPieces(int pieceID, int pieceColumn, int pieceRow) {
+        int integer = convertCoordinates(pieceColumn, pieceRow);
+        board.getBoardStatus().set(integer, 1);
+        ArrayList<Integer> temporary = new ArrayList<>();
+        temporary.add(pieceID);
+        temporary.add(pieceRow);
+        temporary.add(pieceColumn);
+        temporary.add(integer);
+        board.getUsedTiles().add(temporary);
+        System.out.println("Coordinates for pieces: "+board.getUsedTiles());
     }
 
     /**
@@ -224,48 +274,30 @@ public class Quarto {
     }
 
 
-    public void createTableIfDoesntExist() {
-        database.createTableIfDoesntExist();
-    }
+    public void createTableIfDoesntExist() { database.createTableIfDoesntExist(); }
 
-    public void getStatistics(int id) {
-        leaderboard.getStatistics(id);
-    }
+    public void getStatistics(int id) { leaderboard.getStatistics(id); }
 
-    public String getRecords(int i) {
-        return String.format("%d. %s - %d", i + 1, Leaderboard.records[i].getUsername(), Leaderboard.records[i].getScore());
-    }
+    public String getRecords(int i) { return String.format("%d. %s - %d", i + 1, Leaderboard.records[i].getUsername(), Leaderboard.records[i].getScore()); }
 
-    public String getRecordsUserName(int i) {
-        return Leaderboard.records[i].getUsername();
-    }
+    public String getRecordsUserName(int i) { return Leaderboard.records[i].getUsername(); }
 
-    public int getRecordsUserScore(int i) {
-        return Leaderboard.records[i].getScore();
-    }
+    public int getRecordsUserScore(int i) { return Leaderboard.records[i].getScore(); }
 
-    public Long getAverageTime() {
-        return Leaderboard.averageTime;
-    }
+    public Long getAverageTime() { return Leaderboard.averageTime; }
 
-    public int getFastestMove() {
-        return Collections.min(Leaderboard.turnStats);
-    }
+    public int getFastestMove() { return Collections.min(Leaderboard.turnStats); }
 
-    public int getSlowestMove() {
-        return Collections.max(Leaderboard.turnStats);
-    }
+    public int getSlowestMove() { return Collections.max(Leaderboard.turnStats); }
 
-    public int getRecordsUserId(int i) {
-        return Leaderboard.records[i].getId();
-    }
+    public int getRecordsUserId(int i) { return Leaderboard.records[i].getId(); }
 
-    public int getTurnStatsSize() {
-        return Leaderboard.turnStats.size();
-    }
+    public int getTurnStatsSize() { return Leaderboard.turnStats.size(); }
 
-    public int getTurnstats(int i) {
-        return Leaderboard.turnStats.get(i);
+    public int getTurnStats(int i) { return Leaderboard.turnStats.get(i); }
+
+    public String getPlaceHolder() {
+        return remainingPieces.getPlaceHolder();
     }
 
     //Business logic
@@ -331,6 +363,8 @@ public class Quarto {
     public void addToListOnBoard(Integer pieceId) {
         board.setPiecesOnBoard(pieceId);
     }
+
+
 
     /**
      * Checks if the piece which the user has selected has been already placed or not.

@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Window;
 import main.java.model.Quarto;
-import main.java.model.pieces.Pieces;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 import main.java.view.screens.pauseScreen.PauseScreenPresenter;
@@ -95,9 +94,9 @@ public class GameWindowPresenter {
                         view.getGameBoard().add(new ImageView(im), model.getX(), model.getY());
                         view.getChosenPiece().getChildren().add(new ImageView(model.getPlaceHolder()));
                         model.addToListOnBoard(Integer.valueOf(view.getChosenPiece().getId()));
-                        model.setUsedTiles(parseInt(view.getChosenPiece().getId()), model.getX(), model.getY());
-                        model.setCoordinatesToBoardStatus(model.getX(), model.getY());
+                        model.updateBoardStatusAndUsedPieces(parseInt(view.getChosenPiece().getId()), model.getX(), model.getY());
                         model.removeRemainingPieces(Integer.valueOf(view.getChosenPiece().getId()));
+                        System.out.println("Computer made a move.");
 
                         // Computer selects the piece you have to place
                         int temporary = model.selectRandomPiece();
@@ -137,10 +136,10 @@ public class GameWindowPresenter {
                     // testing
                     System.out.println("\nPiece "+view.getChosenPiece().getId()+" has been set on tile "+GridPane.getColumnIndex(item)+" "+GridPane.getRowIndex(item));
                     // updates board tiles array
-                    model.setUsedTiles(parseInt(view.getChosenPiece().getId()), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
-                    model.setCoordinatesToBoardStatus(GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
+                    model.updateBoardStatusAndUsedPieces(parseInt(view.getChosenPiece().getId()), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
                     model.removeRemainingPieces(Integer.valueOf(view.getChosenPiece().getId()));
                     model.setPlayerTurn(false);
+                    System.out.println("Player made move.");
                     updateView();
 
                     //We ran out of time to implement the compare method we talked about with Mr. de Rijke, but we managed to check if lines were filled. Ultimately we

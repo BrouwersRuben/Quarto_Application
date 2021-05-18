@@ -1,5 +1,11 @@
 package main.java.model.dataBase;
 
+import oracle.jdbc.pool.OracleDataSource;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
 /**
  * Class to save a record by a specific player or to override an existing one with a better one.
  * @author Rodžers Ušackis

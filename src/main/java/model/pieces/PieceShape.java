@@ -1,11 +1,11 @@
 package main.java.model.pieces;
 
-public enum pieceShape {
+public enum PieceShape {
     ROUND("ROUND"), TRIANGLE("TRIANGLE");
 
     private final String shape;
 
-    pieceShape(String shape) {
+    PieceShape(String shape) {
         this.shape = shape;
     }
 }

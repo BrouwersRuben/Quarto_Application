@@ -1,11 +1,11 @@
 package main.java.model.pieces;
 
-public enum pieceFill {
+public enum PieceFill {
     HOLLOW("HOLLOW"), FILLED("FILLED");
 
     private final String hollow;
 
-    pieceFill(String hollow) {
+    PieceFill(String hollow) {
         this.hollow = hollow;
     }
 }

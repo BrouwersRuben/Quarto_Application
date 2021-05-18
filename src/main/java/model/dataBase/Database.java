@@ -42,13 +42,6 @@ public class Database {
             connection = DriverManager.getConnection(dbURL, username, password);
             if (connection != null) {
                 System.out.println("Connected to the database.");
-
-                //Statement to make the table:
-//                Statement statement = connection.createStatement();
-//                statement.execute("CREATE TABLE INT_leaderboard"
-//                        + "(player_name VARCHAR2(20),"
-//                        + "top_score INTEGER," +
-//                        "date_submitted DATE DEFAULT SYSDATE)");
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -190,7 +183,7 @@ public class Database {
     /**
      * A method for saving the game state when asked by the user.
      */
-    public void saveGame() { // TODO: Implement game logic
+    public void saveRecord(String username) { // TODO: Implement game logic
         try {
             ods = new OracleDataSource();
             ods.setURL(dbURL);
@@ -199,12 +192,13 @@ public class Database {
             Statement statement = connection.createStatement();
 
 
-            statement.execute("DELETE FROM game_data " +
-                    "WHERE LOWER(username)='something'"); // Human object username
+            statement.execute("DELETE FROM game_leaderboard " +
+                    "WHERE LOWER(username)="+username+""); // Human object username // TODO: used static for this, change it~!
 
+//            ResultSet topScore = statement.executeQuery("SELECT COUNT(*) FROM game_statistics"); calculate top score here
 
-            statement.execute("INSERT INTO game_data(ID, USERNAME, TIME_PLAYED, GAME_DIFFICULTY, HAS_QUARTO)" +
-                    "values(default, 233, 2, 1, 1)");
+            statement.execute("INSERT INTO game_leaderboard(ID, USERNAME, TOP_SCORE)" +
+                    "values(default,"+username+", 69)");
 
 
             statement.close();
@@ -214,7 +208,7 @@ public class Database {
         } catch (SQLException e) {
             if (e.getErrorCode() == 942) {
                 createTableIfDoesntExist();
-                saveGame();
+                saveRecord(username);
 
             } else {
 //                e.printStackTrace();
