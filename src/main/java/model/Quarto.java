@@ -150,10 +150,6 @@ public class Quarto {
         int third = findCorrespondingPiece(line, integers.get(2));
         int fourth = findCorrespondingPiece(line, integers.get(3));
 
-        System.out.println(first+" AND "+second+" AND "+third+" AND "+fourth);
-        System.out.println(remainingPieces.getPieces().get(0).getFill()+" TE "+remainingPieces.getPieces().get(1).getFill());
-        System.out.println(remainingPieces.getPieces().get(first).getFill()+" AND "+ remainingPieces.getPieces().get(second).getFill()+" AND "+remainingPieces.getPieces().get(third).getFill()+" AND "+ remainingPieces.getPieces().get(fourth).getFill());
-
         if (remainingPieces.getPieces().get(first).getFill()==remainingPieces.getPieces().get(second).getFill() && remainingPieces.getPieces().get(first).getFill()==remainingPieces.getPieces().get(third).getFill() && remainingPieces.getPieces().get(first).getFill()==remainingPieces.getPieces().get(fourth).getFill()) {
             return true;
         } else if (remainingPieces.getPieces().get(first).getColor()==remainingPieces.getPieces().get(second).getColor() && remainingPieces.getPieces().get(first).getColor()==remainingPieces.getPieces().get(third).getColor() && remainingPieces.getPieces().get(first).getColor()==remainingPieces.getPieces().get(fourth).getColor()) {
@@ -180,7 +176,6 @@ public class Quarto {
         for (int j = 0; j < board.getUsedTiles().size(); j++) {
             if (tile==(board.getUsedTiles().get(j).get(3))) {
                 piece = board.getUsedTiles().get(j).get(0)-1;
-                System.out.println("Piece for " + board.getWinningLines().get(line) + " tile is: " + piece);
             }
         }
         return piece;
