@@ -204,21 +204,8 @@ public class Quarto {
         return remainingPieces.getRemainingPieces().get(random.nextInt(remainingPieces.getRemainingPieces().size()));
     }
 
-//    /**
-//     * Method to save which piece is placed on which row and column.
-//     * @param pieceID
-//     * @param pieceRow
-//     * @param pieceColumn
-//     */
-//    public void setUsedTiles(int pieceID, int pieceRow, int pieceColumn) {
-//        ArrayList<Integer> temporary = new ArrayList<>();
-//        temporary.add(pieceID);
-//        temporary.add(pieceRow);
-//        temporary.add(pieceColumn);
-//        board.getUsedTiles().add(temporary);
-//        System.out.println("Coordinates for pieces: "+board.getUsedTiles());
-//    }
 
+    //TODO: CHANGE
     /**
      * A method which declares whether a board tile is occupied or not
      * with 1's and 0's.
