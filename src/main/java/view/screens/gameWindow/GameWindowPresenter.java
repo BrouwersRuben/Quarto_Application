@@ -74,9 +74,9 @@ public class GameWindowPresenter {
         // TODO: LOOP BETWEEN PLAYER AND COMPUTER
 
 
-            view.getAvailablePieces().getChildren().forEach(piece -> {
-                piece.setOnMouseClicked(mouseEvent -> {
-                if(!model.getPlayerTurn()) {
+        view.getAvailablePieces().getChildren().forEach(piece -> {
+            piece.setOnMouseClicked(mouseEvent -> {
+                if (!model.getPlayerTurn()) {
                     view.getErrorLabel().setText("");
                     view.getChosenPiece().getChildren().add(new ImageView(model.getPlaceHolder())); // empty placeholder for *selected piece*
 
@@ -119,23 +119,21 @@ public class GameWindowPresenter {
                         updateView();
                     }
                 }
-                });
             });
+        });
 
 
         view.getGameBoard().getChildren().forEach(item -> {
             item.setOnMouseClicked(mouseEvent -> {
-                if(model.getPlayerTurn()) {
+                if (model.getPlayerTurn()) {
+                    model.setStartTimestamp();
                     Image im = new Image("media/images/" + view.getChosenPiece().getId() + ".png");
 
                     if (model.isUnique(Integer.valueOf(view.getChosenPiece().getId()))) {
                         view.getGameBoard().add(new ImageView(im), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
                         view.getChosenPiece().getChildren().add(new ImageView(model.getPlaceHolder()));
                         model.addToListOnBoard(Integer.valueOf(view.getChosenPiece().getId()));
-//                   view.getChosenPiece().setId("0"); // what does this do exactly ?
                         view.getErrorLabel().setText("");
-
-                        // testing
                         System.out.println("\nPiece " + view.getChosenPiece().getId() + " has been set on tile " + GridPane.getColumnIndex(item) + " " + GridPane.getRowIndex(item));
                         // updates board tiles array
                         model.updateBoardStatusAndUsedPieces(parseInt(view.getChosenPiece().getId()), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
@@ -166,6 +164,8 @@ public class GameWindowPresenter {
                     }
 
                     model.setPlayerTurn(false);
+                    model.setEndTimestamp();
+                    model.createTurnData(model.getTurnID(), model.getTurnStartTime(), model.getTurnEndTime());
                     updateView();
                 }
             });

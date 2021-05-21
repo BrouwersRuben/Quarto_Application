@@ -11,7 +11,7 @@ import java.sql.*;
  * methods, such as connecting, disconnecting, creating tables, saving and loading games.
  * @author Rodžers Ušackis
  * @author Ruben Brouwers
- * @version 1.0
+ * @version 1.1
  */
 
 public class Database {
@@ -27,9 +27,6 @@ public class Database {
 
     public Database() { // Constructor for initializing the game session
 
-    }
-
-    public Database(Quarto game) { // Constructor for initializing and existing game session
     }
 
     /**
@@ -77,71 +74,14 @@ public class Database {
 
             Connection connection = DriverManager.getConnection(dbURL, username, password);
             Statement statement = connection.createStatement();
-            try {
-                statement.executeQuery("SELECT * FROM game_data");
+
+            //TODO: try statement for this, which catches 2289 error.
+//            statement.execute("CREATE SEQUENCE game_data_id_seq" +
+//                    " START WITH 1" +
+//                    " INCREMENT BY 1 NOCACHE" +
+//                    " NOCYCLE");
 
 
-            } catch (SQLException e) {
-                if (e.getErrorCode() == 942) {
-
-                    try {
-                        statement.execute("CREATE TABLE game_data(" +
-                                "    id number(10) default game_data_id_seq.nextVal CONSTRAINT game_data_id_pk PRIMARY KEY," +
-                                "    username varchar2(20) CONSTRAINT game_data_username_nn NOT NULL," +
-                                "    time_played number(4) CONSTRAINT game_data_time_played_nn NOT NULL," +
-                                "    game_difficulty number(1) CONSTRAINT game_data_game_difficulty_nn NOT NULL," +
-                                "    has_quarto number(1) CONSTRAINT game_data_has_quarto_nn NOT NULL\n" +
-                                ")");
-//                      e.printStackTrace();
-                    } catch (SQLException d) {
-//                        d.printStackTrace();
-                    }
-                }
-            }
-
-            try {
-                statement.executeQuery("SELECT * FROM board_data");
-
-
-            } catch (SQLException e) {
-                if (e.getErrorCode() == 942) {
-                    statement.execute("CREATE TABLE board_data /* checks which board tiles are occupied */" +
-                            "(" +
-                            "    id number(10) default game_data_id_seq.currVal CONSTRAINT board_data_id_fk REFERENCES game_data (id) ON DELETE CASCADE,\n" +
-                            "    row_1 varchar2(4) CONSTRAINT board_data_row_1_nn NOT NULL," +
-                            "    row_2 varchar2(4) CONSTRAINT board_data_row_2_nn NOT NULL," +
-                            "    row_3 varchar2(4) CONSTRAINT board_data_row_3_nn NOT NULL," +
-                            "    row_4 varchar2(4) CONSTRAINT board_data_row_4_nn NOT NULL," +
-                            "    CONSTRAINT board_data_rows_ck CHECK (regexp_like(row_1 || row_2 || row_3 || row_4, '^[01]{16}$'))" +
-                            "    /* ^ - start of line | [01] 0's or 1's | {16} 16 consecutive times | $ - end of line */" +
-                            ")");
-                }
-            }
-            try {
-                statement.executeQuery("SELECT * FROM piece_attributes");
-
-
-            } catch (SQLException e) {
-                if (e.getErrorCode() == 942) {
-                    statement.execute("CREATE TABLE piece_attributes" +
-                            "(" +
-                            "    piece_ID number(2) CONSTRAINT piece_attributes_piece_ID_pk PRIMARY KEY," +
-                            "    piece_status  number(1) CONSTRAINT piece_attributes_in_play_nn NOT NULL" +
-                            ")");
-                }
-            }
-            try {
-                statement.executeQuery("SELECT * FROM pieces");
-            } catch (SQLException e) {
-                if (e.getErrorCode() == 942) {
-                    statement.execute("CREATE TABLE pieces" +
-                            "(" +
-                            "    id number(10) default game_data_id_seq.currVal CONSTRAINT pieces_id_fk REFERENCES game_data (id) ON DELETE CASCADE," +
-                            "    piece_ID number(2) CONSTRAINT pieces_piece_ID_fk REFERENCES piece_attributes (piece_ID) ON DELETE CASCADE," +
-                            "    coordinates number(2) CONSTRAINT pieces_coordinates_nn NOT NULL" +
-                            ")");
-                }
-            }
             try {
                 statement.executeQuery("SELECT * FROM game_statistics");
             } catch (SQLException e) {
@@ -181,117 +121,6 @@ public class Database {
     }
 
     /**
-     * A method for saving the game state when asked by the user.
-     */
-    public void saveRecord(String username) { // TODO: Implement game logic
-        try {
-            ods = new OracleDataSource();
-            ods.setURL(dbURL);
-
-            Connection connection = DriverManager.getConnection(dbURL, username, password);
-            Statement statement = connection.createStatement();
-
-
-            statement.execute("DELETE FROM game_leaderboard " +
-                    "WHERE LOWER(username)="+username+""); // Human object username // TODO: used static for this, change it~!
-
-//            ResultSet topScore = statement.executeQuery("SELECT COUNT(*) FROM game_statistics"); calculate top score here
-
-            statement.execute("INSERT INTO game_leaderboard(ID, USERNAME, TOP_SCORE)" +
-                    "values(default,"+username+", 69)");
-
-
-            statement.close();
-            connection.close();
-            System.out.println("Your game was successfully saved.");
-
-        } catch (SQLException e) {
-            if (e.getErrorCode() == 942) {
-                createTableIfDoesntExist();
-                saveRecord(username);
-
-            } else {
-//                e.printStackTrace();
-                System.out.println("Something went wrong. Your game couldn't be saved.");
-            }
-
-
-        }
-
-    }
-
-    /**
-     * A method that checks if a save file exists when the user requests to start a game
-     * from a previously saved match point.
-     * @param playerName
-     * @return
-     */
-    public boolean savedGameExists(String playerName) {
-
-        try {
-            ods = new OracleDataSource();
-            ods.setURL(dbURL);
-
-            Connection connection = DriverManager.getConnection(dbURL, username, password);
-            Statement statement = connection.createStatement();
-
-            ResultSet count = statement.executeQuery("SELECT COUNT(*) FROM game_data WHERE LOWER(username)='" + playerName.toLowerCase() + "'");
-
-            return count.next() && count.getInt(1) > 0;
-
-
-        } catch (SQLException e) {
-            //  e.printStackTrace();
-            System.out.println("Something is wrong with the connection to the database. Your game will not be loaded. Sorry for the inconvenience.");
-//            e.printStackTrace();
-            return false;
-        }
-    }
-
-    /**
-     * A method that loads the game, when it is confirmed that the save file exists.
-     * @param playerName
-     * @return
-     */
-    public Quarto loadGame(String playerName) { // Not sure yet, haven't checked
-
-//        game = new Quarto(playerName);
-
-        try {
-            ods = new OracleDataSource();
-            ods.setURL(dbURL);
-
-            Connection connection = DriverManager.getConnection(dbURL, username, password);
-            Statement statement = connection.createStatement();
-
-
-            ResultSet gameTable = statement.executeQuery("SELECT id, username, time_played, game_difficulty, has_quarto " +
-                    "FROM game_data " +
-                    "WHERE LOWER(username)='" + playerName.toLowerCase() + "'");
-
-            gameTable.next();
-
-            String id = gameTable.getString("id");
-            // Set values from the database into the game logic methods
-
-
-        } catch (SQLException e) {
-            if (e.getErrorCode() == 942) {
-                createTableIfDoesntExist();
-                loadGame(playerName);
-
-            } else {
-                // e.printStackTrace();
-                System.out.println("Something is wrong with the connection to the database. Your game will not be loaded. Sorry for inconvenience.");
-//                e.printStackTrace();
-            }
-
-        }
-        return game;
-    }
-
-
-    /**
      * A method to drop tables just in case it is necessary.
      */
     public void dropTables() {
@@ -302,10 +131,6 @@ public class Database {
             Connection connection = DriverManager.getConnection(dbURL, username, password);
             Statement statement = connection.createStatement();
 
-            statement.execute("DROP TABLE game_data");
-            statement.execute("DROP TABLE board_data");
-            statement.execute("DROP TABLE piece_attributes");
-            statement.execute("DROP TABLE pieces");
             statement.execute("DROP TABLE game_statistics");
             statement.execute("DROP TABLE game_leaderboard");
 

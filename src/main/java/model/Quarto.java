@@ -3,9 +3,9 @@ package main.java.model;
 import main.java.model.board.Board;
 import main.java.model.board.GameTimer;
 import main.java.model.board.RemainingPieces;
-import main.java.model.dataBase.Leaderboard;
+import main.java.model.dataBase.GameStatistics;
 import main.java.model.dataBase.Database;
-import main.java.model.dataBase.Statistics;
+import main.java.model.dataBase.TurnStatistics;
 import main.java.model.players.Human;
 
 import java.io.File;
@@ -28,14 +28,17 @@ public class Quarto {
     protected int amountOfTurns;
     protected int gameID;
     protected String username;
-    private final Leaderboard leaderboard = new Leaderboard();
+    private final GameStatistics gameStatistics = new GameStatistics();
+    private final TurnStatistics turnStatistics = new TurnStatistics();
     private final Database database = new Database();
     private final Board board = new Board();
     private final RemainingPieces remainingPieces = new RemainingPieces();
-    private final Human player = new Human();
+    private final Human human = new Human();
     private final GameTimer timer = new GameTimer();
     private final Random random = new Random();
-    private boolean playerTurn=false;
+    private Timestamp turnStartTime;
+    private Timestamp turnEndTime;
+    private int turn;
 
 
     public Quarto() {
@@ -56,11 +59,11 @@ public class Quarto {
     // TODO: TESTING
     // who starts first
     public void setPlayerTurn(boolean value) {
-        player.setPlayerTurn(value);
+        human.setPlayerTurn(value);
     }
 
     public boolean getPlayerTurn() {
-        return player.getPlayerTurn();
+        return human.getPlayerTurn();
     }
 
     /**
@@ -91,6 +94,7 @@ public class Quarto {
      */
     public void startGame() {
         // if starting new game
+        getGameID();
         username = getUserName();
 
         remainingPieces.fillRemainingPieces();
@@ -117,7 +121,8 @@ public class Quarto {
             if (isThereALine(j)) {
                 System.out.println("There's a line. Checking if it's quarto...");
                 if (isItAQuarto(board.getWinningLines().get(j))) {
-                    database.saveRecord(username);
+//                    database.saveRecord(username);
+                    gameStatistics.saveGameStatistics(turnStatistics.getTurnStatsArray(), getGameID(), getUserName());
                     return true;
                 }
             }
@@ -169,7 +174,7 @@ public class Quarto {
     }
 
     public String turnIndicator() {
-        if (playerTurn) {
+        if (human.getPlayerTurn()) {
             return "Your turn!";
         } else {
             return "Their turn!";
@@ -228,39 +233,58 @@ public class Quarto {
         System.out.println("Remaining pieces: "+ remainingPieces.getRemainingPieces());
     }
 
+
+    // Methods for turnStatistics
+    public Timestamp setStartTimestamp() { return turnStartTime = turnStatistics.setTimeStamp(); }
+    public Timestamp setEndTimestamp() { return turnEndTime = turnStatistics.setTimeStamp(); }
+    public Timestamp getTurnStartTime() { return turnStartTime; }
+    public Timestamp getTurnEndTime() { return turnEndTime; }
+
+    public void createTurnData(int turnID, Timestamp turnStart, Timestamp turnEnd) {
+        turnStatistics.createTurnData(turnID, turnStart, turnEnd);
+    }
+
+    public ArrayList<TurnStatistics> getTurnStatsArray() {
+        return turnStatistics.getTurnStatsArray();
+    }
+
+    public void setTurnID(int turn) { turn=turn+1; }
+    public int getTurnID() { return turn; }
+
+    public int getGameID() {
+        return gameStatistics.getGameID();
+    }
+
+
     /**
      * Creates an object which is used for entering advanced statistics data into the database.
      */
-    public void createTurnData(int playerID, int turnID, Timestamp turnStart, Timestamp turnEnd, double score) {
-        Statistics statistics = new Statistics(playerID, turnID, turnStart, turnEnd, score);
-    }
+
 
 
     public void createTableIfDoesntExist() { database.createTableIfDoesntExist(); }
 
-    public void getStatistics(int id) { leaderboard.getStatistics(id); }
+    public void getStatistics(int id) { gameStatistics.getStatistics(id); }
 
-    public String getRecords(int i) { return String.format("%d. %s - %d", i + 1, Leaderboard.records[i].getUsername(), Leaderboard.records[i].getScore()); }
+    public String getRecords(int i) { return String.format("%d. %s - %d", i + 1, GameStatistics.records[i].getUsername(), GameStatistics.records[i].getScore()); }
 
-    public String getRecordsUserName(int i) { return Leaderboard.records[i].getUsername(); }
+    public String getRecordsUserName(int i) { return GameStatistics.records[i].getUsername(); }
 
-    public int getRecordsUserScore(int i) { return Leaderboard.records[i].getScore(); }
+    public int getRecordsUserScore(int i) { return GameStatistics.records[i].getScore(); }
 
-    public Long getAverageTime() { return Leaderboard.averageTime; }
+    public Long getAverageTime() { return GameStatistics.averageTime; }
 
-    public int getFastestMove() { return Collections.min(Leaderboard.turnStats); }
+    public int getFastestMove() { return Collections.min(GameStatistics.turnStats); }
 
-    public int getSlowestMove() { return Collections.max(Leaderboard.turnStats); }
+    public int getSlowestMove() { return Collections.max(GameStatistics.turnStats); }
 
-    public int getRecordsUserId(int i) { return Leaderboard.records[i].getId(); }
+    public int getRecordsUserId(int i) { return GameStatistics.records[i].getId(); }
 
-    public int getTurnStatsSize() { return Leaderboard.turnStats.size(); }
+    public int getTurnStatsSize() { return GameStatistics.turnStats.size(); }
 
-    public int getTurnStats(int i) { return Leaderboard.turnStats.get(i); }
+    public int getTurnStats(int i) { return GameStatistics.turnStats.get(i); }
 
-    public String getPlaceHolder() {
-        return remainingPieces.getPlaceHolder();
-    }
+    public String getPlaceHolder() { return remainingPieces.getPlaceHolder(); }
 
     //Business logic
     /**
@@ -297,28 +321,28 @@ public class Quarto {
     }
 
     public String getUserName() {
-        return player.getName();
+        return human.getName();
     }
 
     public void setUserName(String name) {
-        player.setName(name);
+        human.setName(name);
     }
 
     public boolean setWon() {
-        return player.setHasQuarto(true);
+        return human.setHasQuarto(true);
     }
 
     public boolean setLost() {
-        return player.setHasQuarto(false);
+        return human.setHasQuarto(false);
     }
 
     public boolean getWinState() {
-        return player.isHasQuarto();
+        return human.isHasQuarto();
     }
 
     public void gameOver() {
         if (timer.getDdMinute().equals("02")) {
-            player.setHasQuarto(false);
+            human.setHasQuarto(false);
         }
     }
 
@@ -348,7 +372,7 @@ public class Quarto {
 
     public void openDB() {
         database.connectToDb();
-        leaderboard.getLeaderboard();
+        gameStatistics.getLeaderboard();
     }
 
     public void timerIncrement() {
