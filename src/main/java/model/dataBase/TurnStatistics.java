@@ -1,5 +1,6 @@
 package main.java.model.dataBase;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -12,40 +13,42 @@ import java.util.ArrayList;
 public class TurnStatistics {
     private int id;
     private int turn;
-    private Timestamp turn_start_time;
-    private Timestamp turn_end_time;
-    private double score;
+    private Timestamp turnStartTime;
+    private Timestamp turnEndTime;
+    private long timeDifference;
+    private long score;
     private ArrayList<TurnStatistics> turnStatsArray = new ArrayList<>();
-    private final GameStatistics gameStatistics = new GameStatistics();
 
     public TurnStatistics() {
     }
 
-    public TurnStatistics(int turn, Timestamp turn_start_time, Timestamp turn_end_time, double score) { // removed , int score_for_turn, will make calculation in sql
-        this.id = gameStatistics.getGameID(); // TODO: is this allowed ? otherwise I would be calling getGameID() after every move, when it's not really necessary
+    public TurnStatistics(int id, int turn, Timestamp turnStartTime, Timestamp turnEndTime, long timeDifference, long score) { // removed , int score_for_turn, will make calculation in sql
+        this.id = id;
         this.turn = turn;
-        this.turn_start_time = turn_start_time;
-        this.turn_end_time = turn_end_time;
+        this.turnStartTime = turnStartTime;
+        this.turnEndTime = turnEndTime;
+        this.timeDifference = timeDifference;
         this.score = score;
     }
 
-    public void createTurnData(int turnID, Timestamp turnStart, Timestamp turnEnd) {
-        long score = calculateScoreForMove(turnStart, turnEnd);
-        TurnStatistics statistics = new TurnStatistics(turnID, turnStart, turnEnd, score);
+    public void createTurnData(int id, int turn, Timestamp turnStartTime, Timestamp turnEndTime) {
+        long difference = turnEndTime.getTime()-turnStartTime.getTime();
+        long score = calculateScoreForMove(difference);
+        TurnStatistics statistics = new TurnStatistics(id, turn, turnStartTime, turnEndTime, difference, score);
         turnStatsArray.add(statistics);
 
     }
 
     // TODO: Make this more advanced, combined with AI rule based potentially.
-    public long calculateScoreForMove(Timestamp turnStart, Timestamp turnEnd) {
-        return (long) ((turnEnd.getTime()-turnStart.getTime())*0.5);
+    public long calculateScoreForMove(long difference) {
+        return difference;
     }
 
 
 
     // Should create a method that puts the objects into the turnArray arraylist.
 
-    public Timestamp setTimeStamp() { return new Timestamp(System.currentTimeMillis()); }
+    public Timestamp createTimestamp() { return new Timestamp(System.currentTimeMillis()); }
 
     public int getId() {
         return id;
@@ -55,11 +58,13 @@ public class TurnStatistics {
         return turn;
     }
 
-    public double getScore() { return score; }
+    public long getScore() { return score; }
 
-    public Timestamp getTurn_start_time() { return turn_start_time; }
+    public Timestamp getTurnStartTime() { return turnStartTime; }
 
-    public Timestamp getTurn_end_time() { return turn_end_time; }
+    public Timestamp getTurnEndTime() { return turnEndTime; }
+
+    public long getTimeDifference() { return timeDifference; }
 
     public ArrayList<TurnStatistics> getTurnStatsArray() { return turnStatsArray; }
 }

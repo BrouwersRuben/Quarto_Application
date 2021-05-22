@@ -50,7 +50,6 @@ public class GameWindowPresenter {
             updateView();
         });
         view.getWinScreen().setOnAction(event -> {
-            model.setWon();
 
             //Temp
             model.getStatistics(model.getRecordsUserId(0));
@@ -59,7 +58,6 @@ public class GameWindowPresenter {
             updateView();
         });
         view.getLoseScreen().setOnAction(event -> {
-            model.setLost();
 
             //Temp
             model.getStatistics(model.getRecordsUserId(3));
@@ -106,16 +104,15 @@ public class GameWindowPresenter {
 //                        view.getPlayerTurn().setText("Your turn!");
 
                         if (model.isGameOver()) {
-                            model.setLost();
-
                             //Temporary solution
                             model.getStatistics(model.getRecordsUserId(3));
                             setWinLoseWindow();
                             System.out.println("Game is over! Thank you for playing!");
                             // TODO: here it should end game/show winLoseScreen
+                        } else {
+                            model.setPlayerTurn(true);
+                            model.setStartTimestamp();
                         }
-
-                        model.setPlayerTurn(true);
                         updateView();
                     }
                 }
@@ -126,7 +123,7 @@ public class GameWindowPresenter {
         view.getGameBoard().getChildren().forEach(item -> {
             item.setOnMouseClicked(mouseEvent -> {
                 if (model.getPlayerTurn()) {
-                    model.setStartTimestamp();
+                    model.setTurn();
                     Image im = new Image("media/images/" + view.getChosenPiece().getId() + ".png");
 
                     if (model.isUnique(Integer.valueOf(view.getChosenPiece().getId()))) {
@@ -149,6 +146,9 @@ public class GameWindowPresenter {
                         //here is the link to the whiteboard we used to visualize our thoughts on how the remainder of the game logic has to be. (or at least the stuff we failed to implement)
                         //https://wbd.ms/share/v2/aHR0cHM6Ly93aGl0ZWJvYXJkLm1pY3Jvc29mdC5jb20vYXBpL3YxLjAvd2hpdGVib2FyZHMvcmVkZWVtLzZhZjI5ZjEzMDMxODQzNGM5YTM0YmM5NWUyYTFjODEwX2VkMWZjNTdmLThhOTctNDdlNy05ZGUxLTkzMDJkZmQ3ODZhZQ==
 
+                        model.setEndTimestamp();
+                        model.createTurnData(model.getGameID(), model.getTurn(), model.getTurnStartTime(), model.getTurnEndTime());
+
                         if (model.isGameOver()) {
                             //TODO: Can't set winlosewindow cause database is not linked with game
                             model.setWon();
@@ -164,8 +164,6 @@ public class GameWindowPresenter {
                     }
 
                     model.setPlayerTurn(false);
-                    model.setEndTimestamp();
-                    model.createTurnData(model.getTurnID(), model.getTurnStartTime(), model.getTurnEndTime());
                     updateView();
                 }
             });

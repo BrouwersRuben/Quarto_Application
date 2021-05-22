@@ -7,6 +7,8 @@ import main.java.model.Quarto;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 
+import java.sql.SQLException;
+
 public class Main extends Application {
 
     protected boolean isRunning;
@@ -19,7 +21,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws SQLException {
         window = primaryStage;
 
 //        window.setResizable(false);

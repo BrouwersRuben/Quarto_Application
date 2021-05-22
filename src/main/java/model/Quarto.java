@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -36,9 +37,8 @@ public class Quarto {
     private final Human human = new Human();
     private final GameTimer timer = new GameTimer();
     private final Random random = new Random();
-    private Timestamp turnStartTime;
-    private Timestamp turnEndTime;
-    private int turn;
+    private Timestamp turnStart;
+    private Timestamp turnEnd;
 
 
     public Quarto() {
@@ -94,6 +94,7 @@ public class Quarto {
      */
     public void startGame() {
         // if starting new game
+
         getGameID();
         username = getUserName();
 
@@ -122,7 +123,8 @@ public class Quarto {
                 System.out.println("There's a line. Checking if it's quarto...");
                 if (isItAQuarto(board.getWinningLines().get(j))) {
 //                    database.saveRecord(username);
-                    gameStatistics.saveGameStatistics(turnStatistics.getTurnStatsArray(), getGameID(), getUserName());
+
+                    gameStatistics.saveGameStatistics(turnStatistics.getTurnStatsArray(), getGameID(), getUserName(), human.getDifficulty(), human.isHasQuarto());
                     return true;
                 }
             }
@@ -235,25 +237,23 @@ public class Quarto {
 
 
     // Methods for turnStatistics
-    public Timestamp setStartTimestamp() { return turnStartTime = turnStatistics.setTimeStamp(); }
-    public Timestamp setEndTimestamp() { return turnEndTime = turnStatistics.setTimeStamp(); }
-    public Timestamp getTurnStartTime() { return turnStartTime; }
-    public Timestamp getTurnEndTime() { return turnEndTime; }
+    public void setStartTimestamp() { turnStart = turnStatistics.createTimestamp(); }
+    public void setEndTimestamp() {  turnEnd = turnStatistics.createTimestamp(); }
+    public Timestamp getTurnStartTime() { return turnStart; }
+    public Timestamp getTurnEndTime() { return turnEnd; }
 
-    public void createTurnData(int turnID, Timestamp turnStart, Timestamp turnEnd) {
-        turnStatistics.createTurnData(turnID, turnStart, turnEnd);
+
+
+    public void createTurnData(int id, int turnID, Timestamp turnStart, Timestamp turnEnd) {
+        turnStatistics.createTurnData(id, turnID, turnStart, turnEnd);
     }
 
     public ArrayList<TurnStatistics> getTurnStatsArray() {
         return turnStatistics.getTurnStatsArray();
     }
 
-    public void setTurnID(int turn) { turn=turn+1; }
-    public int getTurnID() { return turn; }
-
-    public int getGameID() {
-        return gameStatistics.getGameID();
-    }
+    // put it into Human class maybe..
+    public int getGameID() { return gameStatistics.getGameID(); }
 
 
     /**
@@ -328,17 +328,9 @@ public class Quarto {
         human.setName(name);
     }
 
-    public boolean setWon() {
-        return human.setHasQuarto(true);
-    }
+    public boolean getWinState() { return human.isHasQuarto(); }
 
-    public boolean setLost() {
-        return human.setHasQuarto(false);
-    }
-
-    public boolean getWinState() {
-        return human.isHasQuarto();
-    }
+    public void setWon() { human.setHasQuarto(true); }
 
     public void gameOver() {
         if (timer.getDdMinute().equals("02")) {
@@ -370,8 +362,13 @@ public class Quarto {
         database.closeDb();
     }
 
-    public void openDB() {
-        database.connectToDb();
+    public void openDB()  {
+        try {
+            gameStatistics.connectToDb();
+            database.connectToDb();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         gameStatistics.getLeaderboard();
     }
 
@@ -388,4 +385,6 @@ public class Quarto {
     }
 
 
+    public void setTurn() { human.setTurn(human.getTurn()+1); }
+    public int getTurn() { return human.getTurn();}
 }

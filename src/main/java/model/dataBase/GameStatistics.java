@@ -1,9 +1,9 @@
 package main.java.model.dataBase;
 
-import oracle.jdbc.pool.OracleDataSource;
-
-import java.io.File;
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,18 +15,11 @@ import java.util.List;
  * @author Ruben Brouwers
  * @version 1.0
  */
-public class GameStatistics { // Used for retrieving the leaderboard
+public class GameStatistics extends Database { // Used for retrieving the leaderboard
 
-    private static final File WALLET = new File("Wallet_QuartoDatabase");
-    private static final String dbURL = "jdbc:oracle:thin:@quartodatabase_medium?TNS_ADMIN=" + WALLET.getAbsolutePath();
-    public static Statement statement = null;
-    public static Record[] records;
     public static List<Integer> turnStats = new ArrayList<>();
+    public static Record[] records;
     public static long averageTime;
-    private static Connection connection = null;
-    private static OracleDataSource ods;
-    private final String username = "QUARTOADMIN";
-    private final String password = "Quarto_Game1";
 
 
     /**
@@ -34,10 +27,7 @@ public class GameStatistics { // Used for retrieving the leaderboard
      */
     public void getLeaderboard() {
         try {
-            ods = new OracleDataSource();
-            ods.setURL(dbURL);
 
-            Connection connection = DriverManager.getConnection(dbURL, username, password);
             Statement statement = connection.createStatement();
             int countRecords = 0;
 
@@ -59,7 +49,6 @@ public class GameStatistics { // Used for retrieving the leaderboard
                 i++;
             }
             statement.close();
-            connection.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -72,11 +61,9 @@ public class GameStatistics { // Used for retrieving the leaderboard
      * @param id Unique game identifier
      */
     public void getStatistics(int id) {
-        try {
-            ods = new OracleDataSource();
-            ods.setURL(dbURL);
 
-            Connection connection = DriverManager.getConnection(dbURL, username, password);
+        try {
+
             Statement statement = connection.createStatement();
 
             ResultSet average = statement.executeQuery("SELECT AVG(CAST(turn_end_time AS DATE)- CAST(turn_start_time AS DATE))*24*60*60 AS turn FROM test_game_statistics WHERE ID = " + id);
@@ -96,36 +83,25 @@ public class GameStatistics { // Used for retrieving the leaderboard
             }
 
             statement.close();
-            connection.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public void saveTurnStatistics(ArrayList<TurnStatistics> turnStatsArray) {
-
-
-    }
-
     public int getGameID() {
-        ResultSet resultSet;
+
         int gameID = 69;
+
         try {
-            ods = new OracleDataSource();
-            ods.setURL(dbURL);
-
-            Connection connection = DriverManager.getConnection(dbURL, username, password);
             Statement statement = connection.createStatement();
-
-            resultSet = statement.executeQuery("SELECT * FROM (SELECT ID FROM game_data ORDER BY ID DESC) WHERE ROWNUM=1");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM (SELECT ID FROM game_data ORDER BY ID DESC) WHERE ROWNUM=1");
 
             if (resultSet.next()) {
                 gameID = resultSet.getInt(1) + 1;
             } else { // for when there's no data
                 gameID = 1;
             }
-
 
             System.out.println(gameID);
         } catch (SQLException throwables) {
@@ -134,28 +110,73 @@ public class GameStatistics { // Used for retrieving the leaderboard
         return gameID;
     }
 
-    public void saveGameStatistics(ArrayList<TurnStatistics> array, int gameID, String username) {
-        try {
-            ods = new OracleDataSource();
-            ods.setURL(dbURL);
+    public void saveGameStatistics(ArrayList<TurnStatistics> array, int gameID, String username, int difficulty, boolean hasQuarto) {
 
-            Connection connection = DriverManager.getConnection(dbURL, username, password);
+        try {
+
             Statement statement = connection.createStatement();
+
+            PreparedStatement gameStatistics = connection.prepareStatement("INSERT INTO game_statistics (id, turn, turn_start_time, turn_end_time, time_spent, score_for_turn) VALUES (?,?,?,?,?,?)");
+            PreparedStatement gameData = connection.prepareStatement("INSERT INTO game_data (id, username, score, turns, time_played, game_difficulty, has_quarto) VALUES (?,?,?,?,?,?,?)");
+
+
+            ResultSet totalScore = statement.executeQuery("SELECT SUM(score_for_turn) AS total_score FROM game_statistics WHERE ID='" + gameID + "'");
+            totalScore.next();
+            ResultSet turnCount = statement.executeQuery("SELECT COUNT(*) AS turnCount from user_tab_columns WHERE table_name = 'game_statistics'");
+            turnCount.next();
+            ResultSet timePlayed = statement.executeQuery("SELECT turn_start_time, turn_end_time, turn_end_time-turn_start_time AS difference FROM game_statistics");
+            timePlayed.next();
+
+            // Game data (for... game data?)
+            long scoreSum = 0;
+            long timeDifference = 0;
+
+            for (int i = 0; i < array.size(); i++) {
+                scoreSum += array.get(i).getScore();
+                timeDifference += array.get(i).getTimeDifference();
+            }
+
+            gameData.setInt(1, gameID);
+            System.out.println(gameID);
+            gameData.setString(2, username);
+            System.out.println(username);
+            gameData.setLong(3, scoreSum);
+            System.out.println(scoreSum);
+            gameData.setInt(4, array.size());
+            System.out.println(array.size());
+            gameData.setLong(5, timeDifference);
+            System.out.println(timeDifference);
+            gameData.setInt(6, difficulty);
+            System.out.println(difficulty);
+
+            if (hasQuarto) {
+                gameData.setInt(7, 1);
+            } else {
+                gameData.setInt(7, 0);
+            }
+
+            gameData.executeQuery();
+
 
             // Game statistics (for turns)
             for (int i = 0; i < array.size(); i++) {
-                statement.execute("INSERT INTO game_statistics (id, turn, turn_start_time, turn_end_time, score_for_turn) values array.get(i).getId(), (i+1), array.get(i).getTurn_start_time(), array.get(i).getTurn_end_time()," +
-                        " array.get(i).getScore()");
+
+                gameStatistics.setInt(1, gameID);
+                System.out.println(gameID);
+                gameStatistics.setInt(2, array.get(i).getTurn());
+                System.out.println(array.get(i).getTurn());
+                gameStatistics.setTimestamp(3, array.get(i).getTurnStartTime());
+                System.out.println(array.get(i).getTurnStartTime());
+                gameStatistics.setTimestamp(4, array.get(i).getTurnEndTime());
+                System.out.println(array.get(i).getTurnEndTime());
+                gameStatistics.setLong(5, array.get(i).getTimeDifference());
+                System.out.println(array.get(i).getTimeDifference());
+                gameStatistics.setLong(6, array.get(i).getScore());
+                System.out.println(array.get(i).getScore());
+
+                gameStatistics.executeQuery();
+
             }
-
-            ResultSet resultSet = statement.executeQuery("SELECT SUM(score_for_turn) FROM game_statistics WHERE ID='" + gameID + "'");
-            resultSet.next();
-            System.out.println("id: " + gameID + " user: " + username);
-
-            //Game leaderboard (for leaderboard)
-            statement.execute("INSERT INTO game_leaderboard (id, username, top_score) values gameID, username, resultSet");
-
-            //Game data (for idek what)
 
 
         } catch (SQLException throwables) {

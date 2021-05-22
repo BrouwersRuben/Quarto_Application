@@ -1,8 +1,5 @@
 package main.java.model.dataBase;
-
-import main.java.model.Quarto;
 import oracle.jdbc.pool.OracleDataSource;
-
 import java.io.File;
 import java.sql.*;
 
@@ -11,18 +8,17 @@ import java.sql.*;
  * methods, such as connecting, disconnecting, creating tables, saving and loading games.
  * @author Rodžers Ušackis
  * @author Ruben Brouwers
- * @version 1.1
+ * @version 1.2
  */
 
 public class Database {
-    private static final File WALLET = new File("Wallet_QuartoDatabase");
-    private static final String dbURL = "jdbc:oracle:thin:@quartodatabase_medium?TNS_ADMIN=" + WALLET.getAbsolutePath();
-    private static OracleDataSource ods;
-    public static Statement statement = null;
-    private static Connection connection = null;
-    private final String username = "QUARTOADMIN";
-    private final String password = "Quarto_Game1";
-    private Quarto game;
+    protected final File WALLET = new File("Wallet_QuartoDatabase");
+    protected final String dbURL = "jdbc:oracle:thin:@quartodatabase_medium?TNS_ADMIN=" + WALLET.getAbsolutePath();
+    protected OracleDataSource ods;
+    protected Statement statement = null;
+    protected Connection connection = null;
+    protected final String username = "QUARTOADMIN";
+    protected final String password = "Quarto_Game1";
 
 
     public Database() { // Constructor for initializing the game session
@@ -32,18 +28,18 @@ public class Database {
     /**
      * Establishes a connection between the database and the application.
      */
+
     public void connectToDb() {
         try {
             ods = new OracleDataSource();
             ods.setURL(dbURL);
             connection = DriverManager.getConnection(dbURL, username, password);
-            if (connection != null) {
-                System.out.println("Connected to the database.");
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
+
+
 
     /**
      * Terminates the connection between the database and the application.
@@ -69,10 +65,7 @@ public class Database {
      */
     public void createTableIfDoesntExist() {
         try {
-            ods = new OracleDataSource();
-            ods.setURL(dbURL);
 
-            Connection connection = DriverManager.getConnection(dbURL, username, password);
             Statement statement = connection.createStatement();
 
             //TODO: try statement for this, which catches 2289 error.
@@ -81,6 +74,22 @@ public class Database {
 //                    " INCREMENT BY 1 NOCACHE" +
 //                    " NOCYCLE");
 
+            try {
+                statement.executeQuery("SELECT * FROM game_data");
+            } catch (SQLException e) {
+                if (e.getErrorCode() == 942) {
+                    statement.execute("CREATE TABLE game_data" +
+                            "(" +
+                            "    id number(10) default game_data_id_seq.nextVal CONSTRAINT game_data_id_pk PRIMARY KEY," +
+                            "    username varchar2(20) CONSTRAINT game_data_username_nn NOT NULL," +
+                            "    score number(8) CONSTRAINT game_data_score_nn NOT NULL," +
+                            "    turns number(2) CONSTRAINT game_data_turn_nn NOT NULL," +
+                            "    time_played number(8) CONSTRAINT game_data_time_played_nn NOT NULL," +
+                            "    game_difficulty number(1) CONSTRAINT game_data_game_difficulty_nn NOT NULL," +
+                            "    has_quarto number(1) CONSTRAINT game_data_has_quarto_nn NOT NULL" +
+                            ")");
+                }
+            }
 
             try {
                 statement.executeQuery("SELECT * FROM game_statistics");
@@ -88,27 +97,12 @@ public class Database {
                 if (e.getErrorCode() == 942) {
                     statement.execute("CREATE TABLE game_statistics" +
                             "(" +
-                            "    id number(10) default game_data_id_seq.currVal CONSTRAINT game_statistics_id_fk REFERENCES game_data (id) ON DELETE CASCADE," +
-                            "    turn number(2) CONSTRAINT game_statistics_turn_nn NOT NULL," +
+                            "    id number(10) default game_data_id_seq.currVal CONSTRAINT statistics_id_fk REFERENCES game_data (id) ON DELETE CASCADE," +
+                            "    turn number(2) CONSTRAINT statistics_turn_nn NOT NULL," +
                             "    turn_start_time timestamp default SYSTIMESTAMP CONSTRAINT statistics_turn_start_time_nn NOT NULL," +
                             "    turn_end_time timestamp default SYSTIMESTAMP CONSTRAINT statistics_turn_end_time_nn NOT NULL," +
-                            "    score_for_turn number(4) CONSTRAINT game_statistics_score_for_turn_nn NOT NULL" +
-                            ")");
-                }
-            }
-
-            try {
-                statement.executeQuery("SELECT * FROM game_leaderboard");
-            } catch (SQLException e) {
-                if (e.getErrorCode() == 942) {
-                    statement.execute("CREATE TABLE game_leaderboard" +
-                            "(" +
-                            "    id number(10) default game_data_id_seq.currVal " +
-                            " CONSTRAINT game_leaderboard_id_fk REFERENCES game_data (id) ON DELETE CASCADE," +
-                            "    username varchar2(20) " +
-                            " CONSTRAINT game_leaderboard_username_nn NOT NULL," +
-                            "    top_score number(4)" +
-                            " CONSTRAINT game_leaderboard_top_score_nn NOT NULL" +
+                            "    time_spent number(6) CONSTRAINT statistics_time_spent_nn NOT NULL," +
+                            "    score_for_turn number(6) CONSTRAINT statistics_score_for_turn_nn NOT NULL" +
                             ")");
                 }
             }
@@ -119,26 +113,4 @@ public class Database {
             System.out.println("Couldn't connect to database");
         }
     }
-
-    /**
-     * A method to drop tables just in case it is necessary.
-     */
-    public void dropTables() {
-        try {
-            ods = new OracleDataSource();
-            ods.setURL(dbURL);
-
-            Connection connection = DriverManager.getConnection(dbURL, username, password);
-            Statement statement = connection.createStatement();
-
-            statement.execute("DROP TABLE game_statistics");
-            statement.execute("DROP TABLE game_leaderboard");
-
-            System.out.println("Tables dropped.");
-
-        } catch (SQLException e) {
-            System.out.println("Tables weren't dropped");
-        }
-    }
-
 }
