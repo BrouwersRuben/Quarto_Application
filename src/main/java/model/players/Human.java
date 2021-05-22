@@ -1,5 +1,7 @@
 package main.java.model.players;
 
+import java.sql.Timestamp;
+
 public class Human extends Player {
 
     private String name;
@@ -8,6 +10,7 @@ public class Human extends Player {
     private final int difficulty = 0;
     private boolean hasQuarto = false;
     private boolean playerTurn;
+    private Timestamp dateStarted;
 
 
     public Human() {
@@ -29,6 +32,7 @@ public class Human extends Player {
     }
     public int getDifficulty() { return difficulty; }
     public boolean isHasQuarto() { return hasQuarto; }
+    public Timestamp getDateStarted() { return dateStarted; }
 
 
     //Setters
@@ -39,8 +43,5 @@ public class Human extends Player {
         this.playerTurn = playerTurn;
     }
     public boolean setHasQuarto(boolean hasQuarto) { return this.hasQuarto = hasQuarto; }
-
-
-
-
+    public void setDateStarted(Timestamp dateStarted) { this.dateStarted = dateStarted; }
 }

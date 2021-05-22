@@ -1,9 +1,6 @@
 package main.java.model.dataBase;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,14 +107,14 @@ public class GameStatistics extends Database { // Used for retrieving the leader
         return gameID;
     }
 
-    public void saveGameStatistics(ArrayList<TurnStatistics> array, int gameID, String username, int difficulty, boolean hasQuarto) {
+    public void saveGameStatistics(ArrayList<TurnStatistics> array, int gameID, String username, int difficulty, boolean hasQuarto, Timestamp dateStarted) {
 
         try {
 
             Statement statement = connection.createStatement();
 
             PreparedStatement gameStatistics = connection.prepareStatement("INSERT INTO game_statistics (id, turn, turn_start_time, turn_end_time, time_spent, score_for_turn) VALUES (?,?,?,?,?,?)");
-            PreparedStatement gameData = connection.prepareStatement("INSERT INTO game_data (id, username, score, turns, time_played, game_difficulty, has_quarto) VALUES (?,?,?,?,?,?,?)");
+            PreparedStatement gameData = connection.prepareStatement("INSERT INTO game_data (id, username, date_started, score, turns, time_played, game_difficulty, has_quarto) VALUES (?,?,?,?,?,?,?,?)");
 
 
             ResultSet totalScore = statement.executeQuery("SELECT SUM(score_for_turn) AS total_score FROM game_statistics WHERE ID='" + gameID + "'");
@@ -137,22 +134,17 @@ public class GameStatistics extends Database { // Used for retrieving the leader
             }
 
             gameData.setInt(1, gameID);
-            System.out.println(gameID);
             gameData.setString(2, username);
-            System.out.println(username);
-            gameData.setLong(3, scoreSum);
-            System.out.println(scoreSum);
-            gameData.setInt(4, array.size());
-            System.out.println(array.size());
-            gameData.setLong(5, timeDifference);
-            System.out.println(timeDifference);
-            gameData.setInt(6, difficulty);
-            System.out.println(difficulty);
+            gameData.setTimestamp(3, dateStarted);
+            gameData.setLong(4, scoreSum);
+            gameData.setInt(5, array.size());
+            gameData.setLong(6, timeDifference);
+            gameData.setInt(7, difficulty);
 
             if (hasQuarto) {
-                gameData.setInt(7, 1);
+                gameData.setInt(8, 1);
             } else {
-                gameData.setInt(7, 0);
+                gameData.setInt(8, 0);
             }
 
             gameData.executeQuery();
@@ -162,17 +154,11 @@ public class GameStatistics extends Database { // Used for retrieving the leader
             for (int i = 0; i < array.size(); i++) {
 
                 gameStatistics.setInt(1, gameID);
-                System.out.println(gameID);
                 gameStatistics.setInt(2, array.get(i).getTurn());
-                System.out.println(array.get(i).getTurn());
                 gameStatistics.setTimestamp(3, array.get(i).getTurnStartTime());
-                System.out.println(array.get(i).getTurnStartTime());
                 gameStatistics.setTimestamp(4, array.get(i).getTurnEndTime());
-                System.out.println(array.get(i).getTurnEndTime());
                 gameStatistics.setLong(5, array.get(i).getTimeDifference());
-                System.out.println(array.get(i).getTimeDifference());
                 gameStatistics.setLong(6, array.get(i).getScore());
-                System.out.println(array.get(i).getScore());
 
                 gameStatistics.executeQuery();
 

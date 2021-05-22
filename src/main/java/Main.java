@@ -36,7 +36,6 @@ public class Main extends Application {
 
         window.setWidth(625);
         window.setHeight(425);
-
         window.setScene(scene);
         presenter.addWindowEventHandlers();
         window.show();

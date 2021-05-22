@@ -25,9 +25,7 @@ import java.util.*;
  * @version 1.0
  */
 public class Quarto {
-    protected boolean isRunning;
-    protected int amountOfTurns;
-    protected int gameID;
+
     protected String username;
     private final GameStatistics gameStatistics = new GameStatistics();
     private final TurnStatistics turnStatistics = new TurnStatistics();
@@ -96,6 +94,7 @@ public class Quarto {
         // if starting new game
 
         getGameID();
+        human.setDateStarted(new Timestamp(System.currentTimeMillis()));
         username = getUserName();
 
         remainingPieces.fillRemainingPieces();
@@ -124,7 +123,7 @@ public class Quarto {
                 if (isItAQuarto(board.getWinningLines().get(j))) {
 //                    database.saveRecord(username);
 
-                    gameStatistics.saveGameStatistics(turnStatistics.getTurnStatsArray(), getGameID(), getUserName(), human.getDifficulty(), human.isHasQuarto());
+                    gameStatistics.saveGameStatistics(turnStatistics.getTurnStatsArray(), getGameID(), getUserName(), human.getDifficulty(), human.isHasQuarto(), human.getDateStarted());
                     return true;
                 }
             }

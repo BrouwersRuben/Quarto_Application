@@ -82,6 +82,7 @@ public class Database {
                             "(" +
                             "    id number(10) default game_data_id_seq.nextVal CONSTRAINT game_data_id_pk PRIMARY KEY," +
                             "    username varchar2(20) CONSTRAINT game_data_username_nn NOT NULL," +
+                            "    date_started timestamp CONSTRAINT game_data_date_nn NOT NULL," +
                             "    score number(8) CONSTRAINT game_data_score_nn NOT NULL," +
                             "    turns number(2) CONSTRAINT game_data_turn_nn NOT NULL," +
                             "    time_played number(8) CONSTRAINT game_data_time_played_nn NOT NULL," +
