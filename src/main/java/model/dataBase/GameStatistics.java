@@ -126,7 +126,7 @@ public class GameStatistics extends Database { // Used for retrieving the leader
 
             // Game data (for... game data?)
             long scoreSum = 0;
-            long timeDifference = 0;
+            double timeDifference = 0;
 
             for (int i = 0; i < array.size(); i++) {
                 scoreSum += array.get(i).getScore();
@@ -138,9 +138,10 @@ public class GameStatistics extends Database { // Used for retrieving the leader
             gameData.setTimestamp(3, dateStarted);
             gameData.setLong(4, scoreSum);
             gameData.setInt(5, array.size());
-            gameData.setLong(6, timeDifference);
+            gameData.setDouble(6, timeDifference);
             gameData.setInt(7, difficulty);
 
+            System.out.println(hasQuarto);
             if (hasQuarto) {
                 gameData.setInt(8, 1);
             } else {

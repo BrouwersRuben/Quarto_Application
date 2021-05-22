@@ -72,6 +72,8 @@ public class GameWindowPresenter {
         // TODO: LOOP BETWEEN PLAYER AND COMPUTER
 
 
+        //TODO: TEST IF WIN/LOSE ACTUALLY WORKS
+
         view.getAvailablePieces().getChildren().forEach(piece -> {
             piece.setOnMouseClicked(mouseEvent -> {
                 if (!model.getPlayerTurn()) {
@@ -101,6 +103,7 @@ public class GameWindowPresenter {
                         im = new Image("media/images/" + temporary + ".png");
                         view.getChosenPiece().getChildren().add(new ImageView(im));
                         view.getChosenPiece().setId(String.valueOf(temporary));
+                        model.setLost();
 //                        view.getPlayerTurn().setText("Your turn!");
 
                         if (model.isGameOver()) {
@@ -147,12 +150,12 @@ public class GameWindowPresenter {
                         //https://wbd.ms/share/v2/aHR0cHM6Ly93aGl0ZWJvYXJkLm1pY3Jvc29mdC5jb20vYXBpL3YxLjAvd2hpdGVib2FyZHMvcmVkZWVtLzZhZjI5ZjEzMDMxODQzNGM5YTM0YmM5NWUyYTFjODEwX2VkMWZjNTdmLThhOTctNDdlNy05ZGUxLTkzMDJkZmQ3ODZhZQ==
 
                         model.setEndTimestamp();
+                        model.setWon();
                         model.createTurnData(model.getGameID(), model.getTurn(), model.getTurnStartTime(), model.getTurnEndTime());
+
 
                         if (model.isGameOver()) {
                             //TODO: Can't set winlosewindow cause database is not linked with game
-                            model.setWon();
-
                             //Temporary solution
                             model.getStatistics(model.getRecordsUserId(0));
                             setWinLoseWindow();

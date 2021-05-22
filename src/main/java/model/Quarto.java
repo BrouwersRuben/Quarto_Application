@@ -330,6 +330,7 @@ public class Quarto {
     public boolean getWinState() { return human.isHasQuarto(); }
 
     public void setWon() { human.setHasQuarto(true); }
+    public void setLost() { human.setHasQuarto(false); }
 
     public void gameOver() {
         if (timer.getDdMinute().equals("02")) {

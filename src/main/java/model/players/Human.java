@@ -8,7 +8,7 @@ public class Human extends Player {
     private int score;
     private int turn;
     private final int difficulty = 0;
-    private boolean hasQuarto = false;
+    private boolean hasQuarto;
     private boolean playerTurn;
     private Timestamp dateStarted;
 
@@ -42,6 +42,6 @@ public class Human extends Player {
     public void setPlayerTurn(boolean playerTurn) {
         this.playerTurn = playerTurn;
     }
-    public boolean setHasQuarto(boolean hasQuarto) { return this.hasQuarto = hasQuarto; }
+    public void setHasQuarto(boolean hasQuarto) { this.hasQuarto = hasQuarto; }
     public void setDateStarted(Timestamp dateStarted) { this.dateStarted = dateStarted; }
 }
