@@ -157,13 +157,12 @@ public class GameStatistics extends Database { // Used for retrieving the leader
                 gameStatistics.setInt(2, array.get(i).getTurn());
                 gameStatistics.setTimestamp(3, array.get(i).getTurnStartTime());
                 gameStatistics.setTimestamp(4, array.get(i).getTurnEndTime());
-                gameStatistics.setLong(5, array.get(i).getTimeDifference());
+                gameStatistics.setDouble(5, array.get(i).getTimeDifference());
                 gameStatistics.setLong(6, array.get(i).getScore());
 
                 gameStatistics.executeQuery();
 
             }
-
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

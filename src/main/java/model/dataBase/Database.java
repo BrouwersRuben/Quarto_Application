@@ -102,7 +102,7 @@ public class Database {
                             "    turn number(2) CONSTRAINT statistics_turn_nn NOT NULL," +
                             "    turn_start_time timestamp default SYSTIMESTAMP CONSTRAINT statistics_turn_start_time_nn NOT NULL," +
                             "    turn_end_time timestamp default SYSTIMESTAMP CONSTRAINT statistics_turn_end_time_nn NOT NULL," +
-                            "    time_spent number(6) CONSTRAINT statistics_time_spent_nn NOT NULL," +
+                            "    time_spent number(3,2) CONSTRAINT statistics_time_spent_nn NOT NULL," +
                             "    score_for_turn number(6) CONSTRAINT statistics_score_for_turn_nn NOT NULL" +
                             ")");
                 }

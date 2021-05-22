@@ -15,19 +15,19 @@ public class TurnStatistics {
     private int turn;
     private Timestamp turnStartTime;
     private Timestamp turnEndTime;
-    private long timeDifference;
+    private double timeDifference;
     private long score;
     private ArrayList<TurnStatistics> turnStatsArray = new ArrayList<>();
 
     public TurnStatistics() {
     }
 
-    public TurnStatistics(int id, int turn, Timestamp turnStartTime, Timestamp turnEndTime, long timeDifference, long score) { // removed , int score_for_turn, will make calculation in sql
+    public TurnStatistics(int id, int turn, Timestamp turnStartTime, Timestamp turnEndTime, double timeDifference, long score) { // removed , int score_for_turn, will make calculation in sql
         this.id = id;
         this.turn = turn;
         this.turnStartTime = turnStartTime;
         this.turnEndTime = turnEndTime;
-        this.timeDifference = timeDifference;
+        this.timeDifference = timeDifference/1000;
         this.score = score;
     }
 
@@ -64,7 +64,7 @@ public class TurnStatistics {
 
     public Timestamp getTurnEndTime() { return turnEndTime; }
 
-    public long getTimeDifference() { return timeDifference; }
+    public double getTimeDifference() { return timeDifference; }
 
     public ArrayList<TurnStatistics> getTurnStatsArray() { return turnStatsArray; }
 }
