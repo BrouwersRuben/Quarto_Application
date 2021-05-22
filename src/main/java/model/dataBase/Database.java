@@ -110,7 +110,7 @@ public class Database {
 
         } catch (SQLException e) {
 
-            //   e.printStackTrace();
+            //   e.printStackTrace() ;
             System.out.println("Couldn't connect to database");
         }
     }
