@@ -89,9 +89,7 @@ public class QuartoView extends GridPane {
         return startGame;
     }
 
-    Button getLeaderboard() {
-        return leaderboard;
-    }
+    Button getLeaderboard() { return leaderboard; }
 
     Button getTutorial() {
         return tutorial;

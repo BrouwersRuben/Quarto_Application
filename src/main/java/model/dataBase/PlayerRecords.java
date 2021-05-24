@@ -12,12 +12,16 @@ import java.sql.Statement;
  * @author Ruben Brouwers
  * @version 1.0
  */
-public class Record {
-    private final int id;
-    private final String username;
-    private final int score;
+public class PlayerRecords {
+    private int id;
+    private String username;
+    private int score;
+    private int playerSelected;
 
-    public Record(int id, String username, int score) {
+    public PlayerRecords() {
+    }
+
+    public PlayerRecords(int id, String username, int score) {
         this.id = id;
         this.username = username;
         this.score = score;
@@ -34,5 +38,9 @@ public class Record {
     public int getScore() {
         return score;
     }
+
+    public int getPlayerSelected() { return playerSelected; }
+
+    public void setPlayerSelected(int playerSelected) { this.playerSelected = playerSelected; }
 }
 

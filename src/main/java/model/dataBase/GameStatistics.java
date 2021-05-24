@@ -15,76 +15,8 @@ import java.util.List;
 public class GameStatistics extends Database { // Used for retrieving the leaderboard
 
     public static List<Integer> turnStats = new ArrayList<>();
-    public static Record[] records;
+    public static List<PlayerRecords> records = new ArrayList<>();
     public static long averageTime;
-
-
-    /**
-     * Method for retrieving the top 5 leaderboard.
-     */
-    public void getLeaderboard() {
-        try {
-
-            Statement statement = connection.createStatement();
-            int countRecords = 0;
-
-            ResultSet count = statement.executeQuery("SELECT COUNT (*) FROM test_game_leaderboard");
-            while (count.next()) {
-                countRecords = count.getInt("COUNT(*)");
-            }
-            int maxFive = Math.min(countRecords, 5);
-            records = new Record[maxFive];
-
-
-            ResultSet rows = statement.executeQuery("SELECT * FROM test_game_leaderboard" +
-                    " ORDER BY TOP_SCORE DESC");
-            int i = 0;
-            while (rows.next() && i < 5) {
-                records[i] = new Record(rows.getInt("ID"), rows.getString("USERNAME"), rows.getInt("TOP_SCORE"));
-                {
-                }
-                i++;
-            }
-            statement.close();
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    /**
-     * Method to retrieve detailed statistics about the players from the top 5 leaderboard
-     *
-     * @param id Unique game identifier
-     */
-    public void getStatistics(int id) {
-
-        try {
-
-            Statement statement = connection.createStatement();
-
-            ResultSet average = statement.executeQuery("SELECT AVG(CAST(turn_end_time AS DATE)- CAST(turn_start_time AS DATE))*24*60*60 AS turn FROM test_game_statistics WHERE ID = " + id);
-
-            while (average.next()) {
-                averageTime = average.getInt("turn");
-            }
-
-            ResultSet turns = statement.executeQuery(
-                    "SELECT (CAST(turn_end_time AS DATE)- CAST(turn_start_time AS DATE))*24*60*60 AS seconds FROM test_game_statistics WHERE ID = " + id);
-
-            turnStats.clear();
-            int i = 0;
-            while (turns.next()) {
-                turnStats.add(turns.getInt("seconds"));
-                i++;
-            }
-
-            statement.close();
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
 
     public int getGameID() {
 
@@ -107,20 +39,17 @@ public class GameStatistics extends Database { // Used for retrieving the leader
         return gameID;
     }
 
-    public void saveGameStatistics(ArrayList<TurnStatistics> array, int gameID, String username, int difficulty, boolean hasQuarto, Timestamp dateStarted) {
+    public void saveGame(ArrayList<TurnStatistics> array, int gameID, String username, int difficulty, boolean hasQuarto, Timestamp dateStarted) {
 
         try {
 
             Statement statement = connection.createStatement();
-
             PreparedStatement gameStatistics = connection.prepareStatement("INSERT INTO game_statistics (id, turn, turn_start_time, turn_end_time, time_spent, score_for_turn) VALUES (?,?,?,?,?,?)");
             PreparedStatement gameData = connection.prepareStatement("INSERT INTO game_data (id, username, date_started, score, turns, time_played, game_difficulty, has_quarto) VALUES (?,?,?,?,?,?,?,?)");
 
 
             ResultSet totalScore = statement.executeQuery("SELECT SUM(score_for_turn) AS total_score FROM game_statistics WHERE ID='" + gameID + "'");
             totalScore.next();
-            ResultSet turnCount = statement.executeQuery("SELECT COUNT(*) AS turnCount from user_tab_columns WHERE table_name = 'game_statistics'");
-            turnCount.next();
             ResultSet timePlayed = statement.executeQuery("SELECT turn_start_time, turn_end_time, turn_end_time-turn_start_time AS difference FROM game_statistics");
             timePlayed.next();
 
@@ -164,6 +93,65 @@ public class GameStatistics extends Database { // Used for retrieving the leader
                 gameStatistics.executeQuery();
 
             }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    /**
+     * Method to retrieve detailed statistics about the players from the top 5 leaderboard
+     *
+     * @param id Unique game identifier
+     */
+    public void getStatistics(int id) {
+
+        try {
+
+            Statement statement = connection.createStatement();
+            ResultSet turnCount = statement.executeQuery("SELECT COUNT(*) FROM game_statistics WHERE id = '"+id+"'");
+            turnCount.next();
+            ResultSet average = statement.executeQuery("SELECT (SUM(time_spent)/'"+turnCount.getInt(1)+"') FROM game_statistics WHERE ID = "+id);
+            average.next();
+
+            while (average.next()) {
+                averageTime = average.getInt("turn");
+            }
+
+            ResultSet timeSpent = statement.executeQuery("SELECT time_spent FROM game_statistics WHERE id = "+id);
+
+            // Resetting array in case a new game was played.
+            turnStats.clear();
+
+            while (timeSpent.next()) {
+                turnStats.add(timeSpent.getInt("time_spent"));
+            }
+
+            statement.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    /**
+     * Method for retrieving the top 5 leaderboard.
+     */
+    public void getLeaderboard() {
+        try {
+
+            Statement statement = connection.createStatement();
+
+            ResultSet rows = statement.executeQuery("SELECT * FROM game_data" +
+                    " ORDER BY score DESC");
+
+            int i = 0;
+            records.clear();
+            while (rows.next() && i < 5) {
+                records.add(new PlayerRecords(rows.getInt("id"), rows.getString("username"), rows.getInt("score")));
+                i++;
+            }
+            statement.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

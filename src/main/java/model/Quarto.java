@@ -5,6 +5,7 @@ import main.java.model.board.GameTimer;
 import main.java.model.board.RemainingPieces;
 import main.java.model.dataBase.GameStatistics;
 import main.java.model.dataBase.Database;
+import main.java.model.dataBase.PlayerRecords;
 import main.java.model.dataBase.TurnStatistics;
 import main.java.model.players.Human;
 
@@ -12,7 +13,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -29,6 +29,7 @@ public class Quarto {
     protected String username;
     private final GameStatistics gameStatistics = new GameStatistics();
     private final TurnStatistics turnStatistics = new TurnStatistics();
+    private final PlayerRecords record = new PlayerRecords();
     private final Database database = new Database();
     private final Board board = new Board();
     private final RemainingPieces remainingPieces = new RemainingPieces();
@@ -123,7 +124,7 @@ public class Quarto {
                 if (isItAQuarto(board.getWinningLines().get(j))) {
 //                    database.saveRecord(username);
 
-                    gameStatistics.saveGameStatistics(turnStatistics.getTurnStatsArray(), getGameID(), getUserName(), human.getDifficulty(), human.isHasQuarto(), human.getDateStarted());
+                    gameStatistics.saveGame(turnStatistics.getTurnStatsArray(), getGameID(), getUserName(), human.getDifficulty(), human.isHasQuarto(), human.getDateStarted());
                     return true;
                 }
             }
@@ -259,17 +260,23 @@ public class Quarto {
      * Creates an object which is used for entering advanced statistics data into the database.
      */
 
+    // Prepares data that will be shown in the leaderboard page.
+    public void getLeaderboard() { gameStatistics.getLeaderboard(); }
+
+    // Displays the specified player from the top 5.
+    public String getRecords(int i) { return String.format("%d. %s - %d", i + 1, GameStatistics.records.get(i).getUsername(), GameStatistics.records.get(i).getScore()); }
+
+    public void setPlayerSelected(int i) { record.setPlayerSelected(i); }
+    public int getPlayerSelected() { return record.getPlayerSelected(); }
 
 
-    public void createTableIfDoesntExist() { database.createTableIfDoesntExist(); }
+
 
     public void getStatistics(int id) { gameStatistics.getStatistics(id); }
 
-    public String getRecords(int i) { return String.format("%d. %s - %d", i + 1, GameStatistics.records[i].getUsername(), GameStatistics.records[i].getScore()); }
+    public String getRecordsUserName(int i) { return GameStatistics.records.get(i).getUsername(); }
 
-    public String getRecordsUserName(int i) { return GameStatistics.records[i].getUsername(); }
-
-    public int getRecordsUserScore(int i) { return GameStatistics.records[i].getScore(); }
+    public int getRecordsUserScore(int i) { return GameStatistics.records.get(i).getScore(); }
 
     public Long getAverageTime() { return GameStatistics.averageTime; }
 
@@ -277,7 +284,7 @@ public class Quarto {
 
     public int getSlowestMove() { return Collections.max(GameStatistics.turnStats); }
 
-    public int getRecordsUserId(int i) { return GameStatistics.records[i].getId(); }
+    public int getRecordsUserId(int i) { return GameStatistics.records.get(i).getId(); }
 
     public int getTurnStatsSize() { return GameStatistics.turnStats.size(); }
 
@@ -358,20 +365,6 @@ public class Quarto {
         return true;
     }
 
-    public void closeDB() {
-        database.closeDb();
-    }
-
-    public void openDB()  {
-        try {
-            gameStatistics.connectToDb();
-            database.connectToDb();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        gameStatistics.getLeaderboard();
-    }
-
     public void timerIncrement() {
         timer.timerIncrement();
     }
@@ -387,4 +380,19 @@ public class Quarto {
 
     public void setTurn() { human.setTurn(human.getTurn()+1); }
     public int getTurn() { return human.getTurn();}
+
+
+    // Database related methods.
+    public void openDB()  {
+        try {
+            gameStatistics.connectToDb();
+            database.connectToDb();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void closeDB() { database.closeDb(); }
+
+    public void createTableIfDoesntExist() { database.createTableIfDoesntExist(); }
 }

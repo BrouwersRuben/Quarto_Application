@@ -85,7 +85,7 @@ public class Database {
                             "    date_started timestamp CONSTRAINT game_data_date_nn NOT NULL," +
                             "    score number(8) CONSTRAINT game_data_score_nn NOT NULL," +
                             "    turns number(2) CONSTRAINT game_data_turn_nn NOT NULL," +
-                            "    time_played number(8,2) CONSTRAINT game_data_time_played_nn NOT NULL," +
+                            "    time_played number(4,2) CONSTRAINT game_data_time_played_nn NOT NULL," +
                             "    game_difficulty number(1) CONSTRAINT game_data_game_difficulty_nn NOT NULL," +
                             "    has_quarto number(1) CONSTRAINT game_data_has_quarto_nn NOT NULL" +
                             ")");

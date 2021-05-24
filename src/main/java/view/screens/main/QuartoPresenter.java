@@ -41,6 +41,7 @@ public class QuartoPresenter {
         });
 
         this.view.getLeaderboard().setOnAction(event -> {
+            model.getLeaderboard();
             setLeaderboard();
             updateView();
         });

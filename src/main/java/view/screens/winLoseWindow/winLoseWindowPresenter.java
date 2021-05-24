@@ -53,8 +53,8 @@ public class winLoseWindowPresenter {
         // fills the view with model data
         view.getPlayerScore().setText("score: " + model.getRecordsUserScore(0));
         view.getStat1().setText("average time spent per round: " + model.getAverageTime());
-        view.getStat2().setText("fastest move: " + model.getFastestMove() + "seconds");
-        view.getStat3().setText("slowest move: " + model.getSlowestMove() + "seconds");
+        view.getStat2().setText("fastest move: " + model.getFastestMove() + " seconds");
+        view.getStat3().setText("slowest move: " + model.getSlowestMove() + " seconds");
 
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
 

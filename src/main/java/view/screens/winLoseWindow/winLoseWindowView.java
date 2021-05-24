@@ -122,9 +122,7 @@ public class winLoseWindowView extends BorderPane {
         return playerScore;
     }
 
-    Label getStat1() {
-        return stat1;
-    }
+    Label getStat1() { return stat1; }
 
     Label getStat2() {
         return stat2;

@@ -37,19 +37,24 @@ public class LeaderboardPresenter {
         });
 
         //TODO: Cqn this be made more streamlined?
-        this.view.getText5().setOnMouseClicked(event -> {
+        this.view.getText1().setOnMouseClicked(event -> {
+            model.setPlayerSelected(0);
             setUsernameClicked(0);
         });
-        this.view.getText5().setOnMouseClicked(event -> {
+        this.view.getText2().setOnMouseClicked(event -> {
+            model.setPlayerSelected(1);
             setUsernameClicked(1);
         });
-        this.view.getText5().setOnMouseClicked(event -> {
+        this.view.getText3().setOnMouseClicked(event -> {
+            model.setPlayerSelected(2);
             setUsernameClicked(2);
         });
-        this.view.getText5().setOnMouseClicked(event -> {
+        this.view.getText4().setOnMouseClicked(event -> {
+            model.setPlayerSelected(3);
             setUsernameClicked(3);
         });
         this.view.getText5().setOnMouseClicked(event -> {
+            model.setPlayerSelected(4);
             setUsernameClicked(4);
         });
     }
