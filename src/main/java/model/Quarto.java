@@ -103,12 +103,6 @@ public class Quarto {
         board.fillWinningLines();
     }
 
-    public void saveGame() {
-
-    }
-
-
-
 
     /**
      * Method which checks if the game is over or not by
@@ -122,9 +116,8 @@ public class Quarto {
             if (isThereALine(j)) {
                 System.out.println("There's a line. Checking if it's quarto...");
                 if (isItAQuarto(board.getWinningLines().get(j))) {
-//                    database.saveRecord(username);
-
                     gameStatistics.saveGame(turnStatistics.getTurnStatsArray(), getGameID(), getUserName(), human.getDifficulty(), human.isHasQuarto(), human.getDateStarted());
+                    getFinishedGameStatistics(getGameID());
                     return true;
                 }
             }
@@ -245,6 +238,7 @@ public class Quarto {
 
 
     public void createTurnData(int id, int turnID, Timestamp turnStart, Timestamp turnEnd) {
+        System.out.println(id +" "+ turnID +" "+ turnStart +" "+ turnEnd);
         turnStatistics.createTurnData(id, turnID, turnStart, turnEnd);
     }
 
@@ -260,37 +254,40 @@ public class Quarto {
      * Creates an object which is used for entering advanced statistics data into the database.
      */
 
-    // Prepares data that will be shown in the leaderboard page.
+    // Prepares data that will be shown in the leaderboard page (top 5 players).
     public void getLeaderboard() { gameStatistics.getLeaderboard(); }
 
-    // Displays the specified player from the top 5.
-    public String getRecords(int i) { return String.format("%d. %s - %d", i + 1, GameStatistics.records.get(i).getUsername(), GameStatistics.records.get(i).getScore()); }
+    // Displays the top 5 players.
+    public String getRecords(int i) { return String.format("%d. %s - %d", i + 1, gameStatistics.getRecords().get(i).getUsername(), gameStatistics.getRecords().get(i).getScore()); }
 
+    // Sets/Gets the player which the user required to see more info about.
     public void setPlayerSelected(int i) { record.setPlayerSelected(i); }
     public int getPlayerSelected() { return record.getPlayerSelected(); }
 
+    // Gets the specific player data that will be shown for the advanced statistics page.
+    public int getRecordsUserId(int i) { return gameStatistics.getRecords().get(i).getId(); }
+    public void getTopFiveStatistics() { gameStatistics.getStatistics(getRecordsUserId(getPlayerSelected())); }
 
 
+    // Displays the username, score, and other statistics for the advanced statistics page.
+    public String getRecordsUserName(int i) { return gameStatistics.getRecords().get(i).getUsername(); }
 
-    public void getStatistics(int id) { gameStatistics.getStatistics(id); }
+    public int getRecordsUserScore(int i) { return gameStatistics.getRecords().get(i).getScore(); }
 
-    public String getRecordsUserName(int i) { return GameStatistics.records.get(i).getUsername(); }
+    public double getAverageTime() { return gameStatistics.getAverageTime(); }
 
-    public int getRecordsUserScore(int i) { return GameStatistics.records.get(i).getScore(); }
+    public double getFastestMove() { return gameStatistics.getFastestMove(); }
 
-    public Long getAverageTime() { return GameStatistics.averageTime; }
+    public double getSlowestMove() { return gameStatistics.getSlowestMove(); }
 
-    public int getFastestMove() { return Collections.min(GameStatistics.turnStats); }
+    public int getTurnStatsSize() { return gameStatistics.getTurnStats().size(); }
 
-    public int getSlowestMove() { return Collections.max(GameStatistics.turnStats); }
-
-    public int getRecordsUserId(int i) { return GameStatistics.records.get(i).getId(); }
-
-    public int getTurnStatsSize() { return GameStatistics.turnStats.size(); }
-
-    public int getTurnStats(int i) { return GameStatistics.turnStats.get(i); }
+    public double getTurnStats(int i) { return gameStatistics.getTurnStats().get(i); }
 
     public String getPlaceHolder() { return remainingPieces.getPlaceHolder(); }
+
+    // Statistics for win/lose screen.
+    public void getFinishedGameStatistics(int id) { gameStatistics.getStatistics(id); }
 
     //Business logic
     /**

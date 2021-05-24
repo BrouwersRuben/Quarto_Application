@@ -112,8 +112,4 @@ public class winLoseWindowPresenter {
             Platform.exit();
         }
     }
-
-    public int getTurnStatsSize() {
-        return model.getTurnStatsSize();
-    }
 }

@@ -9,7 +9,6 @@ import main.java.view.screens.statisticsWindow.StatisticsPresenter;
 import main.java.view.screens.statisticsWindow.StatisticsView;
 
 public class LeaderboardPresenter {
-    private static int usernameClicked;
     private final Quarto model;
     private final LeaderboardView view;
 
@@ -19,10 +18,6 @@ public class LeaderboardPresenter {
         this.view = view;
         addEventHandlers();
         updateView();
-    }
-
-    public static int getUsernameClicked() {
-        return usernameClicked;
     }
 
     private void addEventHandlers() {
@@ -36,26 +31,31 @@ public class LeaderboardPresenter {
             updateView();
         });
 
-        //TODO: Cqn this be made more streamlined?
+        //TODO: Can this be made more streamlined?
         this.view.getText1().setOnMouseClicked(event -> {
             model.setPlayerSelected(0);
-            setUsernameClicked(0);
+            model.getTopFiveStatistics();
+            setStatisticsWindow();
         });
         this.view.getText2().setOnMouseClicked(event -> {
             model.setPlayerSelected(1);
-            setUsernameClicked(1);
+            model.getTopFiveStatistics();
+            setStatisticsWindow();
         });
         this.view.getText3().setOnMouseClicked(event -> {
             model.setPlayerSelected(2);
-            setUsernameClicked(2);
+            model.getTopFiveStatistics();
+            setStatisticsWindow();
         });
         this.view.getText4().setOnMouseClicked(event -> {
             model.setPlayerSelected(3);
-            setUsernameClicked(3);
+            model.getTopFiveStatistics();
+            setStatisticsWindow();
         });
         this.view.getText5().setOnMouseClicked(event -> {
             model.setPlayerSelected(4);
-            setUsernameClicked(4);
+            model.getTopFiveStatistics();
+            setStatisticsWindow();
         });
     }
 
@@ -87,11 +87,6 @@ public class LeaderboardPresenter {
         view.getScene().setRoot(statisticsView);
         statisticsView.getScene().getWindow().setWidth(625);
         statisticsView.getScene().getWindow().setHeight(425);
-    }
-
-    private void setUsernameClicked(int usernameClicked){
-        model.getStatistics(model.getRecordsUserId(usernameClicked));
-        setStatisticsWindow();
     }
 }
 
