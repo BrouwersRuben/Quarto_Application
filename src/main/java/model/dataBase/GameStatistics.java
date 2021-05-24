@@ -13,14 +13,15 @@ import java.util.List;
  * @author Ruben Brouwers
  * @version 1.0
  */
-public class DatabaseTables extends Database { // Used for retrieving the leaderboard
+public class GameStatistics extends Database { // Used for retrieving the leaderboard
 
     private List<Double> timeSpentOnTurn = new ArrayList<>();
     private List<PlayerRecords> records = new ArrayList<>();
-    private long scoreSum;
-    private double averageTime;
-    private double fastestMove;
-    private double slowestMove;
+    private long playerScore;
+    private double playerAverageMoveTime;
+    private double playerFastestMoveTime;
+    private double playerSlowestMoveTime;
+
 
     public int getGameID() {
 
@@ -43,7 +44,7 @@ public class DatabaseTables extends Database { // Used for retrieving the leader
         return gameID;
     }
 
-    public void saveGame(ArrayList<GameData> array, int gameID, String username, int difficulty, boolean hasQuarto, Timestamp dateStarted) {
+    public void saveGame(ArrayList<TurnData> array, int gameID, String username, int difficulty, boolean hasQuarto, Timestamp dateStarted) {
 
         try {
 
@@ -59,18 +60,18 @@ public class DatabaseTables extends Database { // Used for retrieving the leader
             timePlayed.next();
 
             // Game data (for... game data?)
-            scoreSum = 0;
+            playerScore = 0;
             double timeDifference = 0;
 
             for (int i = 0; i < array.size(); i++) {
-                scoreSum += array.get(i).getScore();
+                playerScore += array.get(i).getScore();
                 timeDifference += array.get(i).getTimeDifference();
             }
 
             gameData.setInt(1, gameID);
             gameData.setString(2, username);
             gameData.setTimestamp(3, dateStarted);
-            gameData.setLong(4, scoreSum);
+            gameData.setLong(4, playerScore);
             gameData.setInt(5, array.size());
             gameData.setDouble(6, timeDifference);
             gameData.setInt(7, difficulty);
@@ -121,7 +122,7 @@ public class DatabaseTables extends Database { // Used for retrieving the leader
             ResultSet average = statement.executeQuery("SELECT (SUM(time_spent)/'"+turnCount.getInt(1)+"') FROM game_statistics WHERE ID = "+id);
 
             while (average.next()) {
-                averageTime = average.getInt(1);
+                playerAverageMoveTime = average.getInt(1);
             }
 
             ResultSet timeSpent = statement.executeQuery("SELECT time_spent FROM game_statistics WHERE id = "+id);
@@ -134,8 +135,8 @@ public class DatabaseTables extends Database { // Used for retrieving the leader
                 timeSpentOnTurn.add(timeSpent.getDouble(1));
             }
             System.out.println("turn stats: "+ timeSpentOnTurn);
-            fastestMove = Collections.min(timeSpentOnTurn);
-            slowestMove = Collections.max(timeSpentOnTurn);
+            playerFastestMoveTime = Collections.min(timeSpentOnTurn);
+            playerSlowestMoveTime = Collections.max(timeSpentOnTurn);
 
             statement.close();
 
@@ -172,13 +173,13 @@ public class DatabaseTables extends Database { // Used for retrieving the leader
 
     public List<PlayerRecords> getRecords() { return records; }
 
-    public double getAverageTime() { return averageTime; }
+    public double getPlayerAverageMoveTime() { return playerAverageMoveTime; }
 
-    public double getFastestMove() { return fastestMove; }
+    public double getPlayerFastestMoveTime() { return playerFastestMoveTime; }
 
-    public double getSlowestMove() { return slowestMove; }
+    public double getPlayerSlowestMoveTime() { return playerSlowestMoveTime; }
 
-    public long getScoreSum() { return scoreSum; }
+    public long getPlayerScore() { return playerScore; }
 }
 
 

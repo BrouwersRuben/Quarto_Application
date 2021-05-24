@@ -9,19 +9,19 @@ import java.util.ArrayList;
  * @author Ruben Brouwers
  * @version 1.0
  */
-public class GameData {
+public class TurnData {
     private int id;
     private int turn;
     private Timestamp turnStartTime;
     private Timestamp turnEndTime;
     private double timeDifference;
     private long score;
-    private ArrayList<GameData> turnStatistics = new ArrayList<>();
+    private ArrayList<TurnData> turnStatistics = new ArrayList<>();
 
-    public GameData() {
+    public TurnData() {
     }
 
-    public GameData(int id, int turn, Timestamp turnStartTime, Timestamp turnEndTime, double timeDifference, long score) { // removed , int score_for_turn, will make calculation in sql
+    public TurnData(int id, int turn, Timestamp turnStartTime, Timestamp turnEndTime, double timeDifference, long score) { // removed , int score_for_turn, will make calculation in sql
         this.id = id;
         this.turn = turn;
         this.turnStartTime = turnStartTime;
@@ -33,7 +33,7 @@ public class GameData {
     public void createTurnData(int id, int turn, Timestamp turnStartTime, Timestamp turnEndTime) {
         long difference = turnEndTime.getTime()-turnStartTime.getTime();
         long score = calculateScoreForMove(difference);
-        GameData statistics = new GameData(id, turn, turnStartTime, turnEndTime, difference, score);
+        TurnData statistics = new TurnData(id, turn, turnStartTime, turnEndTime, difference, score);
         turnStatistics.add(statistics);
 
     }
@@ -65,5 +65,5 @@ public class GameData {
 
     public double getTimeDifference() { return timeDifference; }
 
-    public ArrayList<GameData> getTurnStatistics() { return turnStatistics; }
+    public ArrayList<TurnData> getTurnStatistics() { return turnStatistics; }
 }
