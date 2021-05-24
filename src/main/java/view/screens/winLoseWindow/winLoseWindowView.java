@@ -2,6 +2,7 @@ package main.java.view.screens.winLoseWindow;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -16,7 +17,13 @@ import javafx.scene.layout.VBox;
 public class winLoseWindowView extends BorderPane {
     private final double numRows = 7;
     // private Node attributes (controls)
-    private VBox vBox;
+    private VBox leftVBox;
+    private VBox overallStats;
+    private VBox rightVBox;
+    private HBox centerHBox;
+
+    private Label playerName;
+
     private HBox hBox;
     private Label winOrLose;
     private ImageView endGameStatus;
@@ -25,8 +32,11 @@ public class winLoseWindowView extends BorderPane {
     private Label stat2;
     private Label stat3;
     private LineChart lineChart;
+    private BarChart barChart;
+    private BarChart barChart2; // should be barchart
     private Button mainMenu;
     private Button playAgain;
+    private Button returnToLeaderboard;
     private Button exitGame;
 
     public winLoseWindowView() {
@@ -39,6 +49,7 @@ public class winLoseWindowView extends BorderPane {
         // button = new Button("...")
         // label = new Label("...")
         winOrLose = new Label();
+        playerName = new Label("Statistics for player");
         endGameStatus = new ImageView();
         playerScore = new Label();
         stat1 = new Label();
@@ -48,52 +59,81 @@ public class winLoseWindowView extends BorderPane {
         lineChart = new LineChart<>(new CategoryAxis(), new NumberAxis());
         lineChart.setTitle("Time spent per move");
 
+        barChart = new BarChart<>(new CategoryAxis(), new NumberAxis());
+        barChart.setTitle("Score");
+
+        barChart2 = new BarChart<>(new CategoryAxis(), new NumberAxis());
+        barChart2.setTitle("Average move time");
+
         mainMenu = new Button("Return to the main menu");
         playAgain = new Button("Play again");
         exitGame = new Button("Exit");
+        returnToLeaderboard = new Button("Return to leaderboard");
     }
 
+    // TODO: TAKE CARE OF THIS, I SPAMMED A QUICK 5 MINUTE WINDOW WITHOUT CHECKING WHAT THESE THINGS DO
     private void layoutNodes() {
         // add/set … methods
         // Insets, padding, alignment, …
 
         labelStyle(playerScore);
-        playerScore.setPadding(new Insets(17, 17, 17, 17));
         labelStyle(stat1);
-        stat1.setPadding(new Insets(17, 17, 17, 17));
         labelStyle(stat2);
-        stat2.setPadding(new Insets(17, 17, 17, 17));
         labelStyle(stat3);
-        stat3.setPadding(new Insets(17, 17, 17, 17));
+
 
         endGameStatus.setFitHeight(125);
         endGameStatus.setFitWidth(125);
         winOrLose.setStyle("-fx-font-size: 35; fx-font-weight: BOLD");
-        vBox = new VBox(winOrLose, endGameStatus, playerScore, stat1, stat2, stat3);
-        vBox.setAlignment(Pos.CENTER);
-        this.setCenter(vBox);
+        overallStats = new VBox(winOrLose, endGameStatus, playerScore, stat1, stat2, stat3);
+        overallStats.setAlignment(Pos.CENTER);
+
 
         mainMenu.setStyle("-fx-font-weight: BOLD; -fx-font-size: 13");
         playAgain.setStyle("-fx-font-weight: BOLD; -fx-font-size: 13");
         exitGame.setStyle("-fx-font-weight: BOLD; -fx-font-size: 13");
+        returnToLeaderboard.setStyle("-fx-font-weight: BOLD; -fx-font-size: 13");
         HBox.setMargin(mainMenu, new Insets(17, 17, 17, 17));
         HBox.setMargin(playAgain, new Insets(17, 17, 17, 17));
         HBox.setMargin(exitGame, new Insets(17, 17, 17, 17));
-        hBox = new HBox(mainMenu, playAgain, exitGame);
+        HBox.setMargin(returnToLeaderboard, new Insets(17, 17, 17, 17));
+        hBox = new HBox(mainMenu, returnToLeaderboard, playAgain, exitGame);
         hBox.setAlignment(Pos.CENTER);
         BorderPane.setMargin(hBox, new Insets(17, 17, 17, 17));
-
+        hBox.setMinHeight(50);
         this.setBottom(hBox);
-        lineChart.setMaxWidth(500);
-        lineChart.setMaxHeight(500);
+
+
+
         BorderPane.setAlignment(lineChart, Pos.CENTER);
         BorderPane.setMargin(lineChart, new Insets(17, 17, 17, 17));
         this.setRight(lineChart);
+
+        playerName.setStyle("-fx-font-size: 35; -fx-font-weight: BOLD");
+        playerName.setAlignment(Pos.CENTER);
+        playerName.setMinHeight(100);
+        BorderPane.setAlignment(playerName, Pos.CENTER);
+        this.setTop(playerName);
+
+        leftVBox = new VBox(overallStats, lineChart);
+        leftVBox.setMinWidth(800);
+        leftVBox.setAlignment(Pos.CENTER);
+        rightVBox = new VBox(barChart, barChart2);
+        rightVBox.setMinWidth(800);
+        rightVBox.setAlignment(Pos.CENTER);
+
+        centerHBox = new HBox(leftVBox, rightVBox);
+        HBox.setMargin(centerHBox, new Insets(17, 17, 17, 17));
+
+        centerHBox.maxHeight(750);
+        this.setCenter(centerHBox);
+
     }
 
     private void labelStyle(Label label) {
         label.setAlignment(Pos.CENTER);
         label.setStyle("-fx-font-size: 17");
+        label.setPadding(new Insets(6, 6, 6, 6));
     }
 
     // package-private Getters
@@ -101,6 +141,8 @@ public class winLoseWindowView extends BorderPane {
     Button getMainMenu() {
         return mainMenu;
     }
+
+    Button getReturnToLeaderboard() { return returnToLeaderboard; }
 
     Button getPlayAgain() {
         return playAgain;
@@ -118,9 +160,7 @@ public class winLoseWindowView extends BorderPane {
         return endGameStatus;
     }
 
-    Label getPlayerScore() {
-        return playerScore;
-    }
+    Label getPlayerScore() { return playerScore; }
 
     Label getStat1() { return stat1; }
 
@@ -132,8 +172,18 @@ public class winLoseWindowView extends BorderPane {
         return stat3;
     }
 
+    public Label getPlayerName() { return playerName; }
+
     LineChart getLineChart() {
         return lineChart;
     }
+    BarChart getBarChart() {
+        return barChart;
+    }
+    BarChart getBarChart2() {
+        return barChart2;
+    }
+
+
 }
 

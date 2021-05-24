@@ -1,12 +1,16 @@
 package main.java.view.screens.leaderboard;
 
 
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
 import javafx.stage.Window;
 import main.java.model.Quarto;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
 import main.java.view.screens.statisticsWindow.StatisticsPresenter;
 import main.java.view.screens.statisticsWindow.StatisticsView;
+import main.java.view.screens.winLoseWindow.winLoseWindowPresenter;
+import main.java.view.screens.winLoseWindow.winLoseWindowView;
 
 public class LeaderboardPresenter {
     private final Quarto model;
@@ -35,17 +39,17 @@ public class LeaderboardPresenter {
         this.view.getText1().setOnMouseClicked(event -> {
             model.setPlayerSelected(0);
             model.getTopFiveStatistics();
-            setStatisticsWindow();
+            setWinLoseWindow();
         });
         this.view.getText2().setOnMouseClicked(event -> {
             model.setPlayerSelected(1);
             model.getTopFiveStatistics();
-            setStatisticsWindow();
+            setWinLoseWindow();
         });
         this.view.getText3().setOnMouseClicked(event -> {
             model.setPlayerSelected(2);
             model.getTopFiveStatistics();
-            setStatisticsWindow();
+            setWinLoseWindow();
         });
         this.view.getText4().setOnMouseClicked(event -> {
             model.setPlayerSelected(3);
@@ -87,6 +91,17 @@ public class LeaderboardPresenter {
         view.getScene().setRoot(statisticsView);
         statisticsView.getScene().getWindow().setWidth(625);
         statisticsView.getScene().getWindow().setHeight(425);
+    }
+
+    private void setWinLoseWindow() {
+        winLoseWindowView winLoseView = new winLoseWindowView();
+        winLoseWindowPresenter winLosePresenter = new winLoseWindowPresenter(model, winLoseView);
+        view.getScene().setRoot(winLoseView);
+        winLoseView.getScene().getWindow().setWidth(1600);
+        winLoseView.getScene().getWindow().setHeight(900);
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        winLoseView.getScene().getWindow().setX((screenBounds.getWidth() - 1600) / 2);
+        winLoseView.getScene().getWindow().setY((screenBounds.getHeight() - 900) / 2);
     }
 }
 

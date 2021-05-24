@@ -6,3 +6,6 @@ SELECT * FROM (SELECT time_spent FROM game_statistics WHERE id = 1 ORDER BY time
 SELECT (SUM(time_spent)/3) FROM game_statistics WHERE id = 1;
 
 SELECT time_spent FROM game_statistics WHERE id = 1;
+
+SELECT ROUND(SUM(score)/COUNT(*), 2) from game_data;
+SELECT ROUND(SUM(time_played)/(SELECT COUNT(*) from game_statistics), 2) from game_data;

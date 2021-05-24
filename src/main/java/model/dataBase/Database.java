@@ -59,6 +59,7 @@ public class Database {
         }
     }
 
+    //TODO: CHANGE DATA TYPE PRECISION, GETTING ERRORS SOMETIMES, PROBABLY FOR SCORE
     /**
      * Makes sure the necessary tables for the game functionality are present and if they are not
      * then they are created.

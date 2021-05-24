@@ -19,6 +19,8 @@ public class GameWindowView extends BorderPane {
     // private Node attributes (controls)
     private Button saveGame;
     private Button endGame;
+    private Button winScreen;
+    private Button loseScreen;
     private Label gameTitle;
     private Text turn;
     private Label turnCounter;
@@ -81,6 +83,9 @@ public class GameWindowView extends BorderPane {
         saveGame = new Button("Save");
         endGame = new Button("End");
         userName = new Text();
+        winScreen = new Button("WIN");
+        loseScreen = new Button("LOSE");
+
         playerTurn = new Label();
     }
 
@@ -141,12 +146,14 @@ public class GameWindowView extends BorderPane {
         // add/set … methods
         // Insets, padding, alignment, …
 
-        bottomBox = new HBox(saveGame, endGame, userName, errorLabel);
+        bottomBox = new HBox(saveGame, endGame, userName, errorLabel, winScreen, loseScreen);
         bottomBox.setPadding(new Insets(10, 10, 10, 10));
         HBox.setMargin(saveGame, new Insets(5, 10, 5, 10));
         HBox.setMargin(endGame, new Insets(5, 10, 5, 10));
         HBox.setMargin(userName, new Insets(5, 10, 5, 10));
         HBox.setMargin(errorLabel, new Insets(5, 10, 5, 10));
+        HBox.setMargin(winScreen, new Insets(5, 10, 5, 10));
+        HBox.setMargin(loseScreen, new Insets(5, 10, 5, 10));
         userName.setStyle("-fx-font-size: 15");
         errorLabel.setStyle("-fx-font-size: 15;");
         errorLabel.setFill(Paint.valueOf("Red"));
@@ -181,6 +188,12 @@ public class GameWindowView extends BorderPane {
 
     Button getSaveGame() {
         return saveGame;
+    }
+
+    Button getWinScreen() { return winScreen; }
+
+    Button getLoseScreen() {
+        return loseScreen;
     }
 
     Button getEndGame() {

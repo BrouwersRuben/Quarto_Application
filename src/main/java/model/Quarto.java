@@ -278,14 +278,20 @@ public class Quarto {
 
     public double getSlowestMove() { return gameStatistics.getPlayerSlowestMoveTime(); }
 
-    public int getTurnStatsSize() { return gameStatistics.getTimeSpentOnTurn().size(); }
+    public int getTurnStatsSize() { return gameStatistics.getPlayerTimeSpentOnTurn().size(); }
 
-    public double getTurnStats(int i) { return gameStatistics.getTimeSpentOnTurn().get(i); }
+    public double getTurnStats(int i) { return gameStatistics.getPlayerTimeSpentOnTurn().get(i); }
+
+    public double getAverageTurnStats(int i) { return gameStatistics.getOverallTimeSpentOnTurn().get(i); }
 
     public String getPlaceHolder() { return remainingPieces.getPlaceHolder(); }
 
     // Statistics for win/lose screen.
     public void getFinishedGameStatistics() { gameStatistics.getStatistics(getGameID()); }
+
+    public double getAllGameAverageScore() { return gameStatistics.getAllGameAverageScore(); }
+
+    public double getAllGameAverageTimePerTurn() { return gameStatistics.getAllGameAverageTimePerTurn(); }
 
     //Business logic
     /**
@@ -321,9 +327,9 @@ public class Quarto {
         }
     }
 
-    public String getUserName() {
-        return human.getName();
-    }
+    public String getUserName() { return human.getName(); }
+
+    public String getPlayerName() { return gameStatistics.getPlayerName(); }
 
     public void setUserName(String name) {
         human.setName(name);

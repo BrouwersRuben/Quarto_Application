@@ -15,9 +15,13 @@ import java.util.List;
  */
 public class GameStatistics extends Database { // Used for retrieving the leaderboard
 
-    private List<Double> timeSpentOnTurn = new ArrayList<>();
+    private List<Double> playerTimeSpentOnTurn = new ArrayList<>();
+    private List<Double> overallTimeSpentOnTurn = new ArrayList<>();
     private List<PlayerRecords> records = new ArrayList<>();
+    private String playerName;
     private long playerScore;
+    private double allGameAverageScore;
+    private double allGameAverageTimePerTurn;
     private double playerAverageMoveTime;
     private double playerFastestMoveTime;
     private double playerSlowestMoveTime;
@@ -49,23 +53,17 @@ public class GameStatistics extends Database { // Used for retrieving the leader
         try {
 
             System.out.println("Saving this shit game.");
-            Statement statement = connection.createStatement();
             PreparedStatement gameStatistics = connection.prepareStatement("INSERT INTO game_statistics (id, turn, turn_start_time, turn_end_time, time_spent, score_for_turn) VALUES (?,?,?,?,?,?)");
             PreparedStatement gameData = connection.prepareStatement("INSERT INTO game_data (id, username, date_started, score, turns, time_played, game_difficulty, has_quarto) VALUES (?,?,?,?,?,?,?,?)");
 
-
-            ResultSet totalScore = statement.executeQuery("SELECT SUM(score_for_turn) AS total_score FROM game_statistics WHERE ID='" + gameID + "'");
-            totalScore.next();
-            ResultSet timePlayed = statement.executeQuery("SELECT turn_start_time, turn_end_time, turn_end_time-turn_start_time AS difference FROM game_statistics");
-            timePlayed.next();
-
             // Game data (for... game data?)
+            playerName = username;
             playerScore = 0;
             double timeDifference = 0;
 
-            for (int i = 0; i < array.size(); i++) {
-                playerScore += array.get(i).getScore();
-                timeDifference += array.get(i).getTimeDifference();
+            for (TurnData turnData : array) {
+                playerScore += turnData.getScore();
+                timeDifference += turnData.getTimeDifference();
             }
 
             gameData.setInt(1, gameID);
@@ -87,14 +85,14 @@ public class GameStatistics extends Database { // Used for retrieving the leader
 
 
             // Game statistics (for turns)
-            for (int i = 0; i < array.size(); i++) {
+            for (TurnData turnData : array) {
 
                 gameStatistics.setInt(1, gameID);
-                gameStatistics.setInt(2, array.get(i).getTurn());
-                gameStatistics.setTimestamp(3, array.get(i).getTurnStartTime());
-                gameStatistics.setTimestamp(4, array.get(i).getTurnEndTime());
-                gameStatistics.setDouble(5, array.get(i).getTimeDifference());
-                gameStatistics.setLong(6, array.get(i).getScore());
+                gameStatistics.setInt(2, turnData.getTurn());
+                gameStatistics.setTimestamp(3, turnData.getTurnStartTime());
+                gameStatistics.setTimestamp(4, turnData.getTurnEndTime());
+                gameStatistics.setDouble(5, turnData.getTimeDifference());
+                gameStatistics.setLong(6, turnData.getScore());
 
                 gameStatistics.executeQuery();
 
@@ -115,30 +113,56 @@ public class GameStatistics extends Database { // Used for retrieving the leader
     public void getStatistics(int id) {
 
         try {
-            System.out.println("Entering this shit thing.");
             Statement statement = connection.createStatement();
-            ResultSet turnCount = statement.executeQuery("SELECT COUNT(*) FROM game_statistics WHERE id = '"+id+"'");
+
+            ResultSet username = statement.executeQuery("SELECT username FROM game_data WHERE id = "+id);
+            username.next();
+            playerName = username.getString(1);
+
+            ResultSet scoreQuery = statement.executeQuery("SELECT score FROM game_data WHERE id = "+id);
+            scoreQuery.next();
+            playerScore = scoreQuery.getLong(1);
+
+            ResultSet turnCount = statement.executeQuery("SELECT COUNT(*) FROM game_statistics WHERE id = '" + id + "'");
             turnCount.next();
-            ResultSet average = statement.executeQuery("SELECT (SUM(time_spent)/'"+turnCount.getInt(1)+"') FROM game_statistics WHERE ID = "+id);
+            ResultSet average = statement.executeQuery("SELECT (SUM(time_spent)/'" + turnCount.getInt(1) + "') FROM game_statistics WHERE ID = " + id);
+            average.next();
 
-            while (average.next()) {
-                playerAverageMoveTime = average.getInt(1);
-            }
-
-            ResultSet timeSpent = statement.executeQuery("SELECT time_spent FROM game_statistics WHERE id = "+id);
+            playerAverageMoveTime = average.getInt(1);
 
             // Resetting array in case a instance is requested.
-            timeSpentOnTurn.clear();
+            playerTimeSpentOnTurn.clear();
+            overallTimeSpentOnTurn.clear();
+
+            ResultSet timeSpent = statement.executeQuery("SELECT time_spent FROM game_statistics WHERE id = " + id);
 
             while (timeSpent.next()) {
-                System.out.println("Here is the request: "+timeSpent.getDouble(1));
-                timeSpentOnTurn.add(timeSpent.getDouble(1));
+                playerTimeSpentOnTurn.add(timeSpent.getDouble(1));
+//                ResultSet temp = statement.executeQuery("SELECT COUNT(*) FROM game_statistics WHERE turn = "+turn);
+//                temp.next();
+//                ResultSet temporary = statement.executeQuery("SELECT SUM(time_spent)/'"+temp.getInt(1)+"' FROM game_statistics WHERE turn = "+turn);
+//                temporary.next();
+//                overallTimeSpentOnTurn.add(temporary.getDouble(1));
             }
-            System.out.println("turn stats: "+ timeSpentOnTurn);
-            playerFastestMoveTime = Collections.min(timeSpentOnTurn);
-            playerSlowestMoveTime = Collections.max(timeSpentOnTurn);
 
-            statement.close();
+            playerFastestMoveTime = Collections.min(playerTimeSpentOnTurn);
+            playerSlowestMoveTime = Collections.max(playerTimeSpentOnTurn);
+
+
+            ResultSet overallAverageScore = statement.executeQuery("SELECT ROUND(SUM(score)/COUNT(*), 2) from game_data");
+            overallAverageScore.next();
+            allGameAverageScore = overallAverageScore.getDouble(1);
+
+
+            // TODO: shorten this
+            ResultSet totalTurnCount = statement.executeQuery("SELECT COUNT(*) FROM game_statistics");
+            totalTurnCount.next();
+            int temporary = totalTurnCount.getInt(1);
+
+            ResultSet totalTimePlayed = statement.executeQuery("SELECT SUM(time_played) FROM game_data");
+            totalTimePlayed.next();
+            allGameAverageTimePerTurn = totalTimePlayed.getDouble(1) / temporary;
+
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -162,24 +186,52 @@ public class GameStatistics extends Database { // Used for retrieving the leader
                 records.add(new PlayerRecords(rows.getInt("id"), rows.getString("username"), rows.getInt("score")));
                 i++;
             }
-            statement.close();
+
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public List<Double> getTimeSpentOnTurn() { return timeSpentOnTurn; }
+    public List<Double> getPlayerTimeSpentOnTurn() {
+        return playerTimeSpentOnTurn;
+    }
 
-    public List<PlayerRecords> getRecords() { return records; }
+    public List<Double> getOverallTimeSpentOnTurn() {
+        return overallTimeSpentOnTurn;
+    }
 
-    public double getPlayerAverageMoveTime() { return playerAverageMoveTime; }
+    public List<PlayerRecords> getRecords() {
+        return records;
+    }
 
-    public double getPlayerFastestMoveTime() { return playerFastestMoveTime; }
+    public double getPlayerAverageMoveTime() {
+        return playerAverageMoveTime;
+    }
 
-    public double getPlayerSlowestMoveTime() { return playerSlowestMoveTime; }
+    public double getPlayerFastestMoveTime() {
+        return playerFastestMoveTime;
+    }
 
-    public long getPlayerScore() { return playerScore; }
+    public double getPlayerSlowestMoveTime() {
+        return playerSlowestMoveTime;
+    }
+
+    public long getPlayerScore() {
+        return playerScore;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public double getAllGameAverageScore() {
+        return allGameAverageScore;
+    }
+
+    public double getAllGameAverageTimePerTurn() {
+        return allGameAverageTimePerTurn;
+    }
 }
 
 
