@@ -54,12 +54,12 @@ public class LeaderboardPresenter {
         this.view.getText4().setOnMouseClicked(event -> {
             model.setPlayerSelected(3);
             model.getTopFiveStatistics();
-            setStatisticsWindow();
+            setWinLoseWindow();
         });
         this.view.getText5().setOnMouseClicked(event -> {
             model.setPlayerSelected(4);
             model.getTopFiveStatistics();
-            setStatisticsWindow();
+            setWinLoseWindow();
         });
     }
 
