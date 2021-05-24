@@ -13,10 +13,11 @@ import java.util.List;
  * @author Ruben Brouwers
  * @version 1.0
  */
-public class GameStatistics extends Database { // Used for retrieving the leaderboard
+public class DatabaseTables extends Database { // Used for retrieving the leaderboard
 
-    private List<Double> turnStats = new ArrayList<>();
+    private List<Double> timeSpentOnTurn = new ArrayList<>();
     private List<PlayerRecords> records = new ArrayList<>();
+    private long scoreSum;
     private double averageTime;
     private double fastestMove;
     private double slowestMove;
@@ -42,7 +43,7 @@ public class GameStatistics extends Database { // Used for retrieving the leader
         return gameID;
     }
 
-    public void saveGame(ArrayList<TurnStatistics> array, int gameID, String username, int difficulty, boolean hasQuarto, Timestamp dateStarted) {
+    public void saveGame(ArrayList<GameData> array, int gameID, String username, int difficulty, boolean hasQuarto, Timestamp dateStarted) {
 
         try {
 
@@ -58,7 +59,7 @@ public class GameStatistics extends Database { // Used for retrieving the leader
             timePlayed.next();
 
             // Game data (for... game data?)
-            long scoreSum = 0;
+            scoreSum = 0;
             double timeDifference = 0;
 
             for (int i = 0; i < array.size(); i++) {
@@ -98,6 +99,8 @@ public class GameStatistics extends Database { // Used for retrieving the leader
 
             }
 
+            getStatistics(gameID);
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -116,7 +119,6 @@ public class GameStatistics extends Database { // Used for retrieving the leader
             ResultSet turnCount = statement.executeQuery("SELECT COUNT(*) FROM game_statistics WHERE id = '"+id+"'");
             turnCount.next();
             ResultSet average = statement.executeQuery("SELECT (SUM(time_spent)/'"+turnCount.getInt(1)+"') FROM game_statistics WHERE ID = "+id);
-            average.next();
 
             while (average.next()) {
                 averageTime = average.getInt(1);
@@ -124,17 +126,16 @@ public class GameStatistics extends Database { // Used for retrieving the leader
 
             ResultSet timeSpent = statement.executeQuery("SELECT time_spent FROM game_statistics WHERE id = "+id);
 
-            System.out.println("Vismaz te iegāja");
             // Resetting array in case a instance is requested.
-            turnStats.clear();
+            timeSpentOnTurn.clear();
 
             while (timeSpent.next()) {
                 System.out.println("Here is the request: "+timeSpent.getDouble(1));
-                turnStats.add(timeSpent.getDouble(1));
+                timeSpentOnTurn.add(timeSpent.getDouble(1));
             }
-            System.out.println("turn stats: "+turnStats);
-            fastestMove = Collections.min(turnStats);
-            slowestMove = Collections.max(turnStats);
+            System.out.println("turn stats: "+ timeSpentOnTurn);
+            fastestMove = Collections.min(timeSpentOnTurn);
+            slowestMove = Collections.max(timeSpentOnTurn);
 
             statement.close();
 
@@ -167,7 +168,7 @@ public class GameStatistics extends Database { // Used for retrieving the leader
         }
     }
 
-    public List<Double> getTurnStats() { return turnStats; }
+    public List<Double> getTimeSpentOnTurn() { return timeSpentOnTurn; }
 
     public List<PlayerRecords> getRecords() { return records; }
 
@@ -176,6 +177,8 @@ public class GameStatistics extends Database { // Used for retrieving the leader
     public double getFastestMove() { return fastestMove; }
 
     public double getSlowestMove() { return slowestMove; }
+
+    public long getScoreSum() { return scoreSum; }
 }
 
 

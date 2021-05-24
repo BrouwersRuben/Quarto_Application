@@ -9,19 +9,19 @@ import java.util.ArrayList;
  * @author Ruben Brouwers
  * @version 1.0
  */
-public class TurnStatistics {
+public class GameData {
     private int id;
     private int turn;
     private Timestamp turnStartTime;
     private Timestamp turnEndTime;
     private double timeDifference;
     private long score;
-    private ArrayList<TurnStatistics> turnStatsArray = new ArrayList<>();
+    private ArrayList<GameData> turnStatistics = new ArrayList<>();
 
-    public TurnStatistics() {
+    public GameData() {
     }
 
-    public TurnStatistics(int id, int turn, Timestamp turnStartTime, Timestamp turnEndTime, double timeDifference, long score) { // removed , int score_for_turn, will make calculation in sql
+    public GameData(int id, int turn, Timestamp turnStartTime, Timestamp turnEndTime, double timeDifference, long score) { // removed , int score_for_turn, will make calculation in sql
         this.id = id;
         this.turn = turn;
         this.turnStartTime = turnStartTime;
@@ -33,8 +33,8 @@ public class TurnStatistics {
     public void createTurnData(int id, int turn, Timestamp turnStartTime, Timestamp turnEndTime) {
         long difference = turnEndTime.getTime()-turnStartTime.getTime();
         long score = calculateScoreForMove(difference);
-        TurnStatistics statistics = new TurnStatistics(id, turn, turnStartTime, turnEndTime, difference, score);
-        turnStatsArray.add(statistics);
+        GameData statistics = new GameData(id, turn, turnStartTime, turnEndTime, difference, score);
+        turnStatistics.add(statistics);
 
     }
 
@@ -65,5 +65,5 @@ public class TurnStatistics {
 
     public double getTimeDifference() { return timeDifference; }
 
-    public ArrayList<TurnStatistics> getTurnStatsArray() { return turnStatsArray; }
+    public ArrayList<GameData> getTurnStatistics() { return turnStatistics; }
 }

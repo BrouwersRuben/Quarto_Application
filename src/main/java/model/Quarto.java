@@ -3,10 +3,10 @@ package main.java.model;
 import main.java.model.board.Board;
 import main.java.model.board.GameTimer;
 import main.java.model.board.RemainingPieces;
-import main.java.model.dataBase.GameStatistics;
+import main.java.model.dataBase.DatabaseTables;
 import main.java.model.dataBase.Database;
 import main.java.model.dataBase.PlayerRecords;
-import main.java.model.dataBase.TurnStatistics;
+import main.java.model.dataBase.GameData;
 import main.java.model.players.Human;
 
 import java.io.File;
@@ -27,8 +27,8 @@ import java.util.*;
 public class Quarto {
 
     protected String username;
-    private final GameStatistics gameStatistics = new GameStatistics();
-    private final TurnStatistics turnStatistics = new TurnStatistics();
+    private final DatabaseTables databaseTables = new DatabaseTables();
+    private final GameData gameData = new GameData();
     private final PlayerRecords record = new PlayerRecords();
     private final Database database = new Database();
     private final Board board = new Board();
@@ -116,8 +116,7 @@ public class Quarto {
             if (isThereALine(j)) {
                 System.out.println("There's a line. Checking if it's quarto...");
                 if (isItAQuarto(board.getWinningLines().get(j))) {
-                    gameStatistics.saveGame(turnStatistics.getTurnStatsArray(), getGameID(), getUserName(), human.getDifficulty(), human.isHasQuarto(), human.getDateStarted());
-                    getFinishedGameStatistics(getGameID());
+                    databaseTables.saveGame(gameData.getTurnStatistics(), getGameID(), getUserName(), human.getDifficulty(), human.isHasQuarto(), human.getDateStarted());
                     return true;
                 }
             }
@@ -230,24 +229,25 @@ public class Quarto {
 
 
     // Methods for turnStatistics
-    public void setStartTimestamp() { turnStart = turnStatistics.createTimestamp(); }
-    public void setEndTimestamp() {  turnEnd = turnStatistics.createTimestamp(); }
+    public void setStartTimestamp() { turnStart = gameData.createTimestamp(); }
+    public void setEndTimestamp() {  turnEnd = gameData.createTimestamp(); }
     public Timestamp getTurnStartTime() { return turnStart; }
     public Timestamp getTurnEndTime() { return turnEnd; }
 
 
 
+
     public void createTurnData(int id, int turnID, Timestamp turnStart, Timestamp turnEnd) {
         System.out.println(id +" "+ turnID +" "+ turnStart +" "+ turnEnd);
-        turnStatistics.createTurnData(id, turnID, turnStart, turnEnd);
+        gameData.createTurnData(id, turnID, turnStart, turnEnd);
     }
 
-    public ArrayList<TurnStatistics> getTurnStatsArray() {
-        return turnStatistics.getTurnStatsArray();
+    public ArrayList<GameData> getTurnStatsArray() {
+        return gameData.getTurnStatistics();
     }
 
     // put it into Human class maybe..
-    public int getGameID() { return gameStatistics.getGameID(); }
+    public int getGameID() { return databaseTables.getGameID(); }
 
 
     /**
@@ -255,39 +255,41 @@ public class Quarto {
      */
 
     // Prepares data that will be shown in the leaderboard page (top 5 players).
-    public void getLeaderboard() { gameStatistics.getLeaderboard(); }
+    public void getLeaderboard() { databaseTables.getLeaderboard(); }
 
     // Displays the top 5 players.
-    public String getRecords(int i) { return String.format("%d. %s - %d", i + 1, gameStatistics.getRecords().get(i).getUsername(), gameStatistics.getRecords().get(i).getScore()); }
+    public String getRecords(int i) { return String.format("%d. %s - %d", i + 1, databaseTables.getRecords().get(i).getUsername(), databaseTables.getRecords().get(i).getScore()); }
 
     // Sets/Gets the player which the user required to see more info about.
     public void setPlayerSelected(int i) { record.setPlayerSelected(i); }
     public int getPlayerSelected() { return record.getPlayerSelected(); }
 
     // Gets the specific player data that will be shown for the advanced statistics page.
-    public int getRecordsUserId(int i) { return gameStatistics.getRecords().get(i).getId(); }
-    public void getTopFiveStatistics() { gameStatistics.getStatistics(getRecordsUserId(getPlayerSelected())); }
+    public int getRecordsUserId(int i) { return databaseTables.getRecords().get(i).getId(); }
+    public void getTopFiveStatistics() { databaseTables.getStatistics(getRecordsUserId(getPlayerSelected())); }
 
 
     // Displays the username, score, and other statistics for the advanced statistics page.
-    public String getRecordsUserName(int i) { return gameStatistics.getRecords().get(i).getUsername(); }
+    public String getUsernameFromRecords(int i) { return databaseTables.getRecords().get(i).getUsername(); }
 
-    public int getRecordsUserScore(int i) { return gameStatistics.getRecords().get(i).getScore(); }
+    public int getScoreFromRecords(int id) { return databaseTables.getRecords().get(id).getScore(); }
 
-    public double getAverageTime() { return gameStatistics.getAverageTime(); }
+    public double getAverageTime() { return databaseTables.getAverageTime(); }
 
-    public double getFastestMove() { return gameStatistics.getFastestMove(); }
+    public long getScore() { return databaseTables.getScoreSum(); }
 
-    public double getSlowestMove() { return gameStatistics.getSlowestMove(); }
+    public double getFastestMove() { return databaseTables.getFastestMove(); }
 
-    public int getTurnStatsSize() { return gameStatistics.getTurnStats().size(); }
+    public double getSlowestMove() { return databaseTables.getSlowestMove(); }
 
-    public double getTurnStats(int i) { return gameStatistics.getTurnStats().get(i); }
+    public int getTurnStatsSize() { return databaseTables.getTimeSpentOnTurn().size(); }
+
+    public double getTurnStats(int i) { return databaseTables.getTimeSpentOnTurn().get(i); }
 
     public String getPlaceHolder() { return remainingPieces.getPlaceHolder(); }
 
     // Statistics for win/lose screen.
-    public void getFinishedGameStatistics(int id) { gameStatistics.getStatistics(id); }
+    public void getFinishedGameStatistics() { databaseTables.getStatistics(getGameID()); }
 
     //Business logic
     /**
@@ -382,7 +384,7 @@ public class Quarto {
     // Database related methods.
     public void openDB()  {
         try {
-            gameStatistics.connectToDb();
+            databaseTables.connectToDb();
             database.connectToDb();
         } catch (Exception e) {
             e.printStackTrace();

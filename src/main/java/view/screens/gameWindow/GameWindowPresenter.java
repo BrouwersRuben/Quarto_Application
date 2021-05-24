@@ -81,9 +81,9 @@ public class GameWindowPresenter {
                         im = new Image("media/images/" + temporary + ".png");
                         view.getChosenPiece().getChildren().add(new ImageView(im));
                         view.getChosenPiece().setId(String.valueOf(temporary));
+                        model.setLost();
 
                         if (model.isGameOver()) {
-                            model.setLost();
                             setWinLoseWindow();
                         } else {
                             model.setPlayerTurn(true);
@@ -124,10 +124,9 @@ public class GameWindowPresenter {
 
                         model.setEndTimestamp();
                         model.createTurnData(model.getGameID(), model.getTurn(), model.getTurnStartTime(), model.getTurnEndTime());
-
+                        model.setWon();
 
                         if (model.isGameOver()) {
-                            model.setWon();
                             setWinLoseWindow();
                             System.out.println("Game is over! Thank you for playing!");
                         }

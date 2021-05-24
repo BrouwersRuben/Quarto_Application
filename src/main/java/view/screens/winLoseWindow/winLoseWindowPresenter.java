@@ -51,7 +51,7 @@ public class winLoseWindowPresenter {
 
     private void updateView() {
         // fills the view with model data
-        view.getPlayerScore().setText("score: " + model.getRecordsUserScore(0));
+        view.getPlayerScore().setText("score: "+model.getScore());
         view.getStat1().setText("average time spent per round: " + model.getAverageTime());
         view.getStat2().setText("fastest move: " + model.getFastestMove() + " seconds");
         view.getStat3().setText("slowest move: " + model.getSlowestMove() + " seconds");
