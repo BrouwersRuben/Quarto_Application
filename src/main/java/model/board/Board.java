@@ -20,6 +20,7 @@ public class Board {
     private ArrayList<Integer> boardStatus = new ArrayList<>(Collections.nCopies(16,0));
     private final ArrayList<ArrayList<Integer>> winningLines = new ArrayList<>();
     private int[][] boardRepresentation = new int[4][4];
+    private final int[][] validFirstMoves = {{0,0}, {1,1}, {2,2}, {3,3}, {3,0}, {2,1}, {1,2}, {0,3}}; // positions that fit in a diagonal winning line
 
     private ArrayList<ArrayList<Integer>> remainingSpots = new ArrayList<>();
 
@@ -81,28 +82,13 @@ public class Board {
 
 
     //Getters
-    public int[] getPieceStatus() {
-        return pieceStatus;
-    }
-    public ArrayList<Integer> getPiecesOnBoard() {
-        return piecesOnBoard;
-    }
-
-    public ArrayList<ArrayList<Integer>> getUsedTiles() {
-        return usedTiles;
-    }
-
-    public ArrayList<Integer> getBoardStatus() {
-        return boardStatus;
-    }
-
-    public ArrayList<ArrayList<Integer>> getWinningLines() {
-        return winningLines;
-    }
-
-    public int[][] getBoardRepresentation() { return boardRepresentation; }
-
+    public int[] getPieceStatus() { return pieceStatus; }
+    public ArrayList<Integer> getPiecesOnBoard() { return piecesOnBoard; }
+    public ArrayList<ArrayList<Integer>> getUsedTiles() { return usedTiles; }
+    public ArrayList<Integer> getBoardStatus() { return boardStatus; }
+    public ArrayList<ArrayList<Integer>> getWinningLines() { return winningLines; }
     public ArrayList<ArrayList<Integer>> getRemainingSpots() { return remainingSpots; }
+    public int[][] getValidFirstMoves() { return validFirstMoves; }
 
     //Setters
     public void setPieceStatus(int[] pieceStatus) {

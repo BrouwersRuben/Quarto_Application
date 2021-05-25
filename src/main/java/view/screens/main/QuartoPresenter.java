@@ -37,6 +37,7 @@ public class QuartoPresenter {
 
         this.view.getStartGame().setOnAction(event -> {
             setUserNamePrologue();
+            model.setFirstMove(false); // sets who starts first (false = computer , true = player)
             updateView();
         });
 
