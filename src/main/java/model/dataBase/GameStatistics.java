@@ -19,6 +19,7 @@ public class GameStatistics extends Database { // Used for retrieving the leader
     private List<Double> overallTimeSpentOnTurn = new ArrayList<>();
     private List<PlayerRecords> records = new ArrayList<>();
     private String playerName;
+    private int turn;
     private long playerScore;
     private double allGameAverageScore;
     private double allGameAverageTimePerTurn;
@@ -136,13 +137,18 @@ public class GameStatistics extends Database { // Used for retrieving the leader
 
             ResultSet timeSpent = statement.executeQuery("SELECT time_spent FROM game_statistics WHERE id = " + id);
 
+            turn = 0;
             while (timeSpent.next()) {
                 playerTimeSpentOnTurn.add(timeSpent.getDouble(1));
-//                ResultSet temp = statement.executeQuery("SELECT COUNT(*) FROM game_statistics WHERE turn = "+turn);
-//                temp.next();
-//                ResultSet temporary = statement.executeQuery("SELECT SUM(time_spent)/'"+temp.getInt(1)+"' FROM game_statistics WHERE turn = "+turn);
-//                temporary.next();
-//                overallTimeSpentOnTurn.add(temporary.getDouble(1));
+                turn++;
+            }
+
+            for (int i=1; i<=turn; i++) {
+                ResultSet temp = statement.executeQuery("SELECT COUNT(*) FROM game_statistics WHERE turn = "+i);
+                temp.next();
+                ResultSet temporary = statement.executeQuery("SELECT SUM(time_spent)/'"+temp.getInt(1)+"' FROM game_statistics WHERE turn = "+i);
+                temporary.next();
+                overallTimeSpentOnTurn.add(temporary.getDouble(1));
             }
 
             playerFastestMoveTime = Collections.min(playerTimeSpentOnTurn);

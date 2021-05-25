@@ -2,10 +2,7 @@ package main.java.view.screens.winLoseWindow;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -31,13 +28,17 @@ public class winLoseWindowView extends BorderPane {
     private Label stat1;
     private Label stat2;
     private Label stat3;
-    private LineChart lineChart;
+    private AreaChart lineChart;
     private BarChart barChart;
     private BarChart barChart2; // should be barchart
     private Button mainMenu;
     private Button playAgain;
     private Button returnToLeaderboard;
     private Button exitGame;
+    private CategoryAxis areaChartXAxis;
+    private NumberAxis areaChartYAxis;
+    private NumberAxis barChart2YAxis;
+
 
     public winLoseWindowView() {
         initialiseNodes();
@@ -56,19 +57,32 @@ public class winLoseWindowView extends BorderPane {
         stat2 = new Label();
         stat3 = new Label();
 
-        lineChart = new LineChart<>(new CategoryAxis(), new NumberAxis());
-        lineChart.setTitle("Time spent per move");
+        areaChartXAxis = new CategoryAxis();
+        areaChartXAxis.setLabel("Move");
+
+        areaChartYAxis = new NumberAxis();
+        areaChartYAxis.setLabel("Seconds");
+
+        barChart2YAxis = new NumberAxis();
+        barChart2YAxis.setLabel("Seconds");
+
+        lineChart = new AreaChart<>(areaChartXAxis, areaChartYAxis);
+        lineChart.setTitle("Seconds spent per move");
 
         barChart = new BarChart<>(new CategoryAxis(), new NumberAxis());
         barChart.setTitle("Score");
 
-        barChart2 = new BarChart<>(new CategoryAxis(), new NumberAxis());
+        barChart2 = new BarChart<>(new CategoryAxis(), barChart2YAxis);
         barChart2.setTitle("Average move time");
 
         mainMenu = new Button("Return to the main menu");
         playAgain = new Button("Play again");
         exitGame = new Button("Exit");
         returnToLeaderboard = new Button("Return to leaderboard");
+
+
+
+
     }
 
     // TODO: TAKE CARE OF THIS, I SPAMMED A QUICK 5 MINUTE WINDOW WITHOUT CHECKING WHAT THESE THINGS DO
@@ -174,7 +188,7 @@ public class winLoseWindowView extends BorderPane {
 
     public Label getPlayerName() { return playerName; }
 
-    LineChart getLineChart() {
+    AreaChart getLineChart() {
         return lineChart;
     }
     BarChart getBarChart() {

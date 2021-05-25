@@ -46,6 +46,7 @@ public class Quarto {
     }
 
 
+
     private int x;
     private int y;
 
