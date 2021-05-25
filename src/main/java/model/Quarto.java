@@ -79,7 +79,7 @@ public class Quarto {
         y = random.nextInt(4);
 
         for (int i=0; i<board.getUsedTiles().size(); i++) {
-            if (board.getUsedTiles().get(i).get(1) == x && board.getUsedTiles().get(i).get(2) == y) {
+            if (board.getUsedTiles().get(i).get(1) == y && board.getUsedTiles().get(i).get(2) == x) {
                 generateValidCoordinates();
             }
         }
