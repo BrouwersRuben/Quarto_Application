@@ -74,19 +74,97 @@ public class Quarto {
 //        //TODO: NOT WORKING. maybe you can figure it out
 
 
-    public void generateValidCoordinates() {
+    public void generateMoveForAI(int pieceID) {
 
+//        if (board.getBoardStatus().get(0) == 1 && board.getBoardStatus().get(1) == 1 && board.getBoardStatus().get(2) == 1) {
+
+//        if(aiMakesFirstMove) {
+//
+//        } else
+            if(winningMove(pieceID)) {
+            return;
+        } else {
+            generateRandomCoordinates();
+        }
+
+    }
+
+//    public boolean aiMakesFirstMove() {
+//
+//    }
+
+    public boolean winningMove(int pieceID) {
+        boolean winnable = false;
+
+        for (int i = 0; i < board.getRemainingSpots().size(); i++) {
+            if (simulatedTestPlay(board.getRemainingSpots().get(i), pieceID)) {
+                setX(x=board.getRemainingSpots().get(i).get(0));
+                setY(y=board.getRemainingSpots().get(i).get(1));
+                winnable=true;
+            }
+        }
+        return winnable;
+    }
+
+    public void generateRandomCoordinates() {
         x = random.nextInt(4);
         y = random.nextInt(4);
 
-        for (int i=0; i<board.getUsedTiles().size(); i++) {
+        for (int i = 0; i < board.getUsedTiles().size(); i++) {
             if (board.getUsedTiles().get(i).get(1) == y && board.getUsedTiles().get(i).get(2) == x) {
-                generateValidCoordinates();
+                generateRandomCoordinates();
             }
         }
         setX(x);
         setY(y);
     }
+
+
+    private boolean simulatedTestPlay(ArrayList<Integer> integers, int pieceID) {
+        ArrayList<Integer> cloneRepresentation = (ArrayList<Integer>) board.getBoardStatus().clone();
+        cloneRepresentation.set(convertCoordinates(true, integers.get(0), integers.get(1)),1);
+
+        boolean temporary = false;
+        for (int j = 0; j < board.getWinningLines().size(); j++) {
+            if (isThereALine(cloneRepresentation, j)) {
+                if (simulatedQuartoCheck(board.getWinningLines().get(j), pieceID)) {
+                    temporary = true;
+                }
+            }
+        }
+        return temporary;
+    }
+
+
+    public boolean simulatedQuartoCheck(ArrayList<Integer> integers, int pieceID) {
+        int first = findCorrespondingPiece(integers.get(0));
+        int second = findCorrespondingPiece(integers.get(1));
+        int third = findCorrespondingPiece(integers.get(2));
+        int fourth = pieceID;
+
+        if (remainingPieces.getPieces().get(first).getFill()==remainingPieces.getPieces().get(second).getFill() && remainingPieces.getPieces().get(first).getFill()==remainingPieces.getPieces().get(third).getFill() && remainingPieces.getPieces().get(first).getFill()==remainingPieces.getPieces().get(fourth).getFill()) {
+            return true;
+        } else if (remainingPieces.getPieces().get(first).getColor()==remainingPieces.getPieces().get(second).getColor() && remainingPieces.getPieces().get(first).getColor()==remainingPieces.getPieces().get(third).getColor() && remainingPieces.getPieces().get(first).getColor()==remainingPieces.getPieces().get(fourth).getColor()) {
+            return true;
+        } else if (remainingPieces.getPieces().get(first).getShape()==remainingPieces.getPieces().get(second).getShape() && remainingPieces.getPieces().get(first).getShape()==remainingPieces.getPieces().get(third).getShape() && remainingPieces.getPieces().get(first).getShape()==remainingPieces.getPieces().get(fourth).getShape()) {
+            return true;
+        } else if (remainingPieces.getPieces().get(first).getLength()==remainingPieces.getPieces().get(second).getLength() && remainingPieces.getPieces().get(first).getLength()==remainingPieces.getPieces().get(third).getLength() && remainingPieces.getPieces().get(first).getLength()==remainingPieces.getPieces().get(fourth).getLength()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setBoardRepresentation(int x, int y) {
+        board.setBoardRepresentation(x, y);
+    }
+
+    public void removeRemainingSpots(int x, int y) {
+        board.removeRemainingSpots(x, y);
+    }
+
+
+
 
 
     /**
@@ -102,6 +180,7 @@ public class Quarto {
         remainingPieces.fillRemainingPieces();
         remainingPieces.fillPieces();
         board.fillWinningLines();
+        board.fillRemainingSpots();
     }
 
 
@@ -114,7 +193,7 @@ public class Quarto {
         System.out.println("Here is the current game status: " + board.getBoardStatus());
 
         for (int j = 0; j < board.getWinningLines().size(); j++) {
-            if (isThereALine(j)) {
+            if (isThereALine(board.getBoardStatus(), j)) {
                 System.out.println("There's a line. Checking if it's quarto...");
                 if (isItAQuarto(board.getWinningLines().get(j))) {
                     gameStatistics.saveGame(turnData.getTurnStatistics(), getGameID(), getUserName(), human.getDifficulty(), human.isHasQuarto(), human.getDateStarted());
@@ -150,11 +229,11 @@ public class Quarto {
         }
     }
 
-    public boolean isThereALine(int line) {
-        return board.getBoardStatus().get(board.getWinningLines().get(line).get(0)) == 1 &&
-                board.getBoardStatus().get(board.getWinningLines().get(line).get(1)) == 1 &&
-                board.getBoardStatus().get(board.getWinningLines().get(line).get(2)) == 1 &&
-                board.getBoardStatus().get(board.getWinningLines().get(line).get(3)) == 1;
+    public boolean isThereALine(ArrayList<Integer> gameBoard, int line) {
+        return gameBoard.get(board.getWinningLines().get(line).get(0)) == 1 &&
+                gameBoard.get(board.getWinningLines().get(line).get(1)) == 1 &&
+                gameBoard.get(board.getWinningLines().get(line).get(2)) == 1 &&
+                gameBoard.get(board.getWinningLines().get(line).get(3)) == 1;
     }
 
     public int findCorrespondingPiece(int tile) {
@@ -192,7 +271,7 @@ public class Quarto {
      * This is later on used to compare the board state to possible winning lines/combinations.
      */
 
-    public int convertCoordinates(int pieceColumn, int pieceRow) {
+    public int convertCoordinates(boolean isAI, int pieceColumn, int pieceRow) {
         int tempNumber=0; // for testing, can be whatever (0)
         if (pieceRow==0) {
             tempNumber=pieceColumn;
@@ -203,11 +282,16 @@ public class Quarto {
         } else if (pieceRow==3) {
             tempNumber =pieceColumn+12;
         }
+
+        if (!isAI) {
+            removeRemainingSpots(pieceColumn, pieceRow);
+        }
+
         return tempNumber;
     }
 
     public void updateBoardStatusAndUsedPieces(int pieceID, int pieceColumn, int pieceRow) {
-        int integer = convertCoordinates(pieceColumn, pieceRow);
+        int integer = convertCoordinates(false, pieceColumn, pieceRow);
         board.getBoardStatus().set(integer, 1);
         ArrayList<Integer> temporary = new ArrayList<>();
         temporary.add(pieceID);
@@ -216,6 +300,7 @@ public class Quarto {
         temporary.add(integer);
         board.getUsedTiles().add(temporary);
         System.out.println("Coordinates for pieces: "+board.getUsedTiles());
+        System.out.println("Remaining spots: "+board.getRemainingSpots());
     }
 
     /**

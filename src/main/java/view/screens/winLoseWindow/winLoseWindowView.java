@@ -57,6 +57,7 @@ public class winLoseWindowView extends BorderPane {
         stat2 = new Label();
         stat3 = new Label();
 
+        // TODO: SCORE PER MOVE SO THAT WE CAN CALCULATE OUTLIERS
         areaChartXAxis = new CategoryAxis();
         areaChartXAxis.setLabel("Move");
 

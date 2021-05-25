@@ -74,11 +74,12 @@ public class GameWindowPresenter {
                         view.getErrorLabel().setText("This piece is already on the board");
                     } else {
                         // Here the computer makes the move, based on the piece that was given to him.
-                        model.generateValidCoordinates();
+                        model.generateMoveForAI(Integer.parseInt(view.getChosenPiece().getId()));
                         view.getGameBoard().add(new ImageView(im), model.getX(), model.getY());
                         view.getChosenPiece().getChildren().add(new ImageView(model.getPlaceHolder()));
                         model.addToListOnBoard(Integer.valueOf(view.getChosenPiece().getId()));
                         model.updateBoardStatusAndUsedPieces(parseInt(view.getChosenPiece().getId()), model.getX(), model.getY());
+                        model.setBoardRepresentation(model.getX(), model.getY());
                         model.removeRemainingPieces(Integer.valueOf(view.getChosenPiece().getId()));
                         System.out.println("Computer made a move.");
 
@@ -116,6 +117,7 @@ public class GameWindowPresenter {
                         System.out.println("\nPiece " + view.getChosenPiece().getId() + " has been set on tile " + GridPane.getColumnIndex(item) + " " + GridPane.getRowIndex(item));
                         // updates board tiles array
                         model.updateBoardStatusAndUsedPieces(parseInt(view.getChosenPiece().getId()), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
+                        model.setBoardRepresentation(GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
                         model.removeRemainingPieces(Integer.valueOf(view.getChosenPiece().getId()));
                         model.setPlayerTurn(false);
                         System.out.println("Player made move.");

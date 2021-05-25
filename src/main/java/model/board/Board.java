@@ -1,5 +1,6 @@
 package main.java.model.board;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -18,6 +19,9 @@ public class Board {
     // 16 - 0's representing an empty board, if a piece is added n is changed to 1
     private ArrayList<Integer> boardStatus = new ArrayList<>(Collections.nCopies(16,0));
     private final ArrayList<ArrayList<Integer>> winningLines = new ArrayList<>();
+    private int[][] boardRepresentation = new int[4][4];
+
+    private ArrayList<ArrayList<Integer>> remainingSpots = new ArrayList<>();
 
     /**
      * Fills the winningLines arraylist.
@@ -36,6 +40,26 @@ public class Board {
         }
 
         System.out.println("Winning lines: \n"+winningLines);
+    }
+
+    public void fillRemainingSpots() {
+        for (int i = 0; i<4; i++) {
+            for (int j = 0; j<4; j++) {
+                ArrayList<Integer> temporary = new ArrayList<Integer>();
+                temporary.add(i);
+                temporary.add(j);
+                remainingSpots.add(temporary);
+            }
+        }
+        System.out.println("Remaining spots created: "+remainingSpots);
+    }
+
+    public void removeRemainingSpots(int xCoord, int yCoord) {
+        for (int j=0; j<remainingSpots.size(); j++) {
+            if(remainingSpots.get(j).get(0)==xCoord && remainingSpots.get(j).get(1)==yCoord) {
+                remainingSpots.remove(j);
+            }
+        }
     }
 
 
@@ -76,6 +100,10 @@ public class Board {
         return winningLines;
     }
 
+    public int[][] getBoardRepresentation() { return boardRepresentation; }
+
+    public ArrayList<ArrayList<Integer>> getRemainingSpots() { return remainingSpots; }
+
     //Setters
     public void setPieceStatus(int[] pieceStatus) {
         this.pieceStatus = pieceStatus;
@@ -83,6 +111,9 @@ public class Board {
     public void setPiecesOnBoard(int id) {
         piecesOnBoard.add(id);
     }
+
+    public void setBoardRepresentation(int y, int x) { boardRepresentation[x][y]=1;
+        System.out.println("Board representation: "+Arrays.deepToString(boardRepresentation)); } ;
 }
 
 
