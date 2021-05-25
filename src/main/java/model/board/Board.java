@@ -52,7 +52,7 @@ public class Board {
                 remainingSpots.add(temporary);
             }
         }
-        System.out.println("Remaining spots created: "+remainingSpots);
+        System.out.println("Remaining spots created: "+remainingSpots+"\n");
     }
 
     public void removeRemainingSpots(int xCoord, int yCoord) {

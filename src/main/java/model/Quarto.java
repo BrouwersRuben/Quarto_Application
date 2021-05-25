@@ -88,7 +88,6 @@ public class Quarto {
      * If they are not, the process is repeated until the AI finds an unoccupied tile.
      */
 
-//        //TODO: NOT WORKING. maybe you can figure it out
     public void ruleBasedAI(boolean makeMove, int pieceID) {
 
         if (makeMove) {
@@ -253,7 +252,7 @@ public class Quarto {
         if (remainingPieces.getRemainingPieces().size() == 0) {
             return true;
         } else {
-            System.out.println("It wasn't Quarto.");
+            System.out.println("It wasn't Quarto.\n");
             return false;
         }
     }

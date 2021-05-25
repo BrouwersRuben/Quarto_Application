@@ -42,7 +42,6 @@ public class GameStatistics extends Database { // Used for retrieving the leader
                 gameID = 1;
             }
 
-            System.out.println(gameID);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
