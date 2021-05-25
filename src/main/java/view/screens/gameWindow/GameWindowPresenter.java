@@ -74,7 +74,7 @@ public class GameWindowPresenter {
                         view.getErrorLabel().setText("This piece is already on the board");
                     } else {
                         // Here the computer makes the move, based on the piece that was given to him.
-                        model.generateMoveForAI(Integer.parseInt(view.getChosenPiece().getId()));
+                        model.ruleBasedAI(true, Integer.parseInt(view.getChosenPiece().getId()));
                         view.getGameBoard().add(new ImageView(im), model.getX(), model.getY());
                         view.getChosenPiece().getChildren().add(new ImageView(model.getPlaceHolder()));
                         model.addToListOnBoard(Integer.valueOf(view.getChosenPiece().getId()));
@@ -84,10 +84,10 @@ public class GameWindowPresenter {
                         System.out.println("Computer made a move.");
 
                         // Computer selects the piece you have to place
-                        int temporary = model.selectRandomPiece();
-                        im = new Image("media/images/" + temporary + ".png");
+                        model.ruleBasedAI(false, model.selectRandomPiece());
+                        im = new Image("media/images/" + model.getSelectedPiece() + ".png");
                         view.getChosenPiece().getChildren().add(new ImageView(im));
-                        view.getChosenPiece().setId(String.valueOf(temporary));
+                        view.getChosenPiece().setId(String.valueOf(model.getSelectedPiece()));
                         model.setLost();
 
                         if (model.isGameOver()) {

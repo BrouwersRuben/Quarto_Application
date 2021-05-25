@@ -7,6 +7,7 @@ import main.java.model.dataBase.GameStatistics;
 import main.java.model.dataBase.Database;
 import main.java.model.dataBase.PlayerRecords;
 import main.java.model.dataBase.TurnData;
+import main.java.model.players.Computer;
 import main.java.model.players.Human;
 
 import java.io.File;
@@ -37,6 +38,7 @@ public class Quarto {
     private final Human human = new Human();
     private final GameTimer timer = new GameTimer();
     private final Random random = new Random();
+    private final Computer computer = new Computer();
     private Timestamp turnStart;
     private Timestamp turnEnd;
 
@@ -87,17 +89,37 @@ public class Quarto {
      */
 
 //        //TODO: NOT WORKING. maybe you can figure it out
-    public void generateMoveForAI(int pieceID) {
+    public void ruleBasedAI(boolean makeMove, int pieceID) {
 
+        if (makeMove) {
+            if (isBoardEmpty() && aiMakesFirstMove()) { // if AI has to make the move first then it generates the best move based on strategy (anywhere which can complete 3 winning lines)
+                generateFirstMove();
+                return;
 
-        if (isBoardEmpty() && aiMakesFirstMove()) { // if AI has to make the move first then it generates the best move based on strategy (anywhere which can complete 3 winning lines)
-            generateFirstMove();
-            return;
-        } else if (winningMove(pieceID)) { // if AI sees a winning move he must place it
-            return;
+            } else if (winningMove(pieceID)) { // if AI sees a winning move he must place it
+                return;
+
+            } else {
+                generateRandomCoordinates();
+            }
         } else {
-            generateRandomCoordinates();
+            boolean safeDecision = false;
+            computer.setSelectedPiece(pieceID);
+//            while(!safeDecision) {
+//                System.out.println("Computer making calculations==============================");
+//                if (!winningMove(computer.getSelectedPiece())) { // AI checks if the piece he selects results in the opposing player winning, if it does, he picks a different one
+//                    System.out.println("Computer thinks it's a safe move");
+//                    safeDecision = true;
+//                } else {
+//                    computer.setSelectedPiece(selectRandomPiece());
+//                    safeDecision = false;
+//                }
+//            }
         }
+    }
+
+    public int getSelectedPiece() {
+        return computer.getSelectedPiece();
     }
 
     public boolean isBoardEmpty() {
@@ -138,7 +160,7 @@ public class Quarto {
         y = random.nextInt(4);
 
         for (int i = 0; i < board.getUsedTiles().size(); i++) {
-            if (board.getUsedTiles().get(i).get(1) == y && board.getUsedTiles().get(i).get(2) == x) {
+            if (board.getUsedTiles().get(i).get(1) == x && board.getUsedTiles().get(i).get(2) == y) {
                 generateRandomCoordinates();
             }
         }
@@ -149,6 +171,7 @@ public class Quarto {
 
     private boolean simulatedTestPlay(ArrayList<Integer> integers, int pieceID) {
         ArrayList<Integer> cloneRepresentation = (ArrayList<Integer>) board.getBoardStatus().clone();
+
         cloneRepresentation.set(convertCoordinates(true, integers.get(0), integers.get(1)), 1);
 
         boolean temporary = false;
@@ -167,7 +190,7 @@ public class Quarto {
         int first = findCorrespondingPiece(integers.get(0));
         int second = findCorrespondingPiece(integers.get(1));
         int third = findCorrespondingPiece(integers.get(2));
-        int fourth = pieceID;
+        int fourth = pieceID-1;
 
         if (remainingPieces.getPieces().get(first).getFill() == remainingPieces.getPieces().get(second).getFill() && remainingPieces.getPieces().get(first).getFill() == remainingPieces.getPieces().get(third).getFill() && remainingPieces.getPieces().get(first).getFill() == remainingPieces.getPieces().get(fourth).getFill()) {
             return true;
@@ -322,8 +345,8 @@ public class Quarto {
         board.getBoardStatus().set(integer, 1);
         ArrayList<Integer> temporary = new ArrayList<>();
         temporary.add(pieceID);
-        temporary.add(pieceRow);
         temporary.add(pieceColumn);
+        temporary.add(pieceRow);
         temporary.add(integer);
         board.getUsedTiles().add(temporary);
         System.out.println("Coordinates for pieces: " + board.getUsedTiles());
