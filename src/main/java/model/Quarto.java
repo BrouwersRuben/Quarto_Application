@@ -186,18 +186,20 @@ public class Quarto {
 
 
     public boolean simulatedQuartoCheck(ArrayList<Integer> integers, int pieceID) {
+
         int first = findCorrespondingPiece(integers.get(0));
         int second = findCorrespondingPiece(integers.get(1));
         int third = findCorrespondingPiece(integers.get(2));
         int fourth = findCorrespondingPiece(integers.get(3));
 
-        if(first==0) {
+
+        if(board.getBoardStatus().get(integers.get(0))==0) {
             first = pieceID-1;
-        } else if(second==0) {
+        } else if(board.getBoardStatus().get(integers.get(1))==0) {
             second = pieceID-1;
-        } else if(third==0) {
+        } else if(board.getBoardStatus().get(integers.get(2))==0) {
             third = pieceID-1;
-        } else if(fourth==0) {
+        } else if(board.getBoardStatus().get(integers.get(3))==0) {
             fourth = pieceID-1;
         }
 
