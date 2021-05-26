@@ -24,6 +24,8 @@ public class Board {
 
     private ArrayList<ArrayList<Integer>> remainingSpots = new ArrayList<>();
 
+    private ArrayList<Integer> simulatedBoardStatus = new ArrayList<>();
+
     /**
      * Fills the winningLines arraylist.
      * Use case is to compare the winning lines to the active game (boardStatus), to identify if the game is won.
@@ -90,6 +92,8 @@ public class Board {
     public ArrayList<ArrayList<Integer>> getRemainingSpots() { return remainingSpots; }
     public int[][] getValidFirstMoves() { return validFirstMoves; }
 
+    public ArrayList<Integer> getSimulatedBoardStatus() { return simulatedBoardStatus; }
+
     //Setters
     public void setPieceStatus(int[] pieceStatus) {
         this.pieceStatus = pieceStatus;
@@ -100,7 +104,11 @@ public class Board {
 
     public void setBoardRepresentation(int y, int x) { boardRepresentation[x][y]=1;
         System.out.println("Board representation: "+Arrays.deepToString(boardRepresentation)); } ;
+
+    public void setSimulatedBoardStatus(ArrayList<Integer> simulatedBoardStatus) { this.simulatedBoardStatus = simulatedBoardStatus; }
 }
+
+
 
 
 /*

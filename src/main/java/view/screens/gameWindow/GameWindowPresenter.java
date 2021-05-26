@@ -57,6 +57,7 @@ public class GameWindowPresenter {
         });
 
         //TODO: HANDLE SITUATION WHERE THERE IS A TIE, CURRENTLY ONLY WIN / LOSE ( MOST LIKELY INSTEAD OF BOOLEAN WE NEED INT VALUES )
+        //TODO: TIMESTAMPS ARE NOT CORRECT REGARDING THE INITIAL MOVE
 
         view.getAvailablePieces().getChildren().forEach(piece -> {
             piece.setOnMouseClicked(mouseEvent -> {

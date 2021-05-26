@@ -128,7 +128,7 @@ public class GameStatistics extends Database { // Used for retrieving the leader
             ResultSet average = statement.executeQuery("SELECT (SUM(time_spent)/'" + turnCount.getInt(1) + "') FROM game_statistics WHERE ID = " + id);
             average.next();
 
-            playerAverageMoveTime = average.getInt(1);
+            playerAverageMoveTime = average.getDouble(1);
 
             // Resetting array in case a instance is requested.
             playerTimeSpentOnTurn.clear();

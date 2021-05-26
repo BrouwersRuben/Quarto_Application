@@ -102,20 +102,21 @@ public class Quarto {
                 generateRandomCoordinates();
             }
         } else {
-            boolean safeDecision = false;
+            boolean safeDecision = false; // checks if the random piece that was given can result in the player winning, if true,
+            // it selects a different piece
             computer.setSelectedPiece(pieceID);
 //            while(!safeDecision) {
-//                System.out.println("Computer making calculations==============================");
-//                if (!winningMove(computer.getSelectedPiece())) { // AI checks if the piece he selects results in the opposing player winning, if it does, he picks a different one
-//                    System.out.println("Computer thinks it's a safe move");
-//                    safeDecision = true;
+//                if(!canOpponentWin(getSelectedPiece())) {
+//                    safeDecision=true;
 //                } else {
+//                    System.out.println("Computer thinks it isn't a safe move");
 //                    computer.setSelectedPiece(selectRandomPiece());
-//                    safeDecision = false;
+//                    safeDecision=false;
 //                }
 //            }
         }
     }
+
 
     public int getSelectedPiece() {
         return computer.getSelectedPiece();
@@ -132,6 +133,18 @@ public class Quarto {
     public boolean aiMakesFirstMove() {
         return !human.isFirstMove();
     }
+
+    public boolean canOpponentWin(int pieceID) {
+        boolean winnable = false;
+
+        for (int i = 0; i < board.getRemainingSpots().size(); i++) {
+            if (simulatedTestPlay(board.getRemainingSpots().get(i), pieceID)) {
+                winnable = true;
+            }
+        }
+        return winnable;
+    }
+
 
     public boolean winningMove(int pieceID) {
         boolean winnable = false;
@@ -168,11 +181,13 @@ public class Quarto {
     }
 
 
-    private boolean simulatedTestPlay(ArrayList<Integer> integers, int pieceID) {
+    @SuppressWarnings("unchecked") // boardStatus is
+    private boolean simulatedTestPlay(ArrayList<Integer> availableSpots, int pieceID) {
+        // If simulating where to place piece
         ArrayList<Integer> cloneRepresentation = (ArrayList<Integer>) board.getBoardStatus().clone();
+        cloneRepresentation.set(convertCoordinates(true, availableSpots.get(0), availableSpots.get(1)), 1);
 
-        cloneRepresentation.set(convertCoordinates(true, integers.get(0), integers.get(1)), 1);
-
+        System.out.println("\nSecond clone: "+cloneRepresentation+"\n");
         boolean temporary = false;
         for (int j = 0; j < board.getWinningLines().size(); j++) {
             if (isThereALine(cloneRepresentation, j)) {
