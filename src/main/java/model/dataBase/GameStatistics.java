@@ -1,9 +1,12 @@
 package main.java.model.dataBase;
 
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static java.lang.Integer.parseInt;
 
 /**
  * This class is used for the leaderboard screen and the win/loss screen to

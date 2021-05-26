@@ -12,6 +12,8 @@ import main.java.model.players.Human;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Timestamp;
@@ -41,6 +43,8 @@ public class Quarto {
     private final Computer computer = new Computer();
     private Timestamp turnStart;
     private Timestamp turnEnd;
+    private int x;
+    private int y;
 
 
     public Quarto() {
@@ -48,46 +52,11 @@ public class Quarto {
 
     }
 
-
-    private int x;
-    private int y;
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public void setFirstMove(boolean startsFirst) {
-        human.setFirstMove(startsFirst);
-    }
-
-
-    // TODO: TESTING
-    // who starts first
-    public void setPlayerTurn(boolean value) {
-        human.setPlayerTurn(value);
-    }
-
-    public boolean getPlayerTurn() {
-        return human.getPlayerTurn();
-    }
-
     /**
-     * Method which makes sure that the coordinates AI generates are valid.
-     * If they are not, the process is repeated until the AI finds an unoccupied tile.
+     * METHOD WHICH TAKES CARE OF AI TURN BASED LOGIC
      */
 
+    // TODO: FOR TOM
     public void ruleBasedAI(boolean makeMove, int pieceID) {
 
         if (makeMove) {
@@ -116,30 +85,35 @@ public class Quarto {
             remainingPieces.setRemainingPiecesClone(remainingPieces.getRemainingPieces());
             computer.setSelectedPiece(pieceID);
 
-            if (areTherePiecesRemaining()) {
-                if (canOpponentWin(getSelectedPiece())) {
-                    System.out.println("Computer thinks it isn't a safe move");
-                    System.out.println("================= real remaining ============ "+remainingPieces.getRemainingPieces());
-                    computer.setSelectedPiece(selectRandomPieceOnce());
-                } else {
-                    System.out.println("Computer thinks it's a safe move");
+
+                while(!safeDecision) {
+                    if (!isPieceCloneListEmpty()) {
+                        if (canOpponentWin(computer.getSelectedPiece())) {
+                            System.out.println("Piece: "+computer.getSelectedPiece()+" not a safe move");
+                            computer.setSelectedPiece(selectRandomPieceOnce());
+                            safeDecision = false;
+                        } else {
+                            System.out.println("Computer thinks piece: "+computer.getSelectedPiece()+" is a safe move");
+                            safeDecision = true;
+                        }
+                    } else {
+                        generateRandomCoordinates();
+                        System.out.println("Computer is generating random piece - "+convertCoordinates(false, getX(), getY())+" cause it's a loss anyways");
+                        return;
+                    }
                 }
-            } else {
-                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                generateRandomCoordinates();
-            }
         }
     }
 
-    public boolean areTherePiecesRemaining() {
-        return !remainingPieces.getRemainingPiecesClone().isEmpty();
+    public boolean isPieceCloneListEmpty() {
+        System.out.println("Pieces remaining: "+!remainingPieces.getRemainingPiecesClone().isEmpty());
+        return remainingPieces.getRemainingPiecesClone().isEmpty();
     }
 
     public int selectRandomPieceOnce() {
         int randomValue = random.nextInt(remainingPieces.getRemainingPiecesClone().size());
         int selectedPiece = remainingPieces.getRemainingPiecesClone().get(randomValue);
         remainingPieces.getRemainingPiecesClone().remove(randomValue);
-        System.out.println("te ir size: "+remainingPieces.getRemainingPiecesClone());
         return selectedPiece;
     }
 
@@ -476,7 +450,8 @@ public class Quarto {
     }
 
     public double getAverageTime() {
-        return Math.round(gameStatistics.getPlayerAverageMoveTime()*100.0)/100.0;
+        BigDecimal bd = BigDecimal.valueOf(gameStatistics.getPlayerAverageMoveTime()).setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
     public long getScore() {
@@ -587,6 +562,34 @@ public class Quarto {
 
     public void addToListOnBoard(Integer pieceId) {
         board.setPiecesOnBoard(pieceId);
+    }
+
+    public void setPlayerTurn(boolean value) {
+        human.setPlayerTurn(value);
+    }
+
+    public boolean getPlayerTurn() {
+        return human.getPlayerTurn();
+    }
+
+    public void setFirstMove(boolean startsFirst) {
+        human.setFirstMove(startsFirst);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
 
