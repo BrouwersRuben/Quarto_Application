@@ -1,5 +1,7 @@
 package main.java.model;
 
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
 import main.java.model.board.Board;
 import main.java.model.board.GameTimer;
 import main.java.model.board.RemainingPieces;

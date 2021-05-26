@@ -83,14 +83,9 @@ public class LeaderboardPresenter {
         view.getScene().setRoot(quartoView);
         quartoView.getScene().getWindow().setWidth(625);
         quartoView.getScene().getWindow().setHeight(425);
-    }
-
-    private void setStatisticsWindow() {
-        StatisticsView statisticsView = new StatisticsView();
-        StatisticsPresenter statisticsPresenter = new StatisticsPresenter(model, statisticsView);
-        view.getScene().setRoot(statisticsView);
-        statisticsView.getScene().getWindow().setWidth(625);
-        statisticsView.getScene().getWindow().setHeight(425);
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        quartoView.getScene().getWindow().setX((screenBounds.getWidth() - 625) / 2);
+        quartoView.getScene().getWindow().setY((screenBounds.getHeight() - 425) / 2);
     }
 
     private void setWinLoseWindow() {
