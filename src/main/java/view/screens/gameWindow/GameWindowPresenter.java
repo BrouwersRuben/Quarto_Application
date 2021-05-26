@@ -68,8 +68,6 @@ public class GameWindowPresenter {
                     Image im = new Image("media/images/" + piece.getId() + ".png");
                     view.getChosenPiece().getChildren().add(new ImageView(im));
                     view.getChosenPiece().setId(piece.getId());
-                    System.out.println(piece.getId()); // for testing purposes
-
 
                     if (!model.isUnique(Integer.valueOf(piece.getId()))) {
                         view.getErrorLabel().setText("This piece is already on the board");
@@ -115,7 +113,6 @@ public class GameWindowPresenter {
                         view.getChosenPiece().getChildren().add(new ImageView(model.getPlaceHolder()));
                         model.addToListOnBoard(Integer.valueOf(view.getChosenPiece().getId()));
                         view.getErrorLabel().setText("");
-                        System.out.println("\nPiece " + view.getChosenPiece().getId() + " has been set on tile " + GridPane.getColumnIndex(item) + " " + GridPane.getRowIndex(item));
                         // updates board tiles array
                         model.updateBoardStatusAndUsedPieces(parseInt(view.getChosenPiece().getId()), GridPane.getColumnIndex(item), GridPane.getRowIndex(item));
                         model.setBoardRepresentation(GridPane.getColumnIndex(item), GridPane.getRowIndex(item));

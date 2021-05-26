@@ -75,7 +75,6 @@ public class Quarto {
 
             if(!isBoardEmpty()) {
                 int previousPiece = board.getUsedTiles().get(board.getUsedTiles().size()-1).get(0);
-                System.out.println(previousPiece);
             }
             generateRandomCoordinates();
 
@@ -395,7 +394,6 @@ public class Quarto {
 
 
     public void createTurnData(int id, int turnID, Timestamp turnStart, Timestamp turnEnd) {
-        System.out.println(id + " " + turnID + " " + turnStart + " " + turnEnd);
         turnData.createTurnData(id, turnID, turnStart, turnEnd);
     }
 
