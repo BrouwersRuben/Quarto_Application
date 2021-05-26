@@ -58,35 +58,31 @@ public class Quarto {
      * METHOD WHICH TAKES CARE OF AI TURN BASED LOGIC
      */
 
-    // TODO: FOR TOM
     public void ruleBasedAI(boolean makeMove, int pieceID) {
+        if (computer.isDifficult()) { // accesses methods  based on difficulty
+            if (makeMove) {
+                if (isBoardEmpty() && aiMakesFirstMove()) { // if AI has to make the move first then it generates the best move based on strategy
+                    // (anywhere which can complete 3 winning lines)
+                    generateFirstMove();
+                    return;
+                }
 
-        if (makeMove) {
-            if (isBoardEmpty() && aiMakesFirstMove()) { // if AI has to make the move first then it generates the best move based on strategy (anywhere which can complete 3 winning lines)
-                generateFirstMove();
-                return;
-            }
+                if (winningMove(pieceID)) { // if AI sees a winning move he must place it
+                    return;
+                } else {
+                    generateRandomCoordinates();
+                }
 
-            if (winningMove(pieceID)) { // if AI sees a winning move he must place it
-                return;
-            } else {
                 generateRandomCoordinates();
-            }
 
-            if(!isBoardEmpty()) {
-                int previousPiece = board.getUsedTiles().get(board.getUsedTiles().size()-1).get(0);
-            }
-            generateRandomCoordinates();
+            } else {
+                boolean safeDecision = false;
+                remainingPieces.getRemainingPiecesClone().clear();
+                remainingPieces.setRemainingPiecesClone(remainingPieces.getRemainingPieces());
+                computer.setSelectedPiece(pieceID);
 
-
-        } else {
-            boolean safeDecision = false; // checks if the random piece that was given can result in the player winning, if true,
-            // it selects a different piece
-            remainingPieces.getRemainingPiecesClone().clear();
-            remainingPieces.setRemainingPiecesClone(remainingPieces.getRemainingPieces());
-            computer.setSelectedPiece(pieceID);
-
-                while(!safeDecision) {
+                while (!safeDecision) {// checks if the random piece that was given can result in the player winning, if true,
+                    // it selects a different piece
                     if (!isPieceCloneListEmpty()) {
                         if (winningMove(computer.getSelectedPiece())) {
                             computer.setSelectedPiece(selectRandomPieceOnce());
@@ -100,6 +96,9 @@ public class Quarto {
                         return;
                     }
                 }
+            }
+        } else {
+            generateRandomCoordinates();
         }
     }
 
@@ -234,6 +233,7 @@ public class Quarto {
         getGameID();
         human.setDateStarted(new Timestamp(System.currentTimeMillis()));
         username = getUserName();
+        computer.setDifficult(true);
 
         remainingPieces.fillRemainingPieces();
         remainingPieces.fillPieces();
