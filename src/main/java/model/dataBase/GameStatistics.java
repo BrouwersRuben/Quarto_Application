@@ -69,16 +69,17 @@ public class GameStatistics extends Database { // Used for retrieving the leader
             gameData.setInt(1, gameID);
             gameData.setString(2, username);
             gameData.setTimestamp(3, dateStarted);
-            gameData.setLong(4, playerScore);
             gameData.setInt(5, array.size());
             gameData.setDouble(6, timeDifference);
             gameData.setInt(7, difficulty);
 
             System.out.println(hasQuarto);
             if (hasQuarto) {
+                gameData.setLong(4, (50000-playerScore));
                 gameData.setInt(8, 1);
             } else {
                 gameData.setInt(8, 0);
+                gameData.setLong(4, 0);
             }
 
             gameData.executeQuery();
@@ -92,7 +93,7 @@ public class GameStatistics extends Database { // Used for retrieving the leader
                 gameStatistics.setTimestamp(3, turnData.getTurnStartTime());
                 gameStatistics.setTimestamp(4, turnData.getTurnEndTime());
                 gameStatistics.setDouble(5, turnData.getTimeDifference());
-                gameStatistics.setLong(6, turnData.getScore());
+                gameStatistics.setDouble(6, turnData.getScore());
 
                 gameStatistics.executeQuery();
 
@@ -154,7 +155,7 @@ public class GameStatistics extends Database { // Used for retrieving the leader
             playerSlowestMoveTime = Collections.max(playerTimeSpentOnTurn);
 
 
-            ResultSet overallAverageScore = statement.executeQuery("SELECT ROUND(SUM(score)/COUNT(*), 2) from game_data");
+            ResultSet overallAverageScore = statement.executeQuery("SELECT ROUND(SUM(score)/COUNT(*), 2) from game_data WHERE score!=0");
             overallAverageScore.next();
             allGameAverageScore = overallAverageScore.getDouble(1);
 

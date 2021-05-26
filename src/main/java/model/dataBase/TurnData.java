@@ -40,10 +40,8 @@ public class TurnData {
 
     // TODO: Make this more advanced, combined with AI rule based potentially.
     public long calculateScoreForMove(long difference) {
-        return difference;
+        return difference/100;
     }
-
-
 
     // Should create a method that puts the objects into the turnArray arraylist.
 

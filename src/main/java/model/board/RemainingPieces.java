@@ -15,6 +15,7 @@ public class RemainingPieces {
     public static String placeHolder = "media/images/0.png"; // TODO: I DIDN'T WANT TO MESS WITH THIS BEING A PRIVATE FINAL, IT'S A NUISANCE
     private final ArrayList<Integer> remainingPieces = new ArrayList<Integer>();
     private final ArrayList<Pieces> pieces = new ArrayList<Pieces>();
+    ArrayList<Integer> remainingPiecesClone = new ArrayList<Integer>();
 
 
 
@@ -50,5 +51,12 @@ public class RemainingPieces {
 
     public ArrayList<Pieces> getPieces() { return pieces; }
 
+
+
     public String getPlaceHolder() { return placeHolder; }
+
+
+    public ArrayList<Integer> getRemainingPiecesClone() { return remainingPiecesClone; }
+
+    public void setRemainingPiecesClone(ArrayList<Integer> remainingPiecesClone) { this.remainingPiecesClone = (ArrayList<Integer>) remainingPiecesClone.clone(); }
 }

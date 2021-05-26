@@ -2,9 +2,6 @@ package main.java.view.screens.winLoseWindow;
 
 import javafx.application.Platform;
 import javafx.event.Event;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;

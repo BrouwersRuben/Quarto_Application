@@ -84,9 +84,9 @@ public class Database {
                             "    id number(10) default game_data_id_seq.nextVal CONSTRAINT game_data_id_pk PRIMARY KEY," +
                             "    username varchar2(20) CONSTRAINT game_data_username_nn NOT NULL," +
                             "    date_started timestamp CONSTRAINT game_data_date_nn NOT NULL," +
-                            "    score number(10) CONSTRAINT game_data_score_nn NOT NULL," +
+                            "    score number(5) CONSTRAINT game_data_score_nn NOT NULL," +
                             "    turns number(2) CONSTRAINT game_data_turn_nn NOT NULL," +
-                            "    time_played number(6,2) CONSTRAINT game_data_time_played_nn NOT NULL," +
+                            "    time_played number(8,2) CONSTRAINT game_data_time_played_nn NOT NULL," +
                             "    game_difficulty number(1) CONSTRAINT game_data_game_difficulty_nn NOT NULL," +
                             "    has_quarto number(1) CONSTRAINT game_data_has_quarto_nn NOT NULL" +
                             ")");
@@ -103,8 +103,8 @@ public class Database {
                             "    turn number(2) CONSTRAINT statistics_turn_nn NOT NULL," +
                             "    turn_start_time timestamp default SYSTIMESTAMP CONSTRAINT statistics_turn_start_time_nn NOT NULL," +
                             "    turn_end_time timestamp default SYSTIMESTAMP CONSTRAINT statistics_turn_end_time_nn NOT NULL," +
-                            "    time_spent number(4,2) CONSTRAINT statistics_time_spent_nn NOT NULL," +
-                            "    score_for_turn number(8) CONSTRAINT statistics_score_for_turn_nn NOT NULL" +
+                            "    time_spent number(7,2) CONSTRAINT statistics_time_spent_nn NOT NULL," +
+                            "    score_for_turn number(4) CONSTRAINT statistics_score_for_turn_nn NOT NULL" +
                             ")");
                 }
             }

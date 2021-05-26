@@ -94,27 +94,53 @@ public class Quarto {
             if (isBoardEmpty() && aiMakesFirstMove()) { // if AI has to make the move first then it generates the best move based on strategy (anywhere which can complete 3 winning lines)
                 generateFirstMove();
                 return;
+            }
 
-            } else if (winningMove(pieceID)) { // if AI sees a winning move he must place it
+            if (winningMove(pieceID)) { // if AI sees a winning move he must place it
                 return;
-
             } else {
                 generateRandomCoordinates();
             }
+
+            if(!isBoardEmpty()) {
+                int previousPiece = board.getUsedTiles().get(board.getUsedTiles().size()-1).get(0);
+                System.out.println(previousPiece);
+            }
+            generateRandomCoordinates();
+
+
         } else {
             boolean safeDecision = false; // checks if the random piece that was given can result in the player winning, if true,
             // it selects a different piece
+            remainingPieces.getRemainingPiecesClone().clear();
+            remainingPieces.setRemainingPiecesClone(remainingPieces.getRemainingPieces());
             computer.setSelectedPiece(pieceID);
-//            while(!safeDecision) {
-//                if(!canOpponentWin(getSelectedPiece())) {
-//                    safeDecision=true;
-//                } else {
-//                    System.out.println("Computer thinks it isn't a safe move");
-//                    computer.setSelectedPiece(selectRandomPiece());
-//                    safeDecision=false;
-//                }
-//            }
+
+            if (areTherePiecesRemaining()) {
+                if (canOpponentWin(getSelectedPiece())) {
+                    System.out.println("Computer thinks it isn't a safe move");
+                    System.out.println("================= real remaining ============ "+remainingPieces.getRemainingPieces());
+                    computer.setSelectedPiece(selectRandomPieceOnce());
+                } else {
+                    System.out.println("Computer thinks it's a safe move");
+                }
+            } else {
+                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                generateRandomCoordinates();
+            }
         }
+    }
+
+    public boolean areTherePiecesRemaining() {
+        return !remainingPieces.getRemainingPiecesClone().isEmpty();
+    }
+
+    public int selectRandomPieceOnce() {
+        int randomValue = random.nextInt(remainingPieces.getRemainingPiecesClone().size());
+        int selectedPiece = remainingPieces.getRemainingPiecesClone().get(randomValue);
+        remainingPieces.getRemainingPiecesClone().remove(randomValue);
+        System.out.println("te ir size: "+remainingPieces.getRemainingPiecesClone());
+        return selectedPiece;
     }
 
 
@@ -450,7 +476,7 @@ public class Quarto {
     }
 
     public double getAverageTime() {
-        return gameStatistics.getPlayerAverageMoveTime();
+        return Math.round(gameStatistics.getPlayerAverageMoveTime()*100.0)/100.0;
     }
 
     public long getScore() {
