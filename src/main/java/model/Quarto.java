@@ -85,20 +85,17 @@ public class Quarto {
             remainingPieces.setRemainingPiecesClone(remainingPieces.getRemainingPieces());
             computer.setSelectedPiece(pieceID);
 
-
                 while(!safeDecision) {
                     if (!isPieceCloneListEmpty()) {
-                        if (canOpponentWin(computer.getSelectedPiece())) {
-                            System.out.println("Piece: "+computer.getSelectedPiece()+" not a safe move");
+                        if (winningMove(computer.getSelectedPiece())) {
                             computer.setSelectedPiece(selectRandomPieceOnce());
                             safeDecision = false;
                         } else {
-                            System.out.println("Computer thinks piece: "+computer.getSelectedPiece()+" is a safe move");
                             safeDecision = true;
+
                         }
                     } else {
-                        generateRandomCoordinates();
-                        System.out.println("Computer is generating random piece - "+convertCoordinates(false, getX(), getY())+" cause it's a loss anyways");
+                        computer.setSelectedPiece(selectRandomPiece());
                         return;
                     }
                 }
@@ -106,7 +103,6 @@ public class Quarto {
     }
 
     public boolean isPieceCloneListEmpty() {
-        System.out.println("Pieces remaining: "+!remainingPieces.getRemainingPiecesClone().isEmpty());
         return remainingPieces.getRemainingPiecesClone().isEmpty();
     }
 
@@ -133,18 +129,6 @@ public class Quarto {
     public boolean aiMakesFirstMove() {
         return !human.isFirstMove();
     }
-
-    public boolean canOpponentWin(int pieceID) {
-        boolean winnable = false;
-
-        for (int i = 0; i < board.getRemainingSpots().size(); i++) {
-            if (simulatedTestPlay(board.getRemainingSpots().get(i), pieceID)) {
-                winnable = true;
-            }
-        }
-        return winnable;
-    }
-
 
     public boolean winningMove(int pieceID) {
         boolean winnable = false;
@@ -187,7 +171,6 @@ public class Quarto {
         ArrayList<Integer> cloneRepresentation = (ArrayList<Integer>) board.getBoardStatus().clone();
         cloneRepresentation.set(convertCoordinates(true, availableSpots.get(0), availableSpots.get(1)), 1);
 
-        System.out.println("\nSecond clone: "+cloneRepresentation+"\n");
         boolean temporary = false;
         for (int j = 0; j < board.getWinningLines().size(); j++) {
             if (isThereALine(cloneRepresentation, j)) {
@@ -204,6 +187,7 @@ public class Quarto {
         int first = findCorrespondingPiece(integers.get(0));
         int second = findCorrespondingPiece(integers.get(1));
         int third = findCorrespondingPiece(integers.get(2));
+        System.out.println("This piece: "+pieceID+ "converted to ... remainingPieces.getPieces().get("+(pieceID-1)+")");
         int fourth = pieceID-1;
 
         if (remainingPieces.getPieces().get(first).getFill() == remainingPieces.getPieces().get(second).getFill() && remainingPieces.getPieces().get(first).getFill() == remainingPieces.getPieces().get(third).getFill() && remainingPieces.getPieces().get(first).getFill() == remainingPieces.getPieces().get(fourth).getFill()) {
