@@ -187,8 +187,18 @@ public class Quarto {
         int first = findCorrespondingPiece(integers.get(0));
         int second = findCorrespondingPiece(integers.get(1));
         int third = findCorrespondingPiece(integers.get(2));
-        System.out.println("This piece: "+pieceID+ "converted to ... remainingPieces.getPieces().get("+(pieceID-1)+")");
-        int fourth = pieceID-1;
+        int fourth = findCorrespondingPiece(integers.get(3));
+
+        if(first==0) {
+            first = pieceID-1;
+        } else if(second==0) {
+            second = pieceID-1;
+        } else if(third==0) {
+            third = pieceID-1;
+        } else if(fourth==0) {
+            fourth = pieceID-1;
+        }
+
 
         if (remainingPieces.getPieces().get(first).getFill() == remainingPieces.getPieces().get(second).getFill() && remainingPieces.getPieces().get(first).getFill() == remainingPieces.getPieces().get(third).getFill() && remainingPieces.getPieces().get(first).getFill() == remainingPieces.getPieces().get(fourth).getFill()) {
             return true;
