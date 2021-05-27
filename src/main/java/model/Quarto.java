@@ -1,7 +1,5 @@
 package main.java.model;
 
-import javafx.geometry.Rectangle2D;
-import javafx.stage.Screen;
 import main.java.model.board.Board;
 import main.java.model.board.GameTimer;
 import main.java.model.board.RemainingPieces;
@@ -45,8 +43,6 @@ public class Quarto {
     private final Computer computer = new Computer();
     private Timestamp turnStart;
     private Timestamp turnEnd;
-    private int x;
-    private int y;
 
 
     public Quarto() {
@@ -89,7 +85,6 @@ public class Quarto {
                             safeDecision = false;
                         } else {
                             safeDecision = true;
-
                         }
                     } else {
                         computer.setSelectedPiece(selectRandomPiece());
@@ -135,8 +130,8 @@ public class Quarto {
 
         for (int i = 0; i < board.getRemainingSpots().size(); i++) {
             if (simulatedTestPlay(board.getRemainingSpots().get(i), pieceID)) {
-                setX(x = board.getRemainingSpots().get(i).get(0));
-                setY(y = board.getRemainingSpots().get(i).get(1));
+                computer.setCoordinateX((board.getRemainingSpots().get(i).get(0)));
+                computer.setCoordinateY(board.getRemainingSpots().get(i).get(1));
                 winnable = true;
             }
         }
@@ -145,23 +140,19 @@ public class Quarto {
 
     public void generateFirstMove() {
         int randomMove = random.nextInt(8);
-        x = board.getValidFirstMoves()[randomMove][0];
-        y = board.getValidFirstMoves()[randomMove][1];
-        setX(x);
-        setY(y);
+        computer.setCoordinateX(board.getValidFirstMoves()[randomMove][0]);
+        computer.setCoordinateY(board.getValidFirstMoves()[randomMove][1]);
     }
 
     public void generateRandomCoordinates() {
-        x = random.nextInt(4);
-        y = random.nextInt(4);
+        computer.setCoordinateX(random.nextInt(4));
+        computer.setCoordinateY(random.nextInt(4));
 
         for (int i = 0; i < board.getUsedTiles().size(); i++) {
-            if (board.getUsedTiles().get(i).get(1) == x && board.getUsedTiles().get(i).get(2) == y) {
+            if (board.getUsedTiles().get(i).get(1) == computer.getCoordinateX() && board.getUsedTiles().get(i).get(2) == computer.getCoordinateY()) {
                 generateRandomCoordinates();
             }
         }
-        setX(x);
-        setY(y);
     }
 
 
@@ -573,19 +564,11 @@ public class Quarto {
     }
 
     public int getX() {
-        return x;
+        return computer.getCoordinateX();
     }
 
     public int getY() {
-        return y;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+        return computer.getCoordinateY();
     }
 
 

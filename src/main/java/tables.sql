@@ -1,5 +1,5 @@
 DROP TABLE game_data;
-DROP TABLE game_statistics;
+DROP TABLE turn_statistics;
 
 CREATE SEQUENCE game_data_id_seq
     START WITH 1
@@ -24,7 +24,7 @@ CREATE TABLE game_data
 );
 
 
-CREATE TABLE game_statistics
+CREATE TABLE turn_statistics
 (
     id              number(10) default game_data_id_seq.currVal
         CONSTRAINT statistics_id_fk REFERENCES game_data (id) ON DELETE CASCADE,
@@ -47,7 +47,7 @@ CREATE TABLE test_game_leaderboard
     top_score INTEGER
 );
 
-CREATE TABLE test_game_statistics
+CREATE TABLE test_turn_statistics
 (
     id              number(10),
     turn            number(2),

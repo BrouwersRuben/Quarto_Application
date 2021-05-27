@@ -39,8 +39,6 @@ public class Database {
         }
     }
 
-
-
     /**
      * Terminates the connection between the database and the application.
      */
@@ -58,8 +56,7 @@ public class Database {
             ex.printStackTrace();
         }
     }
-
-    //TODO: CHANGE DATA TYPE PRECISION, GETTING ERRORS SOMETIMES, PROBABLY FOR SCORE
+    
     /**
      * Makes sure the necessary tables for the game functionality are present and if they are not
      * then they are created.
@@ -69,11 +66,17 @@ public class Database {
 
             Statement statement = connection.createStatement();
 
-            //TODO: try statement for this, which catches 2289 error.
-//            statement.execute("CREATE SEQUENCE game_data_id_seq" +
-//                    " START WITH 1" +
-//                    " INCREMENT BY 1 NOCACHE" +
-//                    " NOCYCLE");
+            try {
+                statement.executeQuery("SELECT * FROM user_sequences WHERE sequence_name = 'game_data_id_seq'");
+            } catch (SQLException e) {
+                if (e.getErrorCode() == 2289) {
+                    statement.execute("CREATE SEQUENCE game_data_id_seq" +
+                        " START WITH 1" +
+                        " INCREMENT BY 1 NOCACHE" +
+                        " NOCYCLE");
+                }
+            }
+
 
             try {
                 statement.executeQuery("SELECT * FROM game_data");
@@ -94,15 +97,15 @@ public class Database {
             }
 
             try {
-                statement.executeQuery("SELECT * FROM game_statistics");
+                statement.executeQuery("SELECT * FROM turn_statistics");
             } catch (SQLException e) {
                 if (e.getErrorCode() == 942) {
-                    statement.execute("CREATE TABLE game_statistics" +
+                    statement.execute("CREATE TABLE turn_statistics" +
                             "(" +
                             "    id number(10) default game_data_id_seq.currVal CONSTRAINT statistics_id_fk REFERENCES game_data (id) ON DELETE CASCADE," +
                             "    turn number(2) CONSTRAINT statistics_turn_nn NOT NULL," +
-                            "    turn_start_time timestamp default SYSTIMESTAMP CONSTRAINT statistics_turn_start_time_nn NOT NULL," +
-                            "    turn_end_time timestamp default SYSTIMESTAMP CONSTRAINT statistics_turn_end_time_nn NOT NULL," +
+                            "    turn_start_time timestamp default SYSTIMESTAMP CONSTRAINT statistics_start_time_nn NOT NULL," +
+                            "    turn_end_time timestamp default SYSTIMESTAMP CONSTRAINT statistics_end_time_nn NOT NULL," +
                             "    time_spent number(7,2) CONSTRAINT statistics_time_spent_nn NOT NULL," +
                             "    score_for_turn number(4) CONSTRAINT statistics_score_for_turn_nn NOT NULL" +
                             ")");
