@@ -67,6 +67,27 @@ public class Quarto {
         board.fillRemainingSpots();
     }
 
+    public boolean isGameOver() {
+        System.out.println("Here is the current game status: " + board.getBoardStatus());
+
+        for (int j = 0; j < board.getWinningLines().size(); j++) {
+            if (isThereALine(board.getBoardStatus(), j)) {
+                System.out.println("There's a line. Checking if it's quarto...");
+                if (isItAQuarto(board.getWinningLines().get(j), 1)) { // pieceID is a dummy value, so that I wouldn't have to copy the same method twice
+                    gameStatistics.saveGame(turnData.getTurnStatistics(), getGameID(), getUserName(), human.getDifficulty(), human.isHasQuarto(), human.getDateStarted());
+                    return true;
+                }
+            }
+        }
+        // Checking if draw (when no pieces left and no winning line).
+        if (remainingPieces.getRemainingPieces().size() == 0) {
+            return true;
+        } else {
+            System.out.println("It wasn't Quarto.");
+            return false;
+        }
+    }
+
     /**
      * METHOD WHICH TAKES CARE OF AI TURN BASED LOGIC
      */
@@ -335,7 +356,7 @@ public class Quarto {
      * Removes the piece which has been used.
      * @param pieceID pieceID;
      */
-    public void removeRemainingPieces(int pieceID) {
+    public void removeRemainingPieces(Integer pieceID) {
         while (remainingPieces.getRemainingPieces().contains(pieceID)) {
             remainingPieces.getRemainingPieces().remove(pieceID);
         }

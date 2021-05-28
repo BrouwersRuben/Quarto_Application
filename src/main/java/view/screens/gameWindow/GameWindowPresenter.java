@@ -78,7 +78,7 @@ public class GameWindowPresenter {
                         model.addToListOnBoard(Integer.valueOf(view.getChosenPiece().getId()));
                         model.updateBoardStatusAndUsedPieces(parseInt(view.getChosenPiece().getId()), model.getX(), model.getY());
                         model.setBoardRepresentation(model.getX(), model.getY());
-                        model.removeRemainingPieces(Integer.valueOf(view.getChosenPiece().getId()));
+                        model.removeRemainingPieces(Integer.parseInt(view.getChosenPiece().getId()));
                         System.out.println("Computer made a move.");
 
                         // Computer selects the piece you have to place
