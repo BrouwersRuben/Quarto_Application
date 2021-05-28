@@ -289,6 +289,9 @@ public class Quarto {
      * A method which accepts X and Y coordinates and converts them to a single digit
      * coordinate so that it could be used to indicate whether a board tile is occupied or not.
      * This is used to compare the board state to possible winning lines/combinations.
+     * @param isAI boolean value, one represents the AI making the decision for himself, the other simulating the players decision
+     * @param pieceColumn column coordinate of the location of the piece
+     * @param pieceRow row coordinate of the location of the piece
      * @return single digit coordinate
      **/
     public int convertCoordinates(boolean isAI, int pieceColumn, int pieceRow) {
@@ -310,9 +313,12 @@ public class Quarto {
         return tempNumber;
     }
 
-    /*
+    /**
     Updates an arrayList which contains various important values which are used for the game logic.
-     */
+     @param pieceID pieceID
+     @param pieceColumn column coordinate of the location of the piece
+     @param pieceRow row coordinate of the location of the piece
+     **/
     public void updateBoardStatusAndUsedPieces(int pieceID, int pieceColumn, int pieceRow) {
         int integer = convertCoordinates(false, pieceColumn, pieceRow);
         board.getBoardStatus().set(integer, 1);
@@ -327,9 +333,10 @@ public class Quarto {
     }
 
     /**
-     * Keeps track of which pieces the AI can pick for the player to make a turn with.
+     * Removes the piece which has been used.
+     * @param pieceID pieceID;
      **/
-    public void removeRemainingPieces(Integer pieceID) {
+    public void removeRemainingPieces(int pieceID) {
         while (remainingPieces.getRemainingPieces().contains(pieceID)) {
             remainingPieces.getRemainingPieces().remove(pieceID);
         }
