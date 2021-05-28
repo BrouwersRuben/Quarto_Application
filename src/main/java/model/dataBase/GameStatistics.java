@@ -32,6 +32,8 @@ public class GameStatistics extends Database { // Used for retrieving the leader
     private double allGameSlowestMoveTime;
     private int gameID;
 
+    private double gameDurationPercentile;
+
 
 
     public int getGameID() {
@@ -159,6 +161,12 @@ public class GameStatistics extends Database { // Used for retrieving the leader
             while(gameDurations.next()) {
                 gamesPlayedDuration.add(gameDurations.getDouble(2));
             }
+
+
+
+            ResultSet percentileRS = statement.executeQuery("SELECT id, time_played, percentile FROM (SELECT id, time_played, PERCENT_RANK() OVER (ORDER by time_played ASC) *100 AS percentile FROM game_data) WHERE id = "+id);
+            percentileRS.next();
+            System.out.println("PERCENTILE: "+percentileRS.getDouble(3));
 
 
             ResultSet allGameAverageScoreRS = statement.executeQuery("SELECT ROUND(SUM(score)/COUNT(*), 2) from game_data WHERE score!=0");
