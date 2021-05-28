@@ -166,7 +166,7 @@ public class GameStatistics extends Database { // Used for retrieving the leader
             totalTurnCount.next();
             int temporary = totalTurnCount.getInt(1);
 
-            ResultSet totalTimePlayed = statement.executeQuery("SELECT SUM(time_played) FROM game_data");
+            ResultSet totalTimePlayed = statement.executeQuery("SELECT SUM(time_played) FROM game_data WHERE score!=0");
             totalTimePlayed.next();
             allGameAverageTimePerTurn = totalTimePlayed.getDouble(1) / temporary;
 
