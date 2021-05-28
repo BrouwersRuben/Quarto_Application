@@ -70,7 +70,6 @@ public class Quarto {
     /**
      * METHOD WHICH TAKES CARE OF AI TURN BASED LOGIC
      */
-
     public void ruleBasedAI(boolean makeMove, int pieceID) {
         if (computer.isDifficult()) { // accesses methods  based on difficulty
             if (makeMove) {
@@ -256,7 +255,7 @@ public class Quarto {
      @param gameBoard status of the gameBoard
      @param line winning line which is being compared to the gameBoard
      @return boolean value based on whether there is a line on the board.
-     **/
+     */
     public boolean isThereALine(ArrayList<Integer> gameBoard, int line) {
         return gameBoard.get(board.getWinningLines().get(line).get(0)) == 1 &&
                 gameBoard.get(board.getWinningLines().get(line).get(1)) == 1 &&
@@ -280,7 +279,7 @@ public class Quarto {
      * Method that selects a random piece for the player to place on the board.
      * Selects a random piece from an arrayList containing the pieces that haven't been used yet.
      * @return pieceID
-     **/
+     */
     public int selectRandomPiece() {
         return remainingPieces.getRemainingPieces().get(random.nextInt(remainingPieces.getRemainingPieces().size()));
     }
@@ -293,7 +292,7 @@ public class Quarto {
      * @param pieceColumn column coordinate of the location of the piece
      * @param pieceRow row coordinate of the location of the piece
      * @return single digit coordinate
-     **/
+     */
     public int convertCoordinates(boolean isAI, int pieceColumn, int pieceRow) {
         int tempNumber = 0; // for testing, can be whatever (0)
         if (pieceRow == 0) {
@@ -318,7 +317,7 @@ public class Quarto {
      @param pieceID pieceID
      @param pieceColumn column coordinate of the location of the piece
      @param pieceRow row coordinate of the location of the piece
-     **/
+     */
     public void updateBoardStatusAndUsedPieces(int pieceID, int pieceColumn, int pieceRow) {
         int integer = convertCoordinates(false, pieceColumn, pieceRow);
         board.getBoardStatus().set(integer, 1);
@@ -335,7 +334,7 @@ public class Quarto {
     /**
      * Removes the piece which has been used.
      * @param pieceID pieceID;
-     **/
+     */
     public void removeRemainingPieces(int pieceID) {
         while (remainingPieces.getRemainingPieces().contains(pieceID)) {
             remainingPieces.getRemainingPieces().remove(pieceID);
@@ -459,7 +458,7 @@ public class Quarto {
      * Checks if the file containing the tutorial of the game exists in our game module.
      * @param path location path where the tutorial should be located
      * @return String explaining the status.
-     **/
+     */
     public String checkIfTutorialExist(Path path) {
         if (Files.exists(path) && Files.isRegularFile(path)) {
             return "The File exist and is a regular file.";
@@ -474,7 +473,7 @@ public class Quarto {
      * Displays the tutorial.
      * @param path location path of the video
      * @return video
-     **/
+     */
     public String readTutorialFile(Path path) {
         checkIfTutorialExist(path);
         try {
@@ -546,7 +545,7 @@ public class Quarto {
      *
      * @param pieceID The identifier of the piece which was selected.
      * @return boolean value based on whether the piece has not been used
-     **/
+     */
     public boolean isUnique(Integer pieceID) {
         for (int i = 0; i < board.getPiecesOnBoard().size(); i++) {
             if (pieceID.equals(board.getPiecesOnBoard().get(i))) {
