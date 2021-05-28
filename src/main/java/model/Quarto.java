@@ -51,6 +51,23 @@ public class Quarto {
     }
 
     /**
+     * Here the game is initialized.
+     */
+    public void startGame() {
+        // if starting new game
+
+        getGameID();
+        human.setDateStarted(new Timestamp(System.currentTimeMillis()));
+        username = getUserName();
+        computer.setDifficult(true);
+
+        remainingPieces.fillRemainingPieces();
+        remainingPieces.fillPieces();
+        board.fillWinningLines();
+        board.fillRemainingSpots();
+    }
+
+    /**
      * METHOD WHICH TAKES CARE OF AI TURN BASED LOGIC
      */
 
@@ -97,22 +114,6 @@ public class Quarto {
         }
     }
 
-    public boolean isPieceCloneListEmpty() {
-        return remainingPieces.getRemainingPiecesClone().isEmpty();
-    }
-
-    public int selectRandomPieceOnce() {
-        int randomValue = random.nextInt(remainingPieces.getRemainingPiecesClone().size());
-        int selectedPiece = remainingPieces.getRemainingPiecesClone().get(randomValue);
-        remainingPieces.getRemainingPiecesClone().remove(randomValue);
-        return selectedPiece;
-    }
-
-
-    public int getSelectedPiece() {
-        return computer.getSelectedPiece();
-    }
-
     public boolean isBoardEmpty() {
         if (!board.getBoardStatus().contains(1)) {
             return true;
@@ -125,6 +126,16 @@ public class Quarto {
         return !human.isFirstMove();
     }
 
+    // Checks if there's remaining pieces in the cloned arrayList to simulate games with.
+    public boolean isPieceCloneListEmpty() {
+        return remainingPieces.getRemainingPiecesClone().isEmpty();
+    }
+
+    /**
+     * Checks if there's a winning move for the computer.
+     * @param pieceID pieceID
+     * @return boolean - is there a winning move to be made
+     */
     public boolean winningMove(int pieceID) {
         boolean winnable = false;
 
@@ -136,6 +147,46 @@ public class Quarto {
             }
         }
         return winnable;
+    }
+
+    /**
+     * Method for simulating the moves which the player could make with the given piece.
+     * @param availableSpots arrayList of available tiles
+     * @param pieceID pieceID
+     * @return returns boolean of isItQuarto
+     */
+    @SuppressWarnings("unchecked") // boardStatus is
+    private boolean simulatedTestPlay(ArrayList<Integer> availableSpots, int pieceID) {
+        // If simulating where to place piece
+        ArrayList<Integer> cloneRepresentation = (ArrayList<Integer>) board.getBoardStatus().clone();
+        cloneRepresentation.set(convertCoordinates(true, availableSpots.get(0), availableSpots.get(1)), 1);
+
+        boolean temporary = false;
+        for (int j = 0; j < board.getWinningLines().size(); j++) {
+            if (isThereALine(cloneRepresentation, j)) {
+                if (isItAQuarto(board.getWinningLines().get(j), pieceID)) {
+                    temporary = true;
+                }
+            }
+        }
+        return temporary;
+    }
+
+    /**
+     * Method used for the simulation which makes sure that the
+     * pieces from the remaining pieces list are selected once when selecting them with a randomizer.
+     * @return pieceID
+     */
+    public int selectRandomPieceOnce() {
+        int randomValue = random.nextInt(remainingPieces.getRemainingPiecesClone().size());
+        int selectedPiece = remainingPieces.getRemainingPiecesClone().get(randomValue);
+        remainingPieces.getRemainingPiecesClone().remove(randomValue);
+        return selectedPiece;
+    }
+
+
+    public int getSelectedPiece() {
+        return computer.getSelectedPiece();
     }
 
     public void generateFirstMove() {
@@ -155,26 +206,13 @@ public class Quarto {
         }
     }
 
-
-    @SuppressWarnings("unchecked") // boardStatus is
-    private boolean simulatedTestPlay(ArrayList<Integer> availableSpots, int pieceID) {
-        // If simulating where to place piece
-        ArrayList<Integer> cloneRepresentation = (ArrayList<Integer>) board.getBoardStatus().clone();
-        cloneRepresentation.set(convertCoordinates(true, availableSpots.get(0), availableSpots.get(1)), 1);
-
-        boolean temporary = false;
-        for (int j = 0; j < board.getWinningLines().size(); j++) {
-            if (isThereALine(cloneRepresentation, j)) {
-                if (simulatedQuartoCheck(board.getWinningLines().get(j), pieceID)) {
-                    temporary = true;
-                }
-            }
-        }
-        return temporary;
-    }
-
-
-    public boolean simulatedQuartoCheck(ArrayList<Integer> integers, int pieceID) {
+    /**
+     * Method which checks if there's a quarto
+     * @param integers winningLine
+     * @param pieceID pieceID
+     * @return boolean value confirming whether it's a quarto or not
+     */
+    public boolean isItAQuarto(ArrayList<Integer> integers, int pieceID) {
 
         int first = findCorrespondingPiece(integers.get(0));
         int second = findCorrespondingPiece(integers.get(1));
@@ -191,7 +229,6 @@ public class Quarto {
         } else if(board.getBoardStatus().get(integers.get(3))==0) {
             fourth = pieceID-1;
         }
-
 
         if (remainingPieces.getPieces().get(first).getFill() == remainingPieces.getPieces().get(second).getFill() && remainingPieces.getPieces().get(first).getFill() == remainingPieces.getPieces().get(third).getFill() && remainingPieces.getPieces().get(first).getFill() == remainingPieces.getPieces().get(fourth).getFill()) {
             return true;
@@ -214,71 +251,12 @@ public class Quarto {
         board.removeRemainingSpots(x, y);
     }
 
-
     /**
-     * Here the game is initialized.
-     */
-    public void startGame() {
-        // if starting new game
-
-        getGameID();
-        human.setDateStarted(new Timestamp(System.currentTimeMillis()));
-        username = getUserName();
-        computer.setDifficult(true);
-
-        remainingPieces.fillRemainingPieces();
-        remainingPieces.fillPieces();
-        board.fillWinningLines();
-        board.fillRemainingSpots();
-    }
-
-
-    /**
-     * Method which checks if the game is over or not by
-     * comparing the current board status with the pre-set winning lines.
-     *
-     * @return
-     */
-    public boolean isGameOver() {
-        System.out.println("Here is the current game status: " + board.getBoardStatus());
-
-        for (int j = 0; j < board.getWinningLines().size(); j++) {
-            if (isThereALine(board.getBoardStatus(), j)) {
-                System.out.println("There's a line. Checking if it's quarto...");
-                if (isItAQuarto(board.getWinningLines().get(j))) {
-                    gameStatistics.saveGame(turnData.getTurnStatistics(), getGameID(), getUserName(), human.getDifficulty(), human.isHasQuarto(), human.getDateStarted());
-                    return true;
-                }
-            }
-        }
-        // Checking if draw (when no pieces left and no winning line).
-        if (remainingPieces.getRemainingPieces().size() == 0) {
-            return true;
-        } else {
-            System.out.println("It wasn't Quarto.\n");
-            return false;
-        }
-    }
-
-    public boolean isItAQuarto(ArrayList<Integer> integers) {
-        int first = findCorrespondingPiece(integers.get(0));
-        int second = findCorrespondingPiece(integers.get(1));
-        int third = findCorrespondingPiece(integers.get(2));
-        int fourth = findCorrespondingPiece(integers.get(3));
-
-        if (remainingPieces.getPieces().get(first).getFill() == remainingPieces.getPieces().get(second).getFill() && remainingPieces.getPieces().get(first).getFill() == remainingPieces.getPieces().get(third).getFill() && remainingPieces.getPieces().get(first).getFill() == remainingPieces.getPieces().get(fourth).getFill()) {
-            return true;
-        } else if (remainingPieces.getPieces().get(first).getColor() == remainingPieces.getPieces().get(second).getColor() && remainingPieces.getPieces().get(first).getColor() == remainingPieces.getPieces().get(third).getColor() && remainingPieces.getPieces().get(first).getColor() == remainingPieces.getPieces().get(fourth).getColor()) {
-            return true;
-        } else if (remainingPieces.getPieces().get(first).getShape() == remainingPieces.getPieces().get(second).getShape() && remainingPieces.getPieces().get(first).getShape() == remainingPieces.getPieces().get(third).getShape() && remainingPieces.getPieces().get(first).getShape() == remainingPieces.getPieces().get(fourth).getShape()) {
-            return true;
-        } else if (remainingPieces.getPieces().get(first).getLength() == remainingPieces.getPieces().get(second).getLength() && remainingPieces.getPieces().get(first).getLength() == remainingPieces.getPieces().get(third).getLength() && remainingPieces.getPieces().get(first).getLength() == remainingPieces.getPieces().get(fourth).getLength()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
+    Scans the board to see if the pieces on the board have created a line of four.
+     @param gameBoard status of the gameBoard
+     @param line winning line which is being compared to the gameBoard
+     @return boolean value based on whether there is a line on the board.
+     **/
     public boolean isThereALine(ArrayList<Integer> gameBoard, int line) {
         return gameBoard.get(board.getWinningLines().get(line).get(0)) == 1 &&
                 gameBoard.get(board.getWinningLines().get(line).get(1)) == 1 &&
@@ -297,32 +275,22 @@ public class Quarto {
         return piece;
     }
 
-    public String turnIndicator() {
-        if (human.getPlayerTurn()) {
-            return "Your turn!";
-        } else {
-            return "Their turn!";
-        }
-    }
 
     /**
-     * Method to help AI select a piece for the player to place on the board.
-     *
-     * @return
-     */
+     * Method that selects a random piece for the player to place on the board.
+     * Selects a random piece from an arrayList containing the pieces that haven't been used yet.
+     * @return pieceID
+     **/
     public int selectRandomPiece() {
         return remainingPieces.getRemainingPieces().get(random.nextInt(remainingPieces.getRemainingPieces().size()));
     }
 
-
-    //TODO: CHANGE
-
     /**
-     * A method which declares whether a board tile is occupied or not
-     * with 1's and 0's.
-     * This is later on used to compare the board state to possible winning lines/combinations.
-     */
-
+     * A method which accepts X and Y coordinates and converts them to a single digit
+     * coordinate so that it could be used to indicate whether a board tile is occupied or not.
+     * This is used to compare the board state to possible winning lines/combinations.
+     * @return single digit coordinate
+     **/
     public int convertCoordinates(boolean isAI, int pieceColumn, int pieceRow) {
         int tempNumber = 0; // for testing, can be whatever (0)
         if (pieceRow == 0) {
@@ -342,6 +310,9 @@ public class Quarto {
         return tempNumber;
     }
 
+    /*
+    Updates an arrayList which contains various important values which are used for the game logic.
+     */
     public void updateBoardStatusAndUsedPieces(int pieceID, int pieceColumn, int pieceRow) {
         int integer = convertCoordinates(false, pieceColumn, pieceRow);
         board.getBoardStatus().set(integer, 1);
@@ -357,7 +328,7 @@ public class Quarto {
 
     /**
      * Keeps track of which pieces the AI can pick for the player to make a turn with.
-     */
+     **/
     public void removeRemainingPieces(Integer pieceID) {
         while (remainingPieces.getRemainingPieces().contains(pieceID)) {
             remainingPieces.getRemainingPieces().remove(pieceID);
@@ -393,11 +364,6 @@ public class Quarto {
         return gameStatistics.getGameID();
     }
 
-
-    /**
-     * Creates an object which is used for entering advanced statistics data into the database.
-     */
-
     // Prepares data that will be shown in the leaderboard page (top 5 players).
     public void getLeaderboard() {
         gameStatistics.getLeaderboard();
@@ -413,6 +379,7 @@ public class Quarto {
         record.setPlayerSelected(i);
     }
 
+    // Stores an integer value of the selected player.
     public int getPlayerSelected() {
         return record.getPlayerSelected();
     }
@@ -422,12 +389,12 @@ public class Quarto {
         return gameStatistics.getRecords().get(i).getId();
     }
 
-    public void getTopFiveStatistics() {
+    // Gets statistics of the player selected from the top 5 leaderboard.
+    public void getSpecificPlayerStatistics() {
         gameStatistics.getStatistics(getRecordsUserId(getPlayerSelected()));
     }
 
-
-    // Displays the username, score, and other statistics for the advanced statistics page.
+    // These next methods display the username, score, and other statistics for the advanced statistics page.
     public String getUsernameFromRecords(int i) {
         return gameStatistics.getRecords().get(i).getUsername();
     }
@@ -465,15 +432,12 @@ public class Quarto {
         return gameStatistics.getOverallTimeSpentOnTurn().get(i);
     }
 
+    // Blank image representing that no piece is selected.
     public String getPlaceHolder() {
         return remainingPieces.getPlaceHolder();
     }
 
     // Statistics for win/lose screen.
-    public void getFinishedGameStatistics() {
-        gameStatistics.getStatistics(getGameID());
-    }
-
     public double getAllGameAverageScore() {
         return gameStatistics.getAllGameAverageScore();
     }
@@ -486,7 +450,9 @@ public class Quarto {
 
     /**
      * Checks if the file containing the tutorial of the game exists in our game module.
-     */
+     * @param path location path where the tutorial should be located
+     * @return String explaining the status.
+     **/
     public String checkIfTutorialExist(Path path) {
         if (Files.exists(path) && Files.isRegularFile(path)) {
             return "The File exist and is a regular file.";
@@ -499,7 +465,9 @@ public class Quarto {
 
     /**
      * Displays the tutorial.
-     */
+     * @param path location path of the video
+     * @return video
+     **/
     public String readTutorialFile(Path path) {
         checkIfTutorialExist(path);
         try {
@@ -541,12 +509,6 @@ public class Quarto {
         human.setHasQuarto(false);
     }
 
-    public void gameOver() {
-        if (timer.getDdMinute().equals("02")) {
-            human.setHasQuarto(false);
-        }
-    }
-
     public void addToListOnBoard(Integer pieceId) {
         board.setPiecesOnBoard(pieceId);
     }
@@ -575,39 +537,32 @@ public class Quarto {
     /**
      * Checks if the piece which the user has selected has been already placed or not.
      *
-     * @param pieceId The identifier of the piece which was selected.
-     * @return
-     */
-    public boolean isUnique(Integer pieceId) {
+     * @param pieceID The identifier of the piece which was selected.
+     * @return boolean value based on whether the piece has not been used
+     **/
+    public boolean isUnique(Integer pieceID) {
         for (int i = 0; i < board.getPiecesOnBoard().size(); i++) {
-            if (pieceId.equals(board.getPiecesOnBoard().get(i))) {
+            if (pieceID.equals(board.getPiecesOnBoard().get(i))) {
                 return false;
             }
         }
         return true;
     }
 
-    public void timerIncrement() {
-        timer.timerIncrement();
+    public void timerIncrement() { timer.timerIncrement(); }
+    public String ddMinute() { return timer.getDdMinute(); }
+    public String ddSecond() { return timer.getDdSecond(); }
+
+    public void setTurn() { human.setTurn(human.getTurn() + 1); }
+    public int getTurn() { return human.getTurn(); }
+
+    public String turnIndicator() {
+        if (human.getPlayerTurn()) {
+            return "Your turn!";
+        } else {
+            return "Their turn!";
+        }
     }
-
-    public String ddMinute() {
-        return timer.getDdMinute();
-    }
-
-    public String ddSecond() {
-        return timer.getDdSecond();
-    }
-
-
-    public void setTurn() {
-        human.setTurn(human.getTurn() + 1);
-    }
-
-    public int getTurn() {
-        return human.getTurn();
-    }
-
 
     // Database related methods.
     public void openDB() {
@@ -619,11 +574,6 @@ public class Quarto {
         }
     }
 
-    public void closeDB() {
-        database.closeDb();
-    }
-
-    public void createTableIfDoesntExist() {
-        database.createTableIfDoesntExist();
-    }
+    public void createTableIfDoesntExist() { database.createTableIfDoesntExist(); }
+    public void closeDB() { database.closeDb(); }
 }

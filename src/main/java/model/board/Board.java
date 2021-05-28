@@ -105,7 +105,6 @@ public class Board {
     public void setBoardRepresentation(int y, int x) { boardRepresentation[x][y]=1;
         System.out.println("Board representation: "+Arrays.deepToString(boardRepresentation)); } ;
 
-    public void setSimulatedBoardStatus(ArrayList<Integer> simulatedBoardStatus) { this.simulatedBoardStatus = simulatedBoardStatus; }
 }
 
 

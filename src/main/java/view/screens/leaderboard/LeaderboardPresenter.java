@@ -7,8 +7,6 @@ import javafx.stage.Window;
 import main.java.model.Quarto;
 import main.java.view.screens.main.QuartoPresenter;
 import main.java.view.screens.main.QuartoView;
-import main.java.view.screens.statisticsWindow.StatisticsPresenter;
-import main.java.view.screens.statisticsWindow.StatisticsView;
 import main.java.view.screens.winLoseWindow.winLoseWindowPresenter;
 import main.java.view.screens.winLoseWindow.winLoseWindowView;
 
@@ -38,27 +36,27 @@ public class LeaderboardPresenter {
         //TODO: Can this be made more streamlined?
         this.view.getText1().setOnMouseClicked(event -> {
             model.setPlayerSelected(0);
-            model.getTopFiveStatistics();
+            model.getSpecificPlayerStatistics();
             setWinLoseWindow();
         });
         this.view.getText2().setOnMouseClicked(event -> {
             model.setPlayerSelected(1);
-            model.getTopFiveStatistics();
+            model.getSpecificPlayerStatistics();
             setWinLoseWindow();
         });
         this.view.getText3().setOnMouseClicked(event -> {
             model.setPlayerSelected(2);
-            model.getTopFiveStatistics();
+            model.getSpecificPlayerStatistics();
             setWinLoseWindow();
         });
         this.view.getText4().setOnMouseClicked(event -> {
             model.setPlayerSelected(3);
-            model.getTopFiveStatistics();
+            model.getSpecificPlayerStatistics();
             setWinLoseWindow();
         });
         this.view.getText5().setOnMouseClicked(event -> {
             model.setPlayerSelected(4);
-            model.getTopFiveStatistics();
+            model.getSpecificPlayerStatistics();
             setWinLoseWindow();
         });
     }
