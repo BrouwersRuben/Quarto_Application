@@ -32,6 +32,8 @@ public class GameStatistics extends Database { // Used for retrieving the leader
     private double allGameSlowestMoveTime;
     private int gameID;
 
+    private boolean hasWon;
+
     private double gameDurationPercentile;
 
 
@@ -166,14 +168,13 @@ public class GameStatistics extends Database { // Used for retrieving the leader
 
             ResultSet percentileRS = statement.executeQuery("SELECT id, time_played, percentile FROM (SELECT id, time_played, PERCENT_RANK() OVER (ORDER by time_played ASC) *100 AS percentile FROM game_data) WHERE id = "+id);
             percentileRS.next();
-            System.out.println("PERCENTILE: "+percentileRS.getDouble(3));
-
+            gameDurationPercentile = percentileRS.getDouble(3);
 
             ResultSet allGameAverageScoreRS = statement.executeQuery("SELECT ROUND(SUM(score)/COUNT(*), 2) from game_data WHERE score!=0");
             allGameAverageScoreRS.next();
             this.allGameAverageScore = allGameAverageScoreRS.getDouble(1);
 
-            ResultSet allGameAverageTurnRS = statement.executeQuery("SELECT SUM(time_spent)/COUNT(DISTINCT ID) FROM turn_statistics");
+            ResultSet allGameAverageTurnRS = statement.executeQuery("SELECT SUM(time_spent)/COUNT(TURN) FROM turn_statistics");
             allGameAverageTurnRS.next();
             allGameAverageMoveTime = allGameAverageTurnRS.getDouble(1);
 
@@ -185,7 +186,16 @@ public class GameStatistics extends Database { // Used for retrieving the leader
             allGameSlowestTurnRS.next();
             allGameSlowestMoveTime = allGameSlowestTurnRS.getDouble(1);
 
+            ResultSet hasWonRS = statement.executeQuery("SELECT has_quarto FROM game_data WHERE id = "+id);
+            hasWonRS.next();
 
+            if(hasWonRS.getInt(1) == 1) {
+                hasWon = true;
+            } else {
+                hasWon = false;
+            }
+
+            System.out.println("HAS WON = "+hasWon);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -268,6 +278,8 @@ public class GameStatistics extends Database { // Used for retrieving the leader
     public List<Double> getGamesPlayedDuration() {
         return gamesPlayedDuration;
     }
+
+    public boolean isHasWon() { return hasWon; }
 }
 
 

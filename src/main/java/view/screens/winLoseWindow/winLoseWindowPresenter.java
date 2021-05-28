@@ -46,6 +46,7 @@ public class winLoseWindowPresenter {
             updateView();
         });
         this.view.getReturnToLeaderboard().setOnAction(event -> {
+            model.getLeaderboard();
             setLeaderboardWindow();
             updateView();
         });
@@ -106,8 +107,8 @@ public class winLoseWindowPresenter {
         view.getBarChart().getData().addAll(barChart1GameDurations);
         view.getBarChart2().getData().addAll(barChart2Fastest, barChart2Average, barChart2Slowest);
 
-        view.getWinOrLose().setText(model.getWinState() ? "Victory" : "Defeat");
-        view.getEndGameStatus().setImage(model.getWinState() ? new Image(Paths.get("resources/media/images/victory.png").toUri().toString()) : new Image(Paths.get("resources/media/images/defeat.png").toUri().toString()));
+        view.getWinOrLose().setText(model.isHasWon() ? "Victory" : "Defeat");
+        view.getEndGameStatus().setImage(model.isHasWon() ? new Image(Paths.get("resources/media/images/victory.png").toUri().toString()) : new Image(Paths.get("resources/media/images/defeat.png").toUri().toString()));
     }
 
     public void addWindowEventHandlers() {

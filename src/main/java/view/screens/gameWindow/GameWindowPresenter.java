@@ -51,10 +51,6 @@ public class GameWindowPresenter {
             closingAlert(event);
             updateView();
         });
-        this.view.getWinScreen().setOnAction(event -> {
-            setWinLoseWindow();
-            updateView();
-        });
 
         //TODO: HANDLE SITUATION WHERE THERE IS A TIE, CURRENTLY ONLY WIN / LOSE ( MOST LIKELY INSTEAD OF BOOLEAN WE NEED INT VALUES )
 
@@ -80,12 +76,6 @@ public class GameWindowPresenter {
                         model.setBoardRepresentation(model.getX(), model.getY());
                         model.removeRemainingPieces(Integer.parseInt(view.getChosenPiece().getId()));
                         System.out.println("Computer made a move.");
-
-                        // Computer selects the piece you have to place
-                        model.ruleBasedAI(false, model.selectRandomPiece());
-                        im = new Image("media/images/" + model.getSelectedPiece() + ".png");
-                        view.getChosenPiece().getChildren().add(new ImageView(im));
-                        view.getChosenPiece().setId(String.valueOf(model.getSelectedPiece()));
                         model.setLost();
 
                         if (model.isGameOver()) {
@@ -93,6 +83,11 @@ public class GameWindowPresenter {
                         } else {
                             model.setPlayerTurn(true);
                             model.setStartTimestamp();
+                            // Computer selects the piece you have to place
+                            model.ruleBasedAI(false, model.selectRandomPiece());
+                            im = new Image("media/images/" + model.getSelectedPiece() + ".png");
+                            view.getChosenPiece().getChildren().add(new ImageView(im));
+                            view.getChosenPiece().setId(String.valueOf(model.getSelectedPiece()));
                         }
                         updateView();
                     }

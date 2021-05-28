@@ -42,7 +42,7 @@ public class Board {
             winningLines.add(temporary);
         }
 
-        System.out.println("Winning lines: \n"+winningLines);
+        System.out.println("Winning lines: "+winningLines);
     }
 
     public void fillRemainingSpots() {
@@ -54,7 +54,7 @@ public class Board {
                 remainingSpots.add(temporary);
             }
         }
-        System.out.println("Remaining spots created: "+remainingSpots+"\n");
+        System.out.println("Remaining spots : "+remainingSpots+"\n");
     }
 
     public void removeRemainingSpots(int xCoord, int yCoord) {

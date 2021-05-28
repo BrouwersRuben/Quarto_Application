@@ -90,25 +90,32 @@ public class Quarto {
 
     /**
      * METHOD WHICH TAKES CARE OF AI TURN BASED LOGIC
+     * @param makeMove boolean value which indicates whether the AI is placing a piece or selecting a piece for the opponent to play.
+     * @param pieceID pieceID
      */
     public void ruleBasedAI(boolean makeMove, int pieceID) {
         if (computer.isDifficult()) { // accesses methods  based on difficulty
+            System.out.println("\nDifficulty: intermediate");
             if (makeMove) {
-                if (isBoardEmpty() && aiMakesFirstMove()) { // if AI has to make the move first then it generates the best move based on strategy
-                    // (anywhere which can complete 3 winning lines)
+                System.out.println("Computers turn. Making decision on where to place the piece.");
+                if (isBoardEmpty() && aiMakesFirstMove()) { // if AI has to make the move first then it generates the best move
+                    // based on strategy (anywhere which can be a part of 3 winning lines)
                     generateFirstMove();
+                    System.out.println("Since it's the first move, computer is generating a random tile to place the piece which can be a part of 3 winning lines.");
                     return;
                 }
 
                 if (winningMove(pieceID)) { // if AI sees a winning move he must place it
+                    System.out.println("Computer found a tile to place a piece for a victory. Placing it.");
                     return;
                 } else {
+                    System.out.println("Computer didn't find a chance to claim victory, placing the piece at a random spot.");
                     generateRandomCoordinates();
                 }
 
-                generateRandomCoordinates();
 
             } else {
+                System.out.println("Choosing a piece for the opponent.");
                 boolean safeDecision = false;
                 remainingPieces.getRemainingPiecesClone().clear();
                 remainingPieces.setRemainingPiecesClone(remainingPieces.getRemainingPieces());
@@ -116,20 +123,25 @@ public class Quarto {
 
                 while (!safeDecision) {// checks if the random piece that was given can result in the player winning, if true,
                     // it selects a different piece
-                    if (!isPieceCloneListEmpty()) {
+                    System.out.println("Checking if piece "+computer.getSelectedPiece()+"  is safe to give and doesn't result in a victory for the opponent.");
+                    if (otherPiecesAvailable()) {
                         if (winningMove(computer.getSelectedPiece())) {
+                            System.out.println("The chosen piece results in a player potentially winning the game, choosing a different piece.");
                             computer.setSelectedPiece(selectRandomPieceOnce());
                             safeDecision = false;
                         } else {
+                            System.out.println("The chosen piece is safe to give to the opponent, no threat.");
                             safeDecision = true;
                         }
                     } else {
+                        System.out.println("All of the available pieces result in the player winning, giving him a random piece.");
                         computer.setSelectedPiece(selectRandomPiece());
                         return;
                     }
                 }
             }
         } else {
+            System.out.println("Difficulty: easy.\n No thought process is being applied, giving a random piece.");
             generateRandomCoordinates();
         }
     }
@@ -147,8 +159,8 @@ public class Quarto {
     }
 
     // Checks if there's remaining pieces in the cloned arrayList to simulate games with.
-    public boolean isPieceCloneListEmpty() {
-        return remainingPieces.getRemainingPiecesClone().isEmpty();
+    public boolean otherPiecesAvailable() {
+        return !remainingPieces.getRemainingPiecesClone().isEmpty();
     }
 
     /**
@@ -422,13 +434,6 @@ public class Quarto {
     }
 
     // These next methods display the username, score, and other statistics for the advanced statistics page.
-    public String getUsernameFromRecords(int i) {
-        return gameStatistics.getRecords().get(i).getUsername();
-    }
-
-    public int getScoreFromRecords(int id) {
-        return gameStatistics.getRecords().get(id).getScore();
-    }
 
     public double getAverageTime() {
         BigDecimal bd = BigDecimal.valueOf(gameStatistics.getPlayerAverageMoveTime()).setScale(2, RoundingMode.HALF_UP);
@@ -486,6 +491,10 @@ public class Quarto {
     // Blank image representing that no piece is selected.
     public String getPlaceHolder() {
         return remainingPieces.getPlaceHolder();
+    }
+
+    public boolean isHasWon() {
+        return gameStatistics.isHasWon();
     }
 
     // Statistics for win/lose screen.
