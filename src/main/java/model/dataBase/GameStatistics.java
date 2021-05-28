@@ -32,12 +32,7 @@ public class GameStatistics extends Database { // Used for retrieving the leader
     private double allGameSlowestMoveTime;
     private int gameID;
     private double gameDurationPercentile;
-
     private boolean hasWon;
-
-
-
-
 
     public int getGameID() {
 
@@ -235,9 +230,7 @@ public class GameStatistics extends Database { // Used for retrieving the leader
         return allGameTimeSpentOnTurn;
     }
 
-    public List<PlayerRecords> getRecords() {
-        return records;
-    }
+    public List<PlayerRecords> getRecords() { return records; }
 
     public double getPlayerAverageMoveTime() {
         return playerAverageMoveTime;
