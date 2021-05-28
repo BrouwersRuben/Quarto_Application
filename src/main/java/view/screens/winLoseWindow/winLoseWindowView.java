@@ -35,8 +35,9 @@ public class winLoseWindowView extends BorderPane {
     private Button playAgain;
     private Button returnToLeaderboard;
     private Button exitGame;
-    private CategoryAxis areaChartXAxis;
-    private NumberAxis areaChartYAxis;
+    private CategoryAxis lineChartXAxis;
+    private NumberAxis lineChartYAxis;
+    private NumberAxis barChart1YAxis;
     private NumberAxis barChart2YAxis;
 
 
@@ -58,20 +59,23 @@ public class winLoseWindowView extends BorderPane {
         stat3 = new Label();
 
         // TODO: SCORE PER MOVE SO THAT WE CAN CALCULATE OUTLIERS
-        areaChartXAxis = new CategoryAxis();
-        areaChartXAxis.setLabel("Move");
+        lineChartXAxis = new CategoryAxis();
+        lineChartXAxis.setLabel("Move");
 
-        areaChartYAxis = new NumberAxis();
-        areaChartYAxis.setLabel("Seconds");
+        lineChartYAxis = new NumberAxis();
+        lineChartYAxis.setLabel("Seconds");
+
+        barChart1YAxis = new NumberAxis();
+        barChart1YAxis.setLabel("Seconds");
 
         barChart2YAxis = new NumberAxis();
         barChart2YAxis.setLabel("Seconds");
 
-        lineChart = new AreaChart<>(areaChartXAxis, areaChartYAxis);
+        lineChart = new AreaChart<>(lineChartXAxis, lineChartYAxis);
         lineChart.setTitle("Seconds spent per move");
 
-        barChart = new BarChart<>(new CategoryAxis(), new NumberAxis());
-        barChart.setTitle("Score");
+        barChart = new BarChart<>(new CategoryAxis(), barChart1YAxis);
+        barChart.setTitle("Duration of the game");
 
         barChart2 = new BarChart<>(new CategoryAxis(), barChart2YAxis);
         barChart2.setTitle("Average move time");

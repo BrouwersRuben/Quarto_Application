@@ -3,3 +3,4 @@ FROM game_data;
 
 
 SELECT SUM(MIN(time_spent))/COUNT(DISTINCT ID) FROM turn_statistics GROUP BY ID;
+SELECT DISTINCT id, time_played from game_data ORDER BY id ASC;

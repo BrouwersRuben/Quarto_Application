@@ -471,6 +471,18 @@ public class Quarto {
         return gameStatistics.getAllGameSlowestMoveTime();
     }
 
+    public String scoredBetterThanAverage() {
+        if(gameStatistics.getPlayerScore()>gameStatistics.getAllGameAverageScore()) {
+            return "You performed better than the average player.";
+        } else {
+            return "You performed worse than the average player.";
+        }
+    }
+
+    public List<Double> getGamesPlayedDuration() {
+        return gameStatistics.getGamesPlayedDuration();
+    }
+
     // Blank image representing that no piece is selected.
     public String getPlaceHolder() {
         return remainingPieces.getPlaceHolder();

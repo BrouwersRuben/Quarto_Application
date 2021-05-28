@@ -18,6 +18,7 @@ public class GameStatistics extends Database { // Used for retrieving the leader
 
     private List<Double> playerTimeSpentOnTurn = new ArrayList<>();
     private List<Double> allGameTimeSpentOnTurn = new ArrayList<>();
+    private List<Double> gamesPlayedDuration = new ArrayList<>();
     private List<PlayerRecords> records = new ArrayList<>();
     private String playerName;
     private int turn;
@@ -154,6 +155,11 @@ public class GameStatistics extends Database { // Used for retrieving the leader
             playerFastestMoveTime = Collections.min(playerTimeSpentOnTurn);
             playerSlowestMoveTime = Collections.max(playerTimeSpentOnTurn);
 
+            ResultSet gameDurations = statement.executeQuery("SELECT DISTINCT id, time_played from game_data ORDER BY id ASC");
+            while(gameDurations.next()) {
+                gamesPlayedDuration.add(gameDurations.getDouble(2));
+            }
+
 
             ResultSet allGameAverageScoreRS = statement.executeQuery("SELECT ROUND(SUM(score)/COUNT(*), 2) from game_data WHERE score!=0");
             allGameAverageScoreRS.next();
@@ -249,6 +255,10 @@ public class GameStatistics extends Database { // Used for retrieving the leader
 
     public double getAllGameSlowestMoveTime() {
         return allGameSlowestMoveTime;
+    }
+
+    public List<Double> getGamesPlayedDuration() {
+        return gamesPlayedDuration;
     }
 }
 
