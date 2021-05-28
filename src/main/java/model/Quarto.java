@@ -456,7 +456,19 @@ public class Quarto {
     }
 
     public double getAverageTurnStats(int i) {
-        return gameStatistics.getOverallTimeSpentOnTurn().get(i);
+        return gameStatistics.getAllGameTimeSpentOnTurn().get(i);
+    }
+
+    public double getAllGameAverageMoveTime() {
+        return gameStatistics.getAllGameAverageMoveTime();
+    }
+
+    public double getAllGameFastestMoveTime() {
+        return gameStatistics.getAllGameFastestMoveTime();
+    }
+
+    public double getAllGameSlowestMoveTime() {
+        return gameStatistics.getAllGameSlowestMoveTime();
     }
 
     // Blank image representing that no piece is selected.
@@ -467,10 +479,6 @@ public class Quarto {
     // Statistics for win/lose screen.
     public double getAllGameAverageScore() {
         return gameStatistics.getAllGameAverageScore();
-    }
-
-    public double getAllGameAverageTimePerTurn() {
-        return gameStatistics.getAllGameAverageTimePerTurn();
     }
 
     //Business logic

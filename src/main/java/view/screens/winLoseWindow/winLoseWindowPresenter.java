@@ -57,18 +57,24 @@ public class winLoseWindowPresenter {
         // fills the view with model data
         view.getPlayerScore().setText("score: "+model.getScore());
         view.getPlayerName().setText("Statistics for "+model.getPlayerName());
-        view.getStat1().setText("average time spent per round: " + model.getAverageTime());
-        view.getStat2().setText("fastest move: " + model.getFastestMove() + " seconds");
-        view.getStat3().setText("slowest move: " + model.getSlowestMove() + " seconds");
+//        view.getStat1().setText("average time spent per round: " + model.getAverageTime());
+//        view.getStat2().setText("fastest move: " + model.getFastestMove() + " seconds");
+//        view.getStat3().setText("slowest move: " + model.getSlowestMove() + " seconds");
 
 
         // TODO: DO THIS CORRECTLY, SO THAT PLAYER AND COMPUTER HAVE SEPARATE COLORS/INDICATORS
         XYChart.Series<String, Number> lineChartPlayer = new XYChart.Series<>();
         XYChart.Series<String, Number> lineChartAverage = new XYChart.Series<>();
-        XYChart.Series<String, Number> barChart1Player = new XYChart.Series<>();
-        XYChart.Series<String, Number> barChart1Average = new XYChart.Series<>();
-        XYChart.Series<String, Number> barChart2Player = new XYChart.Series<>();
+        XYChart.Series<String, Number> barChart1PlayerAverage = new XYChart.Series<>();
+        XYChart.Series<String, Number> barChart1AllGameAverage = new XYChart.Series<>();
+
+
         XYChart.Series<String, Number> barChart2Average = new XYChart.Series<>();
+        XYChart.Series<String, Number> barChart2AllGameAverage = new XYChart.Series<>();
+        XYChart.Series<String, Number> barChart2Fastest = new XYChart.Series<>();
+        XYChart.Series<String, Number> barChart2AllGameFastest = new XYChart.Series<>();
+        XYChart.Series<String, Number> barChart2Slowest = new XYChart.Series<>();
+        XYChart.Series<String, Number> barChart2AllGameSlowest = new XYChart.Series<>();
 
 
 
@@ -81,21 +87,31 @@ public class winLoseWindowPresenter {
         lineChartPlayer.setName("Player");
         lineChartAverage.setName("Average");
 
-        barChart1Player.getData().add(new XYChart.Data<>("player", model.getScore()));
-        barChart1Average.getData().add(new XYChart.Data<>("average", model.getAllGameAverageScore()));
-        barChart1Player.setName("Player");
-        barChart1Average.setName("Average");
+        barChart1PlayerAverage.getData().add(new XYChart.Data<>("player", model.getScore()));
+        barChart1AllGameAverage.getData().add(new XYChart.Data<>("average", model.getAllGameAverageScore()));
+        barChart1PlayerAverage.setName("Player");
+        barChart1AllGameAverage.setName("Average");
 
-        barChart2Player.getData().add(new XYChart.Data<>("player", model.getAverageTime()));
-        barChart2Average.getData().add(new XYChart.Data<>("average", model.getAllGameAverageTimePerTurn()));
-        barChart2Player.setName("Player");
+        barChart2Average.getData().add(new XYChart.Data<>("player", model.getAverageTime()));
+        barChart2Average.getData().add(new XYChart.Data<>("average (all games combined)", model.getAllGameAverageMoveTime()));
+
+        barChart2Fastest.getData().add(new XYChart.Data<>("player", model.getFastestMove()));
+        barChart2Fastest.getData().add(new XYChart.Data<>("average (all games combined)", model.getAllGameFastestMoveTime()));
+
+        barChart2Slowest.getData().add(new XYChart.Data<>("player", model.getSlowestMove()));
+        barChart2Slowest.getData().add(new XYChart.Data<>("average (all games combined)", model.getAllGameSlowestMoveTime()));
+
         barChart2Average.setName("Average");
+        barChart2Fastest.setName("Fastest");
+        barChart2Slowest.setName("Slowest");
+
+
 
 
 
         view.getLineChart().getData().addAll(lineChartPlayer, lineChartAverage);
-        view.getBarChart().getData().addAll(barChart1Player, barChart1Average);
-        view.getBarChart2().getData().addAll(barChart2Player, barChart2Average);
+        view.getBarChart().getData().addAll(barChart1PlayerAverage, barChart1AllGameAverage);
+        view.getBarChart2().getData().addAll(barChart2Fastest, barChart2Average, barChart2Slowest);
 
         view.getWinOrLose().setText(model.getWinState() ? "Victory" : "Defeat");
         view.getEndGameStatus().setImage(model.getWinState() ? new Image(Paths.get("resources/media/images/victory.png").toUri().toString()) : new Image(Paths.get("resources/media/images/defeat.png").toUri().toString()));

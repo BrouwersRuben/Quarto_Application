@@ -2,3 +2,4 @@ SELECT id, username, date_started, score, turns, time_played, game_difficulty, (
 FROM game_data;
 
 
+SELECT SUM(MIN(time_spent))/COUNT(DISTINCT ID) FROM turn_statistics GROUP BY ID;
