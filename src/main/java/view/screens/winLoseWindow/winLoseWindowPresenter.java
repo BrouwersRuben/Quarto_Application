@@ -59,6 +59,7 @@ public class winLoseWindowPresenter {
         view.getPlayerScore().setText("Your score: "+model.getScore());
         view.getStat1().setText("Average score of all games: " + model.getAllGameAverageScore());
         view.getStat2().setText(model.scoredBetterThanAverage());
+        view.getStat3().setText("You scored in the "+model.getGameDurationPercentile()+"% percentile");
         view.getPlayerName().setText("Statistics for "+model.getPlayerName());
 
         XYChart.Series<String, Number> lineChartPlayer = new XYChart.Series<>();

@@ -31,10 +31,11 @@ public class GameStatistics extends Database { // Used for retrieving the leader
     private double allGameFastestMoveTime;
     private double allGameSlowestMoveTime;
     private int gameID;
+    private double gameDurationPercentile;
 
     private boolean hasWon;
 
-    private double gameDurationPercentile;
+
 
 
 
@@ -165,8 +166,6 @@ public class GameStatistics extends Database { // Used for retrieving the leader
                 gamesPlayedDuration.add(gameDurations.getDouble(2));
             }
 
-
-
             ResultSet percentileRS = statement.executeQuery("SELECT id, time_played, percentile FROM (SELECT id, time_played, PERCENT_RANK() OVER (ORDER by time_played ASC) *100 AS percentile FROM game_data) WHERE id = "+id);
             percentileRS.next();
             gameDurationPercentile = percentileRS.getDouble(3);
@@ -281,6 +280,8 @@ public class GameStatistics extends Database { // Used for retrieving the leader
     }
 
     public boolean isHasWon() { return hasWon; }
+
+    public double getGameDurationPercentile() { return gameDurationPercentile; }
 }
 
 

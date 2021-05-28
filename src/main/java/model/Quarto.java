@@ -484,6 +484,11 @@ public class Quarto {
         }
     }
 
+    public double getGameDurationPercentile() {
+        BigDecimal bd = BigDecimal.valueOf(gameStatistics.getGameDurationPercentile()).setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
     public List<Double> getGamesPlayedDuration() {
         return gameStatistics.getGamesPlayedDuration();
     }
