@@ -160,6 +160,7 @@ public class GameStatistics extends Database { // Used for retrieving the leader
             playerSlowestMoveTime = Collections.max(playerTimeSpentOnTurn);
 
             ResultSet gameDurations = statement.executeQuery("SELECT DISTINCT id, time_played from game_data ORDER BY id ASC");
+            gamesPlayedDuration.clear();
             while(gameDurations.next()) {
                 gamesPlayedDuration.add(gameDurations.getDouble(2));
             }
