@@ -164,7 +164,7 @@ public class Quarto {
         return !human.isFirstMove();
     }
 
-    // Checks if there's remaining pieces in the cloned arrayList to simulate games with.
+    // Checks if there's remaining pieces in the cloned arrayList to simulate games with..
     public boolean otherPiecesAvailable() {
         return !remainingPieces.getRemainingPiecesClone().isEmpty();
     }
