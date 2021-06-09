@@ -68,11 +68,11 @@ public class Quarto {
     }
 
     public boolean isGameOver() {
-        System.out.println("Here is the current game status: " + board.getBoardStatus());
+//        System.out.println("Here is the current game status: " + board.getBoardStatus());
 
         for (int j = 0; j < board.getWinningLines().size(); j++) {
             if (isThereALine(board.getBoardStatus(), j)) {
-                System.out.println("There's a line. Checking if it's quarto...");
+//                System.out.println("There's a line. Checking if it's quarto...");
                 if (isItAQuarto(board.getWinningLines().get(j), 1)) { // pieceID is a dummy value, so that I wouldn't have to copy the same method twice
                     gameStatistics.saveGame(turnData.getTurnStatistics(), getGameID(), getUserName(), human.getDifficulty(), human.isHasQuarto(), human.getDateStarted());
                     return true;
@@ -83,7 +83,7 @@ public class Quarto {
         if (remainingPieces.getRemainingPieces().size() == 0) {
             return true;
         } else {
-            System.out.println("It wasn't Quarto.");
+//            System.out.println("It wasn't Quarto.");
             return false;
         }
     }
@@ -141,8 +141,14 @@ public class Quarto {
                 }
             }
         } else {
-            System.out.println("Difficulty: easy.\n No thought process is being applied, giving a random piece.");
-            generateRandomCoordinates();
+            if (makeMove) {
+                System.out.println("Difficulty: easy.\n No thought process is being applied, placing the piece at a random coordinate.");
+                generateRandomCoordinates();
+            } else {
+
+                System.out.println("Difficulty: easy.\n No thought process is being applied, giving a random piece.");
+                computer.setSelectedPiece(pieceID);
+            }
         }
     }
 
@@ -360,8 +366,8 @@ public class Quarto {
         temporary.add(pieceRow);
         temporary.add(integer);
         board.getUsedTiles().add(temporary);
-        System.out.println("Coordinates for pieces: " + board.getUsedTiles());
-        System.out.println("Remaining spots: " + board.getRemainingSpots());
+//        System.out.println("Coordinates for pieces: " + board.getUsedTiles());
+//        System.out.println("Remaining spots: " + board.getRemainingSpots());
     }
 
     /**
@@ -372,7 +378,7 @@ public class Quarto {
         while (remainingPieces.getRemainingPieces().contains(pieceID)) {
             remainingPieces.getRemainingPieces().remove(pieceID);
         }
-        System.out.println("Remaining pieces: " + remainingPieces.getRemainingPieces());
+//        System.out.println("Remaining pieces: " + remainingPieces.getRemainingPieces());
     }
 
 

@@ -54,7 +54,7 @@ public class Board {
                 remainingSpots.add(temporary);
             }
         }
-        System.out.println("Remaining spots : "+remainingSpots+"\n");
+//        System.out.println("Remaining spots : "+remainingSpots+"\n");
     }
 
     public void removeRemainingSpots(int xCoord, int yCoord) {

@@ -10,10 +10,6 @@ import main.java.view.screens.main.QuartoView;
 import java.sql.SQLException;
 
 public class Main extends Application {
-
-    protected boolean isRunning;
-    protected int amountOfTurns;
-    protected int gameTimerSeconds;
     Stage window;
 
     public static void main(String[] args) {
